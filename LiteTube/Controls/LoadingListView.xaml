@@ -42,66 +42,76 @@
     
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
-            <toolkit:LongListMultiSelector Margin="0,0,-22,0" 
+            <Grid>
+                <toolkit:LongListMultiSelector Margin="0,0,0,0" 
                                            ItemsSource="{Binding Items}"
-                                           toolkit:TiltEffect.IsTiltEnabled="True"
+                                           IsSelectionEnabled="False"
+                                           EnforceIsSelectionEnabled="False"
+                                           
+                                           toolkit:TiltEffect.IsTiltEnabled="True" 
                                            common:ItemClickCommand.Command="{Binding ItemClickCommand}">
                     <!--<i:Interaction.Behaviors>
                         <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
                                                                  LoadMoreCommand="{Binding LoadMoreCommand}"/>
                     </i:Interaction.Behaviors>-->
 
-                <toolkit:LongListMultiSelector.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,0,0,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <toolkit:LongListMultiSelector.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Grid Grid.Column="0" 
+                                <Grid Grid.Column="0" 
                                   HorizontalAlignment="Left"
                                   Background="DimGray"
                                   Height="100"
                                   Width="178">
 
-                                <Image Source="{Binding ImagePath}" 
+                                    <Image Source="{Binding ImagePath}" 
                                        Stretch="UniformToFill" />
 
-                                <Border Margin="2"
+                                    <Border Margin="2"
                                         VerticalAlignment="Bottom"
                                         HorizontalAlignment="Right"
                                         Background="Black"
                                         Padding="4,0,4,0">
-                                    <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
+                                        <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
                                                TextWrapping="NoWrap" 
                                                Foreground="White"
                                                FontSize="14"/>
-                                </Border>
-                            </Grid>
+                                    </Border>
+                                </Grid>
 
-                            <StackPanel Grid.Column="1" 
+                                <StackPanel Grid.Column="1" 
                                         Margin="0,0,0,0">
-                                <TextBlock Text="{Binding Title}" 
+                                    <TextBlock Text="{Binding Title}" 
                                            Style="{StaticResource PhoneTextNormalStyle}"
                                            TextTrimming="WordEllipsis"
                                            TextWrapping="Wrap"
                                            MaxHeight="54"/>
-                                <TextBlock Text="{Binding ChannelTitle}" 
+                                    <TextBlock Text="{Binding ChannelTitle}" 
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            TextWrapping="NoWrap"/>
-                                <TextBlock TextWrapping="NoWrap"
+                                    <TextBlock TextWrapping="NoWrap"
                                            Text="{Binding PublishedAt}"
                                            Style="{StaticResource PhoneTextSmallStyle}">
                                     <Run Text="Published at " x:Uid="PublishedAt"/>
                                     <Run Text="{Binding PublishedAt}" />
-                                </TextBlock>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </toolkit:LongListMultiSelector.ItemTemplate>
-            </toolkit:LongListMultiSelector>
-            
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </toolkit:LongListMultiSelector.ItemTemplate>
+                </toolkit:LongListMultiSelector>
+                <Grid x:Name="BlockMulti" 
+                      Width="50" 
+                      Background="Transparent" 
+                      HorizontalAlignment="Left" 
+                      Visibility="Visible"/>
+            </Grid>
+
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        x:Uid="Loading"

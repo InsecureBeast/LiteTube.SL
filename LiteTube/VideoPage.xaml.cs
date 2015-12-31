@@ -95,7 +95,7 @@ namespace LiteTube
             //Frame.Navigate(typeof(ChannelPage), new ChannelPageViewModel(comment.AuthorChannelId, viewModel.DataSource));
         }
 
-        private void PivotOnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void PivotOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var pivot = sender as Pivot;
             if (pivot == null)
@@ -113,6 +113,8 @@ namespace LiteTube
 
                 case 1:
                     Debug.WriteLine("related");
+                    if (!viewModel.RelatedVideosViewModel.IsEmpty)
+                        await viewModel.RelatedVideosViewModel.FirstLoad();
                     break;
 
                 case 2:

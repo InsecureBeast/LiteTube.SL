@@ -178,6 +178,15 @@
                     </Grid>
                 </ScrollViewer>
             </phone:PivotItem>
+            
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock Text="related"
+                               x:Uid="Related"/>
+                </phone:PivotItem.Header>
+                <ContentPresenter Content="{Binding RelatedVideosViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
+            </phone:PivotItem>
         </phone:Pivot>
         
         <Canvas x:Name="playerCanvas" 

@@ -167,6 +167,7 @@
     <Compile Include="VideoPage.xaml.cs">
       <DependentUpon>VideoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
     <Compile Include="ViewModels\VideoPageViewModel.cs" />
     <Compile Include="ViewModels\MostPopularViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeViewModelBase.cs" />
@@ -175,7 +176,6 @@
     <Compile Include="ViewModels\SectionBaseViewModel.cs" />
     <Compile Include="ViewModels\Nodes\VideoItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\VideoCategoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
