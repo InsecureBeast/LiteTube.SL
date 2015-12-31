@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:LiteTube.Converters"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
 
 
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible"/>
@@ -11,7 +12,8 @@
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <phone:LongListSelector Margin="0,0,-22,0" 
-                                    ItemsSource="{Binding Items}">
+                                    ItemsSource="{Binding Items}"
+                                    toolkit:TiltEffect.IsTiltEnabled="True">
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,0,0,5">
@@ -41,14 +43,15 @@
                             </Grid>
 
                             <StackPanel Grid.Column="1" 
-                                        Margin="8,0,0,0">
+                                        Margin="0,0,0,0">
                                 <TextBlock Text="{Binding Title}" 
                                            Style="{StaticResource PhoneTextNormalStyle}"
-                                           TextTrimming="WordEllipsis"/>
+                                           TextTrimming="WordEllipsis"
+                                           TextWrapping="Wrap"
+                                           MaxHeight="54"/>
                                 <TextBlock Text="{Binding ChannelTitle}" 
                                            Style="{StaticResource PhoneTextSmallStyle}"
-                                           Margin="0,0,0,0"
-                                           TextWrapping="Wrap"/>
+                                           TextWrapping="NoWrap"/>
                                 <TextBlock TextWrapping="NoWrap"
                                            Text="{Binding PublishedAt}"
                                            Style="{StaticResource PhoneTextSmallStyle}">
