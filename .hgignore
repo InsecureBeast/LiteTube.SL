@@ -1,3 +1,4 @@
 syntax: glob
 LiteTube/Bin/Debug/*
 LiteTube/obj/*
+LiteTube/packages/*
