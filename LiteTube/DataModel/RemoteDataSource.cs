@@ -16,12 +16,8 @@ namespace LiteTube.DataModel
 {
     interface IRemoteDataSource
     {
-#if WINDOWS_PHONE_APP
         void Login();
         Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
-#else
-        Task<string> Login(string username);
-#endif
         Task Logout();
         Task LoginSilently(string username);
         bool IsAuthorized { get; }
@@ -80,7 +76,6 @@ namespace LiteTube.DataModel
             //WebRequest.DefaultWebProxy = new WebProxy();
         }
 
-#if WINDOWS_PHONE_APP
         public void Login()
         {
             _youTubeServiceControl.Login();
@@ -93,15 +88,7 @@ namespace LiteTube.DataModel
             await _subscriptionsHolder.Init();
             return userId;
         }
-#else
-        public async Task<string> Login(string username)
-        {
-            var userId = await _youTubeServiceControl.Login(username);
-            _youTubeService = _youTubeServiceControl.GetAuthorizedService();
-            await _subscriptionsHolder.Init();
-            return userId;
-        }
-#endif
+
         public async Task LoginSilently(string username)
         {
             await _youTubeServiceControl.RefreshToken(username);
@@ -490,7 +477,7 @@ namespace LiteTube.DataModel
         {
             //await InsertHistory(videoId);
             YouTubeWeb.OpenVideo(videoId, _youTubeServiceControl.OAuthToken);
-            var url = await YouTube.GetVideoUriAsync(videoId, _youTubeServiceControl.OAuthToken, quality);
+            var url = await YouTube.GetVideoUriAsync(videoId, /*_youTubeServiceControl.OAuthToken, */quality);
             return url;
         }
 
@@ -639,8 +626,8 @@ namespace LiteTube.DataModel
         {
             if (!IsAuthorized)
             {
-                var image = "https://yt3.ggpht.com/-v6fA9YDXkMs/AAAAAAAAAAI/AAAAAAAAAAA/_GjtZC3QejY/s88-c-k-no/photo.jpg";
-                var displayName = "";
+                const string image = "https://yt3.ggpht.com/-v6fA9YDXkMs/AAAAAAAAAAI/AAAAAAAAAAA/_GjtZC3QejY/s88-c-k-no/photo.jpg";
+                const string displayName = "";
                 return new MProfile(image, displayName);
             }
 

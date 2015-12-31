@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using LiteTube.DataClasses;
-using MyToolkit.Multimedia;
 using Windows.ApplicationModel.Activation;
 using System.Diagnostics;
+using MyToolkit.Multimedia;
 
 namespace LiteTube.DataModel
 {
@@ -18,7 +17,6 @@ namespace LiteTube.DataModel
             _remoteDataSource = remoteDataSource;
         }
 
-#if WINDOWS_PHONE_APP
         public void Login()
         {
             try
@@ -46,21 +44,7 @@ namespace LiteTube.DataModel
                 throw e;
             }
         }
-#else
-        public Task<string> Login(string username)
-        {
-            try
-            {
-                Debug.WriteLine("Login methode called");   
-                return _remoteDataSource.Login(username);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Login methode called with exception " + e.Message);
-                throw e;
-            }
-        }
-#endif
+
         public Task Logout()
         {
             try

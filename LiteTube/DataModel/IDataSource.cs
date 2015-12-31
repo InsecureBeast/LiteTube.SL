@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LiteTube.Common;
 using System;
 using Windows.ApplicationModel.Activation;
+using MyToolkit.Multimedia;
 
 namespace LiteTube.DataModel
 {
@@ -12,12 +13,8 @@ namespace LiteTube.DataModel
     {
         EventHandler SettingsUpdated { get; set; }
         EventHandler ContextUpdated { get; set; }
-#if WINDOWS_PHONE_APP
         void Login();
         Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
-#else
-        Task<string> Login(string username);
-#endif
         bool IsAuthorized { get; }
         Task LoginSilently(string username);
         Task Logout();
@@ -57,13 +54,11 @@ namespace LiteTube.DataModel
         private readonly IList<IVideoCategory> _categories;
         private readonly VideoQuality _qualityHelper;
         private IList<IGuideCategory> _guideCategories;
-        private readonly ResponceListCache<IVideoList> _activityListCache;
-        private readonly ResponceListCache<IVideoList> _mostPopularCache;
         private readonly List<IChannel> _channels;
         private readonly IDeviceHistory _deviceHistory;
         private  EventHandler _settingsUpdated;
         private string _region;
-        private int _maxPageResult;
+        private readonly int _maxPageResult;
         private YouTubeQuality _quality;
         private EventHandler _contextUpdated;
 
@@ -71,8 +66,6 @@ namespace LiteTube.DataModel
         {
             _remoteDataSource = remoteDataSource;
             _categories = new List<IVideoCategory>();
-            _activityListCache = new ResponceListCache<IVideoList>();
-            _mostPopularCache = new ResponceListCache<IVideoList>();
             _guideCategories = new List<IGuideCategory>();
             _channels = new List<IChannel>();
             _region = region.ToUpper();
@@ -99,7 +92,6 @@ namespace LiteTube.DataModel
             set { _contextUpdated = value; }
         }
 
-#if WINDOWS_PHONE_APP
         public void Login()
         {
             _remoteDataSource.Login();
@@ -112,12 +104,7 @@ namespace LiteTube.DataModel
                 _contextUpdated(this, new EventArgs());
             return result;
         }
-#else
-        public async Task<string> Login(string username)
-        {
-            return await _remoteDataSource.Login(username);
-        }
-#endif
+     
         public async Task Logout()
         {
             await _remoteDataSource.Logout();
@@ -138,8 +125,6 @@ namespace LiteTube.DataModel
             _quality = _qualityHelper.GetQualityEnum(quality);
             _categories.Clear();
             _guideCategories.Clear();
-            _activityListCache.Clear();
-            _mostPopularCache.Clear();
             _channels.Clear();
 
             if (SettingsUpdated != null)

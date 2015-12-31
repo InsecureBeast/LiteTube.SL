@@ -73,7 +73,6 @@ namespace LiteTube.DataModel
             }
         }
 
-#if WINDOWS_PHONE_APP
         public void Login()
         {
             try
@@ -96,23 +95,17 @@ namespace LiteTube.DataModel
 
         public async Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username)
         {
-            await PasswordVaultDataStore.Default.StoreAsync<SerializableWebAuthResult>
-            (
-                SerializableWebAuthResult.Name,
-                new SerializableWebAuthResult(args.WebAuthenticationResult)
-            );
+            //await PasswordVaultDataStore.Default.StoreAsync<SerializableWebAuthResult>
+            //(
+            //    SerializableWebAuthResult.Name,
+            //    new SerializableWebAuthResult(args.WebAuthenticationResult)
+            //);
 
 		    var userId = await Authorize(username);
 
-            await PasswordVaultDataStore.Default.DeleteAsync<SerializableWebAuthResult>(SerializableWebAuthResult.Name);
+            //await PasswordVaultDataStore.Default.DeleteAsync<SerializableWebAuthResult>(SerializableWebAuthResult.Name);
             return userId;
         }
-#else
-        public async Task<string> Login(string username)
-        {
-            return await Authorize(username);
-        }
-#endif
 
         private async Task<string> Authorize(string username)
         {

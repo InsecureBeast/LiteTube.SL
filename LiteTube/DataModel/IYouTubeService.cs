@@ -11,12 +11,8 @@ namespace LiteTube.DataModel
         YouTubeService GetAuthorizedService();
         Task Logout();
         bool IsAuthorized { get; }
-#if WINDOWS_PHONE_APP
         void Login();
         Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
-#else
-        Task<string> Login(string username);
-#endif
         Task RefreshToken(string username);
         string OAuthToken { get; }
     }

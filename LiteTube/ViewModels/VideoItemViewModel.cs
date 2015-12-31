@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 
 namespace LiteTube.ViewModels
 {
-    public class ItemViewModel : INotifyPropertyChanged
+    public class VideoItemViewModel : INotifyPropertyChanged
     {
         private string _lineOne;
         /// <summary>

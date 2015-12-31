@@ -94,6 +94,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BugTreckerReporter.cs" />
     <Compile Include="Common\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />
     <Compile Include="Common\DurationConverter.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\VideoQuality.cs" />
     <Compile Include="Common\VisualHelper.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="DataClasses\DataClasses.cs" />
     <Compile Include="DataClasses\Extensions.cs" />
     <Compile Include="DataClasses\IActivity.cs" />
@@ -128,7 +131,6 @@
     <Compile Include="DataClasses\IVideoCategory.cs" />
     <Compile Include="DataClasses\IVideoItem.cs" />
     <Compile Include="DataClasses\RatingEnum.cs" />
-    <Compile Include="DataModel\ActivityListCache.cs" />
     <Compile Include="DataModel\DataSourceExceptionWrapper.cs" />
     <Compile Include="DataModel\IDataSource.cs" />
     <Compile Include="DataModel\IYouTubeService.cs" />
@@ -136,10 +138,10 @@
     <Compile Include="DataModel\RemoteDataSource.cs" />
     <Compile Include="DataModel\SubscriptionsHolder.cs" />
     <Compile Include="DataModel\VideoItemsCache.cs" />
-    <Compile Include="DataModel\YouTube.cs" />
     <Compile Include="DataModel\YouTubeConstants.cs" />
     <Compile Include="DataModel\YouTubeServiceControl.cs" />
     <Compile Include="DataModel\YouTubeWeb.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -150,7 +152,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\PropertyChangedBase.cs" />
+    <Compile Include="ViewModels\VideoItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +226,7 @@
     <EmbeddedResource Include="Resources\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
