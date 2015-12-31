@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace LiteTube.ViewModels
 {
-    public class MostPopularViewModel : SectionViewModel
+    public class MostPopularViewModel : SectionBaseViewModel
     {
         private readonly IVideoList _videoList;
 

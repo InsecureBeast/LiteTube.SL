@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using LiteTube.DataClasses;
 
-namespace LiteTube.ViewModels
+namespace LiteTube.ViewModels.Nodes
 {
     public class VideoItemViewModel : NodeViewModelBase
     {

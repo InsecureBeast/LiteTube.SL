@@ -1,5 +1,5 @@
 ﻿
-namespace LiteTube.ViewModels
+namespace LiteTube.ViewModels.Nodes
 {
     public abstract class NodeViewModelBase : PropertyChangedBase
     {

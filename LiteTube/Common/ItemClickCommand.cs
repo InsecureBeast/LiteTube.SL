@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using LiteTube.ViewModels;
 using System.Windows.Input;
 using Microsoft.Phone.Controls;
@@ -38,16 +39,16 @@ namespace LiteTube.Common
 
         private static void OnCommandPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as LongListSelector;
+            var control = d as LongListMultiSelector;
             if (control != null)
                 control.Tap += OnItemTap;
         }
 
-        private static void OnItemTap(object sender, GestureEventArgs gestureEventArgs)
+        private static void OnItemTap(object sender, GestureEventArgs e)
         {
-            var control = sender as LongListSelector;
+            var control = sender as LongListMultiSelector;
             var command = GetCommand(control);
-            var selected = GetCommandParameter(control);
+            //var selected = GetCommandParameter(control);
 
             if (control != null && command != null && command.CanExecute(null))
             {

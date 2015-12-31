@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interactivity;
 using LiteTube.Common;
 using System;
@@ -6,7 +7,7 @@ using System.Windows.Input;
 
 namespace LiteTube.Interactivity
 {
-    class LoadItemsByScrollBehavior : DependencyObject, IAttachedObject
+    class LoadItemsByScrollBehavior : Behavior<Control>
     {
 
         public static DependencyProperty IsEnabledProperty =
@@ -27,34 +28,44 @@ namespace LiteTube.Interactivity
             set { SetValue(LoadMoreCommandProperty, value); }
         }
 
-        public DependencyObject AssociatedObject
-        {
-            get; private set;
-        }
-
-        public void Attach(DependencyObject associatedObject)
+        protected override void OnAttached()
         {
             if (!IsEnabled)
                 return;
 
-            if ((associatedObject != AssociatedObject))
-            {
-                if (AssociatedObject != null)
-                    throw new InvalidOperationException("Cannot attach behavior multiple times.");
+            if (AssociatedObject != null)
+                throw new InvalidOperationException("Cannot attach behavior multiple times.");
 
-                AssociatedObject = associatedObject;
-               var frameworkElement = AssociatedObject as FrameworkElement;
-                if (frameworkElement == null)
-                    return;
+            var frameworkElement = AssociatedObject as FrameworkElement;
+            if (frameworkElement == null)
+                return;
 
-                frameworkElement.Loaded += OnLoaded;
-            }
+            frameworkElement.Loaded += OnLoaded;
         }
 
-        public void Detach()
-        {
-            AssociatedObject = null;
-        }
+        //void Attach(DependencyObject associatedObject)
+        //{
+        //    if (!IsEnabled)
+        //        return;
+
+        //    if ((associatedObject != AssociatedObject))
+        //    {
+        //        if (AssociatedObject != null)
+        //            throw new InvalidOperationException("Cannot attach behavior multiple times.");
+
+        //        //AssociatedObject = associatedObject;
+        //        var frameworkElement = AssociatedObject as FrameworkElement;
+        //        if (frameworkElement == null)
+        //            return;
+
+        //        frameworkElement.Loaded += OnLoaded;
+        //    }
+        //}
+
+        //public void Detach()
+        //{
+        //    //AssociatedObject = null;
+        //}
 
         //private void MainPageViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         //{

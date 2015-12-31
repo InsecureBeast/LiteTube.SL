@@ -4,17 +4,57 @@
     xmlns:converters="clr-namespace:LiteTube.Converters"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
-
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:interactivity="clr-namespace:LiteTube.Interactivity"
+    xmlns:common="clr-namespace:LiteTube.Common">
 
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible"/>
+    <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+    <converters:TimeSpanFormatConverter x:Key="TimeSpanFormatConverter" />
 
+    <DataTemplate x:Key="CategoryItemTemplate">
+        <Border Width="370"
+                Height="100"
+                x:Name="Border"
+                Margin="0,0,0,10"
+                Background="{StaticResource PhoneDisabledBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Title}" 
+                           Grid.Column="0"
+                           TextWrapping="Wrap" 
+                           TextTrimming="WordEllipsis"
+                           MaxHeight="54"
+                           Style="{StaticResource PhoneTextSubtleStyle}"
+                           VerticalAlignment="Center"
+                           Margin="20"/>
+                <Border Grid.Column="1"
+                        Margin="0,0,20,0"
+                        Width="55"
+                        Height="55"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding Image, Converter={StaticResource StringToVisibilityConverter}}">
+                    <Image Source="{Binding Image}"/>
+                </Border>
+
+            </Grid>
+        </Border>
+    </DataTemplate>
+    
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
-            <phone:LongListSelector Margin="0,0,-22,0" 
+            <toolkit:LongListMultiSelector Margin="0,0,-22,0" 
                                     ItemsSource="{Binding Items}"
                                     toolkit:TiltEffect.IsTiltEnabled="True">
-                <phone:LongListSelector.ItemTemplate>
+                    <!--<i:Interaction.Behaviors>
+                        <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
+                                                                 LoadMoreCommand="{Binding LoadMoreCommand}"/>
+                    </i:Interaction.Behaviors>-->
+
+                <toolkit:LongListMultiSelector.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,0,0,5">
                             <Grid.ColumnDefinitions>
@@ -36,7 +76,8 @@
                                         HorizontalAlignment="Right"
                                         Background="Black"
                                         Padding="4,0,4,0">
-                                    <TextBlock TextWrapping="NoWrap" 
+                                    <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
+                                               TextWrapping="NoWrap" 
                                                Foreground="White"
                                                FontSize="14"/>
                                 </Border>
@@ -61,11 +102,8 @@
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
-                    <!--<i:Interaction.Behaviors>
-                        <interactivity: LoadMoreCommand="{Binding LoadMoreCommand}"/>
-                    </i:Interaction.Behaviors>-->
-                </phone:LongListSelector.ItemTemplate>
-            </phone:LongListSelector>
+                </toolkit:LongListMultiSelector.ItemTemplate>
+            </toolkit:LongListMultiSelector>
             
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -80,40 +118,33 @@
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
-<!--
+
     <DataTemplate x:Key="CategoryLoadingListView" >
         <Grid>
-            <ListView ItemsSource="{Binding CategoryItems}"
-                      ItemTemplate="{StaticResource CategoryItemTemplate}"
-                      SelectionMode="None"
-                      IsSwipeEnabled="false"
-                      IsItemClickEnabled="True"
-                      common:ItemClickCommand.Command="{Binding ItemClickCommand}"
-                      common:ItemClickCommand.CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedItem}">
-                <i:Interaction.Behaviors>
+            <toolkit:LongListMultiSelector ItemsSource="{Binding CategoryItems}"
+                                           ItemTemplate="{StaticResource CategoryItemTemplate}"
+                                           toolkit:TiltEffect.IsTiltEnabled="True"
+                                           common:ItemClickCommand.Command="{Binding ItemClickCommand}">
+                <!--<i:Interaction.Behaviors>
                     <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
                                                              LoadMoreCommand="{Binding LoadMoreCommand}"/>
-                </i:Interaction.Behaviors>
-            </ListView>
+                </i:Interaction.Behaviors>-->
+            </toolkit:LongListMultiSelector>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        x:Uid="Loading"
                        Text="Loading..."
-                       Style="{StaticResource SubheaderTextBlockStyle}"
-                       Foreground="{ThemeResource ContentForegroundBrush}"
                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        x:Uid="IsEmpty"
                        Text="Items not found"
-                       Style="{StaticResource SubheaderTextBlockStyle}"
-                       Foreground="{ThemeResource ContentForegroundBrush}"
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
-
+<!--
     <DataTemplate x:Key="CommentsLoadingListView" >
         <Grid x:Name="ContentRoot">
             <controls:GenericListView ItemsSource="{Binding Comments}"

@@ -44,15 +44,37 @@
             </phone:Panorama.Background>-->
 
             <!--Panorama item one-->
+            <phone:PanoramaItem Header="Activity"
+                                Visibility="Collapsed">
+                <!--Single line list with text wrapping-->
+                <ContentPresenter Content="{Binding MostPopularViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
+            </phone:PanoramaItem>
+
             <phone:PanoramaItem Header="Most polpular">
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding MostPopularViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PanoramaItem>
 
+            <phone:PanoramaItem Header="Menu">
+                <!--Single line list with text wrapping-->
+                <ContentPresenter Content="{Binding MostPopularViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
+            </phone:PanoramaItem>
+
+            <phone:PanoramaItem Header="Video categories">
+                <!--Single line list with text wrapping-->
+                <ContentPresenter Content="{Binding}"
+                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
+            </phone:PanoramaItem>
+
             <!--Panorama item two-->
+            <!--
             <phone:PanoramaItem>
-                <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
+                -->
+            <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
+            <!--
                 <phone:LongListSelector Margin="0,-38,-22,2" ItemsSource="{Binding Items}">
                     <phone:LongListSelector.ListHeaderTemplate>
                         <DataTemplate>
@@ -70,7 +92,9 @@
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="12,2,0,4" Height="105" Width="432">
-                                <!--Replace rectangle with image-->
+                                -->
+            <!--Replace rectangle with image-->
+            <!--
                                 <Border BorderThickness="1" Width="99" Height="99" BorderBrush="#FFFFC700" Background="#FFFFC700"/>
                                 <StackPanel Width="311" Margin="8,-7,0,0">
                                     <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
@@ -82,9 +106,13 @@
                 </phone:LongListSelector>
             </phone:PanoramaItem>
 
+            -->
             <!--Panorama item three-->
+            <!--
             <phone:PanoramaItem Header="third item" Orientation="Horizontal">
-                <!--Double wide Panorama with large image placeholders-->
+                -->
+            <!--Double wide Panorama with large image placeholders-->
+            <!--
                 <Grid>
                     <StackPanel Margin="0,4,16,0" Orientation="Vertical" VerticalAlignment="Top">
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
@@ -101,7 +129,7 @@
                         </StackPanel>
                     </StackPanel>
                 </Grid>
-            </phone:PanoramaItem>
+            </phone:PanoramaItem>-->
         </phone:Panorama>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Windows.Input;
+using LiteTube.ViewModels.Nodes;
 using MyToolkit.Command;
 using LiteTube.Common;
 
@@ -15,7 +16,7 @@ namespace LiteTube.ViewModels
     /// Модель для отображения определенной секции. 
     /// Например видео канала или самого популярного
     /// </summary>
-    public class SectionViewModel : PropertyChangedBase //IHubSection, IDataSourceContext
+    public class SectionBaseViewModel : PropertyChangedBase //IHubSection, IDataSourceContext
     {
         //protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
         protected string _uniqueId;
@@ -35,7 +36,7 @@ namespace LiteTube.ViewModels
         //private ListViewSelectionMode _selectionMode;
         private ObservableCollection<NodeViewModelBase> _selectedItems;
 
-        public SectionViewModel(IDataSource dataSource)
+        public SectionBaseViewModel(IDataSource dataSource)
         {
             _dataSource = dataSource;
             _hasItems = true;

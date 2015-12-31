@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace LiteTube.Converters
 {
-    class StringToVisibilityConverter : IValueConverter
+    public class StringToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
