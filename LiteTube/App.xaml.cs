@@ -6,7 +6,6 @@ using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using LiteTube.DataModel;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.Resources;
@@ -16,8 +15,8 @@ namespace LiteTube
 {
     public partial class App : Application
     {
-        private static MainViewModel viewModel = null;
-        private static ContainerBootstrapper _container = new ContainerBootstrapper();
+        private static MainViewModel _viewModel = null;
+        private static readonly ContainerBootstrapper _container = new ContainerBootstrapper();
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -28,13 +27,13 @@ namespace LiteTube
             get
             {
                 // Delay creation of the view model until necessary
-                if (viewModel == null)
+                if (_viewModel == null)
                 {
                     _container.Build();
-                    viewModel = new MainViewModel(_container.DataSource);
+                    _viewModel = new MainViewModel(_container.DataSource);
                 }
 
-                return viewModel;
+                return _viewModel;
             }
         }
 

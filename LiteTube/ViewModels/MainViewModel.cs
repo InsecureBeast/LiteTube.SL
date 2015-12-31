@@ -10,6 +10,7 @@ namespace LiteTube.ViewModels
     public class MainViewModel : PropertyChangedBase
     {
         private readonly IDataSource _dataSource;
+        private readonly MostPopularViewModel _mostPopularViewModel;
 
         public MainViewModel(IDataSource dataSource)
         {
@@ -17,6 +18,7 @@ namespace LiteTube.ViewModels
                 throw new ArgumentNullException("dataSource");
             
             _dataSource = dataSource;
+            _mostPopularViewModel = new MostPopularViewModel(dataSource);
             Items = new ObservableCollection<VideoItemViewModel>();
         }
 
@@ -86,20 +88,27 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public MostPopularViewModel MostPopularViewModel
+        {
+            get { return _mostPopularViewModel; }
+        }
+
         /// <summary>
         /// Creates and adds a few VideoItemViewModel objects into the Items collection.
         /// </summary>
         public async Task LoadData()
         {
-            IsLoading = true;
-            IsEmpty = false;
-            var items = await _dataSource.GetMostPopular(string.Empty);
-            foreach (var item in items.Items)
-            {
-                Items.Add(new VideoItemViewModel(item));
-            }
-            IsLoading = false;
-            IsEmpty = !Items.Any();
+            //IsLoading = true;
+            //IsEmpty = false;
+            //var items = await _dataSource.GetMostPopular(string.Empty);
+            //foreach (var item in items.Items)
+            //{
+            //    Items.Add(new VideoItemViewModel(item));
+            //}
+            //IsLoading = false;
+            //IsEmpty = !Items.Any();
+            
+            await _mostPopularViewModel.FirstLoad();
 
             // Sample data; replace with real data
             //this.Items.Add(new VideoItemViewModel() { LineOne = "runtime one", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu" });

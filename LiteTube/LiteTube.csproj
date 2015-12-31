@@ -150,6 +150,10 @@
     <Compile Include="DataModel\YouTubeServiceControl.cs" />
     <Compile Include="DataModel\YouTubeWeb.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Interactivity\ItemsNotFoundBehavior.cs" />
+    <Compile Include="Interactivity\ItemsSizeBehavior.cs" />
+    <Compile Include="Interactivity\ItemWidthBehavior.cs" />
+    <Compile Include="Interactivity\LoadItemsByScrollBehavior.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -160,9 +164,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MostPopularViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModelBase.cs" />
     <Compile Include="ViewModels\PropertyChangedBase.cs" />
-    <Compile Include="ViewModels\VideoItemViewModel.cs" />
+    <Compile Include="ViewModels\SectionViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\VideoItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +314,7 @@
       <HintPath>packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="YoutubeInfoLite, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\YoutubeInfoLite.1.0.2\lib\YoutubeInfoLite.dll</HintPath>
       <Private>True</Private>

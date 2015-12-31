@@ -46,7 +46,7 @@
             <!--Panorama item one-->
             <phone:PanoramaItem Header="Most polpular">
                 <!--Single line list with text wrapping-->
-                <ContentPresenter Content="{Binding}"
+                <ContentPresenter Content="{Binding MostPopularViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PanoramaItem>
 
