@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:converters="clr-namespace:LiteTube.Converters">
 
     <!--Application Resources-->
     <Application.Resources>
@@ -12,7 +13,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Controls/LoadingListView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-        
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible"/>
+            <converters:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" FalseValue="Visible" TrueValue="Collapsed"/>
+            <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+            <converters:TimeSpanFormatConverter x:Key="TimeSpanFormatConverter" />
+            
             <sys:Double x:Key="PanoramaItemHeaderFontSize">66</sys:Double>
 
             <Style x:Key="PanoramaItemHeaderTextStyle" TargetType="TextBlock">

@@ -8,10 +8,6 @@
     xmlns:interactivity="clr-namespace:LiteTube.Interactivity"
     xmlns:common="clr-namespace:LiteTube.Common">
 
-    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible"/>
-    <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
-    <converters:TimeSpanFormatConverter x:Key="TimeSpanFormatConverter" />
-
     <DataTemplate x:Key="CategoryItemTemplate">
         <Border Width="370"
                 Height="100"
@@ -47,8 +43,9 @@
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <toolkit:LongListMultiSelector Margin="0,0,-22,0" 
-                                    ItemsSource="{Binding Items}"
-                                    toolkit:TiltEffect.IsTiltEnabled="True">
+                                           ItemsSource="{Binding Items}"
+                                           toolkit:TiltEffect.IsTiltEnabled="True"
+                                           common:ItemClickCommand.Command="{Binding ItemClickCommand}">
                     <!--<i:Interaction.Behaviors>
                         <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
                                                                  LoadMoreCommand="{Binding LoadMoreCommand}"/>

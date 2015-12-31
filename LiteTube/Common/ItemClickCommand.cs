@@ -57,6 +57,7 @@ namespace LiteTube.Common
                 //    return;
 
                 var page = VisualHelper.FindParent<Page>(control);
+                command.Execute(page);
                 //viewModel.SetNavigationFrame(page.Frame);
                 //command.Execute(e.ClickedItem);
             }

@@ -25,7 +25,7 @@ namespace LiteTube.ViewModels
         protected Frame _frame;
         protected bool _hasItems;
         private readonly Common.RelayCommand _loadMoreCommand;
-        private readonly RelayCommand<NodeViewModelBase> _itemClickCommand;
+        private readonly RelayCommand<object> _itemClickCommand;
         private readonly Common.RelayCommand _selectCommand;
         private readonly Common.RelayCommand _deleteCommand;
         private bool _isLoading = true;
@@ -34,7 +34,7 @@ namespace LiteTube.ViewModels
         private bool _isItemClickEnabled;
         protected string _pageToken = string.Empty;
         //private ListViewSelectionMode _selectionMode;
-        private ObservableCollection<NodeViewModelBase> _selectedItems;
+        private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
 
         public SectionBaseViewModel(IDataSource dataSource)
         {
@@ -43,7 +43,7 @@ namespace LiteTube.ViewModels
             //_navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
             Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
-            _itemClickCommand = new RelayCommand<NodeViewModelBase>(NavigateTo);
+            _itemClickCommand = new RelayCommand<object>(NavigateTo);
             _selectCommand = new Common.RelayCommand(SelectItems);
             _deleteCommand = new Common.RelayCommand(DeleteItems);
 
@@ -232,7 +232,7 @@ namespace LiteTube.ViewModels
             HideProgressIndicator();
         }
 
-        internal virtual void NavigateTo(NodeViewModelBase node)
+        internal virtual void NavigateTo(object node)
         {
             if (_frame == null)
                 return;
