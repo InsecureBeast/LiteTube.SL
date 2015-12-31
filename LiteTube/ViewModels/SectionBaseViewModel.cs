@@ -9,6 +9,9 @@ using System.Windows.Input;
 using LiteTube.ViewModels.Nodes;
 using MyToolkit.Command;
 using LiteTube.Common;
+using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 
 namespace LiteTube.ViewModels
 {
@@ -25,7 +28,7 @@ namespace LiteTube.ViewModels
         protected Frame _frame;
         protected bool _hasItems;
         private readonly Common.RelayCommand _loadMoreCommand;
-        private readonly RelayCommand<object> _itemClickCommand;
+        private readonly RelayCommand<NavigationObject> _itemClickCommand;
         private readonly Common.RelayCommand _selectCommand;
         private readonly Common.RelayCommand _deleteCommand;
         private bool _isLoading = true;
@@ -43,7 +46,7 @@ namespace LiteTube.ViewModels
             //_navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
             Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
-            _itemClickCommand = new RelayCommand<object>(NavigateTo);
+            _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
             _selectCommand = new Common.RelayCommand(SelectItems);
             _deleteCommand = new Common.RelayCommand(DeleteItems);
 
@@ -232,16 +235,10 @@ namespace LiteTube.ViewModels
             HideProgressIndicator();
         }
 
-        internal virtual void NavigateTo(object node)
+        internal virtual void NavigateTo(NavigationObject navObject)
         {
-            if (_frame == null)
-                return;
-
-            var model = node as NodeViewModelBase;
-            if (model == null)
-                return;
-
-            //_frame.Navigate(typeof(ItemPage), new ItemPageViewModel(model.VideoId, _dataSource));
+            PhoneApplicationService.Current.State["model"] = new VideoPageViewModel(navObject.ViewModel.VideoId, _dataSource);
+            navObject.NavigationService.Navigate(new System.Uri("/VideoPage.xaml", System.UriKind.Relative));
         }
 
         protected void ShowProgressIndicator()

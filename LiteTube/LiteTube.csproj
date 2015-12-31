@@ -102,8 +102,8 @@
     <Compile Include="Common\IDialogService.cs" />
     <Compile Include="Common\ItemClickCommand.cs" />
     <Compile Include="Common\LayoutHelper.cs" />
-    <Compile Include="Common\ListViewItemClickCommand.cs" />
     <Compile Include="Common\MediaPlayerVisualStates.cs" />
+    <Compile Include="Common\NavigationObject.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\PropertyExtensions.cs" />
     <Compile Include="Common\RelayCommand.cs" />
@@ -258,7 +258,11 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="Microsoft.PlayerFramework.WP8.Core, Version=2.0.0.0">
+      <Name>Microsoft Player Framework</Name>
+    </SDKReference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Google.Apis, Version=1.9.1.12395, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Google.Apis.1.9.1\lib\wp8\Google.Apis.dll</HintPath>
@@ -324,7 +328,9 @@
       <HintPath>packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\Windows Phone\v8.0\Libraries\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="YoutubeInfoLite, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\YoutubeInfoLite.1.0.2\lib\YoutubeInfoLite.dll</HintPath>
       <Private>True</Private>

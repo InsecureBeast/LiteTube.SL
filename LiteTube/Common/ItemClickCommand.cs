@@ -1,11 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
-using LiteTube.ViewModels;
 using System.Windows.Input;
 using Microsoft.Phone.Controls;
 using GestureEventArgs = System.Windows.Input.GestureEventArgs;
+using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube.Common
 {
@@ -52,14 +50,17 @@ namespace LiteTube.Common
 
             if (control != null && command != null && command.CanExecute(null))
             {
-                //var viewModel = control.DataContext as SectionViewModel;
-                //if (viewModel == null)
-                //    return;
+                var source = e.OriginalSource as FrameworkElement;
+                if (source == null)
+                    return;
+
+                var viewModel = source.DataContext as NodeViewModelBase;
+                if (viewModel == null)
+                    return;
 
                 var page = VisualHelper.FindParent<Page>(control);
-                command.Execute(page);
-                //viewModel.SetNavigationFrame(page.Frame);
-                //command.Execute(e.ClickedItem);
+                var navObj = new NavigationObject(viewModel, page);
+                command.Execute(navObj);
             }
         }
     }

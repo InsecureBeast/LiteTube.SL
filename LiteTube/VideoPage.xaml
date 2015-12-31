@@ -6,12 +6,12 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mmppf="clr-namespace:Microsoft.PlayerFramework;assembly=Microsoft.PlayerFramework"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True" Orientation="Portrait">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -22,7 +22,8 @@
         </Grid.RowDefinitions>
 
         <phone:Pivot x:Name="Pivot"
-                     Grid.Row="2">
+                     Grid.Row="2"
+                     Margin="0,10,0,0">
             <phone:PivotItem Header="details"
                              x:Uid="Details">
 
@@ -37,7 +38,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
-                               Style="{StaticResource TitleTextBlockStyle}"/>
+                                   Style="{StaticResource PhoneTextLargeStyle}"/>
 
                         <Grid Grid.Row="1"
                           x:Name="videoInfo">
@@ -179,10 +180,26 @@
             </phone:PivotItem>
         </phone:Pivot>
         
-        <!--ContentPanel - place additional content here-->
+        <Canvas x:Name="playerCanvas" 
+                Grid.Row="1"
+                VerticalAlignment="Top"
+                Background="Black">
+            <mmppf:MediaPlayer x:Name="player"
+                               Source="{Binding VideoUri}"
+                               PosterSource="{Binding ImagePath}"
+                               IsFullScreenVisible="True"
+                               IsFullScreenEnabled="True"
+                               VerticalAlignment="Center">
+                <mmppf:MediaPlayer.RenderTransform>
+                    <TranslateTransform x:Name="PlayerMover"/>
+                </mmppf:MediaPlayer.RenderTransform>
+                
+            </mmppf:MediaPlayer>
+        </Canvas>
+        <!--ContentPanel - place additional content here--><!--
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
 
-        </Grid>
+        </Grid>-->
     </Grid>
 
 </phone:PhoneApplicationPage>

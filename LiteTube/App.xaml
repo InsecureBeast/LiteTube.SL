@@ -18,6 +18,7 @@
             <converters:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" FalseValue="Visible" TrueValue="Collapsed"/>
             <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
             <converters:TimeSpanFormatConverter x:Key="TimeSpanFormatConverter" />
+            <converters:UppercaseConverter x:Key="UppercaseConverter"/>
             
             <sys:Double x:Key="PanoramaItemHeaderFontSize">66</sys:Double>
 
