@@ -13,7 +13,8 @@ namespace LiteTube.ViewModels
         private readonly IDataSource _dataSource;
         private readonly MostPopularViewModel _mostPopularViewModel;
         private readonly ObservableCollection<VideoCategoryNodeViewModel> _categoryItems;
-        
+        private readonly ProfileSectionViewModel _profileSectionViewModel;
+
         public MainViewModel(IDataSource dataSource) : base(dataSource)
         {
             if (dataSource == null) 
@@ -21,6 +22,7 @@ namespace LiteTube.ViewModels
             
             _dataSource = dataSource;
             _mostPopularViewModel = new MostPopularViewModel(dataSource);
+            _profileSectionViewModel = new ProfileSectionViewModel(dataSource);
             _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
         }
 
@@ -51,6 +53,11 @@ namespace LiteTube.ViewModels
             get { return _categoryItems; }
         }
 
+        public ProfileSectionViewModel ProfileSectionViewModel
+        {
+            get { return _profileSectionViewModel; }
+        }
+
         /// <summary>
         /// Creates and adds a few VideoItemViewModel objects into the Items collection.
         /// </summary>
@@ -61,6 +68,7 @@ namespace LiteTube.ViewModels
             
             await _mostPopularViewModel.FirstLoad();
             await LoadGuideCategories();
+
             IsDataLoaded = true;
             IsLoading = false;
             IsEmpty = !CategoryItems.Any();

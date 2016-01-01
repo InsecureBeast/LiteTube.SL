@@ -7,13 +7,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
+    SupportedOrientations="Portrait"  
+    Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
-
+    
+    <phone:PhoneApplicationPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/ProfileSections.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </phone:PhoneApplicationPage.Resources>
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" 
           Background="Transparent">
@@ -57,10 +65,10 @@
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="Menu">
-                <!--Single line list with text wrapping-->
-                <ContentPresenter Content="{Binding MostPopularViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+            <phone:PanoramaItem Header="Main menu"
+                                x:Uid="MenuSection"
+                                DataContext="{Binding ProfileSectionViewModel}"
+                                ContentTemplate="{StaticResource ProfileSectionsDataTemplate}">
             </phone:PanoramaItem>
 
             <phone:PanoramaItem Header="Video categories">
