@@ -15,6 +15,7 @@ namespace LiteTube.ViewModels
         private readonly ObservableCollection<VideoCategoryNodeViewModel> _categoryItems;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
 
+
         public MainViewModel(IDataSource dataSource) : base(dataSource)
         {
             if (dataSource == null) 

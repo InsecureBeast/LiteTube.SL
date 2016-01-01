@@ -21,7 +21,7 @@ namespace LiteTube.ViewModels
     /// </summary>
     public class SectionBaseViewModel : PropertyChangedBase //IHubSection, IDataSourceContext
     {
-        //protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
+        protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
         protected string _uniqueId;
         protected string _title;
         protected readonly IDataSource _dataSource;
@@ -43,7 +43,7 @@ namespace LiteTube.ViewModels
         {
             _dataSource = dataSource;
             _hasItems = true;
-            //_navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
             Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
@@ -55,10 +55,10 @@ namespace LiteTube.ViewModels
             _selectedItems = new ObservableCollection<NodeViewModelBase>();
         }
 
-        //public NavigationPanelViewModel NavigationPanelViewModel
-        //{
-        //    get { return _navigatioPanelViewModel; }
-        //}
+        public NavigationPanelViewModel NavigationPanelViewModel
+        {
+            get { return _navigatioPanelViewModel; }
+        }
 
         public string UniqueId 
         {
@@ -238,7 +238,7 @@ namespace LiteTube.ViewModels
         internal virtual void NavigateTo(NavigationObject navObject)
         {
             PhoneApplicationService.Current.State["model"] = new VideoPageViewModel(navObject.ViewModel.VideoId, _dataSource);
-            navObject.NavigationService.Navigate(new System.Uri("/VideoPage.xaml", System.UriKind.Relative));
+            App.RootFrame.Navigate(new System.Uri("/VideoPage.xaml", System.UriKind.Relative));
         }
 
         protected void ShowProgressIndicator()
@@ -247,13 +247,12 @@ namespace LiteTube.ViewModels
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("LoadingString");
             //statusBar.ProgressIndicator.Text = arstring;
-            //statusBar.ProgressIndicator.ShowAsync();
+            //SystemTray.ProgressIndicator.IsVisible = true;
         }
 
         protected void HideProgressIndicator()
         {
-            //var statusBar = StatusBar.GetForCurrentView();
-            //statusBar.ProgressIndicator.HideAsync();
+            //SystemTray.ProgressIndicator.IsVisible = false;
         }
 
         protected virtual void DeleteItems()

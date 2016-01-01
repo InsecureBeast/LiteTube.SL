@@ -100,6 +100,7 @@
     <Compile Include="Common\DurationConverter.cs" />
     <Compile Include="Common\I18nLanguages.cs" />
     <Compile Include="Common\IDialogService.cs" />
+    <Compile Include="Common\AppBarClickCommand.cs" />
     <Compile Include="Common\ItemClickCommand.cs" />
     <Compile Include="Common\LayoutHelper.cs" />
     <Compile Include="Common\MediaPlayerVisualStates.cs" />
@@ -164,13 +165,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VideoPage.xaml.cs">
       <DependentUpon>VideoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
     <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
     <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
+    <Compile Include="ViewModels\SearchPageViewModel.cs" />
     <Compile Include="ViewModels\VideoPageViewModel.cs" />
     <Compile Include="ViewModels\MostPopularViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeViewModelBase.cs" />
@@ -197,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
+    <Page Include="SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -237,6 +247,8 @@
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Find.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Home.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
     <Resource Include="Assets\PanoramaBackground.png" />
     <Content Include="Assets\AlignmentGrid.png" />
@@ -279,6 +291,10 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AppBarUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\AppBarUtils.2.5.1\lib\windowsphone8\AppBarUtils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Apis, Version=1.9.1.12395, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Google.Apis.1.9.1\lib\wp8\Google.Apis.dll</HintPath>
       <Private>True</Private>

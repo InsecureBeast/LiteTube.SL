@@ -189,8 +189,7 @@ namespace LiteTube
             //Уберем кнопки навигации
             //ApplicationView.GetForCurrentView().SuppressSystemOverlays = true;
             //Спрячем статус бар
-            //var statusBar = StatusBar.GetForCurrentView();
-            //await statusBar.HideAsync();
+            SystemTray.IsVisible = false;
         }
 
         private async Task SetNormalState()
@@ -202,8 +201,7 @@ namespace LiteTube
             //Покажем кнопки навигации
             //ApplicationView.GetForCurrentView().SuppressSystemOverlays = false;
             //Покажем статус бар
-            //var statusBar = StatusBar.GetForCurrentView();
-            //await statusBar.ShowAsync();
+            SystemTray.IsVisible = true;
         }
 
         private async void PlayerIsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
