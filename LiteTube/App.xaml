@@ -12,6 +12,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Controls/LoadingListView.xaml"/>
+                <ResourceDictionary Source="Themes/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible"/>
@@ -19,9 +20,13 @@
             <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
             <converters:TimeSpanFormatConverter x:Key="TimeSpanFormatConverter" />
             <converters:UppercaseConverter x:Key="UppercaseConverter"/>
-            
-            <sys:Double x:Key="PanoramaItemHeaderFontSize">66</sys:Double>
+            <converters:CommentMarginConverter x:Key="CommentMarginConverter"/>
 
+            <sys:Double x:Key="PanoramaItemHeaderFontSize">56</sys:Double>
+            
+            <SolidColorBrush x:Key="NavigationPanelBrush" Color="#FF2B2B2B" />
+            <SolidColorBrush x:Key="NavigationPanelForegroundBrush" Color="#FFFFFFFF" />
+            
             <Style x:Key="PanoramaItemHeaderTextStyle" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
                 <Setter Property="FontSize" Value="{StaticResource PanoramaItemHeaderFontSize}"/>

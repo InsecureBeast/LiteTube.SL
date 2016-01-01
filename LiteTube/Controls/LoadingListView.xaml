@@ -151,23 +151,17 @@
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
-<!--
+
     <DataTemplate x:Key="CommentsLoadingListView" >
         <Grid x:Name="ContentRoot">
-            <controls:GenericListView ItemsSource="{Binding Comments}"
-                                      SelectionMode="{Binding SelectionMode}"
-                                      SelectedItems2="{Binding SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      IsSwipeEnabled="false"
-                                      ItemContainerStyle="{StaticResource CommentListViewItemStyle}"
-                                      IsItemClickEnabled="False">
-                <i:Interaction.Behaviors>
+            <ListBox ItemsSource="{Binding Comments}">
+                <!--<i:Interaction.Behaviors>
                     <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
                                                              LoadMoreCommand="{Binding LoadMoreCommand}"/>
-                </i:Interaction.Behaviors>
-                <ListView.ItemTemplate>
+                </i:Interaction.Behaviors>-->
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Width="{Binding ActualWidth, ElementName=ContentRoot}" 
-                              Margin="0,0,0,12">
+                        <Grid Margin="0,0,0,12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -184,43 +178,36 @@
                                         Margin="8,0,0,0">
 
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="{Binding AuthorDisplayName}"
-                                            Style="{StaticResource AccentTextBlockButtonStyle}"
-                                            Margin="0,-3,0,0"
-                                            Click="OnCommentButtonClick"/>
+                                    <HyperlinkButton Content="{Binding AuthorDisplayName}"
+                                                     Margin="0, -5,0,0"/>
                                     <TextBlock TextWrapping="NoWrap"
-                                               Style="{StaticResource CommentPublishedTextBlockStyle}"
-                                               Margin="10,0,0,0"
-                                               Text="{Binding PublishedAtRaw}"/>
+                                               Text="{Binding PublishedAtRaw}"
+                                               Margin="0,0,0,0"/>
                                 </StackPanel>
 
                                 <TextBlock Text="{Binding TextDisplay}" 
-                                           Style="{StaticResource CommentTextBlockStyle}" 
-                                           Margin="0,0,0,0"
-                                           TextWrapping="Wrap"/>
+                                           Style="{StaticResource PhoneTextNormalStyle}"
+                                           TextWrapping="Wrap"
+                                           Margin="10,0,0,0"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
 
-                </ListView.ItemTemplate>
-            </controls:GenericListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        x:Uid="Loading"
                        Text="Loading..."
-                       Style="{StaticResource SubheaderTextBlockStyle}"
-                       Foreground="{ThemeResource ContentForegroundBrush}"
                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        x:Uid="IsEmpty"
                        Text="Items not found"
-                       Style="{StaticResource SubheaderTextBlockStyle}"
-                       Foreground="{ThemeResource ContentForegroundBrush}"
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
-    -->
+    
 </ResourceDictionary>

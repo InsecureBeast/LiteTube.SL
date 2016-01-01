@@ -15,7 +15,7 @@ namespace LiteTube.ViewModels
         private readonly IDataSource _dataSource;
         //private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private RelatedVideosViewModel _relatedViewModel;
-        //private CommentsViewModel _commentsViewModel;
+        private CommentsViewModel _commentsViewModel;
         private string _channelImage;
         private ulong? _channelVideoCount;
         private ulong? _channelSubscribers;
@@ -303,10 +303,15 @@ namespace LiteTube.ViewModels
             }
         }
 
-        //public CommentsViewModel CommentsViewModel
-        //{
-        //    get { return _commentsViewModel; }
-        //}
+        public CommentsViewModel CommentsViewModel
+        {
+            get { return _commentsViewModel; }
+            set
+            {
+                _commentsViewModel = value;
+                NotifyOfPropertyChanged(() => CommentsViewModel);
+            }
+        }
 
         public IDataSource DataSource
         {
@@ -458,7 +463,7 @@ namespace LiteTube.ViewModels
                 PublishedAt = videoItem.PublishedAt.Value.ToString("D");
                 _channelId = videoItem.ChannelId;
                 RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource);
-                //_commentsViewModel = new CommentsViewModel(VideoId, _dataSource);
+                CommentsViewModel = new CommentsViewModel(VideoId, _dataSource);
 
                 SetLikesAndDislikes(videoItem.Details.Video);
                 SetChannelInfo(_channelId);

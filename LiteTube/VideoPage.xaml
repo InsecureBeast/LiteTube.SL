@@ -26,7 +26,7 @@
                      Margin="0,10,0,0">
             <phone:PivotItem Header="details"
                              x:Uid="Details">
-
+                
                 <ScrollViewer>
                     <Grid >
                         <Grid.RowDefinitions>
@@ -107,7 +107,6 @@
 
                             <Button BorderThickness="0"
                                     Margin="8"
-                                    
                                     Click="OnChannelButtonClick">
                                 <Image Source="{Binding ChannelImage}" 
                                        Stretch="UniformToFill" 
@@ -117,10 +116,9 @@
 
                             <StackPanel Grid.Column="1"
                                         Margin="0">
-                                <Button Content="{Binding ChannelTitle}"
-                                        
-                                        Click="OnChannelButtonClick"
-                                        MaxWidth="180"/>
+                                <HyperlinkButton Content="{Binding ChannelTitle}"
+                                                Click="OnChannelButtonClick"
+                                                MaxWidth="180"/>
                                 <TextBlock TextWrapping="NoWrap"
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            TextTrimming="WordEllipsis"
@@ -184,9 +182,21 @@
                     <TextBlock Text="related"
                                x:Uid="Related"/>
                 </phone:PivotItem.Header>
+                
                 <ContentPresenter Content="{Binding RelatedVideosViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
+
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock Text="comments"
+                               x:Uid="Comments"/>
+                </phone:PivotItem.Header>
+
+                <ContentPresenter Content="{Binding CommentsViewModel}"
+                                  ContentTemplate="{StaticResource CommentsLoadingListView}"/>
+            </phone:PivotItem>
+            
         </phone:Pivot>
         
         <Canvas x:Name="playerCanvas" 

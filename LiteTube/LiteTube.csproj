@@ -167,6 +167,8 @@
     <Compile Include="VideoPage.xaml.cs">
       <DependentUpon>VideoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
     <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
     <Compile Include="ViewModels\VideoPageViewModel.cs" />
@@ -196,6 +198,10 @@
       <SubType>Designer</SubType>
     </DesignData>
     <Page Include="Themes\generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -17,7 +17,7 @@
     </Style>
     
     <DataTemplate x:Key="ProfileSectionsDataTemplate">
-        <ListBox >
+        <ListBox toolkit:TiltEffect.IsTiltEnabled="True">
             <ListBoxItem common:ItemClickCommand.Command="{Binding RecommendedCommand}"
                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                          Margin="0,0,0,10">
