@@ -237,6 +237,16 @@ namespace LiteTube.ViewModels
 
         internal virtual void NavigateTo(NavigationObject navObject)
         {
+            if (navObject.ViewModel is VideoCategoryNodeViewModel)
+            {
+                var viewModel = (VideoCategoryNodeViewModel)navObject.ViewModel;
+                var categoryId = viewModel.CategoryId;
+                var title = viewModel.Title;
+                PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _dataSource);
+                App.NavigateTo("/SectionPage.xaml");
+                return;
+            }
+
             var id = navObject.ViewModel.VideoId;
             PhoneApplicationService.Current.State["model"] = new VideoPageViewModel(id, _dataSource);
             App.NavigateTo(string.Format("/VideoPage.xaml?videoId={0}", id));

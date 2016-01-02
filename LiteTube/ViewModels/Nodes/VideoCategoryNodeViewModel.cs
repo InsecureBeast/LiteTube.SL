@@ -1,8 +1,9 @@
-﻿using LiteTube.DataClasses;
+﻿using System;
+using LiteTube.DataClasses;
 
 namespace LiteTube.ViewModels.Nodes
 {
-    public class VideoCategoryNodeViewModel
+    public class VideoCategoryNodeViewModel : NodeViewModelBase
     {
         private readonly string _title;
         
@@ -33,6 +34,16 @@ namespace LiteTube.ViewModels.Nodes
         public string Image
         {
             get { return null; }
+        }
+
+        public override string Id
+        {
+            get { return CategoryId; }
+        }
+
+        public override string VideoId
+        {
+            get { return CategoryId; }
         }
     }
 }
