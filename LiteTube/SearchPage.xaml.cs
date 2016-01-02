@@ -60,5 +60,11 @@ namespace LiteTube
                 SearchBox.IsReadOnly = false;
             }
         }
+
+        private void Find_Click(object sender, EventArgs e)
+        {
+            SearchBox.Focus();
+            SearchBox.SelectAll();
+        }
     }
 }
