@@ -42,7 +42,11 @@ namespace LiteTube.ViewModels
             ShowProgressIndicator();
             var responseList = await GetItems(string.Empty);
             if (responseList == null)
+            {
+                IsEmpty = true;
+                IsLoading = false;
                 return;
+            }
             _pageToken = responseList.NextPageToken;
             LoadItems(responseList);
             HideProgressIndicator();

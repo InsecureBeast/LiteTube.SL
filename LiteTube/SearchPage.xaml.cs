@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -29,27 +25,22 @@ namespace LiteTube
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (DataContext != null)
+            {
+                _firstLoad = false;
+                return;
+            }
+
             var model = PhoneApplicationService.Current.State["searchModel"] as SearchPageViewModel;
             DataContext = model;
-            object obj;
-            if (PhoneApplicationService.Current.State.TryGetValue("search", out obj))
-            {
-                var view = obj as SearchPage;
-                SearchBox.Text = view.SearchBox.Text;
-                SearchList = view.SearchList;
-                if (model.Items.Count > 0)
-                    _firstLoad = false;
-            }
+            if (model.Items.Count > 0)
+                _firstLoad = false;
             
             PhoneApplicationService.Current.State["searchModel"] = null;
-            PhoneApplicationService.Current.State["search"] = null;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            PhoneApplicationService.Current.State["search"] = this;
-            PhoneApplicationService.Current.State["searchModel"] = DataContext;
-
         }
 
         private async void TextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)

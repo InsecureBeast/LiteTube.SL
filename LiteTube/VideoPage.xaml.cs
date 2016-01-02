@@ -48,6 +48,9 @@ namespace LiteTube
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (DataContext != null)
+                return;
+
             var model = PhoneApplicationService.Current.State["model"];
             DataContext = model;
             PhoneApplicationService.Current.State["model"] = null;

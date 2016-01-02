@@ -237,8 +237,9 @@ namespace LiteTube.ViewModels
 
         internal virtual void NavigateTo(NavigationObject navObject)
         {
-            PhoneApplicationService.Current.State["model"] = new VideoPageViewModel(navObject.ViewModel.VideoId, _dataSource);
-            App.RootFrame.Navigate(new System.Uri("/VideoPage.xaml", System.UriKind.Relative));
+            var id = navObject.ViewModel.VideoId;
+            PhoneApplicationService.Current.State["model"] = new VideoPageViewModel(id, _dataSource);
+            App.NavigateTo(string.Format("/VideoPage.xaml?videoId={0}", id));
         }
 
         protected void ShowProgressIndicator()

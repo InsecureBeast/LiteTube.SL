@@ -82,6 +82,15 @@ namespace LiteTube
 
         }
 
+        // prevents crash when trying to navigate to current page
+        public static void NavigateTo(string url)
+        {
+            var frame = App.Current.RootVisual as PhoneApplicationFrame;
+            if ((frame == null) || (url == frame.CurrentSource.ToString()))
+                return;
+            frame.Navigate(new Uri(url, UriKind.Relative));
+        }
+
         // Code to execute when a contract activation such as a file open or save picker returns 
         // with the picked file or other return values
         private void Application_ContractActivated(object sender, Windows.ApplicationModel.Activation.IActivatedEventArgs e)
@@ -117,7 +126,6 @@ namespace LiteTube
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
             PhoneApplicationService.Current.State["searchModel"] = null;
-            PhoneApplicationService.Current.State["search"] = null;
         }
 
         // Code to execute if a navigation fails
