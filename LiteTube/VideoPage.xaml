@@ -107,7 +107,8 @@
 
                             <Button BorderThickness="0"
                                     Margin="8"
-                                    Click="OnChannelButtonClick">
+                                    Command="{Binding NavigationPanelViewModel.ChannelCommand}"
+                                    CommandParameter="{Binding ChannelId}">
                                 <Image Source="{Binding ChannelImage}" 
                                        Stretch="UniformToFill" 
                                        Width="60"
@@ -117,7 +118,6 @@
                             <StackPanel Grid.Column="1"
                                         Margin="0">
                                 <HyperlinkButton Content="{Binding ChannelTitle}"
-                                                 Click="OnChannelButtonClick"
                                                  Command="{Binding NavigationPanelViewModel.ChannelCommand}"
                                                  CommandParameter="{Binding ChannelId}"
                                                  MaxWidth="180"/>

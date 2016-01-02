@@ -13,13 +13,13 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
         private IProfile _profile;
-        private IDataSource _datasource;
+        private IDataSource _dataSource;
         private ObservableCollection<CommentNodeViewModel> _comments;
 
         public CommentsViewModel(string videoId, IDataSource dataSource) : base(dataSource)
         {
             _videoId = videoId;
-            _datasource = dataSource;
+            _dataSource = dataSource;
             LoadProfile();
             _comments = new ObservableCollection<CommentNodeViewModel>();
         }
@@ -42,7 +42,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetComments(_videoId, nextPageToken);
+            return await base._dataSource.GetComments(_videoId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -58,11 +58,11 @@ namespace LiteTube.ViewModels
         {
             foreach (var item in items)
             {
-                _comments.Add(new CommentNodeViewModel(item));
-            //    foreach (var replayItem in item.ReplayComments.OrderBy(c => c.PublishedAt))
-            //    {
-            //        Comments.Add(replayItem);
-            //    }
+                _comments.Add(new CommentNodeViewModel(item, _dataSource));
+                foreach (var replayItem in item.ReplayComments.OrderBy(c => c.PublishedAt))
+                {
+                    _comments.Add(new CommentNodeViewModel(replayItem, _dataSource));
+                }
             }
 
             IsLoading = false;
@@ -74,7 +74,7 @@ namespace LiteTube.ViewModels
         {
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                _profile = await _datasource.GetProfile();
+                _profile = await _dataSource.GetProfile();
                 NotifyOfPropertyChanged(() => ProfileImage);
             });
         }

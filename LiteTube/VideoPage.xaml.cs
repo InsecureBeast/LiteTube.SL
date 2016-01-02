@@ -56,15 +56,6 @@ namespace LiteTube
             PhoneApplicationService.Current.State["model"] = null;
         }
 
-        private void OnChannelButtonClick(object sender, RoutedEventArgs e)
-        {
-            //var viewModel = DataContext as VideoPageViewModel;
-            //if (viewModel == null)
-            //    return;
-
-            //Frame.Navigate(typeof(ChannelPage), new ChannelPageViewModel(viewModel.Channel, viewModel.DataSource));
-        }
-
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var minSize = ActualHeight > ActualWidth ? ActualHeight : ActualWidth;
