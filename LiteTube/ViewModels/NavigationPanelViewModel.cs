@@ -19,6 +19,7 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<Page> _historyCommand;
         private readonly RelayCommand<object> _searchCommand;
         private readonly RelayCommand<Page> _recommendedCommand;
+        private readonly RelayCommand<string> _channelCommand;
         private bool _isHomeSelected = false;
         private bool _isMenuSelected = false;
         private bool _isSettingsSelected = false;
@@ -41,6 +42,7 @@ namespace LiteTube.ViewModels
             _historyCommand = new RelayCommand<Page>(GetHistory);
             _searchCommand = new RelayCommand<object>(Search);
             _recommendedCommand = new RelayCommand<Page>(Recommended);
+            _channelCommand = new RelayCommand<string>(LoadChannel);
 
             datasource.ContextUpdated += OnContextUpdated;
         }
@@ -83,6 +85,11 @@ namespace LiteTube.ViewModels
         public ICommand RecommendedCommand
         {
             get { return _recommendedCommand; }
+        }
+
+        public ICommand ChannelCommand
+        {
+            get { return _channelCommand; }
         }
 
         public IDataSource DataSource
@@ -250,8 +257,8 @@ namespace LiteTube.ViewModels
 
         private void Search(object page)
         {
-            PhoneApplicationService.Current.State["searchModel"] = new SearchPageViewModel(_datasource);
-            App.RootFrame.Navigate(new Uri("/SearchPage.xaml", UriKind.Relative));
+            PhoneApplicationService.Current.State["model"] = new SearchPageViewModel(_datasource);
+            App.NavigateTo("/SearchPage.xaml");
         }
 
         private void OnContextUpdated(object sender, EventArgs e)
@@ -265,6 +272,12 @@ namespace LiteTube.ViewModels
                 return;
 
             //_page.Frame.Navigate(typeof(PivotPage), new PivotPageViewModel(0, _datasource));
+        }
+
+        private void LoadChannel(string channelId)
+        {
+            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _datasource);
+            App.NavigateTo("/ChannelPage.xaml");
         }
 
         private void LoadProfileInfo()

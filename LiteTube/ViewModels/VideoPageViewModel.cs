@@ -13,7 +13,7 @@ namespace LiteTube.ViewModels
         private Uri _videoUri;
         private IChannel _channel;
         private readonly IDataSource _dataSource;
-        //private readonly NavigationPanelViewModel _navigatioPanelViewModel;
+        private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private RelatedVideosViewModel _relatedViewModel;
         private CommentsViewModel _commentsViewModel;
         private string _channelImage;
@@ -58,7 +58,7 @@ namespace LiteTube.ViewModels
             _dislikeCommand = new RelayCommand(Dislike, CanLike);
             _addFavoritesCommand = new RelayCommand(AddFavorites);
 
-            //_navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
 
             LoadVideoItem(videoId);
         }
@@ -188,10 +188,10 @@ namespace LiteTube.ViewModels
             }
         }
 
-        //public NavigationPanelViewModel NavigationPanelViewModel
-        //{
-        //    get { return _navigatioPanelViewModel; }
-        //}
+        public NavigationPanelViewModel NavigationPanelViewModel
+        {
+            get { return _navigatioPanelViewModel; }
+        }
 
         public Uri VideoUri 
         {
@@ -318,9 +318,14 @@ namespace LiteTube.ViewModels
             get { return _dataSource; }
         }
 
-        public IChannel Channel
+        public string ChannelId
         {
-            get { return _channel; }
+            get { return _channelId; }
+            set
+            {
+                _channelId = value;
+                NotifyOfPropertyChanged(() => ChannelId);
+            }
         }
 
         public bool IsSubscribed
@@ -461,7 +466,7 @@ namespace LiteTube.ViewModels
                 Duration = videoItem.Details.Duration;
                 ViewCount = videoItem.Details.Video.Statistics.ViewCount;
                 PublishedAt = videoItem.PublishedAt.Value.ToString("D");
-                _channelId = videoItem.ChannelId;
+                ChannelId = videoItem.ChannelId;
                 RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource);
                 CommentsViewModel = new CommentsViewModel(VideoId, _dataSource);
 

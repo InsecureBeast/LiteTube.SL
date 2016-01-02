@@ -117,8 +117,10 @@
                             <StackPanel Grid.Column="1"
                                         Margin="0">
                                 <HyperlinkButton Content="{Binding ChannelTitle}"
-                                                Click="OnChannelButtonClick"
-                                                MaxWidth="180"/>
+                                                 Click="OnChannelButtonClick"
+                                                 Command="{Binding NavigationPanelViewModel.ChannelCommand}"
+                                                 CommandParameter="{Binding ChannelId}"
+                                                 MaxWidth="180"/>
                                 <TextBlock TextWrapping="NoWrap"
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            TextTrimming="WordEllipsis"

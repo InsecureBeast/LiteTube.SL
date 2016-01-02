@@ -125,7 +125,7 @@ namespace LiteTube
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
-            PhoneApplicationService.Current.State["searchModel"] = null;
+            PhoneApplicationService.Current.State["model"] = null;
         }
 
         // Code to execute if a navigation fails

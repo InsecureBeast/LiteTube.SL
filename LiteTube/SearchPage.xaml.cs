@@ -31,12 +31,12 @@ namespace LiteTube
                 return;
             }
 
-            var model = PhoneApplicationService.Current.State["searchModel"] as SearchPageViewModel;
+            var model = PhoneApplicationService.Current.State["model"] as SearchPageViewModel;
             DataContext = model;
             if (model.Items.Count > 0)
                 _firstLoad = false;
             
-            PhoneApplicationService.Current.State["searchModel"] = null;
+            PhoneApplicationService.Current.State["model"] = null;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
