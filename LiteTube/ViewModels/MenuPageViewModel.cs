@@ -1,0 +1,263 @@
+﻿using LiteTube.DataModel;
+using LiteTube.Controls;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
+using LiteTube.Common;
+using System.Windows.Input;
+using System;
+using System.Linq;
+using System.Collections.Specialized;
+using Microsoft.Phone.Shell;
+using MyToolkit.Command;
+using LiteTube.ViewModels.Nodes;
+
+namespace LiteTube.ViewModels
+{
+    class MenuPageViewModel : PropertyChangedBase
+    {
+        private IDataSource _dataSource;
+        //private readonly RecommendedSectionViewModel _recommendedSectionViewModel;
+        private readonly NavigationPanelViewModel _navigatioPanelViewModel;
+        //private readonly SubscriptionChannelsViewModel _subscriptions;
+        //private readonly HistoryPageViewModel _history;
+        //private readonly FavoritesViewModel _favoritesViewModel;
+        private readonly ObservableCollection<GuideCategoryNodeViewModel> _categories;
+
+        private readonly Common.RelayCommand _selectCommand;
+        private readonly Common.RelayCommand _deleteCommand;
+        private readonly RelayCommand<NavigationObject> _categoryCommand;
+
+        private int _selectedIndex;
+        //private PreventNavigationHelper _navigationHelper;
+
+        public MenuPageViewModel(int index, IDataSource dataSource)
+        {
+            _dataSource = dataSource;
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
+            //_recommendedSectionViewModel = new RecommendedSectionViewModel(dataSource);
+            //_subscriptions = new SubscriptionChannelsViewModel(dataSource);
+            //_history = new HistoryPageViewModel(dataSource);
+            //_favoritesViewModel = new FavoritesViewModel(dataSource);
+            //_favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
+            _categories = new ObservableCollection<GuideCategoryNodeViewModel>();
+
+            _selectCommand = new Common.RelayCommand(SelectItems);
+            _deleteCommand = new Common.RelayCommand(DeleteItems, CanDelete);
+            _categoryCommand = new RelayCommand<NavigationObject>(CategoryLoad);
+
+            SelectedIndex = index;
+        }
+
+        public ObservableCollection<GuideCategoryNodeViewModel> Categories
+        {
+            get { return _categories; }
+        }
+
+        public NavigationPanelViewModel NavigationPanelViewModel
+        {
+            get { return _navigatioPanelViewModel; }
+        }
+
+        //public RecommendedSectionViewModel RecommendedSectionViewModel
+        //{
+        //    get { return _recommendedSectionViewModel; }
+        //}
+
+        //public SubscriptionChannelsViewModel SubscriptionChannelsViewModel
+        //{
+        //    get { return _subscriptions; }
+        //}
+
+        //public HistoryPageViewModel HistoryPageViewModel
+        //{
+        //    get { return _history; }
+        //}
+
+        //public FavoritesViewModel FavoritesViewModel
+        //{
+        //    get { return _favoritesViewModel; }
+        //}
+
+        public ICommand SelectCommand
+        {
+            get { return _selectCommand; }
+        }
+
+        public ICommand DeleteCommand
+        {
+            get { return _deleteCommand; }
+        }
+
+        public ICommand CategoryCommand
+        {
+            get { return _categoryCommand; }
+        }
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+            set
+            {
+                _selectedIndex = value;
+                OnSelectedIndexChanged(_selectedIndex);
+                NotifyOfPropertyChanged(() => SelectedIndex);
+            }
+        }
+
+        public bool IsAuthorized
+        {
+            get { return _dataSource.IsAuthorized; }
+        }
+
+        public IDataSource DataSource
+        {
+            get { return _dataSource; }
+        }
+
+        //public bool IsFavoritesSelectedVisible
+        //{
+        //    get { return _favoritesViewModel.IsItemClickEnabled && _selectedIndex == 2; }
+        //}
+
+        //public void SetNavigationHelper(PreventNavigationHelper helper)
+        //{
+        //    _navigationHelper = helper;
+        //}
+
+        private void OnSelectedIndexChanged(int index)
+        {
+            //_favoritesViewModel.SetNonSelected();
+
+            if (IsAuthorized)
+            {
+                SetAuthorizedSelection(index);
+                return;
+            }
+
+            SetSelection(index);
+        }
+
+        private void SetAuthorizedSelection(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    Debug.WriteLine("recommended");
+                    //if (RecommendedSectionViewModel.Items.Count > 0)
+                    //    return;
+
+                    //RecommendedSectionViewModel.FirstLoad();
+                    break;
+
+                case 1:
+                    Debug.WriteLine("subscriptions");
+                    break;
+
+                case 2:
+                    Debug.WriteLine("favorites");
+                    break;
+
+                case 3:
+                    Debug.WriteLine("history");
+                    break;
+
+                case 4:
+                    Debug.WriteLine("Video categories");
+                    LoadCategories();
+                    break;
+
+            }
+
+            //NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+        }
+
+        private void SetSelection(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    Debug.WriteLine("Video categories");
+                    LoadCategories();
+                    break;
+                //case 1:
+                //    Debug.WriteLine("subscriptions");
+                //    break;
+
+                //case 2:
+                //    Debug.WriteLine("history");
+                //    break;
+                //case 3:
+                //    break;
+            }
+        }
+
+        private void LoadCategories()
+        {
+            if (_categories.Count > 0)
+                return;
+
+            LayoutHelper.InvokeFromUIThread(async () =>
+            {
+                var sections = await _dataSource.GetGuideCategories();
+                _categories.Clear();
+                foreach (var section in sections)
+                {
+                    _categories.Add(new GuideCategoryNodeViewModel(section));
+                }
+            });
+        }
+
+        private async void DeleteItems()
+        {
+            //_favoritesViewModel.SetNonSelected();
+            //NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+            //_navigationHelper.IsCanGoBack = true;
+            //var items = _favoritesViewModel.SelectedItems;
+            //foreach (var item in items)
+            //{
+            //    await _dataSource.RemoveFromFavorites(item.Id);
+            //    _favoritesViewModel.Items.Remove(item);
+            //}
+        }
+
+        private bool CanDelete()
+        {
+            return false;
+            //return _favoritesViewModel.SelectedItems.Any();
+        }
+
+        private void SelectItems()
+        {
+            //_favoritesViewModel.SetSelected();
+            //NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+            //_navigationHelper.IsCanGoBack = false;
+            //HardwareButtons.BackPressed += OnBackPressed;
+        }
+
+        //private void OnBackPressed(object sender, BackPressedEventArgs e)
+        //{
+        //    if (!_favoritesViewModel.IsItemClickEnabled)
+        //    {
+        //        _favoritesViewModel.SetNonSelected();
+        //        NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+        //        e.Handled = true;
+        //        HardwareButtons.BackPressed -= OnBackPressed;
+        //        _navigationHelper.IsCanGoBack = true;
+        //    }
+        //}
+
+        private void SelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            _deleteCommand.RaiseCanExecuteChanged();
+        }
+
+        private void CategoryLoad(NavigationObject navObject)
+        {
+            var viewModel = (GuideCategoryNodeViewModel)navObject.ViewModel;
+            var id = viewModel.CategoryId;
+            var title = viewModel.Title;
+            PhoneApplicationService.Current.State["model"] = new ChannelListPageViewModel(id, title, _dataSource);
+            App.NavigateTo(string.Format("/ChannelListPage.xaml?categoriId={0}", id));
+        }
+    }
+}

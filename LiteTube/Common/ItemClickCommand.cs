@@ -37,14 +37,14 @@ namespace LiteTube.Common
 
         private static void OnCommandPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as LongListMultiSelector;
+            var control = d as Control;
             if (control != null)
                 control.Tap += OnItemTap;
         }
 
         private static void OnItemTap(object sender, GestureEventArgs e)
         {
-            var control = sender as LongListMultiSelector;
+            var control = sender as Control;
             var command = GetCommand(control);
             //var selected = GetCommandParameter(control);
 
@@ -56,7 +56,10 @@ namespace LiteTube.Common
 
                 var viewModel = source.DataContext as NodeViewModelBase;
                 if (viewModel == null)
+                {
+                    command.Execute(null);
                     return;
+                }
 
                 var page = VisualHelper.FindParent<Page>(control);
                 var navObj = new NavigationObject(viewModel, page);

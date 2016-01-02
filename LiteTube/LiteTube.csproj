@@ -95,6 +95,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BugTreckerReporter.cs" />
+    <Compile Include="ChannelListPage.xaml.cs">
+      <DependentUpon>ChannelListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChannelPage.xaml.cs">
       <DependentUpon>ChannelPage.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -178,9 +184,13 @@
       <DependentUpon>VideoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ChannelPageViewModel.cs" />
+    <Compile Include="ViewModels\ChannelsPageViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\ChannelNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
+    <Compile Include="ViewModels\MenuPageViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\GuideCategoryNodeViewModel.cs" />
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
     <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
     <Compile Include="ViewModels\SearchPageViewModel.cs" />
@@ -199,6 +209,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="ChannelListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ChannelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
+    <Page Include="MenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -335,6 +353,7 @@
       <HintPath>packages\Google.Apis.YouTube.v3.1.9.0.1360\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.YouTube.v3.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <HintPath>packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
       <Private>True</Private>

@@ -3,6 +3,7 @@ using MyToolkit.Command;
 using System.Windows.Input;
 using System;
 using System.Windows;
+using Microsoft.Phone.Shell;
 
 namespace LiteTube.ViewModels
 {
@@ -59,48 +60,35 @@ namespace LiteTube.ViewModels
 
         private void Recommended(FrameworkElement control)
         {
-            //var page = VisualHelper.FindParent<Page>(control);
-            //if (page == null)
-            //    return;
-
-            //page.Frame.Navigate(typeof(PivotPage), new PivotPageViewModel(0, _datasource));
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(0, _datasource);
+            App.NavigateTo("/MenuPage.xaml?item=0");
         }
 
         private void Subscriptions(FrameworkElement control)
         {
-            //var page = VisualHelper.FindParent<Page>(control);
-            //if (page == null)
-            //    return;
-
-            //page.Frame.Navigate(typeof(PivotPage), new PivotPageViewModel(1, _datasource));
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(1, _datasource);
+            App.NavigateTo("/MenuPage.xaml?item=1");
         }
 
         private void GetHistory(FrameworkElement control)
         {
-            //var page = VisualHelper.FindParent<Page>(control);
-            //if (page == null)
-            //    return;
-
-            //page.Frame.Navigate(typeof(PivotPage), new PivotPageViewModel(3, _datasource));
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(3, _datasource);
+            App.NavigateTo("/MenuPage.xaml?item=3");
         }
 
         private void VideoCategories(FrameworkElement control)
         {
-            //var page = VisualHelper.FindParent<Page>(control);
-            //if (page == null)
-            //    return;
-
-            //var index = IsAuthorized ? 4 : 0;
-            //page.Frame.Navigate(typeof(PivotPage), new PivotPageViewModel(index, _datasource));
+            var index = IsAuthorized ? 4 : 0;
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _datasource);
+            App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
         }
 
         private void Favorites(FrameworkElement control)
         {
-            //var page = VisualHelper.FindParent<Page>(control);
-            //if (page == null)
-            //    return;
+            var index = 2;
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _datasource);
+            App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
             ////var index = IsAuthorized ? 2 : 0; //TODO favorites saved on device!!
-            //page.Frame.Navigate(typeof(PivotPage), new PivotPageViewModel(2, _datasource));
         }
 
         private void OnContextUpdated(object sender, EventArgs e)

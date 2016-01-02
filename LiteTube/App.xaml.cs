@@ -146,6 +146,8 @@ namespace LiteTube
                 // An unhandled exception has occurred; break into the debugger
                 Debugger.Break();
             }
+
+            e.Handled = true;
         }
 
         #region Phone application initialization

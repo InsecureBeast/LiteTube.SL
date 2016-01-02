@@ -70,9 +70,9 @@
             </phone:PanoramaItem>
 
             <phone:PanoramaItem Header="Main menu"
-                                x:Uid="MenuSection"
-                                DataContext="{Binding ProfileSectionViewModel}"
-                                ContentTemplate="{StaticResource ProfileSectionsDataTemplate}">
+                                x:Uid="MenuSection">
+                <ContentPresenter Content="{Binding ProfileSectionViewModel}"
+                                  ContentTemplate="{StaticResource ProfileSectionsDataTemplate}"/>
             </phone:PanoramaItem>
 
             <phone:PanoramaItem Header="Video categories">

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using LiteTube.DataModel;
 using LiteTube.Resources;
 using LiteTube.ViewModels.Nodes;
+using LiteTube.Common;
+using Microsoft.Phone.Shell;
 
 namespace LiteTube.ViewModels
 {
@@ -83,6 +85,15 @@ namespace LiteTube.ViewModels
             {
                 _categoryItems.Add(new VideoCategoryNodeViewModel(section));
             }
+        }
+
+        internal override void NavigateTo(NavigationObject navObject)
+        {
+            var viewModel = (VideoCategoryNodeViewModel)navObject.ViewModel;
+            var categoryId = viewModel.CategoryId;
+            var title = viewModel.Title;
+            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _dataSource);
+            App.NavigateTo("/SectionPage.xaml");
         }
     }
 }
