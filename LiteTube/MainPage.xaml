@@ -67,9 +67,9 @@
 
             <!--Panorama item one-->
             <phone:PanoramaItem Header="Activity"
-                                Visibility="Collapsed">
+                                Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!--Single line list with text wrapping-->
-                <ContentPresenter Content="{Binding MostPopularViewModel}"
+                <ContentPresenter Content="{Binding ActivitySectionViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PanoramaItem>
 

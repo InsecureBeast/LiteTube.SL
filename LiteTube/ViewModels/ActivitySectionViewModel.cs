@@ -1,0 +1,43 @@
+﻿using LiteTube.DataClasses;
+using LiteTube.DataModel;
+using System;
+using System.Threading.Tasks;
+
+namespace LiteTube.ViewModels
+{
+    public class ActivitySectionViewModel : SectionBaseViewModel
+    {
+        private bool _canLoad = false;
+
+        public ActivitySectionViewModel(IVideoList activity, IDataSource dataSource) : base(dataSource)
+        {
+            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
+            //var arstring = resourceLoader.GetString("RecommendedSectionHeader");
+            //Title = arstring;
+            Title = "Activity"; //TODO Localize
+        }
+
+        public ActivitySectionViewModel(IDataSource dataSource) : base(dataSource)
+        {
+            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
+            //var arstring = resourceLoader.GetString("RecommendedSectionHeader");
+            //Title = arstring;
+            Title = "Activity"; //TODO Localize
+        }
+
+        public override string ToString()
+        {
+            return Title;
+        }
+
+        internal override async Task<IResponceList> GetItems(string nextPageToken)
+        {
+            if (_canLoad) 
+                return await _dataSource.GetActivity(nextPageToken);
+            
+            _canLoad = true;
+            return null;
+        }
+    }
+}
+

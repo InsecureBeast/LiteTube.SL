@@ -18,6 +18,7 @@ namespace LiteTube.ViewModels
         private readonly MostPopularViewModel _mostPopularViewModel;
         private readonly ObservableCollection<VideoCategoryNodeViewModel> _categoryItems;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
+        private readonly ActivitySectionViewModel _activitySectionViewModel;
 
 
         public MainViewModel(IDataSource dataSource) : base(dataSource)
@@ -29,6 +30,7 @@ namespace LiteTube.ViewModels
             _mostPopularViewModel = new MostPopularViewModel(dataSource);
             _profileSectionViewModel = new ProfileSectionViewModel(dataSource);
             _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
+            _activitySectionViewModel = new ActivitySectionViewModel(dataSource);
 
             _dataSource.Subscribe((IListener<UpdateSettingsEventArgs>)this);
             _dataSource.Subscribe((IListener<UpdateContextEventArgs>)this);
@@ -66,6 +68,11 @@ namespace LiteTube.ViewModels
             get { return _profileSectionViewModel; }
         }
 
+        public ActivitySectionViewModel ActivitySectionViewModel
+        {
+            get { return _activitySectionViewModel; }
+        }
+
         public bool IsAuthorized
         {
             get { return !string.IsNullOrEmpty(SettingsHelper.GetUserId()); }
@@ -81,6 +88,8 @@ namespace LiteTube.ViewModels
             
             await _mostPopularViewModel.FirstLoad();
             await LoadGuideCategories();
+            if (_dataSource.IsAuthorized)
+                await _activitySectionViewModel.FirstLoad();
 
             IsDataLoaded = true;
             IsLoading = false;
@@ -124,12 +133,12 @@ namespace LiteTube.ViewModels
             App.NavigateTo("/SectionPage.xaml");
         }
 
-        public void Notify(UpdateContextEventArgs e)
+        public async void Notify(UpdateContextEventArgs e)
         {
             if (_dataSource.IsAuthorized)
             {
-                //ActivitySectionViewModel.Items.Clear();
-                //ActivitySectionViewModel.FirstLoad();
+                ActivitySectionViewModel.Items.Clear();
+                await ActivitySectionViewModel.FirstLoad();
             }
 
             NotifyOfPropertyChanged(() => IsAuthorized);

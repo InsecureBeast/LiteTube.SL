@@ -193,6 +193,7 @@
     <Compile Include="VideoPage.xaml.cs">
       <DependentUpon>VideoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ActivitySectionViewModel.cs" />
     <Compile Include="ViewModels\ChannelPageViewModel.cs" />
     <Compile Include="ViewModels\ChannelsPageViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
