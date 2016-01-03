@@ -20,11 +20,15 @@ namespace LiteTube
         {
             InitializeComponent();
             Loaded += MenuPage_Loaded;
+            Pivot.SelectionChanged += Pivot_SelectionChanged;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
+
+            if (e.NavigationMode == NavigationMode.Back)
+                return;
 
             string index = string.Empty;
             if (NavigationContext.QueryString.TryGetValue("item", out index))
@@ -48,6 +52,11 @@ namespace LiteTube
             }
 
             Pivot.SelectedIndex = _selectedIndex;
+        }
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _selectedIndex = Pivot.SelectedIndex;
         }
     }
 }
