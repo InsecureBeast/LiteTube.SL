@@ -101,27 +101,28 @@
     <Compile Include="ChannelPage.xaml.cs">
       <DependentUpon>ChannelPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\ControlExtensions.cs" />
+    <Compile Include="Common\Extensions\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />
-    <Compile Include="Common\DurationConverter.cs" />
-    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\Helpers\NavigationHelper.cs" />
+    <Compile Include="Converters\DurationConverter.cs" />
+    <Compile Include="Common\Extensions\Extensions.cs" />
     <Compile Include="Common\I18nLanguages.cs" />
     <Compile Include="Common\IDialogService.cs" />
     <Compile Include="Common\AppBarClickCommand.cs" />
     <Compile Include="Common\ItemClickCommand.cs" />
-    <Compile Include="Common\ItemsControlExtensions.cs" />
-    <Compile Include="Common\LayoutHelper.cs" />
+    <Compile Include="Common\Extensions\ItemsControlExtensions.cs" />
+    <Compile Include="Common\Helpers\LayoutHelper.cs" />
     <Compile Include="Common\MediaPlayerVisualStates.cs" />
     <Compile Include="Common\NavigationObject.cs" />
     <Compile Include="Common\Notifier\Notifier.cs" />
     <Compile Include="Common\Notifier\UpdateSettingsEventArgs.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
-    <Compile Include="Common\PropertyExtensions.cs" />
+    <Compile Include="Common\Extensions\PropertyExtensions.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="Common\SettingsHelper.cs" />
+    <Compile Include="Common\Helpers\SettingsHelper.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\VideoQuality.cs" />
-    <Compile Include="Common\VisualHelper.cs" />
+    <Compile Include="Common\Helpers\VisualHelper.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="Controls\GenericListView.cs" />

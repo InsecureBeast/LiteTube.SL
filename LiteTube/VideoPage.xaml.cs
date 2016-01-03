@@ -14,6 +14,7 @@ using System.Diagnostics;
 using LiteTube.Common;
 using Windows.Graphics.Display;
 using System.Threading.Tasks;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube
 {
@@ -232,6 +233,11 @@ namespace LiteTube
         {
             Orientation = PageOrientation.Portrait;
             await SetNormalState();
+        }
+
+        private void Home_Click(object sender, EventArgs e)
+        {
+            NavigationHelper.GoHome();
         }
     }
 }

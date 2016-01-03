@@ -32,11 +32,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            if (_canLoad) 
-                return await _dataSource.GetActivity(nextPageToken);
-            
-            _canLoad = true;
-            return null;
+            return await _dataSource.GetActivity(nextPageToken);
         }
     }
 }

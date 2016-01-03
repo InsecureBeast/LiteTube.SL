@@ -1,24 +1,20 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using LiteTube.Common;
 using LiteTube.DataModel;
-using System.Windows.Controls;
 using MyToolkit.Command;
 using Microsoft.Phone.Shell;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
     public class NavigationPanelViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>
     {
         private readonly IDataSource _datasource;
-        private readonly RelayCommand<Page> _loginCommand;
-        private readonly RelayCommand<Page> _logoutCommand;
-        private readonly RelayCommand<Page> _homeCommand;
+        private readonly Common.RelayCommand _loginCommand;
+        private readonly Common.RelayCommand _logoutCommand;
+        private readonly Common.RelayCommand _homeCommand;
         private readonly Common.RelayCommand _settingsCommand;
-        private readonly Common.RelayCommand _subscriptionsCommand;
-        private readonly RelayCommand<Page> _historyCommand;
         private readonly RelayCommand<object> _searchCommand;
-        private readonly RelayCommand<Page> _recommendedCommand;
         private readonly RelayCommand<string> _channelCommand;
         private bool _isHomeSelected = false;
         private bool _isMenuSelected = false;
@@ -34,14 +30,11 @@ namespace LiteTube.ViewModels
         public NavigationPanelViewModel(IDataSource datasource)
         {
             _datasource = datasource;
-            _loginCommand = new RelayCommand<Page>(Login);
-            _logoutCommand = new RelayCommand<Page>(Logout);
-            _homeCommand = new RelayCommand<Page>(Home);
+            _loginCommand = new Common.RelayCommand(Login);
+            _logoutCommand = new Common.RelayCommand(Logout);
+            _homeCommand = new Common.RelayCommand(Home);
             _settingsCommand = new Common.RelayCommand(Settings, CanSettings);
-            _subscriptionsCommand = new Common.RelayCommand(Subscriptions);
-            _historyCommand = new RelayCommand<Page>(GetHistory);
             _searchCommand = new RelayCommand<object>(Search);
-            _recommendedCommand = new RelayCommand<Page>(Recommended);
             _channelCommand = new RelayCommand<string>(LoadChannel);
 
             _datasource.Subscribe(this);
@@ -67,24 +60,9 @@ namespace LiteTube.ViewModels
             get { return _settingsCommand; }
         }
 
-        public ICommand SubsribtionsCommand
-        {
-            get { return _subscriptionsCommand; }
-        }
-
-        public ICommand HistoryCommand
-        {
-            get { return _historyCommand; }
-        }
-
         public ICommand SearchCommand
         {
             get { return _searchCommand; }
-        }
-
-        public ICommand RecommendedCommand
-        {
-            get { return _recommendedCommand; }
         }
 
         public ICommand ChannelCommand
@@ -206,27 +184,24 @@ namespace LiteTube.ViewModels
             }
         }
 
-        private void Login(Page page)
+        private void Login()
         {
             _datasource.Login();
-            Home(page);
+            Home();
         }
 
-        private void Logout(Page page)
+        private void Logout()
         {
             LayoutHelper.InvokeFromUIThread(async () =>
             {
                 await _datasource.Logout();
-                Home(page);
+                Home();
             });
         }
 
-        private void Home(Page page)
+        private void Home()
         {
-            if (page == null)
-                return;
-
-            //_page.Frame.Navigate(typeof(HubPage), new HubPageViewModel(_datasource));
+            NavigationHelper.GoHome();
         }
 
         private void Settings()
@@ -240,31 +215,10 @@ namespace LiteTube.ViewModels
             return !_isSettingsSelected;
         }
 
-        private void Subscriptions()
-        {
-            //_page.Frame.Navigate(typeof(HubPage), new SubscribtionsPageViewModel(_datasource));
-        }
-
-        private void GetHistory(Page page)
-        {
-            if (page == null)
-                return;
-
-            //_page.Frame.Navigate(typeof(SectionPage), new HistoryPageViewModel(_datasource));
-        }
-
         private void Search(object page)
         {
             PhoneApplicationService.Current.State["model"] = new SearchPageViewModel(_datasource);
             App.NavigateTo("/SearchPage.xaml");
-        }
-
-        private void Recommended(Page page)
-        {
-            if (page == null)
-                return;
-
-            //_page.Frame.Navigate(typeof(PivotPage), new PivotPageViewModel(0, _datasource));
         }
 
         private void LoadChannel(string channelId)

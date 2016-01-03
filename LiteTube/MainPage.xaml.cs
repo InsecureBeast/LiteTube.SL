@@ -6,11 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using Windows.ApplicationModel.Activation;
-using Windows.Security.Authentication.Web;
-using LiteTube.ViewModels;
 using System.Windows.Threading;
+using LiteTube.Common;
 
 namespace LiteTube
 {
@@ -25,15 +22,6 @@ namespace LiteTube
 
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
-
-            Loaded += MainPage_Loaded;
-        }
-
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            _timer.Interval = new TimeSpan(0, 0, 0);
-            _timer.Tick += timer_Tick;
-            _timer.Start();
         }
 
         // Load data for the ViewModel Items
@@ -42,13 +30,13 @@ namespace LiteTube
             if (!App.ViewModel.IsDataLoaded)
             {
                 await App.ViewModel.LoadData();
-            }
-        }
 
-        private async void timer_Tick(object sender, object e)
-        {
-            _timer.Stop();
-            await App.ViewModel.DataSource.LoginSilently(string.Empty);
+                var userId = SettingsHelper.GetRefreshToken();
+                if (string.IsNullOrEmpty(userId))
+                    return;
+
+                await App.ViewModel.DataSource.LoginSilently(string.Empty);
+            }
         }
     }
 }

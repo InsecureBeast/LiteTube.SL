@@ -14,26 +14,23 @@ namespace LiteTube.ViewModels
 {
     public class MainViewModel : SectionBaseViewModel, IListener<UpdateContextEventArgs>, IListener<UpdateSettingsEventArgs>
     {
-        private readonly IDataSource _dataSource;
         private readonly MostPopularViewModel _mostPopularViewModel;
         private readonly ObservableCollection<VideoCategoryNodeViewModel> _categoryItems;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
         private readonly ActivitySectionViewModel _activitySectionViewModel;
-
 
         public MainViewModel(IDataSource dataSource) : base(dataSource)
         {
             if (dataSource == null) 
                 throw new ArgumentNullException("dataSource");
             
-            _dataSource = dataSource;
             _mostPopularViewModel = new MostPopularViewModel(dataSource);
             _profileSectionViewModel = new ProfileSectionViewModel(dataSource);
             _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
             _activitySectionViewModel = new ActivitySectionViewModel(dataSource);
 
-            _dataSource.Subscribe((IListener<UpdateSettingsEventArgs>)this);
-            _dataSource.Subscribe((IListener<UpdateContextEventArgs>)this);
+            dataSource.Subscribe((IListener<UpdateSettingsEventArgs>)this);
+            dataSource.Subscribe((IListener<UpdateContextEventArgs>)this);
         }
 
         /// <summary>
