@@ -147,7 +147,7 @@ namespace LiteTube
                 Debugger.Break();
             }
 
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         #region Phone application initialization

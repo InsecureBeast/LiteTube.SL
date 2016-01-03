@@ -16,8 +16,8 @@ namespace LiteTube
             _deviceHistory = new DeviceHistory();
             _youTubeService = new YouTubeServiceControl();
             _remoteDataSource = new RemoteDataSource(_youTubeService);
-            var region = "ru";// SettingsHelper.GetRegion();
-            var quality = "720p";// SettingsHelper.GetQuality();
+            var region = SettingsHelper.GetRegion();
+            var quality = SettingsHelper.GetQuality();
             const int maxPageResult = 30;
             var remoteExceptionWrapper = new DataSourceExceptionWrapper(_remoteDataSource);
             _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, _deviceHistory, quality);

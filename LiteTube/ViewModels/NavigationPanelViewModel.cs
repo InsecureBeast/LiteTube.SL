@@ -14,7 +14,7 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<Page> _loginCommand;
         private readonly RelayCommand<Page> _logoutCommand;
         private readonly RelayCommand<Page> _homeCommand;
-        private readonly RelayCommand<Page> _settingsCommand;
+        private readonly Common.RelayCommand _settingsCommand;
         private readonly Common.RelayCommand _subscriptionsCommand;
         private readonly RelayCommand<Page> _historyCommand;
         private readonly RelayCommand<object> _searchCommand;
@@ -37,7 +37,7 @@ namespace LiteTube.ViewModels
             _loginCommand = new RelayCommand<Page>(Login);
             _logoutCommand = new RelayCommand<Page>(Logout);
             _homeCommand = new RelayCommand<Page>(Home);
-            _settingsCommand = new RelayCommand<Page>(Settings, CanSettings);
+            _settingsCommand = new Common.RelayCommand(Settings, CanSettings);
             _subscriptionsCommand = new Common.RelayCommand(Subscriptions);
             _historyCommand = new RelayCommand<Page>(GetHistory);
             _searchCommand = new RelayCommand<object>(Search);
@@ -229,15 +229,13 @@ namespace LiteTube.ViewModels
             //_page.Frame.Navigate(typeof(HubPage), new HubPageViewModel(_datasource));
         }
 
-        private void Settings(Page page)
+        private void Settings()
         {
-            if (page == null)
-                return;
-
-            //_page.Frame.Navigate(typeof(SettingsPage), new SettingsViewModel(_datasource));
+            PhoneApplicationService.Current.State["model"] = new SettingsViewModel(_datasource);
+            App.NavigateTo("/SettingsPage.xaml");
         }
 
-        private bool CanSettings(Page page)
+        private bool CanSettings()
         {
             return !_isSettingsSelected;
         }

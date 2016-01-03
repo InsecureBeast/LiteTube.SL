@@ -104,10 +104,12 @@
     <Compile Include="Common\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />
     <Compile Include="Common\DurationConverter.cs" />
+    <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\I18nLanguages.cs" />
     <Compile Include="Common\IDialogService.cs" />
     <Compile Include="Common\AppBarClickCommand.cs" />
     <Compile Include="Common\ItemClickCommand.cs" />
+    <Compile Include="Common\ItemsControlExtensions.cs" />
     <Compile Include="Common\LayoutHelper.cs" />
     <Compile Include="Common\MediaPlayerVisualStates.cs" />
     <Compile Include="Common\NavigationObject.cs" />
@@ -121,6 +123,9 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="Controls\GenericListView.cs" />
+    <Compile Include="Controls\NavigationPanel.xaml.cs">
+      <DependentUpon>NavigationPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\CommentMarginConverter.cs" />
     <Compile Include="Converters\CountToVisibilityConverter.cs" />
@@ -180,6 +185,9 @@
     <Compile Include="SectionPage.xaml.cs">
       <DependentUpon>SectionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VideoPage.xaml.cs">
       <DependentUpon>VideoPage.xaml</DependentUpon>
     </Compile>
@@ -194,6 +202,7 @@
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
     <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
     <Compile Include="ViewModels\SearchPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\VideoCategorySectionViewModel.cs" />
     <Compile Include="ViewModels\VideoPageViewModel.cs" />
     <Compile Include="ViewModels\MostPopularViewModel.cs" />
@@ -221,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\NavigationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -238,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

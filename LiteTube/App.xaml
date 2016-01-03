@@ -21,6 +21,7 @@
             <converters:TimeSpanFormatConverter x:Key="TimeSpanFormatConverter" />
             <converters:UppercaseConverter x:Key="UppercaseConverter"/>
             <converters:CommentMarginConverter x:Key="CommentMarginConverter"/>
+            <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
 
             <sys:Double x:Key="PanoramaItemHeaderFontSize">56</sys:Double>
             
