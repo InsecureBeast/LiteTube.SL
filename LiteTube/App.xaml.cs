@@ -10,6 +10,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
+using Windows.ApplicationModel.Activation;
 
 namespace LiteTube
 {
@@ -95,6 +96,10 @@ namespace LiteTube
         // with the picked file or other return values
         private void Application_ContractActivated(object sender, Windows.ApplicationModel.Activation.IActivatedEventArgs e)
         {
+            if (e is WebAuthenticationBrokerContinuationEventArgs)
+            {
+                ViewModel.ContinueWebAuthentication((WebAuthenticationBrokerContinuationEventArgs)e);
+            }
         }
 
         // Code to execute when the application is launching (eg, from Start)

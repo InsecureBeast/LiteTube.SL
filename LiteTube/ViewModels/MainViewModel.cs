@@ -7,6 +7,8 @@ using LiteTube.Resources;
 using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
 using Microsoft.Phone.Shell;
+using Windows.ApplicationModel.Activation;
+using Windows.Security.Authentication.Web;
 
 namespace LiteTube.ViewModels
 {
@@ -64,6 +66,11 @@ namespace LiteTube.ViewModels
             get { return _profileSectionViewModel; }
         }
 
+        public bool IsAuthorized
+        {
+            get { return !string.IsNullOrEmpty(SettingsHelper.GetUserId()); }
+        }
+
         /// <summary>
         /// Creates and adds a few VideoItemViewModel objects into the Items collection.
         /// </summary>
@@ -78,6 +85,24 @@ namespace LiteTube.ViewModels
             IsDataLoaded = true;
             IsLoading = false;
             IsEmpty = !CategoryItems.Any();
+        }
+
+        public async void ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args)
+        {
+            WebAuthenticationResult result = args.WebAuthenticationResult;
+
+            if (result.ResponseStatus == WebAuthenticationStatus.Success)
+            {
+                await DataSource.ContinueWebAuthentication(args, string.Empty);
+            }
+            else if (result.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
+            {
+                //OutputToken("HTTP Error returned by AuthenticateAsync() : " + result.ResponseErrorDetail.ToString());
+            }
+            else
+            {
+                //OutputToken("Error returned by AuthenticateAsync() : " + result.ResponseStatus.ToString());
+            }
         }
 
         private async Task LoadGuideCategories()
@@ -107,7 +132,7 @@ namespace LiteTube.ViewModels
                 //ActivitySectionViewModel.FirstLoad();
             }
 
-            //NotifyOfPropertyChanged(() => IsAuthorized);
+            NotifyOfPropertyChanged(() => IsAuthorized);
         }
 
         public async void Notify(UpdateSettingsEventArgs e)
