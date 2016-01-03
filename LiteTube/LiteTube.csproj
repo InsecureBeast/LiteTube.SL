@@ -113,6 +113,8 @@
     <Compile Include="Common\LayoutHelper.cs" />
     <Compile Include="Common\MediaPlayerVisualStates.cs" />
     <Compile Include="Common\NavigationObject.cs" />
+    <Compile Include="Common\Notifier\Notifier.cs" />
+    <Compile Include="Common\Notifier\UpdateSettingsEventArgs.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\PropertyExtensions.cs" />
     <Compile Include="Common\RelayCommand.cs" />

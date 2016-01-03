@@ -10,7 +10,7 @@ using Microsoft.Phone.Shell;
 
 namespace LiteTube.ViewModels
 {
-    public class MainViewModel : SectionBaseViewModel
+    public class MainViewModel : SectionBaseViewModel, IListener<UpdateContextEventArgs>, IListener<UpdateSettingsEventArgs>
     {
         private readonly IDataSource _dataSource;
         private readonly MostPopularViewModel _mostPopularViewModel;
@@ -27,6 +27,9 @@ namespace LiteTube.ViewModels
             _mostPopularViewModel = new MostPopularViewModel(dataSource);
             _profileSectionViewModel = new ProfileSectionViewModel(dataSource);
             _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
+
+            _dataSource.Subscribe((IListener<UpdateSettingsEventArgs>)this);
+            _dataSource.Subscribe((IListener<UpdateContextEventArgs>)this);
         }
 
         /// <summary>
@@ -94,6 +97,24 @@ namespace LiteTube.ViewModels
             var title = viewModel.Title;
             PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _dataSource);
             App.NavigateTo("/SectionPage.xaml");
+        }
+
+        public void Notify(UpdateContextEventArgs e)
+        {
+            if (_dataSource.IsAuthorized)
+            {
+                //ActivitySectionViewModel.Items.Clear();
+                //ActivitySectionViewModel.FirstLoad();
+            }
+
+            //NotifyOfPropertyChanged(() => IsAuthorized);
+        }
+
+        public async void Notify(UpdateSettingsEventArgs e)
+        {
+            MostPopularViewModel.Items.Clear();
+            await MostPopularViewModel.FirstLoad();
+            await LoadData();
         }
     }
 }

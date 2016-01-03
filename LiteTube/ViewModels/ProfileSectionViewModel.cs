@@ -4,10 +4,11 @@ using System.Windows.Input;
 using System;
 using System.Windows;
 using Microsoft.Phone.Shell;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels
 {
-    public class ProfileSectionViewModel : PropertyChangedBase
+    public class ProfileSectionViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>
     {
         private readonly RelayCommand<FrameworkElement> _subscriptionsCommand;
         private readonly RelayCommand<FrameworkElement> _historyCommand;
@@ -25,7 +26,7 @@ namespace LiteTube.ViewModels
             _videoCategoryCommand = new RelayCommand<FrameworkElement>(VideoCategories);
             _favoritesCommand = new RelayCommand<FrameworkElement>(Favorites);
 
-            datasource.ContextUpdated += OnContextUpdated;
+            _datasource.Subscribe(this);
         }
 
         public ICommand SubsribtionsCommand
@@ -91,7 +92,7 @@ namespace LiteTube.ViewModels
             ////var index = IsAuthorized ? 2 : 0; //TODO favorites saved on device!!
         }
 
-        private void OnContextUpdated(object sender, EventArgs e)
+        public void Notify(UpdateContextEventArgs e)
         {
             NotifyOfPropertyChanged(() => IsAuthorized);
         }

@@ -8,7 +8,7 @@ using Microsoft.Phone.Shell;
 
 namespace LiteTube.ViewModels
 {
-    public class NavigationPanelViewModel : PropertyChangedBase
+    public class NavigationPanelViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>
     {
         private readonly IDataSource _datasource;
         private readonly RelayCommand<Page> _loginCommand;
@@ -44,7 +44,7 @@ namespace LiteTube.ViewModels
             _recommendedCommand = new RelayCommand<Page>(Recommended);
             _channelCommand = new RelayCommand<string>(LoadChannel);
 
-            datasource.ContextUpdated += OnContextUpdated;
+            _datasource.Subscribe(this);
         }
 
         public ICommand LoginCommand
@@ -259,11 +259,6 @@ namespace LiteTube.ViewModels
             App.NavigateTo("/SearchPage.xaml");
         }
 
-        private void OnContextUpdated(object sender, EventArgs e)
-        {
-            NotifyOfPropertyChanged(() => IsAuthorized);
-        }
-
         private void Recommended(Page page)
         {
             if (page == null)
@@ -296,6 +291,11 @@ namespace LiteTube.ViewModels
                 if (profile.Registered != null)
                     ProfileRegistered = profile.Registered.Value.ToString("d");
             });
+        }
+
+        public void Notify(UpdateContextEventArgs e)
+        {
+            NotifyOfPropertyChanged(() => IsAuthorized);
         }
     }
 }

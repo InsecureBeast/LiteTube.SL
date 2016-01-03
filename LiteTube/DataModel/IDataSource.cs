@@ -11,8 +11,6 @@ namespace LiteTube.DataModel
 {
     public interface IDataSource
     {
-        EventHandler SettingsUpdated { get; set; }
-        EventHandler ContextUpdated { get; set; }
         void Login();
         Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
         bool IsAuthorized { get; }
@@ -46,6 +44,11 @@ namespace LiteTube.DataModel
         Task<IResponceList> GetFavorites(string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
         Task<IProfile> GetProfile();
+
+        void Subscribe(IListener<UpdateSettingsEventArgs> listener);
+        void Subscribe(IListener<UpdateContextEventArgs> listener);
+        void Unsubscribe(IListener<UpdateSettingsEventArgs> listener);
+        void Unsubscribe(IListener<UpdateContextEventArgs> listener);
     }
 
     class DataSource : IDataSource
@@ -61,6 +64,8 @@ namespace LiteTube.DataModel
         private readonly int _maxPageResult;
         private YouTubeQuality _quality;
         private EventHandler _contextUpdated;
+        private readonly Notifier<UpdateContextEventArgs> _contextNotifier = new Notifier<UpdateContextEventArgs>();
+        private readonly Notifier<UpdateSettingsEventArgs> _settingsNotifier = new Notifier<UpdateSettingsEventArgs>();
 
         public DataSource(IRemoteDataSource remoteDataSource, string region, int maxPageResult, IDeviceHistory deviceHistory, string quality)
         {
@@ -80,18 +85,6 @@ namespace LiteTube.DataModel
             get { return _remoteDataSource.IsAuthorized; }
         }
 
-        public EventHandler SettingsUpdated
-        {
-            get { return _settingsUpdated; }
-            set { _settingsUpdated = value; }
-        }
-
-        public EventHandler ContextUpdated
-        {
-            get { return _contextUpdated; }
-            set { _contextUpdated = value; }
-        }
-
         public void Login()
         {
             _remoteDataSource.Login();
@@ -100,23 +93,20 @@ namespace LiteTube.DataModel
         public async Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username)
         {
             var result = await _remoteDataSource.ContinueWebAuthentication(args, username);
-            if (_contextUpdated != null)
-                _contextUpdated(this, new EventArgs());
+            _contextNotifier.Notify(new UpdateContextEventArgs());
             return result;
         }
      
         public async Task Logout()
         {
             await _remoteDataSource.Logout();
-            if (_contextUpdated != null)
-                _contextUpdated(this, new EventArgs());
+            _contextNotifier.Notify(new UpdateContextEventArgs());
         }
 
         public async Task LoginSilently(string username)
         {
             await _remoteDataSource.LoginSilently(username);
-            if (_contextUpdated != null)
-                _contextUpdated(this, new EventArgs());
+            _contextNotifier.Notify(new UpdateContextEventArgs());
         }
 
         public void Update(string region, string quality)
@@ -127,8 +117,7 @@ namespace LiteTube.DataModel
             _guideCategories.Clear();
             _channels.Clear();
 
-            if (SettingsUpdated != null)
-                SettingsUpdated(this, new EventArgs());
+            _settingsNotifier.Notify(new UpdateSettingsEventArgs());
     }
 
         public async Task<IVideoList> GetActivity(string pageToken)
@@ -314,6 +303,26 @@ namespace LiteTube.DataModel
         public async Task<IProfile> GetProfile()
         {
             return await _remoteDataSource.GetProfile();
+        }
+
+        public void Subscribe(IListener<UpdateSettingsEventArgs> listener)
+        {
+            _settingsNotifier.Subscribe(listener);
+        }
+
+        public void Subscribe(IListener<UpdateContextEventArgs> listener)
+        {
+            _contextNotifier.Subscribe(listener);
+        }
+
+        public void Unsubscribe(IListener<UpdateSettingsEventArgs> listener)
+        {
+            _settingsNotifier.Unsubscribe(listener);
+        }
+
+        public void Unsubscribe(IListener<UpdateContextEventArgs> listener)
+        {
+            _contextNotifier.Unsubscribe(listener);
         }
     }
 }
