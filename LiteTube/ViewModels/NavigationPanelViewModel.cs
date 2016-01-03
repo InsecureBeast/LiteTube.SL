@@ -2,7 +2,6 @@
 using LiteTube.Common;
 using LiteTube.DataModel;
 using MyToolkit.Command;
-using Microsoft.Phone.Shell;
 using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
@@ -206,8 +205,7 @@ namespace LiteTube.ViewModels
 
         private void Settings()
         {
-            PhoneApplicationService.Current.State["model"] = new SettingsViewModel(_datasource);
-            App.NavigateTo("/SettingsPage.xaml");
+            NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_datasource));
         }
 
         private bool CanSettings()
@@ -217,14 +215,12 @@ namespace LiteTube.ViewModels
 
         private void Search(object page)
         {
-            PhoneApplicationService.Current.State["model"] = new SearchPageViewModel(_datasource);
-            App.NavigateTo("/SearchPage.xaml");
+            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(_datasource));
         }
 
         private void LoadChannel(string channelId)
         {
-            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _datasource);
-            App.NavigateTo("/ChannelPage.xaml");
+            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _datasource));
         }
 
         private void LoadProfileInfo()

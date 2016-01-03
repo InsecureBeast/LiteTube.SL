@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using System.Windows.Navigation;
+﻿using Microsoft.Phone.Shell;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace LiteTube.Common.Helpers
 {
@@ -14,6 +15,22 @@ namespace LiteTube.Common.Helpers
             }
 
             App.RootFrame.GoBack();
+        }
+
+        public static void Navigate(string uri, object viewModel)
+        {
+            PhoneApplicationService.Current.State["model"] = viewModel;
+            App.NavigateTo(uri);
+        }
+
+        public static void OnNavigatedTo(Page page)
+        {
+            if (page.DataContext != null)
+                return;
+
+            var model = PhoneApplicationService.Current.State["model"];
+            page.DataContext = model;
+            PhoneApplicationService.Current.State["model"] = null;
         }
     }
 }

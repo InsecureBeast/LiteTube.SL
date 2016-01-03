@@ -12,7 +12,6 @@ using LiteTube.DataClasses;
 using LiteTube.ViewModels;
 using System.Diagnostics;
 using LiteTube.Common;
-using Windows.Graphics.Display;
 using System.Threading.Tasks;
 using LiteTube.Common.Helpers;
 
@@ -49,12 +48,7 @@ namespace LiteTube
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (DataContext != null)
-                return;
-
-            var model = PhoneApplicationService.Current.State["model"];
-            DataContext = model;
-            PhoneApplicationService.Current.State["model"] = null;
+            NavigationHelper.OnNavigatedTo(this);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

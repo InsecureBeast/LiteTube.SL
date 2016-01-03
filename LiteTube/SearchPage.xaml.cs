@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.ViewModels;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube
 {
@@ -31,12 +32,11 @@ namespace LiteTube
                 return;
             }
 
-            var model = PhoneApplicationService.Current.State["model"] as SearchPageViewModel;
-            DataContext = model;
+            NavigationHelper.OnNavigatedTo(this);
+
+            var model = DataContext as SearchPageViewModel;
             if (model.Items.Count > 0)
                 _firstLoad = false;
-            
-            PhoneApplicationService.Current.State["model"] = null;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
