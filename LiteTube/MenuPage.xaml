@@ -20,21 +20,20 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
         <phone:Pivot Title="LiteTube"
-                     Name="Pivot">
+                     Name="Pivot"
+                     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=Default}">
             <!--Pivot item one-->
             <phone:PivotItem Header="recommended for you"
                              Name="RecommendedItem">
-                <ContentPresenter HorizontalAlignment="Center"
-                                  x:Name="RecommendedList"
+                <ContentPresenter x:Name="RecommendedList"
                                   Content="{Binding RecommendedSectionViewModel}"
-                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item two-->
             <phone:PivotItem Header="subscribtions"
                              Name="SubscribtionsItem">
-                <ContentPresenter HorizontalAlignment="Center"
-                                  x:Name="SubscriptionsList"
+                <ContentPresenter x:Name="SubscriptionsList"
                                   Content="{Binding SubscriptionChannelsViewModel}"
                                   ContentTemplate="{StaticResource CategoryLoadingListView}"/>
             </phone:PivotItem>
@@ -42,19 +41,17 @@
             <!--Pivot item three-->
             <phone:PivotItem Header="favorites"
                              Name="FavoritesItem">
-                <ContentPresenter HorizontalAlignment="Center"
-                                  x:Name="FavoritesList"
+                <ContentPresenter x:Name="FavoritesList"
                                   Content="{Binding FavoritesViewModel}"
-                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item four-->
             <phone:PivotItem Header="watch history"
                              Name="HistoryItem">
-                <ContentPresenter HorizontalAlignment="Center"
-                                  x:Name="HistoryList"
+                <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
-                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item five-->

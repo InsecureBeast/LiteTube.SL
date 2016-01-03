@@ -10,17 +10,19 @@ using System.Collections.Specialized;
 using Microsoft.Phone.Shell;
 using MyToolkit.Command;
 using LiteTube.ViewModels.Nodes;
+using Windows.Phone.UI.Input;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
     class MenuPageViewModel : PropertyChangedBase
     {
         private IDataSource _dataSource;
-        //private readonly RecommendedSectionViewModel _recommendedSectionViewModel;
+        private readonly RecommendedSectionViewModel _recommendedSectionViewModel;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
-        //private readonly SubscriptionChannelsViewModel _subscriptions;
-        //private readonly HistoryPageViewModel _history;
-        //private readonly FavoritesViewModel _favoritesViewModel;
+        private readonly SubscriptionChannelsViewModel _subscriptions;
+        private readonly HistoryPageViewModel _history;
+        private readonly FavoritesViewModel _favoritesViewModel;
         private readonly ObservableCollection<GuideCategoryNodeViewModel> _categories;
 
         private readonly Common.RelayCommand _selectCommand;
@@ -34,11 +36,11 @@ namespace LiteTube.ViewModels
         {
             _dataSource = dataSource;
             _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
-            //_recommendedSectionViewModel = new RecommendedSectionViewModel(dataSource);
-            //_subscriptions = new SubscriptionChannelsViewModel(dataSource);
-            //_history = new HistoryPageViewModel(dataSource);
-            //_favoritesViewModel = new FavoritesViewModel(dataSource);
-            //_favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
+            _recommendedSectionViewModel = new RecommendedSectionViewModel(dataSource);
+            _subscriptions = new SubscriptionChannelsViewModel(dataSource);
+            _history = new HistoryPageViewModel(dataSource);
+            _favoritesViewModel = new FavoritesViewModel(dataSource);
+            _favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
             _categories = new ObservableCollection<GuideCategoryNodeViewModel>();
 
             _selectCommand = new Common.RelayCommand(SelectItems);
@@ -58,25 +60,25 @@ namespace LiteTube.ViewModels
             get { return _navigatioPanelViewModel; }
         }
 
-        //public RecommendedSectionViewModel RecommendedSectionViewModel
-        //{
-        //    get { return _recommendedSectionViewModel; }
-        //}
+        public RecommendedSectionViewModel RecommendedSectionViewModel
+        {
+            get { return _recommendedSectionViewModel; }
+        }
 
-        //public SubscriptionChannelsViewModel SubscriptionChannelsViewModel
-        //{
-        //    get { return _subscriptions; }
-        //}
+        public SubscriptionChannelsViewModel SubscriptionChannelsViewModel
+        {
+            get { return _subscriptions; }
+        }
 
-        //public HistoryPageViewModel HistoryPageViewModel
-        //{
-        //    get { return _history; }
-        //}
+        public HistoryPageViewModel HistoryPageViewModel
+        {
+            get { return _history; }
+        }
 
-        //public FavoritesViewModel FavoritesViewModel
-        //{
-        //    get { return _favoritesViewModel; }
-        //}
+        public FavoritesViewModel FavoritesViewModel
+        {
+            get { return _favoritesViewModel; }
+        }
 
         public ICommand SelectCommand
         {
@@ -114,19 +116,14 @@ namespace LiteTube.ViewModels
             get { return _dataSource; }
         }
 
-        //public bool IsFavoritesSelectedVisible
-        //{
-        //    get { return _favoritesViewModel.IsItemClickEnabled && _selectedIndex == 2; }
-        //}
-
-        //public void SetNavigationHelper(PreventNavigationHelper helper)
-        //{
-        //    _navigationHelper = helper;
-        //}
+        public bool IsFavoritesSelectedVisible
+        {
+            get { return _favoritesViewModel.IsItemClickEnabled && _selectedIndex == 2; }
+        }
 
         private void OnSelectedIndexChanged(int index)
         {
-            //_favoritesViewModel.SetNonSelected();
+            _favoritesViewModel.SetNonSelected();
 
             if (IsAuthorized)
             {
@@ -137,38 +134,40 @@ namespace LiteTube.ViewModels
             SetSelection(index);
         }
 
-        private void SetAuthorizedSelection(int index)
+        private async void SetAuthorizedSelection(int index)
         {
             switch (index)
             {
                 case 0:
                     Debug.WriteLine("recommended");
-                    //if (RecommendedSectionViewModel.Items.Count > 0)
-                    //    return;
+                    if (RecommendedSectionViewModel.Items.Count > 0)
+                        return;
 
-                    //RecommendedSectionViewModel.FirstLoad();
+                    await RecommendedSectionViewModel.FirstLoad();
                     break;
 
                 case 1:
                     Debug.WriteLine("subscriptions");
+                    await SubscriptionChannelsViewModel.FirstLoad();
                     break;
 
                 case 2:
                     Debug.WriteLine("favorites");
+                    await FavoritesViewModel.FirstLoad();
                     break;
 
                 case 3:
                     Debug.WriteLine("history");
+                    await HistoryPageViewModel.FirstLoad();
                     break;
 
                 case 4:
                     Debug.WriteLine("Video categories");
                     LoadCategories();
                     break;
-
             }
 
-            //NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+            NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
         }
 
         private void SetSelection(int index)
@@ -209,42 +208,41 @@ namespace LiteTube.ViewModels
 
         private async void DeleteItems()
         {
-            //_favoritesViewModel.SetNonSelected();
-            //NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+            _favoritesViewModel.SetNonSelected();
+            NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
             //_navigationHelper.IsCanGoBack = true;
-            //var items = _favoritesViewModel.SelectedItems;
-            //foreach (var item in items)
-            //{
-            //    await _dataSource.RemoveFromFavorites(item.Id);
-            //    _favoritesViewModel.Items.Remove(item);
-            //}
+            var items = _favoritesViewModel.SelectedItems;
+            foreach (var item in items)
+            {
+                await _dataSource.RemoveFromFavorites(item.Id);
+                _favoritesViewModel.Items.Remove(item);
+            }
         }
 
         private bool CanDelete()
         {
-            return false;
-            //return _favoritesViewModel.SelectedItems.Any();
+            return _favoritesViewModel.SelectedItems.Any();
         }
 
         private void SelectItems()
         {
-            //_favoritesViewModel.SetSelected();
-            //NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+            _favoritesViewModel.SetSelected();
+            NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
             //_navigationHelper.IsCanGoBack = false;
-            //HardwareButtons.BackPressed += OnBackPressed;
+            HardwareButtons.BackPressed += OnBackPressed;
         }
 
-        //private void OnBackPressed(object sender, BackPressedEventArgs e)
-        //{
-        //    if (!_favoritesViewModel.IsItemClickEnabled)
-        //    {
-        //        _favoritesViewModel.SetNonSelected();
-        //        NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
-        //        e.Handled = true;
-        //        HardwareButtons.BackPressed -= OnBackPressed;
-        //        _navigationHelper.IsCanGoBack = true;
-        //    }
-        //}
+        private void OnBackPressed(object sender, BackPressedEventArgs e)
+        {
+            if (!_favoritesViewModel.IsItemClickEnabled)
+            {
+                _favoritesViewModel.SetNonSelected();
+                NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
+                e.Handled = true;
+                HardwareButtons.BackPressed -= OnBackPressed;
+                //_navigationHelper.IsCanGoBack = true;
+            }
+        }
 
         private void SelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -253,11 +251,12 @@ namespace LiteTube.ViewModels
 
         private void CategoryLoad(NavigationObject navObject)
         {
-            var viewModel = (GuideCategoryNodeViewModel)navObject.ViewModel;
-            var id = viewModel.CategoryId;
-            var title = viewModel.Title;
-            PhoneApplicationService.Current.State["model"] = new ChannelListPageViewModel(id, title, _dataSource);
-            App.NavigateTo(string.Format("/ChannelListPage.xaml?categoriId={0}", id));
+            var item = (GuideCategoryNodeViewModel)navObject.ViewModel;
+            var id = item.CategoryId;
+            var title = item.Title;
+            var view = string.Format("/ChannelListPage.xaml?categoriId={0}", id);
+            var viewModel = new ChannelListPageViewModel(id, title, _dataSource);
+            NavigationHelper.Navigate(view, viewModel);
         }
     }
 }

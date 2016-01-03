@@ -39,35 +39,13 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            //var scroll = VisualHelper.GetScrollViewer(VideoCategoriesList);
-            //if (scroll != null)
-            //    scroll.ChangeView(0, _categoriesScrollVerticalOffset, null);
-
-            if (viewModel.IsAuthorized)
+            if (!viewModel.IsAuthorized)
             {
-                //scroll = VisualHelper.GetScrollViewer(SubscriptionsList);
-                //if (scroll != null)
-                //    scroll.ChangeView(0, _subscriptionsScrollVerticalOffset, null);
-
-                //scroll = VisualHelper.GetScrollViewer(RecommendedList);
-                //if (scroll != null)
-                //    scroll.ChangeView(0, _recommendedScrollVerticalOffset, null);
-
-                //scroll = VisualHelper.GetScrollViewer(HistoryList);
-                //if (scroll != null)
-                //    scroll.ChangeView(0, _historyScrollVerticalOffset, null);
-
-                //scroll = VisualHelper.GetScrollViewer(FavoritesList);
-                //if (scroll != null)
-                //    scroll.ChangeView(0, _favoritesScrollVerticalOffset, null);
-
-                return;
+                Pivot.Items.Remove(RecommendedItem);
+                Pivot.Items.Remove(SubscribtionsItem);
+                Pivot.Items.Remove(HistoryItem);
+                Pivot.Items.Remove(FavoritesItem);
             }
-
-            Pivot.Items.Remove(RecommendedItem);
-            Pivot.Items.Remove(SubscribtionsItem);
-            Pivot.Items.Remove(HistoryItem);
-            Pivot.Items.Remove(FavoritesItem);
 
             Pivot.SelectedIndex = _selectedIndex;
         }

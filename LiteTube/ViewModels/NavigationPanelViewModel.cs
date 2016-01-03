@@ -15,11 +15,9 @@ namespace LiteTube.ViewModels
         private readonly Common.RelayCommand _settingsCommand;
         private readonly RelayCommand<object> _searchCommand;
         private readonly RelayCommand<string> _channelCommand;
-        private bool _isHomeSelected = false;
         private bool _isMenuSelected = false;
         private bool _isSettingsSelected = false;
         private bool _isSubscribtionSelected = false;
-        private bool _isHistorySelected = false;
         private string _profileImage;
         private string _profileDisplayName;
         private bool _isProfileChecked;
@@ -84,16 +82,6 @@ namespace LiteTube.ViewModels
             }
         }
 
-        public bool IsHomeSelected
-        {
-            get { return _isHomeSelected; }
-            set
-            {
-                _isHomeSelected = value;
-                NotifyOfPropertyChanged(() => IsHomeSelected);
-            }
-        }
-
         public bool IsSettingsSelected
         {
             get { return _isSettingsSelected; }
@@ -112,16 +100,6 @@ namespace LiteTube.ViewModels
             {
                 _isSubscribtionSelected = value;
                 NotifyOfPropertyChanged(() => IsSubscribtionSelected);
-            }
-        }
-
-        public bool IsHistorySelected
-        {
-            get { return _isHistorySelected; }
-            set
-            {
-                _isHistorySelected = value;
-                NotifyOfPropertyChanged(() => IsHistorySelected);
             }
         }
 

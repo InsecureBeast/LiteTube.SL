@@ -122,15 +122,15 @@ namespace LiteTube.ViewModels
 
         internal async Task FirstLoad()
         {
-            //LayoutHelper.InvokeFromUIThread(async () =>
-            //{
-                var responseList = await GetItems(string.Empty);
-                if (responseList == null)
-                    return;
-                LoadItems(responseList);
-                _pageToken = responseList.NextPageToken;
-                _hasItems = !string.IsNullOrEmpty(_pageToken);
-            //});
+            if (Items.Count > 0)
+                return;
+
+            var responseList = await GetItems(string.Empty);
+            if (responseList == null)
+                return;
+            LoadItems(responseList);
+            _pageToken = responseList.NextPageToken;
+            _hasItems = !string.IsNullOrEmpty(_pageToken);
         }
 
         public bool IsEmpty
