@@ -14,7 +14,8 @@ namespace LiteTube.Common.Helpers
                 App.RootFrame.RemoveBackEntry();
             }
 
-            App.RootFrame.GoBack();
+            if (App.RootFrame.CanGoBack)
+                App.RootFrame.GoBack();
         }
 
         public static void Navigate(string uri, object viewModel)
