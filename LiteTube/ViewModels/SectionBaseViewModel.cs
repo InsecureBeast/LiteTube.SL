@@ -9,9 +9,7 @@ using System.Windows.Input;
 using LiteTube.ViewModels.Nodes;
 using MyToolkit.Command;
 using LiteTube.Common;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -238,8 +236,8 @@ namespace LiteTube.ViewModels
         internal virtual void NavigateTo(NavigationObject navObject)
         {
             var id = navObject.ViewModel.VideoId;
-            PhoneApplicationService.Current.State["model"] = new VideoPageViewModel(id, _dataSource);
-            App.NavigateTo(string.Format("/VideoPage.xaml?videoId={0}", id));
+            var view = string.Format("/VideoPage.xaml?videoId={0}", id);
+            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _dataSource));
         }
 
         protected void ShowProgressIndicator()

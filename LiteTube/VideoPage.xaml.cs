@@ -1,87 +1,93 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Windows.Devices.Sensors;
-using LiteTube.DataClasses;
+using LiteTube.Common.Helpers;
 using LiteTube.ViewModels;
 using System.Diagnostics;
+using Windows.Devices.Sensors;
 using LiteTube.Common;
-using System.Threading.Tasks;
-using LiteTube.Common.Helpers;
 
 namespace LiteTube
 {
     public partial class VideoPage : PhoneApplicationPage
     {
-        private SimpleOrientationSensor _sensor;
         private double _normalHeight;
         private double _normalWidth;
+        private SimpleOrientationSensor _sensor;
 
         public VideoPage()
         {
             InitializeComponent();
-
-            _sensor = SimpleOrientationSensor.GetDefault();
-            SupportedOrientations = SupportedPageOrientation.Portrait | SupportedPageOrientation.Landscape;
-
-            Pivot.SelectionChanged += PivotOnSelectionChanged;
             Loaded += OnLoaded;
+            Pivot.SelectionChanged += PivotOnSelectionChanged;
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
-            player.MediaFailed += Player_MediaFailed;
-        }
-
-        private void Player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
+            _sensor = SimpleOrientationSensor.GetDefault();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
+            _sensor.OrientationChanged += Sensor_OrientationChanged;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            _sensor.OrientationChanged -= Sensor_OrientationChanged;
+        }
+
+        private void Sensor_OrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
+        {
+            LayoutHelper.InvokeFromUIThread(() => 
+            {
+                if (args.Orientation == SimpleOrientation.Rotated90DegreesCounterclockwise)
+                {
+                    SupportedOrientations = SupportedPageOrientation.Landscape;
+                    Orientation = PageOrientation.LandscapeRight;
+                    return;
+                }
+                if (args.Orientation == SimpleOrientation.Rotated270DegreesCounterclockwise)
+                {
+                    SupportedOrientations = SupportedPageOrientation.Landscape;
+                    Orientation = PageOrientation.LandscapeLeft;
+                    return;
+                }
+
+                SupportedOrientations = SupportedPageOrientation.Portrait;
+                Orientation = PageOrientation.Portrait;
+            });
+        }
+
+        protected override void OnOrientationChanged(OrientationChangedEventArgs e)
+        {
+            base.OnOrientationChanged(e);
+
+            if (e.Orientation == PageOrientation.LandscapeLeft ||
+                e.Orientation == PageOrientation.LandscapeRight ||
+                e.Orientation == PageOrientation.Landscape)
+            {
+                SetPlayerFullScreenState();
+                SetVisibilityControls(Visibility.Collapsed);
+                return;
+            }
+
+            SetPlayerNormalState();
+            SetVisibilityControls(Visibility.Visible);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var minSize = ActualHeight > ActualWidth ? ActualHeight : ActualWidth;
-            var maxSize = ActualHeight > ActualWidth ? ActualWidth : ActualHeight;
+            var actualWidth = App.Current.Host.Content.ActualWidth;
+            var actualHeight = App.Current.Host.Content.ActualHeight;
+            var minSize = actualHeight > actualWidth ? actualHeight : actualWidth;
+            var maxSize = actualHeight > actualWidth ? actualWidth : actualHeight;
             _normalHeight = minSize;
             _normalWidth = maxSize;
+
             SetPlayerNormalState();
-
-            _sensor.OrientationChanged += SensorOrientationChanged;
-        }
-
-        private void SensorOrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
-        {
-            OnOrientationChanged(null);
-        }
-
-        private void OnCommentButtonClick(object sender, RoutedEventArgs e)
-        {
-            var button = e.OriginalSource as Button;
-            if (button == null)
-                return;
-
-            var comment = button.DataContext as IComment;
-            if (comment == null)
-                return;
-
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            //Frame.Navigate(typeof(ChannelPage), new ChannelPageViewModel(comment.AuthorChannelId, viewModel.DataSource));
         }
 
         private async void PivotOnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -114,124 +120,50 @@ namespace LiteTube
             }
         }
 
-        protected override void OnOrientationChanged(OrientationChangedEventArgs e)
+        private void Home_Click(object sender, EventArgs e)
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
-            {
-                var o = _sensor.GetCurrentOrientation();
-                if (o.Equals(SimpleOrientation.Rotated90DegreesCounterclockwise))
-                {
-                    await GoToLanscapeState(PageOrientation.Landscape);
-                    return;
-                }
-
-                if (o.Equals(SimpleOrientation.Rotated270DegreesCounterclockwise))
-                {
-                    await GoToLanscapeState(PageOrientation.LandscapeLeft);
-                    return;
-                }
-
-                if (o.Equals(SimpleOrientation.NotRotated))
-                {
-                    await GoToPortraitState();
-                }
-            });
-        }
-
-        private void SetPlayerFullScreenState()
-        {
-            player.IsFullScreen = true;
-
-            player.Width = _normalHeight;
-            player.Height = _normalWidth;
-            playerCanvas.Width = player.Width;
-            playerCanvas.Height = player.Height;
-            PlayerMover.Y = 0;
-            return;
+            NavigationHelper.GoHome();
         }
 
         private void SetPlayerNormalState()
         {
             player.IsFullScreen = false;
-
             player.Width = _normalWidth;
             player.Height = _normalWidth / 1.778;
             playerCanvas.Width = player.Width;
             playerCanvas.Height = player.Height;
+            PlayerMover.Y = 0;
+        }
 
+        private void SetPlayerFullScreenState()
+        {
+            player.IsFullScreen = true;
+            player.Width = _normalHeight;
+            player.Height = _normalWidth;
+            playerCanvas.Width = player.Width;
+            playerCanvas.Height = player.Height;
             PlayerMover.Y = 0;
         }
 
         private void SetVisibilityControls(Visibility visibility)
         {
-            //CommandBar.Visibility = visibility;
+            ApplicationBar.IsVisible = visibility == Visibility.Visible;
             //NavPanel.Visibility = visibility;
             Pivot.Visibility = visibility;
+            SystemTray.IsVisible = visibility == Visibility.Visible;
         }
 
-        private async Task SetFullScreenState()
+        private void PlayerIsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
-            //Меняем размеры плеера
-            SetPlayerFullScreenState();
-            //Спрячем остальные контролы
-            SetVisibilityControls(Visibility.Collapsed);
-            //Уберем кнопки навигации
-            //ApplicationView.GetForCurrentView().SuppressSystemOverlays = true;
-            //Спрячем статус бар
-            SystemTray.IsVisible = false;
-        }
-
-        private async Task SetNormalState()
-        {
-            //Меняем размеры плеера
-            SetPlayerNormalState();
-            //Покажем остальные контролы
-            SetVisibilityControls(Visibility.Visible);
-            //Покажем кнопки навигации
-            //ApplicationView.GetForCurrentView().SuppressSystemOverlays = false;
-            //Покажем статус бар
-            SystemTray.IsVisible = true;
-        }
-
-        private async void PlayerIsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
-        {
-            var o = _sensor.GetCurrentOrientation();
-            if (e.NewValue)
+            if (player.IsFullScreen)
             {
-                if (o.Equals(SimpleOrientation.Rotated90DegreesCounterclockwise))
-                {
-                    await GoToLanscapeState(PageOrientation.Landscape);
-                    return;
-                }
-
-                if (o.Equals(SimpleOrientation.Rotated270DegreesCounterclockwise))
-                {
-                    await GoToLanscapeState(PageOrientation.LandscapeLeft);
-                    return;
-                }
-
-                await GoToLanscapeState(PageOrientation.Landscape);
+                SupportedOrientations = SupportedPageOrientation.Landscape; 
+                Orientation = PageOrientation.LandscapeLeft;
                 return;
             }
 
-            await GoToPortraitState();
-        }
-
-        private async Task GoToLanscapeState(PageOrientation displayOrientation)
-        {
-            Orientation = displayOrientation;
-            await SetFullScreenState();
-        }
-
-        private async Task GoToPortraitState()
-        {
+            SupportedOrientations = SupportedPageOrientation.Portrait;
             Orientation = PageOrientation.Portrait;
-            await SetNormalState();
-        }
-
-        private void Home_Click(object sender, EventArgs e)
-        {
-            NavigationHelper.GoHome();
         }
     }
 }

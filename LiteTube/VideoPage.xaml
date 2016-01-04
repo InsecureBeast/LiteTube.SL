@@ -7,13 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mmppf="clr-namespace:Microsoft.PlayerFramework;assembly=Microsoft.PlayerFramework"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:abu="clr-namespace:AppBarUtils;assembly=AppBarUtils"
+    mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True" Orientation="Portrait">
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -23,12 +22,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <phone:Pivot x:Name="Pivot"
-                     Grid.Row="2"
-                     Margin="0,10,0,0">
-            <phone:PivotItem Header="details"
-                             x:Uid="Details">
-                
+        <!--Pivot Control-->
+        <phone:Pivot Name="Pivot"
+                     Grid.Row="2">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="details">
                 <ScrollViewer>
                     <Grid >
                         <Grid.RowDefinitions>
@@ -57,11 +55,6 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-
-                            <!--<ProgressBar Value="{Binding LikesProgress}"
-                                     Grid.ColumnSpan="5"
-                                     Style="{StaticResource LikeProgressBarStyle}"
-                                     Visibility="{Binding IsLikesProgressVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
 
                             <StackPanel Grid.Row="1" 
                                     Grid.Column="0"
@@ -166,43 +159,27 @@
                             <Run Text="{Binding PublishedAt}"/>
                         </TextBlock>
 
-                        <!--<ScrollViewer Grid.Row="4"
-                                  VerticalScrollBarVisibility="Auto"
-                                  Margin="{StaticResource DefaultControlMargin}"
-                                  x:Name="descriptionTextBlock">-->
-                        <!--<StackPanel Orientation="Vertical">-->
                         <TextBlock Text="{Binding Description}"
-                                           Grid.Row="4"
-                                           Style="{StaticResource PhoneTextSmallStyle}"
-                                           TextWrapping="Wrap"/>
-                        <!--</StackPanel>-->
-                        <!--</ScrollViewer>-->
+                                    Grid.Row="4"
+                                    Style="{StaticResource PhoneTextSmallStyle}"
+                                    TextWrapping="Wrap"/>
                     </Grid>
                 </ScrollViewer>
             </phone:PivotItem>
-            
-            <phone:PivotItem>
-                <phone:PivotItem.Header>
-                    <TextBlock Text="related"
-                               x:Uid="Related"/>
-                </phone:PivotItem.Header>
-                
+
+            <!--Pivot item two-->
+            <phone:PivotItem Header="related">
                 <ContentPresenter Content="{Binding RelatedVideosViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
-            <phone:PivotItem>
-                <phone:PivotItem.Header>
-                    <TextBlock Text="comments"
-                               x:Uid="Comments"/>
-                </phone:PivotItem.Header>
-
+            <!--Pivot item three-->
+            <phone:PivotItem Header="comments">
                 <ContentPresenter Content="{Binding CommentsViewModel}"
                                   ContentTemplate="{StaticResource CommentsLoadingListView}"/>
             </phone:PivotItem>
-            
         </phone:Pivot>
-        
+
         <Canvas x:Name="playerCanvas" 
                 Grid.Row="1"
                 VerticalAlignment="Top"
@@ -216,16 +193,15 @@
                 <mmppf:MediaPlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </mmppf:MediaPlayer.RenderTransform>
-                
             </mmppf:MediaPlayer>
+            <Canvas.RenderTransform>
+                <RotateTransform x:Name="PlayerRotator"/>
+            </Canvas.RenderTransform>
         </Canvas>
-        <!--ContentPanel - place additional content here--><!--
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-
-        </Grid>-->
     </Grid>
+
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" x:Name="CommandBar">
             <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" 
                                             Text="Home"
                                             Click="Home_Click"/>
@@ -235,8 +211,4 @@
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
-    <!--<i:Interaction.Behaviors>
-        <abu:AppBarItemCommand Id="Home" Command="{Binding NavigationPanelViewModel.HomeCommand}"/>
-    </i:Interaction.Behaviors>-->
-    
 </phone:PhoneApplicationPage>
