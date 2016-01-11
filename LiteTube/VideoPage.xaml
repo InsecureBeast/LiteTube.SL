@@ -13,7 +13,13 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
-
+    <phone:PhoneApplicationPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -38,7 +44,8 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
-                                   Style="{StaticResource PhoneTextLargeStyle}"/>
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   TextWrapping="Wrap"/>
 
                         <Grid Grid.Row="1"
                           x:Name="videoInfo">
@@ -59,10 +66,10 @@
                             <StackPanel Grid.Row="1" 
                                     Grid.Column="0"
                                     Orientation="Horizontal">
-                                <!--<AppBarToggleButton IsCompact="True"
-                                                Icon="Like"
-                                                Command="{Binding LikeCommand}"
-                                                IsChecked="{Binding IsLiked, Mode=TwoWay}"/>-->
+                                <ToggleButton Command="{Binding LikeCommand}"
+                                              IsChecked="{Binding IsLiked, Mode=TwoWay}">
+                                    <ContentPresenter ContentTemplate="{StaticResource LikeIcon}"/>
+                                </ToggleButton>
                                 <TextBlock Text="{Binding Likes}"
                                            Style ="{StaticResource PhoneTextTitle2Style}"
                                            VerticalAlignment="Center"/>
@@ -71,10 +78,10 @@
                             <StackPanel Orientation="Horizontal"
                                     Grid.Column="2"
                                     Grid.Row="1" >
-                                <!--<AppBarToggleButton IsCompact="True"
-                                                Icon="Dislike"
-                                                Command="{Binding DislikeCommand}"
-                                                IsChecked="{Binding IsDisliked, Mode=TwoWay}"/>-->
+                                <ToggleButton Command="{Binding LikeCommand}"
+                                              IsChecked="{Binding IsDisliked, Mode=TwoWay}">
+                                    <ContentPresenter ContentTemplate="{StaticResource DislikeIcon}"/>
+                                </ToggleButton>
                                 <TextBlock Text="{Binding Dislikes}"
                                            Style ="{StaticResource PhoneTextTitle2Style}"
                                            VerticalAlignment="Center"/>

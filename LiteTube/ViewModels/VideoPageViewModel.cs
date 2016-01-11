@@ -1,5 +1,4 @@
-﻿//using LiteTube.Commands;
-using LiteTube.Common;
+﻿using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System;
@@ -8,7 +7,7 @@ using System.Windows.Input;
 
 namespace LiteTube.ViewModels
 {
-    public class VideoPageViewModel : PropertyChangedBase//, IDataSourceContext
+    public class VideoPageViewModel : PropertyChangedBase
     {
         private Uri _videoUri;
         private IChannel _channel;
@@ -19,8 +18,8 @@ namespace LiteTube.ViewModels
         private string _channelImage;
         private ulong? _channelVideoCount;
         private ulong? _channelSubscribers;
-        //private readonly SubscribeCommand _subscribeCommand;
-        //private readonly UnsubscribeCommand _unsubscribeCommand;
+        private readonly SubscribeCommand _subscribeCommand;
+        private readonly UnsubscribeCommand _unsubscribeCommand;
         private readonly RelayCommand _likeCommand;
         private readonly RelayCommand _dislikeCommand;
         private readonly RelayCommand _addFavoritesCommand;
@@ -51,8 +50,8 @@ namespace LiteTube.ViewModels
             _channelSubscribers = 0;
             _channelVideoCount = 0;
 
-            //_subscribeCommand = new SubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
-            //_unsubscribeCommand = new UnsubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
+            _subscribeCommand = new SubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
+            _unsubscribeCommand = new UnsubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
 
             _likeCommand = new RelayCommand(Like, CanLike);
             _dislikeCommand = new RelayCommand(Dislike, CanLike);
@@ -268,15 +267,15 @@ namespace LiteTube.ViewModels
             get { return Likes != 0 && Dislikes != 0; }
         }
 
-        //public ICommand SubscribeCommand
-        //{
-        //    get { return _subscribeCommand; }
-        //}
+        public ICommand SubscribeCommand
+        {
+            get { return _subscribeCommand; }
+        }
 
-        //public ICommand UnsubscribeCommand
-        //{
-        //    get { return _unsubscribeCommand; }
-        //}
+        public ICommand UnsubscribeCommand
+        {
+            get { return _unsubscribeCommand; }
+        }
 
         public ICommand LikeCommand
         {
@@ -465,7 +464,8 @@ namespace LiteTube.ViewModels
                 ImagePath = videoItem.Thumbnails.Medium.Url;
                 Duration = videoItem.Details.Duration;
                 ViewCount = videoItem.Details.Video.Statistics.ViewCount;
-                PublishedAt = videoItem.PublishedAt.Value.ToString("D");
+                if (videoItem.PublishedAt != null) 
+                    PublishedAt = videoItem.PublishedAt.Value.ToString("D");
                 ChannelId = videoItem.ChannelId;
                 RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource);
                 CommentsViewModel = new CommentsViewModel(VideoId, _dataSource);

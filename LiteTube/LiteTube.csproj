@@ -104,6 +104,8 @@
     <Compile Include="Common\Extensions\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />
     <Compile Include="Common\Helpers\NavigationHelper.cs" />
+    <Compile Include="Common\SubscribeCommand.cs" />
+    <Compile Include="Common\UnsubscribeCommand.cs" />
     <Compile Include="Converters\DurationConverter.cs" />
     <Compile Include="Common\Extensions\Extensions.cs" />
     <Compile Include="Common\I18nLanguages.cs" />
