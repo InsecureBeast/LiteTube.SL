@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:abu="clr-namespace:AppBarUtils;assembly=AppBarUtils"
-    xmlns:common="clr-namespace:LiteTube.Common"
     xmlns:controls="clr-namespace:LiteTube.Controls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -17,6 +16,7 @@
     SupportedOrientations="Portrait"  
     Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
+    Style="{StaticResource SystemTrayStyle}"
     Name="page">
     
     <phone:PhoneApplicationPage.Resources>

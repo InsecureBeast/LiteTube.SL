@@ -1,5 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone">
 
+    <Style x:Key="SystemTrayStyle" TargetType="phone:PhoneApplicationPage">
+        <Setter Property="shell:SystemTray.BackgroundColor" Value="{StaticResource PhoneChromeColor}" />
+    </Style>
     
 </ResourceDictionary>
