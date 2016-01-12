@@ -3,14 +3,17 @@
                     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone">
 
+    <Color x:Key="NavigationPanelColor">#FF2B2B2B</Color>
+
     <SolidColorBrush x:Key="PhoneDisabledBackgroundBrush" Color="#FFA5A5A5" />
-    <SolidColorBrush x:Key="NavigationPanelBrush" Color="#FF2B2B2B" />
+    <SolidColorBrush x:Key="NavigationPanelBrush" Color="{StaticResource NavigationPanelColor}" />
     <SolidColorBrush x:Key="NavigationPanelForegroundBrush" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="NavigationPanelButtonPressedBackgroundBrush" Color="#FF404040" />
     <SolidColorBrush x:Key="PhoneSecondaryForegroundBrush" Color="#99000000" />
     
-    <Style x:Key="SystemTrayStyle" TargetType="phone:PhoneApplicationPage">
-        <Setter Property="shell:SystemTray.BackgroundColor" Value="#FF2B2B2B" />
+    <Style x:Key="PageThemeStyle" TargetType="phone:PhoneApplicationPage">
+        <Setter Property="shell:SystemTray.BackgroundColor" Value="{StaticResource NavigationPanelColor}" />
+        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
     </Style>
 
     <Style x:Key="PanoramaItemHeaderTextStyle" TargetType="TextBlock">

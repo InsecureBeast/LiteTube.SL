@@ -25,9 +25,14 @@
             <converters:UppercaseConverter x:Key="UppercaseConverter"/>
             <converters:CommentMarginConverter x:Key="CommentMarginConverter"/>
             <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
-
+            
             <sys:Double x:Key="PanoramaItemHeaderFontSize">56</sys:Double>
 
+            <Color x:Key="PhoneBackgroundColor">#FFF1F0EE</Color>
+            
+            <SolidColorBrush x:Key="PhoneDarkAccentBrush" Color="#FFA5A5A5" />
+            <SolidColorBrush x:Key="PhoneLightAccentBrush" Color="#FFA5A5A5" />
+            
             <local:LocalizedStrings xmlns:local="clr-namespace:LiteTube" x:Key="LocalizedStrings"/>
 
             <shell:ApplicationBar x:Key="GlobalAppBar" IsVisible="True" IsMenuEnabled="True">

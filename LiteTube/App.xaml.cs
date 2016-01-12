@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using LiteTube.Common.Helpers;
 using Microsoft.Phone.Controls;
@@ -107,6 +108,29 @@ namespace LiteTube
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            var accentBrush = Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
+            if (accentBrush != null)
+            {
+                var accentColor = accentBrush.Color;
+                var accentLightColor = accentColor.Lerp(Colors.White, 0.25f);
+                var accentDarkColor = accentColor.Lerp(Colors.Black, 0.25f);
+
+                var accentDarkBrush = Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
+                if (accentDarkBrush != null)
+                    accentDarkBrush.Color = accentDarkColor;
+
+                var accentLightBrush = Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
+                if (accentLightBrush != null)
+                    accentLightBrush.Color = accentLightColor;
+
+                var backgroundBrush = Current.Resources["PhoneBackgroundBrush"] as SolidColorBrush;
+                if (backgroundBrush != null)
+                    backgroundBrush.Color = Color.FromArgb(255, 241, 240, 238); //#FFF1F0EE
+
+                var textBrush = Current.Resources["PhoneForegroundBrush"] as SolidColorBrush;
+                if (textBrush != null)
+                    textBrush.Color = Color.FromArgb(255, 64, 64, 64);
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)

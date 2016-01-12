@@ -15,7 +15,7 @@
     SupportedOrientations="Portrait"  
     Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
-    Style="{StaticResource SystemTrayStyle}"
+    Style="{StaticResource PageThemeStyle}"
     ApplicationBar = "{StaticResource GlobalAppBar}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->

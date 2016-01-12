@@ -13,7 +13,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
-    Style="{StaticResource SystemTrayStyle}">
+    Style="{StaticResource PageThemeStyle}">
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,7 @@
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -111,7 +111,8 @@
                             <Button BorderThickness="0"
                                     Margin="8"
                                     Command="{Binding NavigationPanelViewModel.ChannelCommand}"
-                                    CommandParameter="{Binding ChannelId}">
+                                    CommandParameter="{Binding ChannelId}"
+                                    Style="{StaticResource ImageButtonStyle}">
                                 <Image Source="{Binding ChannelImage}" 
                                        Stretch="UniformToFill" 
                                        Width="60"

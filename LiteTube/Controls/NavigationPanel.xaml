@@ -151,6 +151,7 @@
                             Height="100"
                             Visibility="{Binding IsAuthorized, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                             Click="LoginButton_Click"
+                            Style="{StaticResource ContentButtonStyle}"
                             x:Name="LoginButton">
                         <StackPanel Orientation="Vertical" 
                                     HorizontalAlignment="Center"
@@ -176,6 +177,7 @@
                             Width="90"
                             Height="100"
                             Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Style="{StaticResource ContentButtonStyle}"
                             x:Name="LoginoutButton">
                         <StackPanel Orientation="Vertical" 
                                     HorizontalAlignment="Center"
