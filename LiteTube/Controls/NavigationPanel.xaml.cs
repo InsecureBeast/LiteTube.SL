@@ -25,7 +25,7 @@ namespace LiteTube.Controls
             BackgroundGridPopup.Height = page.ActualHeight;
         }
 
-        private void Popup_Closed(object sender, object e)
+        private void Popup_Closed(object sender, EventArgs eventArgs)
         {
             MainMenuButton.IsChecked = false;
             LoginMenuButton.IsChecked = false;
