@@ -12,7 +12,8 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    Style="{StaticResource SystemTrayStyle}">
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

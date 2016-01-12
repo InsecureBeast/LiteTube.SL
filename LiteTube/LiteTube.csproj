@@ -312,6 +312,7 @@
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Find.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Home.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Save.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
     <Resource Include="Assets\PanoramaBackground.png" />
     <Content Include="Assets\AlignmentGrid.png" />

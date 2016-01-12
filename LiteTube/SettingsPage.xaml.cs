@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using LiteTube.ViewModels;
 using LiteTube.Common.Helpers;
 
@@ -26,6 +25,11 @@ namespace LiteTube
                 return;
 
             viewModel.Save();
+            NavigationService.GoBack();
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
             NavigationService.GoBack();
         }
     }
