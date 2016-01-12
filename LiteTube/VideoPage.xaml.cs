@@ -165,5 +165,11 @@ namespace LiteTube
             SupportedOrientations = SupportedPageOrientation.Portrait;
             Orientation = PageOrientation.Portrait;
         }
+
+        private void Find_Click(object sender, EventArgs e)
+        {
+            var datasource = App.ViewModel.DataSource;
+            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource));
+        }
     }
 }

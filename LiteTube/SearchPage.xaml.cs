@@ -66,5 +66,10 @@ namespace LiteTube
             SearchBox.Focus();
             SearchBox.SelectAll();
         }
+
+        private void Home_Click(object sender, EventArgs e)
+        {
+            NavigationHelper.GoHome();
+        }
     }
 }

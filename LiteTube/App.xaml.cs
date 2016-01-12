@@ -6,6 +6,7 @@ using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
+using LiteTube.Common.Helpers;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.Resources;
@@ -258,7 +259,7 @@ namespace LiteTube
                 //
                 // If a compiler error is hit then ResourceFlowDirection is missing from
                 // the resource file.
-                FlowDirection flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
+                var flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
                 RootFrame.FlowDirection = flow;
             }
             catch
@@ -275,6 +276,17 @@ namespace LiteTube
 
                 throw;
             }
+        }
+
+        private void Find_Click(object sender, EventArgs e)
+        {
+            var datasource = ViewModel.DataSource;
+            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource));
+        }
+
+        private void Home_Click(object sender, EventArgs e)
+        {
+            NavigationHelper.GoHome();
         }
     }
 }
