@@ -13,7 +13,7 @@
                 Height="100"
                 x:Name="Border"
                 Margin="0,0,0,10"
-                Background="{StaticResource PhoneDisabledBrush}">
+                Background="{StaticResource PhoneSecondaryBackgroundBrush}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

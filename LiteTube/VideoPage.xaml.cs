@@ -9,6 +9,7 @@ using LiteTube.ViewModels;
 using System.Diagnostics;
 using Windows.Devices.Sensors;
 using LiteTube.Common;
+using Microsoft.PlayerFramework;
 
 namespace LiteTube
 {
@@ -37,6 +38,7 @@ namespace LiteTube
         {
             base.OnNavigatedFrom(e);
             _sensor.OrientationChanged -= Sensor_OrientationChanged;
+            //player.Dispose();
         }
 
         private void Sensor_OrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)

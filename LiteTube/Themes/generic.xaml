@@ -17,6 +17,7 @@
     <SolidColorBrush x:Key="NavigationPanelForegroundBrush" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="NavigationPanelButtonPressedBackgroundBrush" Color="#FF404040" />
     <SolidColorBrush x:Key="PhoneSecondaryForegroundBrush" Color="#99000000" />
+    <SolidColorBrush x:Key="PhoneSecondaryBackgroundBrush" Color="#50000000" />
     
     <Style x:Key="PageThemeStyle" TargetType="phone:PhoneApplicationPage">
         <Setter Property="shell:SystemTray.BackgroundColor" Value="{StaticResource NavigationPanelColor}" />

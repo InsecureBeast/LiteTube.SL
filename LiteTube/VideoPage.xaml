@@ -99,6 +99,7 @@
 
                         <!--Info about publisher (channel)-->
                         <Grid Grid.Row="2"
+                              Background="{StaticResource PhoneSecondaryBackgroundBrush}"
                               x:Name="publisherInfo">
 
                             <Grid.ColumnDefinitions>

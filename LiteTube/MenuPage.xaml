@@ -19,7 +19,7 @@
     ApplicationBar = "{StaticResource GlobalAppBar}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
         <!--Pivot Control-->
         <phone:Pivot Title="LiteTube"
                      Name="Pivot"
