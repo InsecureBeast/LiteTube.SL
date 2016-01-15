@@ -27,7 +27,7 @@
             <converters:CommentMarginConverter x:Key="CommentMarginConverter"/>
             <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
             
-            <sys:Double x:Key="PanoramaItemHeaderFontSize">56</sys:Double>
+            <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
 
             <local:LocalizedStrings xmlns:local="clr-namespace:LiteTube" x:Key="LocalizedStrings"/>
 
@@ -40,10 +40,6 @@
                 </shell:ApplicationBar.MenuItems>-->
             </shell:ApplicationBar>
 
-            <Style x:Key="PhoneTextNormalStyle" TargetType="TextBlock" BasedOn="{StaticResource PhoneTextBlockBase}">
-                <Setter Property="Foreground" Value="{StaticResource PhoneMainForegroundBrush}"/>
-            </Style>
-            
         </ResourceDictionary>
     </Application.Resources>
 
