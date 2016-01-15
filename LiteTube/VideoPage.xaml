@@ -198,7 +198,8 @@
                                PosterSource="{Binding ImagePath}"
                                IsFullScreenVisible="True"
                                IsFullScreenEnabled="True"
-                               VerticalAlignment="Center">
+                               VerticalAlignment="Center"
+                               Foreground="White">
                 <mmppf:MediaPlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </mmppf:MediaPlayer.RenderTransform>

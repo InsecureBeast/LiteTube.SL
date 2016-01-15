@@ -4,7 +4,14 @@
                     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone">
 
     <Color x:Key="NavigationPanelColor">#FF2B2B2B</Color>
-
+    <Color x:Key="PhoneBackgroundColor">#FFF1F0EE</Color>
+    
+    <!-- Foreground colors -->
+    <SolidColorBrush x:Key="PhoneDarkAccentBrush" Color="#FFA5A5A5" />
+    <SolidColorBrush x:Key="PhoneLightAccentBrush" Color="#FFA5A5A5" />
+    <SolidColorBrush x:Key="PhoneMainForegroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="PhoneSubtleForegroundBrush" Color="#99FFFFFF" />
+    
     <SolidColorBrush x:Key="PhoneDisabledBackgroundBrush" Color="#FFA5A5A5" />
     <SolidColorBrush x:Key="NavigationPanelBrush" Color="{StaticResource NavigationPanelColor}" />
     <SolidColorBrush x:Key="NavigationPanelForegroundBrush" Color="#FFFFFFFF" />
@@ -21,5 +28,7 @@
         <Setter Property="FontSize" Value="{StaticResource PanoramaItemHeaderFontSize}"/>
         <Setter Property="CharacterSpacing" Value="-35"/>
     </Style>
+
+    
 
 </ResourceDictionary>
