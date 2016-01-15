@@ -16,7 +16,7 @@ namespace LiteTube
     {
         private double _normalHeight;
         private double _normalWidth;
-        private SimpleOrientationSensor _sensor;
+        private readonly SimpleOrientationSensor _sensor;
 
         public VideoPage()
         {
@@ -56,6 +56,9 @@ namespace LiteTube
                     return;
                 }
 
+                if (args.Orientation != SimpleOrientation.NotRotated) 
+                    return;
+                
                 SupportedOrientations = SupportedPageOrientation.Portrait;
                 Orientation = PageOrientation.Portrait;
             });

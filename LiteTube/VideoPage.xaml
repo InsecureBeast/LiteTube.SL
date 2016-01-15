@@ -199,7 +199,8 @@
                                IsFullScreenVisible="True"
                                IsFullScreenEnabled="True"
                                VerticalAlignment="Center"
-                               Foreground="White">
+                               IsSkipAheadVisible="False"
+                               IsSkipBackVisible="False">
                 <mmppf:MediaPlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </mmppf:MediaPlayer.RenderTransform>
