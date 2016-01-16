@@ -55,7 +55,7 @@
                 <ContentPresenter x:Name="SubscriptionsList"
                                   Content="{Binding SubscriptionChannelsViewModel}"
                                   ContentTemplate="{StaticResource CategoryLoadingListView}"
-                                  Style="{StaticResource PivotContentStyle}"/>
+                                  Margin="-50,-10,0,0"/>
             </phone:PivotItem>
 
             <!--Pivot item three-->
@@ -94,7 +94,7 @@
                          common:ItemClickCommand.Command="{Binding CategoryCommand}"
                          common:ItemClickCommand.CommandParameter="{Binding}"
                          ItemTemplate="{StaticResource CategoryItemTemplate}"
-                         Margin="0,-20,0,0">
+                         Margin="30,-20,0,0">
                 </ListBox>
             </phone:PivotItem>
         </phone:Pivot>

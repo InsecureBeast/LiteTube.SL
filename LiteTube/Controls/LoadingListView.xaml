@@ -9,7 +9,8 @@
     xmlns:common="clr-namespace:LiteTube.Common">
 
     <DataTemplate x:Key="CategoryItemTemplate">
-        <Grid Height="100"
+        <Border Height="100"
+              Width="370"
               x:Name="Border"
               Margin="0,0,0,10"
               Background="{StaticResource PhoneSecondaryBackgroundBrush}">
@@ -22,14 +23,13 @@
                             Grid.Column="0"
                             TextWrapping="Wrap" 
                             TextTrimming="WordEllipsis"
-                            MaxHeight="64"
                             FontSize="28"
                             FontWeight="Light"
                             VerticalAlignment="Center"
-                            Margin="20,0,20,0"
+                            Margin="20,0,0,0"
                             Foreground="{StaticResource PhoneSubtleBrush}"/>
                 <Border Grid.Column="1"
-                        Margin="0,0,20,0"
+                        Margin="20"
                         Width="55"
                         Height="55"
                         VerticalAlignment="Center"
@@ -38,7 +38,7 @@
                 </Border>
 
             </Grid>
-        </Grid>
+        </Border>
     </DataTemplate>
     
     <DataTemplate x:Key="LoadingListView" >

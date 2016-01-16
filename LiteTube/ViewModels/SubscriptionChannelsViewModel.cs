@@ -40,6 +40,9 @@ namespace LiteTube.ViewModels
 
         internal override void NavigateTo(NavigationObject navObject)
         {
+            if (navObject == null)
+                return;
+
             var model = navObject.ViewModel as SubscriptionNodeViewModel;
             if (model == null)
                 return;

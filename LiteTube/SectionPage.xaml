@@ -30,8 +30,7 @@
 
         <TextBlock Text="{Binding Title}"
                    Grid.Row="1"
-                   Style="{StaticResource PanoramaItemHeaderTextStyle}"
-                   Margin="12,0,12,20" />
+                   Style="{StaticResource TitleTextBlockStyle}"/>
 
         <ContentPresenter Grid.Row="2"
                           Margin="8,0,8,0"
