@@ -23,7 +23,7 @@
     
     <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationPanelBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="55"/>
+            <RowDefinition Height="56"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>

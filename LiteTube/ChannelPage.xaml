@@ -29,39 +29,47 @@
                                   DataContext="{Binding NavigationPanelViewModel}"/>
 
         <Grid Grid.Row="1"
-              Height="145">
+              Height="150">
             <Image Source="{Binding Image}" 
                    Stretch="Fill"
-                   Height="120"
+                   Height="125"
                    VerticalAlignment="Top"/>
             <StackPanel Orientation="Horizontal">
-                <Border Height="87.5"
-                        Width="90"
-                        VerticalAlignment="Bottom"
+                <Border VerticalAlignment="Bottom"
                         HorizontalAlignment="Left"
-                        Margin="8,0,0,0">
+                        Margin="24,0,0,0"
+                        BorderBrush="{StaticResource PhoneBackgroundBrush}"
+                        BorderThickness="3">
                     <Image Source="{Binding ChannelImage}" 
-                           Stretch="UniformToFill" 
                            Height="85"
                            Width="85"
+                           Stretch="UniformToFill" 
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Center"/>
                 </Border>
                 <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
-                       Margin="8,0,0,0"
-                       VerticalAlignment="Bottom"/>
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Bottom"
+                           FontWeight="SemiBold"/>
             </StackPanel>
         </Grid>
 
         <phone:Pivot Grid.Row="2">
-            <phone:PivotItem Header="videos"
-                       x:Uid="VideosPivotItem">
+            <phone:PivotItem x:Uid="VideosPivotItem">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="videos"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
                 <ContentPresenter Content="{Binding}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  Style="{StaticResource PivotContentStyle}"/>
             </phone:PivotItem>
-            <phone:PivotItem Header="channel info"
-                       x:Uid="ChannelInfoPivotItem">
-                <ScrollViewer Margin="8,0,8,0">
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock Text="channel info"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                <ScrollViewer Margin="10,-20,20,0">
                     <StackPanel>
                         <TextBlock TextWrapping="NoWrap"
                                    TextTrimming="WordEllipsis"
@@ -81,6 +89,10 @@
                 </ScrollViewer>
             </phone:PivotItem>
         </phone:Pivot>
+
+        <!--Before shipping remove this XAML and the image itself.-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" IsHitTestVisible="False" />-->
+
     </Grid>
 
 

@@ -44,7 +44,7 @@
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <Grid>
-                <toolkit:LongListMultiSelector Margin="-12,0,0,0" 
+                <toolkit:LongListMultiSelector Margin="-12,0,0,10" 
                                            ItemsSource="{Binding Items}"
                                            IsSelectionEnabled="False"
                                            EnforceIsSelectionEnabled="False"
