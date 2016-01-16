@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:LiteTube.Controls"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -23,9 +24,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--<controls:NavigationPanel Grid.Row="0" 
+        <controls:NavigationPanel Grid.Row="0" 
                                   x:Name="NavControl"
-                                  DataContext="{Binding NavigationPanelViewModel}"/>-->
+                                  DataContext="{Binding NavigationPanelViewModel}"/>
 
         <TextBlock Text="{Binding Title}"
                    Grid.Row="1"

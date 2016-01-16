@@ -153,7 +153,7 @@ namespace LiteTube
         private void SetVisibilityControls(Visibility visibility)
         {
             ApplicationBar.IsVisible = visibility == Visibility.Visible;
-            //NavPanel.Visibility = visibility;
+            NavControl.Visibility = visibility;
             Pivot.Visibility = visibility;
             SystemTray.IsVisible = visibility == Visibility.Visible;
         }
