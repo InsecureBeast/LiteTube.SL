@@ -25,16 +25,11 @@
 
             <DataTemplate x:Key="MiddlePanoramaHeader">
                 <TextBlock Text="{Binding}"
-                           FontSize="36"
+                           FontSize="{StaticResource PhoneFontSizeExtraLarge}"
                            FontFamily="{StaticResource PhoneFontFamilySemiLight}"
                            Foreground="{StaticResource PhoneSubtleBrush}"
                            Margin="-1,10,0,0"/>
             </DataTemplate>
-
-            <Style x:Key="PanoramaContentStyle" TargetType="ContentPresenter">
-                <Setter Property="Margin" Value="0,-20,0,0"/>
-            </Style>
-
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
     
@@ -66,12 +61,10 @@
             CurrentUICulture of the app at run time.
          -->
 
-        <controls:NavigationPanel Grid.Row="0" 
-                                  DataContext="{Binding NavigationPanelViewModel}"/>
-
         <!--Panorama control-->
         <phone:Panorama Background="{StaticResource PhoneBackgroundBrush}"
-                        Grid.Row="1">
+                        Grid.Row="1"
+                        Margin="0,-9,0,0">
             <!--<phone:Panorama.Background>
                 <ImageBrush ImageSource="/LiteTube;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>-->
@@ -107,7 +100,7 @@
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding}"
                                   ContentTemplate="{StaticResource CategoryLoadingListView}"
-                                  Margin="-27,-20, 0,0"/>
+                                  Margin="-12,-19, 0,0"/>
             </phone:PanoramaItem>
         </phone:Panorama>
 
@@ -117,8 +110,11 @@
             if the System Tray is hidden.
 
             Before shipping remove this XAML and the image itself.-->
-        <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
+        <controls:NavigationPanel Grid.Row="0" 
+                                  DataContext="{Binding NavigationPanelViewModel}"/>
+        
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

@@ -32,50 +32,76 @@
         <!--Pivot Control-->
         <phone:Pivot Name="Pivot"
                      Grid.Row="1"
+                     Margin="0,-12,0,0"
                      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=Default}">
             <!--Pivot item one-->
-            <phone:PivotItem Header="recommended for you"
-                             Name="RecommendedItem">
+            <phone:PivotItem Name="RecommendedItem">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="recommended for you"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="RecommendedList"
                                   Content="{Binding RecommendedSectionViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  Style="{StaticResource PivotContentStyle}"/>
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Header="subscribtions"
-                             Name="SubscribtionsItem">
+            <phone:PivotItem Name="SubscribtionsItem">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="subscribtions"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="SubscriptionsList"
                                   Content="{Binding SubscriptionChannelsViewModel}"
-                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
+                                  ContentTemplate="{StaticResource CategoryLoadingListView}"
+                                  Style="{StaticResource PivotContentStyle}"/>
             </phone:PivotItem>
 
             <!--Pivot item three-->
-            <phone:PivotItem Header="favorites"
-                             Name="FavoritesItem">
+            <phone:PivotItem Name="FavoritesItem">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="favorites"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="FavoritesList"
                                   Content="{Binding FavoritesViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  Style="{StaticResource PivotContentStyle}"/>
             </phone:PivotItem>
 
             <!--Pivot item four-->
-            <phone:PivotItem Header="watch history"
-                             Name="HistoryItem">
+            <phone:PivotItem Name="HistoryItem">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="watch history"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  Style="{StaticResource PivotContentStyle}"/>
             </phone:PivotItem>
 
             <!--Pivot item five-->
-            <phone:PivotItem Header="channels">
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock Text="channels"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
                 <ListBox ItemsSource="{Binding Categories}"
                          Name="VideoCategoriesList"
                          toolkit:TiltEffect.IsTiltEnabled="True"
                          common:ItemClickCommand.Command="{Binding CategoryCommand}"
                          common:ItemClickCommand.CommandParameter="{Binding}"
-                         ItemTemplate="{StaticResource CategoryItemTemplate}">
+                         ItemTemplate="{StaticResource CategoryItemTemplate}"
+                         Margin="0,-20,0,0">
                 </ListBox>
             </phone:PivotItem>
         </phone:Pivot>
+
+        <!--Before shipping remove this XAML and the image itself.-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
+
     </Grid>
     
 </phone:PhoneApplicationPage>

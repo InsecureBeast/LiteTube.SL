@@ -43,7 +43,8 @@
                    Grid.Column="1"
                    Margin="0,6,0,0"
                    Foreground="{StaticResource NavigationPanelForegroundBrush}"
-                   Style="{StaticResource PhoneTextLargeStyle}"
+                   FontSize="28"
+                   FontWeight="ExtraLight"
                    HorizontalAlignment="Center"/>
 
         <ToggleButton Grid.Column="2" 

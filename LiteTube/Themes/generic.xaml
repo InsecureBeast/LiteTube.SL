@@ -28,4 +28,18 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="PivotItemHeaderTextStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}" />
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}" />
+        <Setter Property="CharacterSpacing" Value="{StaticResource PanoramaItemCharacterSpacing}" />
+    </Style>
+
+    <Style x:Key="PanoramaContentStyle" TargetType="ContentPresenter">
+        <Setter Property="Margin" Value="0,-20,0,0"/>
+    </Style>
+
+    <Style x:Key="PivotContentStyle" TargetType="ContentPresenter">
+        <Setter Property="Margin" Value="0,-10,0,0"/>
+    </Style>
+
 </ResourceDictionary>
