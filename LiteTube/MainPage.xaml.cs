@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using System.Windows.Threading;
 using LiteTube.Common;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube
 {
@@ -37,6 +38,11 @@ namespace LiteTube
 
                 await App.ViewModel.DataSource.LoginSilently(string.Empty);
             }
+        }
+
+        private void Find_Click(object sender, EventArgs e)
+        {
+            NavigationHelper.GoToFindPage();
         }
     }
 }

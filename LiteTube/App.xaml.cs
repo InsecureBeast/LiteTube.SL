@@ -283,8 +283,7 @@ namespace LiteTube
 
         private void Find_Click(object sender, EventArgs e)
         {
-            var datasource = ViewModel.DataSource;
-            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource));
+            NavigationHelper.GoToFindPage();
         }
 
         private void Home_Click(object sender, EventArgs e)

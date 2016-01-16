@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Shell;
+﻿using LiteTube.ViewModels;
+using Microsoft.Phone.Shell;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -32,6 +33,12 @@ namespace LiteTube.Common.Helpers
             var model = PhoneApplicationService.Current.State["model"];
             page.DataContext = model;
             PhoneApplicationService.Current.State["model"] = null;
+        }
+
+        public static void GoToFindPage()
+        {
+            var datasource = App.ViewModel.DataSource;
+            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource));
         }
     }
 }
