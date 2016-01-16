@@ -23,19 +23,18 @@
                 <ResourceDictionary Source="Themes/ProfileSections.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="PanoramaItemHeaderTextStyle" TargetType="TextBlock">
-                <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
-                <Setter Property="FontSize" Value="36"/>
-                <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
-                <Setter Property="CharacterSpacing" Value="-35"/>
+            <DataTemplate x:Key="MiddlePanoramaHeader">
+                <TextBlock Text="{Binding}"
+                           FontSize="36"
+                           FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                           Foreground="{StaticResource PhoneSubtleBrush}"
+                           Margin="-1,10,0,0"/>
+            </DataTemplate>
+
+            <Style x:Key="PanoramaContentStyle" TargetType="ContentPresenter">
+                <Setter Property="Margin" Value="0,-20,0,0"/>
             </Style>
 
-            <DataTemplate x:Key="MiddlePanoramaHeader">
-                <ContentPresenter>
-                    <TextBlock Text="{Binding}" 
-                               Style="{StaticResource PanoramaItemHeaderTextStyle}"/>
-                </ContentPresenter>
-            </DataTemplate>
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
     
@@ -83,25 +82,32 @@
                                 Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding ActivitySectionViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  Style="{StaticResource PanoramaContentStyle}"/>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="Most polpular">
+            <phone:PanoramaItem Header="Most polpular"
+                                HeaderTemplate="{StaticResource MiddlePanoramaHeader}">
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding MostPopularViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  Style="{StaticResource PanoramaContentStyle}"/>
             </phone:PanoramaItem>
 
             <phone:PanoramaItem Header="Main menu"
-                                x:Uid="MenuSection">
+                                x:Uid="MenuSection"
+                                HeaderTemplate="{StaticResource MiddlePanoramaHeader}">
                 <ContentPresenter Content="{Binding ProfileSectionViewModel}"
-                                  ContentTemplate="{StaticResource ProfileSectionsDataTemplate}"/>
+                                  ContentTemplate="{StaticResource ProfileSectionsDataTemplate}"
+                                  Style="{StaticResource PanoramaContentStyle}"/>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="Video categories">
+            <phone:PanoramaItem Header="Video categories"
+                                HeaderTemplate="{StaticResource MiddlePanoramaHeader}">
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding}"
-                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
+                                  ContentTemplate="{StaticResource CategoryLoadingListView}"
+                                  Margin="-27,-20, 0,0"/>
             </phone:PanoramaItem>
         </phone:Panorama>
 
@@ -111,7 +117,7 @@
             if the System Tray is hidden.
 
             Before shipping remove this XAML and the image itself.-->
-        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
+        <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />
 
     </Grid>
 
