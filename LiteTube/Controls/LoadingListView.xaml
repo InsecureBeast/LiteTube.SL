@@ -117,12 +117,14 @@
                        VerticalAlignment="Center"
                        x:Uid="Loading"
                        Text="Loading..."
+                       Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        x:Uid="IsEmpty"
                        Text="Items not found"
+                       Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
@@ -143,12 +145,14 @@
                        VerticalAlignment="Center"
                        x:Uid="Loading"
                        Text="Loading..."
+                       Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        x:Uid="IsEmpty"
                        Text="Items not found"
+                       Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>

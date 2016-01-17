@@ -113,8 +113,8 @@ namespace LiteTube.DataModel
             _youTubeServiceAuth = GetYTService(_credential);
             SettingsHelper.SaveUserRefreshToken(_credential.Token.RefreshToken);
             SettingsHelper.SaveUserAccessToken(_credential.Token.AccessToken);
-            SettingsHelper.SaveUserId(_credential.UderId); //UderId!!!!!!!
-            return _credential.UderId;
+            SettingsHelper.SaveUserId(_credential.UserId);
+            return _credential.UserId;
         }
 
         public bool IsAuthorized
