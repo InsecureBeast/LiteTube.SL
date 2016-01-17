@@ -4,3 +4,5 @@ LiteTube/obj/*
 LiteTube/packages/*
 LiteTube/.vs/LiteTube/v14/.suo
 LiteTube/LiteTube.csproj.user
+LiteTube/Bin/ARM/Debug/*
+LiteTube/Bin/x86/Debug/*

@@ -13,13 +13,11 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
         private IProfile _profile;
-        private IDataSource _dataSource;
         private ObservableCollection<CommentNodeViewModel> _comments;
 
         public CommentsViewModel(string videoId, IDataSource dataSource) : base(dataSource)
         {
             _videoId = videoId;
-            _dataSource = dataSource;
             LoadProfile();
             _comments = new ObservableCollection<CommentNodeViewModel>();
         }

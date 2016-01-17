@@ -32,7 +32,9 @@
                 <toolkit:ListPicker.FullModeItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}"
-                                   Style="{StaticResource PhoneTextLargeStyle}"/>
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   Foreground="White"
+                                   Margin="0,0,0,15"/>
                     </DataTemplate>
                 </toolkit:ListPicker.FullModeItemTemplate>
             </toolkit:ListPicker>
@@ -40,11 +42,13 @@
             <TextBlock Name="VideoQuality"
                        Text="Video quality"
                        x:Uid="VideoQuality"
-                       Style="{StaticResource PhoneTextLargeStyle}"/>
+                       Style="{StaticResource PhoneTextLargeStyle}"
+                       HorizontalAlignment="Left" />
             <toolkit:ListPicker ItemsSource="{Binding VideoQualities}"
                                 SelectedItem ="{Binding SelectedQuality, Mode=TwoWay}"
                                 HorizontalAlignment="Left"
                                 MinWidth="250"/>
+
         </StackPanel>
     </Grid>
 
