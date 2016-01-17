@@ -8,6 +8,24 @@
     xmlns:interactivity="clr-namespace:LiteTube.Interactivity"
     xmlns:common="clr-namespace:LiteTube.Common">
 
+    <DataTemplate x:Key="LoadingTextBlockDataTemplate">
+        <Grid>
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       x:Uid="Loading"
+                       Text="Loading..."
+                       Style="{StaticResource LoadingTextBlockStyle}"
+                       Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       x:Uid="IsEmpty"
+                       Text="Items not found"
+                       Style="{StaticResource LoadingTextBlockStyle}"
+                       Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </Grid>
+    </DataTemplate>
+    
     <DataTemplate x:Key="CategoryItemTemplate">
         <Border Height="100"
               Width="370"
@@ -44,7 +62,7 @@
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <Grid>
-                <toolkit:LongListMultiSelector Margin="-12,0,0,10" 
+                <toolkit:LongListMultiSelector Margin="-12,0,0,0" 
                                            ItemsSource="{Binding Items}"
                                            IsSelectionEnabled="False"
                                            EnforceIsSelectionEnabled="False"
@@ -113,19 +131,8 @@
                       Visibility="Visible"/>
             </Grid>
 
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       x:Uid="Loading"
-                       Text="Loading..."
-                       Style="{StaticResource LoadingTextBlockStyle}"
-                       Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       x:Uid="IsEmpty"
-                       Text="Items not found"
-                       Style="{StaticResource LoadingTextBlockStyle}"
-                       Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <ContentPresenter Content="{Binding}"
+                              ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>
         </Grid>
     </DataTemplate>
 
@@ -141,19 +148,8 @@
                 </i:Interaction.Behaviors>-->
             </toolkit:LongListMultiSelector>
 
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       x:Uid="Loading"
-                       Text="Loading..."
-                       Style="{StaticResource LoadingTextBlockStyle}"
-                       Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       x:Uid="IsEmpty"
-                       Text="Items not found"
-                       Style="{StaticResource LoadingTextBlockStyle}"
-                       Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <ContentPresenter Content="{Binding}"
+                              ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>
         </Grid>
     </DataTemplate>
 
@@ -203,18 +199,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       x:Uid="Loading"
-                       Text="Loading..."
-                       Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       x:Uid="IsEmpty"
-                       Text="Items not found"
-                       Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <ContentPresenter Content="{Binding}"
+                              ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>
         </Grid>
     </DataTemplate>
-    
 </ResourceDictionary>

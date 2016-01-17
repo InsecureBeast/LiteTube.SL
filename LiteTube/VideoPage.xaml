@@ -36,9 +36,14 @@
 
         <!--Pivot Control-->
         <phone:Pivot Name="Pivot"
-                     Grid.Row="2">
+                     Grid.Row="2"
+                     Margin="0,-10,0,0">
             <!--Pivot item one-->
-            <phone:PivotItem Header="details">
+            <phone:PivotItem Margin="24,15,24,0">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="details"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
                 <ScrollViewer>
                     <Grid >
                         <Grid.RowDefinitions>
@@ -50,11 +55,13 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                   Margin="0,0,0,5"
+                                   FontWeight="SemiBold"
                                    TextWrapping="Wrap"/>
 
                         <Grid Grid.Row="1"
-                          x:Name="videoInfo">
+                              x:Name="videoInfo">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -70,14 +77,14 @@
                             </Grid.RowDefinitions>
 
                             <StackPanel Grid.Row="1" 
-                                    Grid.Column="0"
-                                    Orientation="Horizontal">
+                                        Grid.Column="0"
+                                        Orientation="Horizontal">
                                 <ToggleButton Command="{Binding LikeCommand}"
                                               IsChecked="{Binding IsLiked, Mode=TwoWay}">
                                     <ContentPresenter ContentTemplate="{StaticResource LikeIcon}"/>
                                 </ToggleButton>
                                 <TextBlock Text="{Binding Likes}"
-                                           Style ="{StaticResource PhoneTextTitle2Style}"
+                                           Style ="{StaticResource PhoneTextSmallStyle}"
                                            VerticalAlignment="Center"/>
                             </StackPanel>
 
@@ -89,23 +96,24 @@
                                     <ContentPresenter ContentTemplate="{StaticResource DislikeIcon}"/>
                                 </ToggleButton>
                                 <TextBlock Text="{Binding Dislikes}"
-                                           Style ="{StaticResource PhoneTextTitle2Style}"
+                                           Style ="{StaticResource PhoneTextSmallStyle}"
                                            VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="4"
-                                   Grid.Row="1" 
-                                   Style ="{StaticResource PhoneTextTitle2Style}"
-                                   VerticalAlignment="Center">
-                            <Run Text="{Binding ViewCount}" />
-                            <Run Text="views" x:Uid="Views"/>
+                                       Grid.Row="1" 
+                                       Style ="{StaticResource PhoneTextSmallStyle}"
+                                       VerticalAlignment="Center">
+                                <Run Text="{Binding ViewCount}" />
+                                <Run Text="views" x:Uid="Views"/>
                             </TextBlock>
                         </Grid>
 
                         <!--Info about publisher (channel)-->
                         <Grid Grid.Row="2"
                               Background="{StaticResource PhoneSecondaryBackgroundBrush}"
-                              x:Name="publisherInfo">
+                              x:Name="publisherInfo"
+                              Margin="0,12,0,0">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -115,7 +123,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Button BorderThickness="0"
-                                    Margin="8"
+                                    Margin="8,8,0,8"
                                     Command="{Binding NavigationPanelViewModel.ChannelCommand}"
                                     CommandParameter="{Binding ChannelId}"
                                     Style="{StaticResource ImageButtonStyle}">
@@ -125,25 +133,23 @@
                                        Height="60"/>
                             </Button>
 
-                            <StackPanel Grid.Column="1"
-                                        Margin="0">
+                            <StackPanel Grid.Column="1">
                                 <HyperlinkButton Content="{Binding ChannelTitle}"
                                                  Command="{Binding NavigationPanelViewModel.ChannelCommand}"
                                                  CommandParameter="{Binding ChannelId}"
-                                                 MaxWidth="180"/>
+                                                 FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                 HorizontalAlignment="Left"/>
                                 <TextBlock TextWrapping="NoWrap"
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            TextTrimming="WordEllipsis"
-                                           MaxWidth="180" 
-                                           HorizontalAlignment="Left" 
-                                           Margin="0">
-                                <Run Text="{Binding ChannelSubscribers}" />
-                                <Run Text="subscribers" x:Uid="Subscribers"/>
+                                           HorizontalAlignment="Left">
+                                    <Run Text="{Binding ChannelSubscribers}" />
+                                    <Run Text="subscribers" x:Uid="Subscribers"/>
                                 </TextBlock>
                                 <TextBlock TextWrapping="NoWrap"
                                            TextTrimming="WordEllipsis"
-                                           MaxWidth="180"
-                                           Style="{StaticResource PhoneTextSmallStyle}">
+                                           Style="{StaticResource PhoneTextSmallStyle}"
+                                           HorizontalAlignment="Left">
                                 <Run Text="{Binding ChannelVideoCount}" />
                                 <Run Text="videos" x:Uid="Videos"/>
                                 </TextBlock>
@@ -152,46 +158,62 @@
                             <Button Content="Subscribe"
                                     x:Uid="SubscribeButton"
                                     Grid.Column="3"
-                                    Margin="8"
+                                    Margin="0,8,8,8"
                                     Command="{Binding SubscribeCommand}"
+                                    FontSize="{StaticResource PhoneFontSizeSmall}"
                                     Visibility="{Binding IsSubscribed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                    HorizontalAlignment="Left"/>
+                                    HorizontalAlignment="Right"/>
 
                             <Button Content="Unsubscribe"
                                     x:Uid="UnsubscribeButton"
                                     Grid.Column="3"
-                                    HorizontalAlignment="Left"
-                                    Margin="5"
+                                    HorizontalAlignment="Right"
+                                    FontSize="{StaticResource PhoneFontSizeSmall}"
+                                    Margin="0,8,8,8"
                                     Command="{Binding UnsubscribeCommand}"
                                     Visibility="{Binding IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         </Grid>
 
                         <TextBlock Grid.Row="3"
-                               TextWrapping="NoWrap"
-                               Style="{StaticResource PhoneTextLargeStyle}"
-                               x:Name="publishedTextBlock">
+                                   TextWrapping="NoWrap"
+                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                   Margin="{StaticResource DefaultControlMargin}"
+                                   x:Name="publishedTextBlock">
                             <Run Text="Published at" x:Uid="PublishedAt" />
                             <Run Text="{Binding PublishedAt}"/>
                         </TextBlock>
 
                         <TextBlock Text="{Binding Description}"
-                                    Grid.Row="4"
-                                    Style="{StaticResource PhoneTextSmallStyle}"
-                                    TextWrapping="Wrap"/>
+                                   Grid.Row="4"
+                                   Style="{StaticResource PhoneTextSmallStyle}"
+                                   Margin="{StaticResource DefaultControlMargin}"
+                                   TextWrapping="Wrap"/>
                     </Grid>
                 </ScrollViewer>
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Header="related">
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock Text="related"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                
                 <ContentPresenter Content="{Binding RelatedVideosViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  Style="{StaticResource PivotContentStyle}"/>
             </phone:PivotItem>
 
             <!--Pivot item three-->
-            <phone:PivotItem Header="comments">
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock Text="comments"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                
                 <ContentPresenter Content="{Binding CommentsViewModel}"
-                                  ContentTemplate="{StaticResource CommentsLoadingListView}"/>
+                                  ContentTemplate="{StaticResource CommentsLoadingListView}"
+                                  Style="{StaticResource PivotContentStyle}"/>
             </phone:PivotItem>
         </phone:Pivot>
 

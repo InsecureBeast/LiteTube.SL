@@ -15,6 +15,9 @@
     <SolidColorBrush x:Key="NavigationPanelButtonPressedBackgroundBrush" Color="#FF404040" />
     <SolidColorBrush x:Key="PhoneSecondaryForegroundBrush" Color="#99000000" />
     <SolidColorBrush x:Key="PhoneSecondaryBackgroundBrush" Color="#50000000" />
+
+    <Thickness x:Key="DefaultTextBlockMargin">0,12,0,5</Thickness>
+    <Thickness x:Key="DefaultControlMargin">0,12,0,0</Thickness>
     
     <Style x:Key="PageThemeStyle" TargetType="phone:PhoneApplicationPage">
         <Setter Property="shell:SystemTray.BackgroundColor" Value="{StaticResource NavigationPanelColor}" />
@@ -39,7 +42,7 @@
     </Style>
 
     <Style x:Key="PivotContentStyle" TargetType="ContentPresenter">
-        <Setter Property="Margin" Value="0,-10,0,0"/>
+        <Setter Property="Margin" Value="0,-15,0,0"/>
     </Style>
 
     <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
