@@ -205,7 +205,7 @@
             </phone:PivotItem>
 
             <!--Pivot item three-->
-            <phone:PivotItem>
+            <phone:PivotItem Margin="24,15,24,0">
                 <phone:PivotItem.Header>
                     <TextBlock Text="comments"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
@@ -213,7 +213,7 @@
                 
                 <ContentPresenter Content="{Binding CommentsViewModel}"
                                   ContentTemplate="{StaticResource CommentsLoadingListView}"
-                                  Style="{StaticResource PivotContentStyle}"/>
+                                  />
             </phone:PivotItem>
         </phone:Pivot>
 

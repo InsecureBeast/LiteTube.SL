@@ -176,15 +176,17 @@
                                    Margin="{Binding IsReplay, Converter={StaticResource CommentMarginConverter}}"/>
 
                             <StackPanel Grid.Column="1"
-                                        Margin="8,0,0,0">
+                                        Margin="0,0,0,0">
 
                                 <StackPanel Orientation="Horizontal">
                                     <HyperlinkButton Content="{Binding AuthorDisplayName}"
-                                                     Margin="0, -5,0,0"
+                                                     Margin="0,0,0,0"
                                                      Command="{Binding ChannelCommand}"
-                                                     CommandParameter="{Binding AuthorChannelId}"/>
+                                                     CommandParameter="{Binding AuthorChannelId}"
+                                                     FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                     <TextBlock TextWrapping="NoWrap"
                                                Text="{Binding PublishedAtRaw}"
+                                               Style="{StaticResource PhoneTextNormalStyle}"
                                                Margin="0,0,0,0"/>
                                 </StackPanel>
 
