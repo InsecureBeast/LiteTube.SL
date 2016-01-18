@@ -1,11 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:LiteTube.Converters"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:interactivity="clr-namespace:LiteTube.Interactivity"
     xmlns:common="clr-namespace:LiteTube.Common">
 
     <DataTemplate x:Key="LoadingTextBlockDataTemplate">
@@ -62,19 +58,13 @@
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <Grid>
-                <toolkit:LongListMultiSelector Margin="-12,0,0,0" 
-                                           ItemsSource="{Binding Items}"
-                                           IsSelectionEnabled="False"
-                                           EnforceIsSelectionEnabled="False"
-                                           
-                                           toolkit:TiltEffect.IsTiltEnabled="True" 
-                                           common:ItemClickCommand.Command="{Binding ItemClickCommand}">
-                    <!--<i:Interaction.Behaviors>
-                        <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
-                                                                 LoadMoreCommand="{Binding LoadMoreCommand}"/>
-                    </i:Interaction.Behaviors>-->
+                <ListBox Margin="15,0,0,5" 
+                         ItemsSource="{Binding Items}"
+                         toolkit:TiltEffect.IsTiltEnabled="True" 
+                         common:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                         common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}">
 
-                    <toolkit:LongListMultiSelector.ItemTemplate>
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,5">
                                 <Grid.ColumnDefinitions>
@@ -122,8 +112,8 @@
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
-                    </toolkit:LongListMultiSelector.ItemTemplate>
-                </toolkit:LongListMultiSelector>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Grid x:Name="BlockMulti" 
                       Width="50" 
                       Background="Transparent" 
@@ -138,15 +128,12 @@
 
     <DataTemplate x:Key="CategoryLoadingListView" >
         <Grid>
-            <toolkit:LongListMultiSelector ItemsSource="{Binding CategoryItems}"
-                                           ItemTemplate="{StaticResource CategoryItemTemplate}"
-                                           toolkit:TiltEffect.IsTiltEnabled="True"
-                                           common:ItemClickCommand.Command="{Binding ItemClickCommand}">
-                <!--<i:Interaction.Behaviors>
-                    <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
-                                                             LoadMoreCommand="{Binding LoadMoreCommand}"/>
-                </i:Interaction.Behaviors>-->
-            </toolkit:LongListMultiSelector>
+            <ListBox ItemsSource="{Binding CategoryItems}"
+                     ItemTemplate="{StaticResource CategoryItemTemplate}"
+                     toolkit:TiltEffect.IsTiltEnabled="True"
+                     common:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                     common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}">
+            </ListBox>
 
             <ContentPresenter Content="{Binding}"
                               ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>
@@ -155,11 +142,8 @@
 
     <DataTemplate x:Key="CommentsLoadingListView" >
         <Grid x:Name="ContentRoot">
-            <ListBox ItemsSource="{Binding Comments}">
-                <!--<i:Interaction.Behaviors>
-                    <interactivity:LoadItemsByScrollBehavior IsEnabled="True"
-                                                             LoadMoreCommand="{Binding LoadMoreCommand}"/>
-                </i:Interaction.Behaviors>-->
+            <ListBox ItemsSource="{Binding Comments}"
+                     common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,0,0,12">

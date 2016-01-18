@@ -235,6 +235,8 @@ namespace LiteTube.ViewModels
 
         internal virtual void NavigateTo(NavigationObject navObject)
         {
+            if (navObject == null)
+                return;
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
             NavigationHelper.Navigate(view, new VideoPageViewModel(id, _dataSource));
