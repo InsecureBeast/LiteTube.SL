@@ -196,7 +196,7 @@
                         <TextBlock Text="{Binding Description}"
                                    Grid.Row="4"
                                    Style="{StaticResource PhoneTextSmallStyle}"
-                                   Margin="{StaticResource DefaultControlMargin}"
+                                   Margin="{StaticResource DefaultTextBlockMargin}"
                                    TextWrapping="Wrap"/>
                     </Grid>
                 </ScrollViewer>
