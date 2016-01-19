@@ -35,55 +35,55 @@
                      Margin="0,-12,0,0"
                      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=Default}">
             <!--Pivot item one-->
-            <phone:PivotItem Name="RecommendedItem">
+            <phone:PivotItem Name="RecommendedItem"
+                             Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="recommended for you"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter x:Name="RecommendedList"
                                   Content="{Binding RecommendedSectionViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"
-                                  Style="{StaticResource PivotContentStyle}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Name="SubscribtionsItem">
+            <phone:PivotItem Name="SubscribtionsItem"
+                             Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="subscribtions"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter x:Name="SubscriptionsList"
                                   Content="{Binding SubscriptionChannelsViewModel}"
-                                  ContentTemplate="{StaticResource CategoryLoadingListView}"
-                                  Margin="15,-10,10,0"/>
+                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item three-->
-            <phone:PivotItem Name="FavoritesItem">
+            <phone:PivotItem Name="FavoritesItem"
+                             Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="favorites"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter x:Name="FavoritesList"
                                   Content="{Binding FavoritesViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"
-                                  Style="{StaticResource PivotContentStyle}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item four-->
-            <phone:PivotItem Name="HistoryItem">
+            <phone:PivotItem Name="HistoryItem"
+                             Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="watch history"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"
-                                  Style="{StaticResource PivotContentStyle}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item five-->
-            <phone:PivotItem>
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="channels"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
@@ -94,8 +94,7 @@
                          common:ItemClickCommand.Command="{Binding CategoryCommand}"
                          common:ItemClickCommand.CommandParameter="{Binding}"
                          ItemTemplate="{StaticResource CategoryItemTemplate}"
-                         Margin="30,-20,0,0">
-                </ListBox>
+                         ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"/>
             </phone:PivotItem>
         </phone:Pivot>
 

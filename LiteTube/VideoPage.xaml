@@ -39,7 +39,7 @@
                      Grid.Row="2"
                      Margin="0,-10,0,0">
             <!--Pivot item one-->
-            <phone:PivotItem Margin="24,15,24,0">
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="details"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
@@ -56,12 +56,12 @@
 
                         <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
                                    Style="{StaticResource PhoneTextNormalStyle}"
-                                   Margin="0,0,0,5"
                                    FontWeight="SemiBold"
                                    TextWrapping="Wrap"/>
 
                         <Grid Grid.Row="1"
-                              x:Name="videoInfo">
+                              x:Name="videoInfo"
+                              Margin="{StaticResource DefaultControlMargin}">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -123,7 +123,7 @@
                         <Grid Grid.Row="2"
                               Background="{StaticResource PhoneSecondaryBackgroundBrush}"
                               x:Name="publisherInfo"
-                              Margin="0,12,0,0">
+                              Margin="{StaticResource DefaultControlMargin}">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -202,19 +202,18 @@
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem>
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="related"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 
                 <ContentPresenter Content="{Binding RelatedVideosViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"
-                                  Style="{StaticResource PivotContentStyle}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item three-->
-            <phone:PivotItem Margin="24,15,24,0">
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="comments"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>

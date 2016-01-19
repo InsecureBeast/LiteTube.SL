@@ -25,10 +25,8 @@
 
             <DataTemplate x:Key="MiddlePanoramaHeader">
                 <TextBlock Text="{Binding}"
-                           FontSize="{StaticResource PhoneFontSizeExtraLarge}"
-                           FontFamily="{StaticResource PhoneFontFamilyLight}"
-                           Foreground="{StaticResource PhoneSubtleBrush}"
-                           Margin="-1,10,0,0"/>
+                           Style="{StaticResource TitleTextBlockStyle}"
+                           Margin="0"/>
             </DataTemplate>
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
@@ -63,8 +61,7 @@
 
         <!--Panorama control-->
         <phone:Panorama Background="{StaticResource PhoneBackgroundBrush}"
-                        Grid.Row="1"
-                        Margin="0,-9,0,0">
+                        Grid.Row="1">
             <!--<phone:Panorama.Background>
                 <ImageBrush ImageSource="/LiteTube;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>-->
@@ -100,7 +97,7 @@
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding}"
                                   ContentTemplate="{StaticResource CategoryLoadingListView}"
-                                  Margin="-12,-19, 0,0"/>
+                                  Margin="15,-19, 0,0"/>
             </phone:PanoramaItem>
         </phone:Panorama>
 

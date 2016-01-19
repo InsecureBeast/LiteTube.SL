@@ -36,7 +36,7 @@
                           x:Name="ChannelList"
                           Content="{Binding}"
                           ContentTemplate="{StaticResource CategoryLoadingListView}"
-                          Margin="24,0,24,0"/>
+                          Margin="{StaticResource DefaultListBoxMargin}"/>
     </Grid>
 
 </phone:PhoneApplicationPage>

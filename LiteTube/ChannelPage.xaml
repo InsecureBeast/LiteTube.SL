@@ -55,21 +55,22 @@
         </Grid>
 
         <phone:Pivot Grid.Row="2">
-            <phone:PivotItem x:Uid="VideosPivotItem">
+            <phone:PivotItem x:Uid="VideosPivotItem"
+                             Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="videos"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter Content="{Binding}"
-                                  ContentTemplate="{StaticResource LoadingListView}"
-                                  Style="{StaticResource PivotContentStyle}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
-            <phone:PivotItem>
+
+            <phone:PivotItem Margin="24,10,24,0">
                 <phone:PivotItem.Header>
                     <TextBlock Text="channel info"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
-                <ScrollViewer Margin="10,-20,20,0">
+                <ScrollViewer>
                     <StackPanel>
                         <TextBlock TextWrapping="NoWrap"
                                    TextTrimming="WordEllipsis"

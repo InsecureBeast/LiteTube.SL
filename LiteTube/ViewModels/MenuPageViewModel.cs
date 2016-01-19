@@ -251,6 +251,9 @@ namespace LiteTube.ViewModels
 
         private void CategoryLoad(NavigationObject navObject)
         {
+            if (navObject == null)
+                return;
+
             var item = (GuideCategoryNodeViewModel)navObject.ViewModel;
             var id = item.CategoryId;
             var title = item.Title;

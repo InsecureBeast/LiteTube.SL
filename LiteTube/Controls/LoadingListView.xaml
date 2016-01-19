@@ -23,47 +23,45 @@
     </DataTemplate>
     
     <DataTemplate x:Key="CategoryItemTemplate">
-        <Border Height="100"
-              Width="370"
-              x:Name="Border"
-              Margin="0,0,0,10"
-              Background="{StaticResource PhoneSecondaryBackgroundBrush}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Title}" 
-                            Grid.Column="0"
-                            TextWrapping="Wrap" 
-                            TextTrimming="WordEllipsis"
-                            FontSize="28"
-                            FontWeight="Light"
-                            VerticalAlignment="Center"
-                            Margin="20,0,0,0"
-                            Foreground="{StaticResource PhoneSubtleBrush}"/>
-                <Border Grid.Column="1"
-                        Margin="20"
-                        Width="55"
-                        Height="55"
-                        VerticalAlignment="Center"
-                        Visibility="{Binding Image, Converter={StaticResource StringToVisibilityConverter}}">
-                    <Image Source="{Binding Image}"/>
-                </Border>
+        <Grid Margin="0,0,0,5"
+              Background="{StaticResource PhoneSecondaryBackgroundBrush}"
+              Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            </Grid>
-        </Border>
+            <TextBlock Text="{Binding Title}" 
+                       Grid.Column="0"
+                       TextWrapping="Wrap" 
+                       TextTrimming="WordEllipsis"
+                       FontSize="28"
+                       FontWeight="Light"
+                       VerticalAlignment="Center"
+                       Margin="20,0,0,0"
+                       Foreground="{StaticResource PhoneSubtleBrush}"/>
+            
+            <Border Grid.Column="1"
+                    Margin="20"
+                    Width="55"
+                    Height="55"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding Image, Converter={StaticResource StringToVisibilityConverter}}">
+                <Image Source="{Binding Image}"/>
+            </Border>
+        </Grid>
     </DataTemplate>
     
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <Grid>
-                <ListBox Margin="15,0,0,5" 
+                <ListBox Margin="0" 
                          ItemsSource="{Binding Items}"
                          toolkit:TiltEffect.IsTiltEnabled="True" 
                          common:ItemClickCommand.Command="{Binding ItemClickCommand}"
-                         common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}">
-
+                         common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
+                         ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
+                    
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,5">
@@ -132,7 +130,9 @@
                      ItemTemplate="{StaticResource CategoryItemTemplate}"
                      toolkit:TiltEffect.IsTiltEnabled="True"
                      common:ItemClickCommand.Command="{Binding ItemClickCommand}"
-                     common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}">
+                     common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
+                     ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"
+                     Margin="0">
             </ListBox>
 
             <ContentPresenter Content="{Binding}"
@@ -143,10 +143,11 @@
     <DataTemplate x:Key="CommentsLoadingListView" >
         <Grid x:Name="ContentRoot">
             <ListBox ItemsSource="{Binding Comments}"
-                     common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}">
+                     common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
+                     ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,0,0,12">
+                        <Grid Margin="0,0,0,15">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
