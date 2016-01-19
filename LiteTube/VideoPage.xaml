@@ -57,7 +57,8 @@
                         <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
                                    Style="{StaticResource PhoneTextNormalStyle}"
                                    FontWeight="SemiBold"
-                                   TextWrapping="Wrap"/>
+                                   TextWrapping="Wrap"
+                                   Margin="0"/>
 
                         <Grid Grid.Row="1"
                               x:Name="videoInfo"
