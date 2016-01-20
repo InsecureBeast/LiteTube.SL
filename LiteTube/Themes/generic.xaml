@@ -19,7 +19,7 @@
 
     <Thickness x:Key="DefaultTextBlockMargin">0,12,0,5</Thickness>
     <Thickness x:Key="DefaultControlMargin">0,12,0,0</Thickness>
-    <Thickness x:Key="DefaultListBoxMargin">24,12,15,0</Thickness>
+    <Thickness x:Key="DefaultListBoxMargin">24,12,20,0</Thickness>
     
     <Style x:Key="PageThemeStyle" TargetType="phone:PhoneApplicationPage">
         <Setter Property="shell:SystemTray.BackgroundColor" Value="{StaticResource NavigationPanelColor}" />
