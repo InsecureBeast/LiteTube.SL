@@ -334,6 +334,8 @@
     <Content Include="Toolkit.Content\ApplicationBar.Home.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Save.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Subscribe.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Unsubscribe.png" />
     <Resource Include="Assets\PanoramaBackground.png" />
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">

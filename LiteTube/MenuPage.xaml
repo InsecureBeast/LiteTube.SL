@@ -17,7 +17,7 @@
     Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
     Style="{StaticResource PageThemeStyle}"
-    ApplicationBar = "{StaticResource GlobalAppBar}">
+    ApplicationBar="{StaticResource GlobalAppBar}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">

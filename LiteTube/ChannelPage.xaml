@@ -14,7 +14,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
     Style="{StaticResource PageThemeStyle}"
-    ApplicationBar = "{StaticResource GlobalAppBar}">
+    ApplicationBar="{StaticResource GlobalAppBar}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
@@ -95,6 +95,4 @@
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" IsHitTestVisible="False" />-->
 
     </Grid>
-
-
 </phone:PhoneApplicationPage>

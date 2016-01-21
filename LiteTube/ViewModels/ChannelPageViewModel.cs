@@ -1,4 +1,6 @@
 ﻿//using LiteTube.Commands;
+
+using System.Windows.Input;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
@@ -14,9 +16,8 @@ namespace LiteTube.ViewModels
         private ulong? _channelSubscribers;
         private string _image;
         private string _channelImage;
-
-        //private SubscribeCommand _subscribeCommand;
-        //private UnsubscribeCommand _unsubscribeCommand;
+        private SubscribeCommand _subscribeCommand;
+        private UnsubscribeCommand _unsubscribeCommand;
         private bool _isSubscribed;
 
         public ChannelPageViewModel(string channelId, IDataSource dataSource) : base(dataSource)
@@ -73,15 +74,15 @@ namespace LiteTube.ViewModels
             }
         }
 
-        //public ICommand SubscribeCommand
-        //{
-        //    get { return _subscribeCommand; }
-        //}
+        public ICommand SubscribeCommand
+        {
+            get { return _subscribeCommand; }
+        }
 
-        //public ICommand UnsubscribeCommand
-        //{
-        //    get { return _unsubscribeCommand; }
-        //}
+        public ICommand UnsubscribeCommand
+        {
+            get { return _unsubscribeCommand; }
+        }
 
         public bool IsSubscribed
         {
@@ -114,8 +115,8 @@ namespace LiteTube.ViewModels
 
         private void InitializeCommands()
         {
-            //_subscribeCommand = new SubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
-            //_unsubscribeCommand = new UnsubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
+            _subscribeCommand = new SubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
+            _unsubscribeCommand = new UnsubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
         }
 
         private void LoadChannel(string channelId)

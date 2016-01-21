@@ -37,14 +37,14 @@
                  x:Uid="SearchBox"
                  x:Name="SearchBox"
                  KeyUp="TextBox_KeyUp"
-                 Margin="24,0,24,24"/>
+                 Margin="24,0,20,5"/>
         </Border>
 
         <ContentPresenter Grid.Row="2"
                           Name="SearchList"
                           Content="{Binding}"
                           ContentTemplate="{StaticResource LoadingListView}"
-                          Margin="10,12,10,0"/>
+                          Margin="{StaticResource DefaultContentMargin}"/>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
