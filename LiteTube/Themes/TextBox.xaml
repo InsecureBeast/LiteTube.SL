@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="TextBox">
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="0.99999"/>
         <Setter Property="Background" Value="#FFFFFFFF"/>
         <Setter Property="Foreground" Value="#FF000000"/>
         <Setter Property="BorderBrush" Value="{StaticResource PhoneBorderBrush}"/>

@@ -241,11 +241,13 @@
                                  MaxHeight="150"
                                  MinHeight="45"
                                  Margin="8,0,0,0"/>
-                        <Button Height="45"
-                                VerticalAlignment="Top"
-                                ContentTemplate="{StaticResource HomeIcon}"
+                        <Button VerticalAlignment="Top"
+                                Content="&#xe122;" 
+                                FontFamily="Segoe UI Symbol"
+                                FontSize="20"
+                                Style="{StaticResource AppBarButtonStyle}"
                                 Grid.Column="2"
-                                Margin="8,0,0,0" />
+                                Margin="8,2,0,0" />
                     </Grid>
                     
                     <ContentPresenter Content="{Binding CommentsViewModel}"
