@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Windows;
-using System.Windows.Media;
 using Microsoft.Phone.Controls;
 
 namespace LiteTube.Common
@@ -12,6 +10,8 @@ namespace LiteTube.Common
 
         public static void ShowDialog(Exception exception)
         {
+            _exception = exception;
+
             // Show the message dialog
             var messageBox = new CustomMessageBox
             {
