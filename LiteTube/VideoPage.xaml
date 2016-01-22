@@ -240,12 +240,16 @@
                                  Grid.Column="1"
                                  MaxHeight="150"
                                  MinHeight="45"
-                                 Margin="8,0,0,0"/>
+                                 Margin="8,0,0,0"
+                                 Text="{Binding CommentsViewModel.CommentText, Mode=TwoWay}"
+                                 IsEnabled="{Binding CommentsViewModel.IsAddingComment, Converter={StaticResource InverseBooleanConverter}}"/>
                         <Button VerticalAlignment="Top"
                                 Content="&#xe122;" 
                                 FontFamily="Segoe UI Symbol"
                                 FontSize="20"
                                 Style="{StaticResource AppBarButtonStyle}"
+                                Command="{Binding CommentsViewModel.AddCommentCommand}"
+                                IsEnabled="{Binding CommentsViewModel.IsAddingComment, Converter={StaticResource InverseBooleanConverter}}"
                                 Grid.Column="2"
                                 Margin="8,2,0,0" />
                     </Grid>

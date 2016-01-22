@@ -445,5 +445,19 @@ namespace LiteTube.DataModel
                 throw e;
             }
         }
+
+        public Task<IComment> AddComment(string channelId, string videoId, string text)
+        {
+            try
+            {
+                Debug.WriteLine("AddComment methode called");
+                return _remoteDataSource.AddComment(channelId, videoId, text);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("AddComment methode called with exception " + e.Message);
+                throw e;
+            }
+        }
     }
 }

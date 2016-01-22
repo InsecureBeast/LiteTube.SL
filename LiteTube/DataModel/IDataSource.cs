@@ -44,6 +44,7 @@ namespace LiteTube.DataModel
         Task<IResponceList> GetFavorites(string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
         Task<IProfile> GetProfile();
+        Task<IComment> AddComment(string channelId, string videoId, string text);
 
         void Subscribe(IListener<UpdateSettingsEventArgs> listener);
         void Subscribe(IListener<UpdateContextEventArgs> listener);
@@ -303,6 +304,11 @@ namespace LiteTube.DataModel
         public async Task<IProfile> GetProfile()
         {
             return await _remoteDataSource.GetProfile();
+        }
+
+        public async Task<IComment> AddComment(string channelId, string videoId, string text)
+        {
+            return await _remoteDataSource.AddComment(channelId, videoId, text);
         }
 
         public void Subscribe(IListener<UpdateSettingsEventArgs> listener)

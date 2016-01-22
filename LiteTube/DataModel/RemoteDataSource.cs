@@ -47,6 +47,7 @@ namespace LiteTube.DataModel
         Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
         Task<IProfile> GetProfile();
+        Task<IComment> AddComment(string channelId, string videoId, string text);
     }
     
     class RemoteDataSource : IRemoteDataSource
@@ -504,7 +505,8 @@ namespace LiteTube.DataModel
                 var name = response.Items.First().Snippet.Title;
                 var image = new MThumbnailDetails(response.Items.First().Snippet.Thumbnails).GetThumbnailUrl();
                 var registered = response.Items.First().Snippet.PublishedAt;
-                _profileInfo = new MProfile(image, name, registered);
+                var channelId = response.Items.First().Id;
+                _profileInfo = new MProfile(channelId, image, name, registered);
             }
         }
 
@@ -628,11 +630,44 @@ namespace LiteTube.DataModel
             {
                 const string image = "https://yt3.ggpht.com/-v6fA9YDXkMs/AAAAAAAAAAI/AAAAAAAAAAA/_GjtZC3QejY/s88-c-k-no/photo.jpg";
                 const string displayName = "";
-                return new MProfile(image, displayName);
+                return new MProfile(string.Empty, image, displayName);
             }
 
             await SetRelatedPlaylists();
             return _profileInfo;
+        }
+
+        public async Task<IComment> AddComment(string channelId, string videoId, string text)
+        {
+            if (!IsAuthorized)
+                return null;
+
+            // Insert channel comment by omitting videoId.
+            // Create a comment snippet with text.
+            var commentSnippet = new CommentSnippet { TextOriginal = text };
+
+            // Create a top-level comment with snippet.
+            var topLevelComment = new Comment {Snippet = commentSnippet};
+
+            // Create a comment thread snippet with channelId and top-level comment.
+            var commentThreadSnippet  = new CommentThreadSnippet
+            {
+                ChannelId = channelId,
+                VideoId = videoId,
+                TopLevelComment = topLevelComment
+            };
+            
+            // Create a comment thread with snippet.
+            var commentThread = new CommentThread { Snippet = commentThreadSnippet };
+
+            var youtubeService = _youTubeServiceControl.GetAuthorizedService();
+            var request = youtubeService.CommentThreads.Insert(commentThread, "snippet");
+            request.Key = _youTubeServiceControl.ApiKey;
+
+            var response = await request.ExecuteAsync();
+            //небольшой хак. т.к. response не содержит текст((
+            response.Snippet.TopLevelComment.Snippet.TextDisplay = text;
+            return new MComment(response);
         }
     }
 }

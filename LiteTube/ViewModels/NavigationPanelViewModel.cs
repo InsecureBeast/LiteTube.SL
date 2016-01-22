@@ -23,6 +23,7 @@ namespace LiteTube.ViewModels
         private bool _isProfileChecked;
         private string _profileRegistered;
         private string _profileSecondDisplayName;
+        private string _profileChannelId;
 
         public NavigationPanelViewModel(IDataSource datasource)
         {
@@ -161,6 +162,16 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public string ProfileChannelId
+        {
+            get { return _profileChannelId; }
+            set
+            {
+                NotifyOfPropertyChanged(() => ProfileChannelId);
+                _profileChannelId = value;
+            }
+        }
+
         private void Login()
         {
             _datasource.Login();
@@ -218,6 +229,8 @@ namespace LiteTube.ViewModels
                     ProfileSecondDisplayName = names[1];
                 if (profile.Registered != null)
                     ProfileRegistered = profile.Registered.Value.ToString("d");
+
+                ProfileChannelId = profile.ChannelId;
             });
         }
 

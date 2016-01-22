@@ -133,7 +133,7 @@ namespace LiteTube.DataModel
                 ClientSecret = SECRET
             };
 
-            var scope = new List<string>() { YouTubeService.Scope.Youtube };
+            var scope = new List<string>() { YouTubeService.Scope.YoutubeForceSsl };
             return await GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scope, username, CancellationToken.None);
         }
 
@@ -166,7 +166,7 @@ namespace LiteTube.DataModel
             var initializer = new GoogleAuthorizationCodeFlow.Initializer
             {
                 ClientSecrets = clientSecrets,
-                Scopes = new [] { YouTubeService.Scope.Youtube }
+                Scopes = new [] { YouTubeService.Scope.YoutubeForceSsl }
             };
 
             var flow = new GoogleAuthorizationCodeFlow(initializer);

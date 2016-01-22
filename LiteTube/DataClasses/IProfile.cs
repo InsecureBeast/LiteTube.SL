@@ -9,17 +9,20 @@ namespace LiteTube.DataClasses
         string Image { get; }
         string DisplayName { get; }
         DateTime? Registered { get; }
+        string ChannelId { get; }
     }
 
     class MProfile : IProfile
     {
-        public MProfile(string image, string displayName)
+        public MProfile(string channelId, string image, string displayName)
         {
             Image = image;
             DisplayName = displayName;
+            ChannelId = channelId;
         }
 
-        public MProfile(string image, string displayName, DateTime? registered) : this(image, displayName)
+        public MProfile(string channelId, string image, string displayName, DateTime? registered)
+            : this(channelId, image, displayName)
         {
             Registered = registered;
         }
@@ -40,6 +43,11 @@ namespace LiteTube.DataClasses
         {
             get;
             private set;
+        }
+
+        public string ChannelId
+        {
+            get; private set;
         }
     }
 }

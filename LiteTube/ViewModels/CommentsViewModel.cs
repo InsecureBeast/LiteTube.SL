@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using System.Windows.Input;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,13 +14,17 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
         private IProfile _profile;
-        private ObservableCollection<CommentNodeViewModel> _comments;
+        private readonly ObservableCollection<CommentNodeViewModel> _comments;
+        private readonly RelayCommand _addCommentCommand;
+        private string _commentText;
+        private bool _isAddingComment;
 
         public CommentsViewModel(string videoId, IDataSource dataSource) : base(dataSource)
         {
             _videoId = videoId;
             LoadProfile();
             _comments = new ObservableCollection<CommentNodeViewModel>();
+            _addCommentCommand = new RelayCommand(AddComment);
         }
 
         public ObservableCollection<CommentNodeViewModel> Comments
@@ -35,6 +40,31 @@ namespace LiteTube.ViewModels
                     return _profile.Image;
 
                 return string.Empty;
+            }
+        }
+
+        public ICommand AddCommentCommand
+        {
+            get { return _addCommentCommand; }
+        }
+
+        public string CommentText
+        {
+            get { return _commentText; }
+            set
+            {
+                _commentText = value;
+                NotifyOfPropertyChanged(() => CommentText);
+            }
+        }
+
+        public bool IsAddingComment
+        {
+            get { return _isAddingComment; }
+            set
+            {
+                _isAddingComment = value;
+                NotifyOfPropertyChanged(() => IsAddingComment);
             }
         }
 
@@ -75,6 +105,16 @@ namespace LiteTube.ViewModels
                 _profile = await _dataSource.GetProfile();
                 NotifyOfPropertyChanged(() => ProfileImage);
             });
+        }
+        
+        private async void AddComment()
+        {
+            IsAddingComment = true;
+            var myChannelId = _profile.ChannelId;
+            var myComment = await _dataSource.AddComment(myChannelId, _videoId, CommentText);
+            _comments.Insert(0, new CommentNodeViewModel(myComment, _dataSource));
+            CommentText = string.Empty;
+            IsAddingComment = false;
         }
     }
 }
