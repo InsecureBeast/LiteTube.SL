@@ -6,6 +6,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using LiteTube.Common.Tools;
 using LiteTube.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -22,8 +23,8 @@ namespace LiteTube
         {
             InitializeComponent();
 
-            _subscribeButton = CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Subscribe.png", "Subscribe", Subscribe_Click);
-            _unsubscribeButton = CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Unsubscribe.png", "Unsubscribe", Unsubscribe_Click);
+            _subscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Subscribe.png", "Subscribe", Subscribe_Click);
+            _unsubscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Unsubscribe.png", "Unsubscribe", Unsubscribe_Click);
         }
 
         private ChannelPageViewModel ViewModel
@@ -70,17 +71,6 @@ namespace LiteTube
             }
 
             ApplicationBar.Buttons.Add(_subscribeButton);
-        }
-
-        private ApplicationBarIconButton CreateApplicationBarIconButton(string iconUri, string caption, EventHandler handler)
-        {
-            var button = new ApplicationBarIconButton
-                {
-                    IconUri = new Uri(iconUri, UriKind.Relative),
-                    Text = caption
-                };
-            button.Click += handler;
-            return button;
         }
 
         private void ClearAppBar()

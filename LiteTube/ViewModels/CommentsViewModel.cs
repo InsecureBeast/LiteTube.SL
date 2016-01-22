@@ -112,9 +112,14 @@ namespace LiteTube.ViewModels
             IsAddingComment = true;
             var myChannelId = _profile.ChannelId;
             var myComment = await _dataSource.AddComment(myChannelId, _videoId, CommentText);
+            if (myComment == null)
+            {
+                IsAddingComment = false;
+                return;
+            }
             _comments.Insert(0, new CommentNodeViewModel(myComment, _dataSource));
             CommentText = string.Empty;
-            IsAddingComment = false;
+            IsAddingComment = false;            
         }
     }
 }

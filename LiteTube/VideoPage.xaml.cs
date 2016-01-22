@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using LiteTube.Common.Tools;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.Common.Helpers;
@@ -9,7 +10,6 @@ using LiteTube.ViewModels;
 using System.Diagnostics;
 using Windows.Devices.Sensors;
 using LiteTube.Common;
-using Microsoft.PlayerFramework;
 
 namespace LiteTube
 {
@@ -18,6 +18,9 @@ namespace LiteTube
         private double _normalHeight;
         private double _normalWidth;
         private readonly SimpleOrientationSensor _sensor;
+        private readonly IApplicationBar _currentApplicationBar;
+        private readonly IApplicationBar _sendApplicationBar;
+        private readonly ApplicationBarIconButton _sendApplicationBarButton;
 
         public VideoPage()
         {
@@ -25,7 +28,42 @@ namespace LiteTube
             Loaded += OnLoaded;
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
+            CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
+            CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
+
             _sensor = SimpleOrientationSensor.GetDefault();
+
+            _sendApplicationBar = new ApplicationBar();
+            _sendApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Send.png", "Send", Send_Click);
+            _sendApplicationBar.Buttons.Add(_sendApplicationBarButton);
+
+            _currentApplicationBar = new ApplicationBar();
+            _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
+            _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Find.png", "Find", Find_Click));
+
+            ApplicationBar = _currentApplicationBar;
+        }
+
+        private void CommentTextBoxOnTextChanged(object sender, TextChangedEventArgs textChangedEventArgs)
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            viewModel.CommentsViewModel.CommentText = CommentTextBox.Text;
+            _sendApplicationBarButton.IsEnabled = !string.IsNullOrEmpty(CommentTextBox.Text);
+        }
+
+        private void CommentTextBoxOnLostFocus(object sender, RoutedEventArgs routedEventArgs)
+        {
+            ApplicationBar = _currentApplicationBar;
+        }
+
+        private void CommentTextBoxOnGotFocus(object sender, RoutedEventArgs routedEventArgs)
+        {
+            ApplicationBar = _sendApplicationBar;
+            _sendApplicationBarButton.IsEnabled = !string.IsNullOrEmpty(CommentTextBox.Text);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -175,6 +213,15 @@ namespace LiteTube
         {
             var datasource = App.ViewModel.DataSource;
             NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource));
+        }
+
+        private void Send_Click(object sender, EventArgs e)
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            viewModel.CommentsViewModel.AddCommentCommand.Execute(null);
         }
     }
 }

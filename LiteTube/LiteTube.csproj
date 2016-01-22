@@ -108,6 +108,7 @@
     <Compile Include="Common\Helpers\NavigationHelper.cs" />
     <Compile Include="Common\ScrollViewerMonitor.cs" />
     <Compile Include="Common\SubscribeCommand.cs" />
+    <Compile Include="Common\Tools\ApplicationBarHelper.cs" />
     <Compile Include="Common\Tools\ThemeManager.cs" />
     <Compile Include="Common\UnsubscribeCommand.cs" />
     <Compile Include="Converters\DurationConverter.cs" />
@@ -335,6 +336,7 @@
     <Content Include="Toolkit.Content\ApplicationBar.Home.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Save.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Send.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Subscribe.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Unsubscribe.png" />
     <Resource Include="Assets\PanoramaBackground.png" />

@@ -642,6 +642,9 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return null;
 
+            if (string.IsNullOrEmpty(text))
+                return null;
+
             // Insert channel comment by omitting videoId.
             // Create a comment snippet with text.
             var commentSnippet = new CommentSnippet { TextOriginal = text };
