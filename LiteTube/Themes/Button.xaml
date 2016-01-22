@@ -81,7 +81,11 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
+    <!--<Style TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
+    </Style>-->
+
+    <Style x:Key="DarkButtonStyle" TargetType="Button">
+        <Setter Property="BorderBrush" Value="White"/>
     </Style>
 
     <Style x:Key="NavigationControlButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">

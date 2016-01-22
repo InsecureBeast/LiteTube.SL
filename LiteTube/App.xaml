@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="Themes/Button.xaml"/>
                 <ResourceDictionary Source="Themes/ToggleButton.xaml"/>
                 <ResourceDictionary Source="Themes/TextBox.xaml"/>
+                <ResourceDictionary Source="Themes/CustomMessageBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible"/>
@@ -41,7 +42,6 @@
                     <shell:ApplicationBarMenuItem Text="MenuItem 2" Click="MenuItem2_Click" />
                 </shell:ApplicationBar.MenuItems>-->
             </shell:ApplicationBar>
-
         </ResourceDictionary>
     </Application.Resources>
 

@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using LiteTube.Common;
 using Microsoft.Phone.Controls;
@@ -42,10 +41,6 @@ namespace LiteTube
             var model = DataContext as SearchPageViewModel;
             if (model.Items.Count > 0)
                 _firstLoad = false;
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
         }
 
         private async void TextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)

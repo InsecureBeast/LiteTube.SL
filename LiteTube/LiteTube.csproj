@@ -103,6 +103,7 @@
     <Compile Include="ChannelPage.xaml.cs">
       <DependentUpon>ChannelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\ExceptionDialog.cs" />
     <Compile Include="Common\Extensions\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />
     <Compile Include="Common\Helpers\NavigationHelper.cs" />
@@ -274,6 +275,10 @@
     <Page Include="SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\CustomMessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Button.xaml">
       <Generator>MSBuild:Compile</Generator>

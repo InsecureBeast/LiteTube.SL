@@ -24,7 +24,7 @@ namespace LiteTube.Common
 
         public void ShowException(Exception exception)
         {
-            //ExceptionDialog.ShowDialog(exception);
+            ExceptionDialog.ShowDialog(exception);
         }
     }
 }

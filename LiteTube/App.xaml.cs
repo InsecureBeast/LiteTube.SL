@@ -83,7 +83,6 @@ namespace LiteTube
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
-
         }
 
         // prevents crash when trying to navigate to current page
@@ -109,6 +108,7 @@ namespace LiteTube
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            //TODO get from settings))
             ThemeManager.GoToLightTheme();
         }
 
@@ -156,6 +156,7 @@ namespace LiteTube
                 Debugger.Break();
             }
 
+            _container.DialogService.ShowException(e.ExceptionObject);
             e.Handled = true;
         }
 
