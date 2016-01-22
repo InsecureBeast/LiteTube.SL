@@ -69,6 +69,31 @@ namespace LiteTube.DataModel
             var responce = HttpGetAsync(url, accessToken);
         }
 
+        public static async Task<IEnumerable<string>> HttpGetAutoCompleteAsync(string query)
+        {
+            var uri = string.Format("http://suggestqueries.google.com/complete/search?client=youtube&ds=yt&q={0}", query);
+            var response = await HttpGetAsync(uri, string.Empty);
+            
+            if (string.IsNullOrEmpty(response))
+                return null;
+
+            var regex = new Regex(@"\[(.*?),0\]");
+            var list = new List<string>();
+            response = response.Remove(0, 21);
+            var colm = regex.Matches(response);
+            foreach (Match match in colm)
+            {
+                //TODO вот эту лабуду бы в regexp'e отбросить. Пока не получилось
+                var str = match.Value.Replace("[", "");
+                str = str.Replace("\"", "");
+                str = str.Replace(",0]", "");
+                if (!list.Contains(str))
+                    list.Add(str);
+            }
+            
+            return list;
+        }
+
         /// <exception cref="WebException">An error occurred while downloading the resource. </exception>
         private static async Task<string>HttpGetAsync(string uri, string accessToken)
         {
@@ -89,9 +114,9 @@ namespace LiteTube.DataModel
             var result = new List<string>();
             if (string.IsNullOrEmpty(nextPageToken))
             {
-                var responce = await HttpGetAsync(url, accessToken);
+                var response = await HttpGetAsync(url, accessToken);
                 var regex = new Regex(@"watch\?v=(.*)");
-                var colm = regex.Matches(responce);
+                var colm = regex.Matches(response);
                 foreach (Match match in colm)
                 {
                     var end = match.Value.IndexOf("\"", StringComparison.Ordinal);

@@ -45,6 +45,7 @@ namespace LiteTube.DataModel
         Task<IVideoItem> GetVideoItem(string videoId);
         Task<IProfile> GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
+        Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
 
         void Subscribe(IListener<UpdateSettingsEventArgs> listener);
         void Subscribe(IListener<UpdateContextEventArgs> listener);
@@ -309,6 +310,11 @@ namespace LiteTube.DataModel
         public async Task<IComment> AddComment(string channelId, string videoId, string text)
         {
             return await _remoteDataSource.AddComment(channelId, videoId, text);
+        }
+
+        public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
+        {
+            return await _remoteDataSource.GetAutoCompleteSearchItems(query);
         }
 
         public void Subscribe(IListener<UpdateSettingsEventArgs> listener)

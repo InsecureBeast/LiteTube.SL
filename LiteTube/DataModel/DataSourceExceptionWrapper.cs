@@ -459,5 +459,19 @@ namespace LiteTube.DataModel
                 throw e;
             }
         }
+
+        public Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
+        {
+            try
+            {
+                Debug.WriteLine("GetAutoCompleteSearchItems methode called");
+                return _remoteDataSource.GetAutoCompleteSearchItems(query);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetAutoCompleteSearchItems methode called with exception " + e.Message);
+                throw e;
+            }
+        }
     }
 }

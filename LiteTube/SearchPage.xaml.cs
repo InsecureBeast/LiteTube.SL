@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Navigation;
+using LiteTube.Common;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using LiteTube.ViewModels;
 using LiteTube.Common.Helpers;
 
@@ -11,11 +14,13 @@ namespace LiteTube
     public partial class SearchPage : PhoneApplicationPage
     {
         private bool _firstLoad = true;
+        private readonly ObservableCollection<string> _autoCompleteItems = new ObservableCollection<string>(); 
 
         public SearchPage()
         {
             InitializeComponent();
             Loaded += SearchPage_Loaded;
+            SearchBox.ItemsSource = _autoCompleteItems;
         }
 
         private void SearchPage_Loaded(object sender, RoutedEventArgs e)
@@ -52,24 +57,38 @@ namespace LiteTube
                     return;
 
                 Focus();
-                SearchBox.IsReadOnly = true;
 
                 viewModel.SearchString = SearchBox.Text;
                 await viewModel.Search();
-
-                SearchBox.IsReadOnly = false;
             }
         }
 
         private void Find_Click(object sender, EventArgs e)
         {
+            var textbox = VisualHelper.FindChild<TextBox>(SearchBox);
+            if (textbox == null)
+                return;
+
             SearchBox.Focus();
-            SearchBox.SelectAll();
+            //textbox.SelectAll();
         }
 
         private void Home_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoHome();
+        }
+
+        private async void SearchBox_OnPopulating(object sender, PopulatingEventArgs e)
+        {
+            var result = await App.ViewModel.DataSource.GetAutoCompleteSearchItems(SearchBox.Text);
+            
+            _autoCompleteItems.Clear();
+            foreach (var str in result)
+            {
+                _autoCompleteItems.Add(str);
+            }
+
+            SearchBox.PopulateComplete();
         }
     }
 }

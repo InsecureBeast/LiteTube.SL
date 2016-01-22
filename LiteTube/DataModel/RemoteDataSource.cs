@@ -11,6 +11,8 @@ using MyToolkit.Multimedia;
 using System.Net;
 using Google;
 using Windows.ApplicationModel.Activation;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace LiteTube.DataModel
 {
@@ -48,6 +50,7 @@ namespace LiteTube.DataModel
         Task<IVideoItem> GetVideoItem(string videoId);
         Task<IProfile> GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
+        Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
     }
     
     class RemoteDataSource : IRemoteDataSource
@@ -671,6 +674,11 @@ namespace LiteTube.DataModel
             //небольшой хак. т.к. response не содержит текст((
             response.Snippet.TopLevelComment.Snippet.TextDisplay = text;
             return new MComment(response);
+        }
+
+        public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
+        {
+            return await YouTubeWeb.HttpGetAutoCompleteAsync(query);
         }
     }
 }

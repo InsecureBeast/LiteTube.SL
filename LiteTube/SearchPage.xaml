@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:LiteTube.Controls"
@@ -32,12 +33,14 @@
         <Border Grid.Row="1"
                 Background="{StaticResource NavigationPanelBrush}"
                 Margin="0">
-            <TextBox 
-                 Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Default}"
-                 x:Uid="SearchBox"
-                 x:Name="SearchBox"
-                 KeyUp="TextBox_KeyUp"
-                 Margin="24,0,20,5"/>
+            <toolkit:AutoCompleteBox Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                                     MinimumPrefixLength="2"
+                                     FilterMode="ContainsCaseSensitive"
+                                     Populating="SearchBox_OnPopulating"
+                                     x:Uid="SearchBox"
+                                     x:Name="SearchBox"
+                                     KeyUp="TextBox_KeyUp"
+                                     Margin="24,0,20,5"/>
         </Border>
 
         <ContentPresenter Grid.Row="2"
