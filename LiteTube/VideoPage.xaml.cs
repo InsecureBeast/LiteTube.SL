@@ -21,6 +21,7 @@ namespace LiteTube
         private readonly IApplicationBar _currentApplicationBar;
         private readonly IApplicationBar _sendApplicationBar;
         private readonly ApplicationBarIconButton _sendApplicationBarButton;
+        private readonly ApplicationBarIconButton _favoritesApplicationBarButton;
 
         public VideoPage()
         {
@@ -41,7 +42,9 @@ namespace LiteTube
             _currentApplicationBar = new ApplicationBar();
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Find.png", "Find", Find_Click));
-            
+
+            _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click);
+
             ApplicationBar = _currentApplicationBar;
         }
 
@@ -76,7 +79,11 @@ namespace LiteTube
                 return;
 
             if (viewModel.NavigationPanelViewModel.IsAuthorized)
-                _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click));
+            {
+                if (_currentApplicationBar.Buttons.Contains(_favoritesApplicationBarButton))
+                    return;
+                _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
