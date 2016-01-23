@@ -41,7 +41,7 @@ namespace LiteTube
             _currentApplicationBar = new ApplicationBar();
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Find.png", "Find", Find_Click));
-
+            
             ApplicationBar = _currentApplicationBar;
         }
 
@@ -70,6 +70,13 @@ namespace LiteTube
         {
             NavigationHelper.OnNavigatedTo(this);
             _sensor.OrientationChanged += Sensor_OrientationChanged;
+
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            if (viewModel.NavigationPanelViewModel.IsAuthorized)
+                _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -222,6 +229,15 @@ namespace LiteTube
                 return;
 
             viewModel.CommentsViewModel.AddCommentCommand.Execute(null);
+        }
+
+        private void AddToFavorites_Click(object sender, EventArgs e)
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            viewModel.AddFavoritesCommand.Execute(null);
         }
     }
 }

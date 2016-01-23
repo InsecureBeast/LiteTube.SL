@@ -342,6 +342,7 @@
     <Content Include="Toolkit.Content\ApplicationBar.Save.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Send.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.StarAdd.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Subscribe.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Unsubscribe.png" />
     <Resource Include="Assets\PanoramaBackground.png" />
