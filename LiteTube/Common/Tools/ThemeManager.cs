@@ -41,6 +41,10 @@ namespace LiteTube.Common.Tools
                 var disabledBackgroundBrush = Application.Current.Resources["PhoneDisabledBrush"] as SolidColorBrush;
                 if (disabledBackgroundBrush != null)
                     disabledBackgroundBrush.Color = Color.FromArgb(255, 165, 165, 165);
+
+                var phoneBorderBrush = Application.Current.Resources["PhoneBorderBrush"] as SolidColorBrush;
+                if (phoneBorderBrush != null)
+                    phoneBorderBrush.Color = Color.FromArgb(178, 0, 0, 0); //75% of black
             }
         }
 
@@ -80,6 +84,10 @@ namespace LiteTube.Common.Tools
                 var disabledBackgroundBrush = Application.Current.Resources["PhoneDisabledBrush"] as SolidColorBrush;
                 if (disabledBackgroundBrush != null)
                     disabledBackgroundBrush.Color = Color.FromArgb(255, 165, 165, 165);
+
+                var phoneBorderBrush = Application.Current.Resources["PhoneBorderBrush"] as SolidColorBrush;
+                if (phoneBorderBrush != null)
+                    phoneBorderBrush.Color = Color.FromArgb(178, 255, 255, 255); //75% of white
             }
         }
     }
