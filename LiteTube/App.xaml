@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="Themes/ToggleButton.xaml"/>
                 <ResourceDictionary Source="Themes/TextBox.xaml"/>
                 <ResourceDictionary Source="Themes/CustomMessageBox.xaml"/>
+                <ResourceDictionary Source="Themes/ContextMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible"/>

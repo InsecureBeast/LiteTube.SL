@@ -51,7 +51,67 @@
             </Border>
         </Grid>
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="LoadingListViewItem">
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" 
+                  HorizontalAlignment="Left"
+                  Background="DimGray"
+                  Height="100"
+                  Width="178">
+
+                <Image Source="{Binding ImagePath}" 
+                       Stretch="UniformToFill" />
+
+                <Border Margin="2"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Background="Black"
+                        Padding="4,0,4,0">
+                    <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
+                               TextWrapping="NoWrap" 
+                               Foreground="White"
+                               FontSize="14"/>
+                </Border>
+            </Grid>
+
+            <StackPanel Grid.Column="1" 
+                        Margin="0,0,0,0">
+                <TextBlock Text="{Binding Title}" 
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           TextTrimming="WordEllipsis"
+                           TextWrapping="Wrap"
+                           MaxHeight="54"/>
+                <TextBlock Text="{Binding ChannelTitle}" 
+                           Style="{StaticResource PhoneTextSmallStyle}"
+                           TextWrapping="NoWrap"/>
+                <TextBlock TextWrapping="NoWrap"
+                           Text="{Binding PublishedAt}"
+                           Style="{StaticResource PhoneTextSmallStyle}">
+                    <Run Text="Published at " x:Uid="PublishedAt"/>
+                    <Run Text="{Binding PublishedAt}" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ContextMenuListViewItem">
+        <Grid>
+            <ContentPresenter Content="{Binding}"
+                              ContentTemplate="{StaticResource LoadingListViewItem}"/>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu Name="ContextMenu">
+                    <toolkit:MenuItem Name="Delete"  Header="Delete" Command="{Binding DeleteCommand}"/>
+                </toolkit:ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <Grid>
@@ -60,64 +120,30 @@
                          toolkit:TiltEffect.IsTiltEnabled="True" 
                          common:ItemClickCommand.Command="{Binding ItemClickCommand}"
                          common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
-                         ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
-                    
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                         ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"
+                         ItemTemplate="{StaticResource LoadingListViewItem}"/>
 
-                                <Grid Grid.Column="0" 
-                                      HorizontalAlignment="Left"
-                                      Background="DimGray"
-                                      Height="100"
-                                      Width="178">
-
-                                    <Image Source="{Binding ImagePath}" 
-                                           Stretch="UniformToFill" />
-
-                                    <Border Margin="2"
-                                            VerticalAlignment="Bottom"
-                                            HorizontalAlignment="Right"
-                                            Background="Black"
-                                            Padding="4,0,4,0">
-                                        <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
-                                                   TextWrapping="NoWrap" 
-                                                   Foreground="White"
-                                                   FontSize="14"/>
-                                    </Border>
-                                </Grid>
-
-                                <StackPanel Grid.Column="1" 
-                                            Margin="0,0,0,0">
-                                    <TextBlock Text="{Binding Title}" 
-                                               Style="{StaticResource PhoneTextNormalStyle}"
-                                               TextTrimming="WordEllipsis"
-                                               TextWrapping="Wrap"
-                                               MaxHeight="54"/>
-                                    <TextBlock Text="{Binding ChannelTitle}" 
-                                               Style="{StaticResource PhoneTextSmallStyle}"
-                                               TextWrapping="NoWrap"/>
-                                    <TextBlock TextWrapping="NoWrap"
-                                               Text="{Binding PublishedAt}"
-                                               Style="{StaticResource PhoneTextSmallStyle}">
-                                    <Run Text="Published at " x:Uid="PublishedAt"/>
-                                    <Run Text="{Binding PublishedAt}" />
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
                 <Grid x:Name="BlockMulti" 
                       Width="50" 
                       Background="Transparent" 
                       HorizontalAlignment="Left" 
                       Visibility="Visible"/>
             </Grid>
+
+            <ContentPresenter Content="{Binding}"
+                              ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="LoadingListViewContextMenu" >
+        <Grid x:Name="ContentRoot">
+            <ListBox Margin="0" 
+                    ItemsSource="{Binding Items}"
+                    toolkit:TiltEffect.IsTiltEnabled="True" 
+                    common:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                    common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
+                    ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"
+                    ItemTemplate="{StaticResource ContextMenuListViewItem}"/>
 
             <ContentPresenter Content="{Binding}"
                               ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>

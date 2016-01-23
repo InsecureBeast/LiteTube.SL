@@ -67,7 +67,7 @@
                 </phone:PivotItem.Header>
                 <ContentPresenter x:Name="FavoritesList"
                                   Content="{Binding FavoritesViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListViewContextMenu}"/>
             </phone:PivotItem>
 
             <!--Pivot item four-->

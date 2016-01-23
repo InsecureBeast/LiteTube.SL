@@ -44,12 +44,22 @@ namespace LiteTube.ViewModels
             {
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
-                Items.Add(new PlayListItemNodeViewModel(item));
+                Items.Add(new PlayListItemNodeViewModel(item, Delete));
             }
 
             IsLoading = false;
             if (!Items.Any())
                 IsEmpty = true;
+        }
+
+        private async Task Delete()
+        {
+            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
+            foreach (var item in items)
+            {
+                await _dataSource.RemoveFromFavorites(item.Id);
+                Items.Remove(item);
+            }
         }
     }
 }

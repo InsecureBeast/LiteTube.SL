@@ -1,5 +1,9 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
 using System.Globalization;
+using System.Windows.Input;
+using System.Threading.Tasks;
+using System;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -7,8 +11,11 @@ namespace LiteTube.ViewModels.Nodes
     {
         private string _videoId;
         private string _id;
+        private readonly Func<Task> _deleteFunc;
+        private bool _isSelected;
+        private readonly RelayCommand _deleteCommand;
 
-        public PlayListItemNodeViewModel(IPlayListItem item)
+        public PlayListItemNodeViewModel(IPlayListItem item, Func<Task> deleteFunc)
         {
             PlayListItem = item;
             _id = item.Id;
@@ -17,6 +24,14 @@ namespace LiteTube.ViewModels.Nodes
             Description = item.Snippet.Description;
             ImagePath = item.Snippet.Thumbnails.Medium.Url;
             PublishedAt = item.Snippet.PublishedAt.Value.ToString("d", CultureInfo.CurrentCulture);
+
+            _deleteCommand = new RelayCommand(Delete);
+            _deleteFunc = deleteFunc;
+        }
+
+        public ICommand DeleteCommand
+        {
+            get { return _deleteCommand; }
         }
 
         public IPlayListItem PlayListItem { get; private set; }
@@ -35,9 +50,25 @@ namespace LiteTube.ViewModels.Nodes
             get { return _videoId; }
         }
 
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                NotifyOfPropertyChanged(() => IsSelected);
+            }
+        }
+
         public override string ToString()
         {
             return Title;
+        }
+
+        private async void Delete()
+        {
+            IsSelected = true;
+            await _deleteFunc();
         }
     }
 }
