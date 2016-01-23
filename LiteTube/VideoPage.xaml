@@ -254,11 +254,11 @@
             </phone:PivotItem>
         </phone:Pivot>
 
-        <Canvas x:Name="playerCanvas" 
-                Grid.Row="1"
-                VerticalAlignment="Top"
-                Background="Black">
-            <mmppf:MediaPlayer x:Name="player"
+        <Grid Grid.Row="1"
+              VerticalAlignment="Top">
+            <Canvas x:Name="playerCanvas" 
+                    Background="Black">
+                <mmppf:MediaPlayer x:Name="player"
                                Source="{Binding VideoUri}"
                                PosterSource="{Binding ImagePath}"
                                IsFullScreenVisible="True"
@@ -270,7 +270,19 @@
                     <TranslateTransform x:Name="PlayerMover"/>
                 </mmppf:MediaPlayer.RenderTransform>
             </mmppf:MediaPlayer>
-        </Canvas>
+            </Canvas>
+
+            <Border Background="#BF000000"
+                    Name="PaidTextBlock"
+                    Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Text="No matching YouTube video or audio stream URI could be found. The video may not be available in your country, is private or uses RTMPE (protected streaming)."
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           Margin="25,0,25,0"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource PhoneTextNormalStyle}"/>
+            </Border>
+        </Grid>
     </Grid>
 
     <!--<phone:PhoneApplicationPage.ApplicationBar>

@@ -1,6 +1,7 @@
 ﻿using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
+using MyToolkit.Multimedia;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -372,10 +373,9 @@ namespace LiteTube.ViewModels
                     var url = await _dataSource.GetVideoUriAsync(videoId);
                     VideoUri = url.Uri;
                 }
-                catch (Exception e)
+                catch(YouTubeUriNotFoundException e)
                 {
                     IsPaid = true;
-                    throw e;
                 }
             });
         }

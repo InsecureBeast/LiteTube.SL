@@ -190,6 +190,8 @@ namespace LiteTube
             playerCanvas.Width = player.Width;
             playerCanvas.Height = player.Height;
             PlayerMover.Y = 0;
+            PaidTextBlock.Width = player.Width;
+            PaidTextBlock.Height = player.Height;
         }
 
         private void SetPlayerFullScreenState()
@@ -200,6 +202,8 @@ namespace LiteTube
             playerCanvas.Width = player.Width;
             playerCanvas.Height = player.Height;
             PlayerMover.Y = 0;
+            PaidTextBlock.Width = player.Width;
+            PaidTextBlock.Height = player.Height;
         }
 
         private void SetVisibilityControls(Visibility visibility)
