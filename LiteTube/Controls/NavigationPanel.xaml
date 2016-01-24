@@ -20,7 +20,7 @@
             <sys:Double x:Key="MenuWidth">350</sys:Double>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationPanelBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="56"/>
@@ -84,17 +84,22 @@
                 <Button HorizontalAlignment="Left"
                         Width="{StaticResource MenuWidth}"
                         Command="{Binding SettingsCommand}"
-                        x:Name="SettingsButton">
+                        x:Name="SettingsButton"
+                        Style="{StaticResource ContentButtonStyle}"
+                        Background="{StaticResource NavigationPanelBrush}">
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Width="{StaticResource MenuWidth}"
                                 Height="60">
                         <ContentPresenter ContentTemplate="{StaticResource SettingsIcon}"
-                                          HorizontalAlignment="Left" />
+                                          HorizontalAlignment="Left" 
+                                          Margin="20,0,0,0"/>
                         <TextBlock Text="settings"
                                    x:Uid="Settings"
-                                   VerticalAlignment="Center"/>
+                                   Margin="20,-5,0,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource NavigationPanelForegroundBrush}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

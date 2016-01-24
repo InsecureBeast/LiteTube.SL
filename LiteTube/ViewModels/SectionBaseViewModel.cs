@@ -125,7 +125,13 @@ namespace LiteTube.ViewModels
 
             var responseList = await GetItems(string.Empty);
             if (responseList == null)
+            {
+                IsLoading = false;
+                if (!Items.Any())
+                    IsEmpty = true;
                 return;
+            }
+               
             LoadItems(responseList);
             _pageToken = responseList.NextPageToken;
             _hasItems = !string.IsNullOrEmpty(_pageToken);

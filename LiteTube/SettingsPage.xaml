@@ -24,11 +24,13 @@
             <TextBlock Name="Region"
                        Text="Select region"
                        x:Uid="SelectRegion"
-                       Style="{StaticResource PhoneTextLargeStyle}"/>
+                       Style="{StaticResource PhoneTextLargeStyle}"
+                       Margin="{StaticResource DefaultTextBlockMargin}"/>
             <toolkit:ListPicker ItemsSource="{Binding Languages}"
                                 SelectedItem ="{Binding SelectedRegion, Mode=TwoWay}"
                                 HorizontalAlignment="Left"
-                                MinWidth="250">
+                                MinWidth="250"
+                                Margin="0">
                 <toolkit:ListPicker.FullModeItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}"
@@ -43,12 +45,13 @@
                        Text="Video quality"
                        x:Uid="VideoQuality"
                        Style="{StaticResource PhoneTextLargeStyle}"
+                       Margin="{StaticResource DefaultTextBlockMargin}"
                        HorizontalAlignment="Left" />
             <toolkit:ListPicker ItemsSource="{Binding VideoQualities}"
                                 SelectedItem ="{Binding SelectedQuality, Mode=TwoWay}"
                                 HorizontalAlignment="Left"
-                                MinWidth="250"/>
-
+                                MinWidth="250"
+                                Margin="0"/>
         </StackPanel>
     </Grid>
 

@@ -19,7 +19,8 @@ namespace LiteTube.DataModel
     class YouTubeWeb
     {
         private const string RECOMMENDED_URL = @"https://www.youtube.com/feed/recommended";
-        private const string BOT_USER_AGENT = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
+        private const string BOT_USER_AGENT1 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
+        private const string BOT_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
         private readonly Dictionary<string, IEnumerable<string>> _recommended = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _related = new Dictionary<string, IEnumerable<string>>();
 
