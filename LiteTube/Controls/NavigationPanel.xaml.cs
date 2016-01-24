@@ -25,6 +25,7 @@ namespace LiteTube.Controls
         {
             var page = VisualHelper.FindParent<Page>(this);
             BackgroundGridPopup.Height = page.ActualHeight;
+            BackgroundGridPopup1.Height = page.ActualHeight;
         }
 
         private void Popup_Closed(object sender, EventArgs eventArgs)
@@ -51,6 +52,12 @@ namespace LiteTube.Controls
             emailComposeTask.Body = "[Your feedback here]";
             emailComposeTask.To = "[LiteTube Team]dmitriev.pe@yandex.ru";
             emailComposeTask.Show();
+        }
+
+        private void BackgroundPopup_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            MainMenuButton.IsChecked = false;
+            LoginMenuButton.IsChecked = false;
         }
     }
 }

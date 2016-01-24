@@ -22,7 +22,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationPanelBrush}">
+    <Grid x:Name="LayoutRoot" 
+          Background="{StaticResource NavigationPanelBrush}"
+          Tap="BackgroundPopup_Tap">
         <Grid.RowDefinitions>
             <RowDefinition Height="56"/>
             <RowDefinition Height="*"/>
@@ -58,11 +60,27 @@
         <Popup Grid.Row="1"
                Grid.Column="0"
                Grid.ColumnSpan="3"
-               IsOpen="{Binding Path=IsChecked, ElementName=LoginMenuButton}"
-               Name="BackgroundPopup">
+               IsOpen="{Binding Path=IsChecked, ElementName=LoginMenuButton}">
             <Grid Background="Black"
                   Opacity="0.7"
                   Name="BackgroundGridPopup"
+                  Tap="BackgroundPopup_Tap"
+                  Width="{Binding ActualWidth, ElementName=LayoutRoot}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+            </Grid>
+        </Popup>
+
+        <Popup Grid.Row="1"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"
+               IsOpen="{Binding Path=IsChecked, ElementName=MainMenuButton}">
+            <Grid Background="Black"
+                  Opacity="0.7"
+                  Name="BackgroundGridPopup1"
+                  Tap="BackgroundPopup_Tap"
                   Width="{Binding ActualWidth, ElementName=LayoutRoot}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
