@@ -6,3 +6,4 @@ LiteTube/.vs/LiteTube/v14/.suo
 LiteTube/LiteTube.csproj.user
 LiteTube/Bin/ARM/Debug/*
 LiteTube/Bin/x86/Debug/*
+LiteTube/Bin/Release/*
