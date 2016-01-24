@@ -475,11 +475,27 @@
                 </Rectangle>
                 <Border x:Name="HorizontalAvailableBar" HorizontalAlignment="Left" IsHitTestVisible="True" Background="#00000000" />
                 <ContentPresenter x:Name="HorizontalForegroundContentPresenter" Margin="{TemplateBinding Padding}" Content="{TemplateBinding HorizontalForegroundContent}"/>
-                <Rectangle x:Name="HorizontalCenterElement" Fill="{TemplateBinding SliderThumbBackground}" DataContext="{TemplateBinding Value}" HorizontalAlignment="Left" Width="{StaticResource SliderTrackThemeHeight}" IsHitTestVisible="False">
-                    <Rectangle.RenderTransform>
+                <Canvas  x:Name="HorizontalCenterElement"  
+                         HorizontalAlignment="Left" 
+                         DataContext="{TemplateBinding Value}" 
+                         VerticalAlignment="Top" 
+                         Margin="-18,-32,0,0">
+                    <Grid>
+                        <Ellipse Stroke="{TemplateBinding SliderThumbBackground}" 
+                                 Fill="Transparent" 
+                                 StrokeThickness="2" 
+                                 Width="35" 
+                                 Height="35"/>
+                        <Path Fill="{TemplateBinding SliderThumbBackground}" 
+                              Margin="0,0,0,-7" 
+                              VerticalAlignment="Bottom" 
+                              HorizontalAlignment="Center" 
+                              Data="M 0,0 8,0 4,8Z"/>
+                    </Grid>
+                    <Canvas.RenderTransform>
                         <TranslateTransform/>
-                    </Rectangle.RenderTransform>
-                </Rectangle>
+                    </Canvas.RenderTransform>
+                </Canvas>
             </Grid>
 
             <Grid x:Name="VerticalTemplate" Visibility="Collapsed">
@@ -622,7 +638,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="0,10,10,10">
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="0,10,10,-20">
                         <Button x:Name="ReplayButton" Style="{TemplateBinding TransportBarButtonStyle}" Visibility="{Binding IsReplayButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" Margin="10,0,10,0">
                             <local:MediaControls.Behavior>
                                 <local:ReplayButtonBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -680,9 +696,11 @@
                         </Button>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center"
+                                Margin="0,0,0,0">
 
-                        <StackPanel Orientation="Horizontal" x:Name="NonEssentialsNearLeft">
+                        <StackPanel Orientation="Horizontal" x:Name="NonEssentialsNearLeft"
+                                    Margin="0,0,0,0">
                             <Button x:Name="SkipPreviousButton" Style="{TemplateBinding TransportBarButtonStyle}" Width="70" Height="70" Visibility="{Binding IsSkipPreviousButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" Margin="10,0,10,0">
                                 <local:MediaControls.Behavior>
                                     <local:SkipPreviousButtonBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -700,7 +718,12 @@
                             </Button>
                         </StackPanel>
 
-                        <Button x:Name="PlayPauseButton" Style="{TemplateBinding TransportBarButtonStyle}" Width="70" Height="70" Visibility="{Binding IsPlayPauseButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" Margin="50,0,50,0">
+                        <Button x:Name="PlayPauseButton" 
+                                Style="{TemplateBinding TransportBarButtonStyle}" 
+                                Width="70" 
+                                Height="70" 
+                                Visibility="{Binding IsPlayPauseButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
+                                Margin="50,0,50,0">
                             <local:MediaControls.Behavior>
                                 <local:PlayPauseButtonBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </local:MediaControls.Behavior>
@@ -726,9 +749,15 @@
 
                     </StackPanel>
 
-                    <local:Timeline x:Name="Timeline" Grid.Row="2" ViewModel="{TemplateBinding ViewModel}" Visibility="{Binding IsTimelineVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" Height="25" Padding="0,10,0,10" Margin="10,20,10,0"/>
+                    <local:Timeline x:Name="Timeline" 
+                                    Grid.Row="2" 
+                                    ViewModel="{TemplateBinding ViewModel}" 
+                                    Visibility="{Binding IsTimelineVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" 
+                                    Height="25" 
+                                    Padding="0,10,0,10" 
+                                    Margin="30,40,30,0"/>
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left" Margin="10,5,10,5">
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left" Margin="30,5,30,5">
                         <TextBlock x:Name="TimeElapsed" 
                                    Visibility="{Binding IsTimeElapsedButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
                                    Foreground="{StaticResource PlayerButtonsBrush}">
@@ -757,7 +786,7 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="10,0,10,10">
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="30,0,30,10">
                         <local:SignalStrength x:Name="SignalStrength" Value="{Binding SignalStrength}" Margin="10,0,0,0" VerticalAlignment="Center" Visibility="{Binding IsSignalStrengthVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>
                         <local:ResolutionIndicator x:Name="ResolutionIndicator" MediaQuality="{Binding MediaQuality}" VerticalAlignment="Center" Margin="10,0,10,0" Visibility="{Binding IsResolutionIndicatorVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>
                     </StackPanel>
@@ -768,7 +797,7 @@
     </ControlTemplate>
 
     <Style TargetType="local:ControlPanel">
-        <Setter Property="Background" Value="{StaticResource PhoneSemitransparentColor}"/>
+        <Setter Property="Background" Value="#33000000"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
