@@ -4,6 +4,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+            xmlns:controls="clr-namespace:LiteTube.Controls"
             mc:Ignorable="d"
             FontFamily="{StaticResource PhoneFontFamilyNormal}"
             FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -78,30 +79,20 @@
                 HorizontalAlignment="Left"
                 Closed="Popup_Closed">
             <StackPanel Background="{StaticResource NavigationPanelBrush}">
-                <!--<Rectangle Height="1"
-                           Width="340"
-                           Fill="{StaticResource NavigationPanelButtonPressedBackgroundBrush}"/>-->
-                <Button HorizontalAlignment="Left"
-                        Width="{StaticResource MenuWidth}"
-                        Command="{Binding SettingsCommand}"
-                        x:Name="SettingsButton"
-                        Style="{StaticResource ContentButtonStyle}"
-                        Background="{StaticResource NavigationPanelBrush}">
-                    <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Width="{StaticResource MenuWidth}"
-                                Height="60">
-                        <ContentPresenter ContentTemplate="{StaticResource SettingsIcon}"
-                                          HorizontalAlignment="Left" 
-                                          Margin="20,0,0,0"/>
-                        <TextBlock Text="settings"
-                                   x:Uid="Settings"
-                                   Margin="20,-5,0,0"
-                                   VerticalAlignment="Center"
-                                   Foreground="{StaticResource NavigationPanelForegroundBrush}"/>
-                    </StackPanel>
-                </Button>
+                <controls:NavigationButton Text="feedback"
+                                           Width="{StaticResource MenuWidth}"
+                                           Click="Feedback_Click"/>
+                <controls:NavigationButton Text="about"
+                                           Width="{StaticResource MenuWidth}"
+                                           Click="About_Click"/>
+                <Rectangle Height="1"
+                           Width="{StaticResource MenuWidth}"
+                           Fill="{StaticResource NavigationPanelButtonPressedBackgroundBrush}"/>
+                
+                <controls:NavigationButton Text="settings"
+                                           Icon="{StaticResource SettingsIcon}"
+                                           Width="{StaticResource MenuWidth}"
+                                           Command="{Binding SettingsCommand}"/>
             </StackPanel>
         </Popup>
 

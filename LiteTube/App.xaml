@@ -13,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/PlayerMobileTheme.xaml"/>
                 <ResourceDictionary Source="Controls/LoadingListView.xaml"/>
+                <ResourceDictionary Source="Controls/NavigationButton.xaml"/>
                 <ResourceDictionary Source="Themes/Icons.xaml"/>
                 <ResourceDictionary Source="Themes/generic.xaml"/>
                 <ResourceDictionary Source="Themes/Button.xaml"/>

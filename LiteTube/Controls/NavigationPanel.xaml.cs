@@ -8,6 +8,8 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.Common;
+using LiteTube.Common.Helpers;
+using Microsoft.Phone.Tasks;
 
 namespace LiteTube.Controls
 {
@@ -35,6 +37,20 @@ namespace LiteTube.Controls
         {
             MainMenuButton.IsChecked = false;
             LoginMenuButton.IsChecked = false;
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationHelper.Navigate("/AboutPage.xaml", null);
+        }
+
+        private void Feedback_Click(object sender, RoutedEventArgs e)
+        {
+            EmailComposeTask emailComposeTask = new EmailComposeTask();
+            emailComposeTask.Subject = "LiteTube feedback";
+            emailComposeTask.Body = "[Your feedback here]";
+            emailComposeTask.To = "[LiteTube Team]dmitriev.pe@yandex.ru";
+            emailComposeTask.Show();
         }
     }
 }

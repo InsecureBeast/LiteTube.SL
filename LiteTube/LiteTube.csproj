@@ -93,6 +93,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,7 @@
     <Compile Include="Common\Tools\ApplicationBarHelper.cs" />
     <Compile Include="Common\Tools\ThemeManager.cs" />
     <Compile Include="Common\UnsubscribeCommand.cs" />
+    <Compile Include="Controls\NavigationButton.cs" />
     <Compile Include="Converters\DurationConverter.cs" />
     <Compile Include="Common\Extensions\Extensions.cs" />
     <Compile Include="Common\I18nLanguages.cs" />
@@ -236,6 +240,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ChannelListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -243,6 +251,10 @@
     <Page Include="ChannelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NavigationButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LoadingListView.xaml">
       <Generator>MSBuild:Compile</Generator>
