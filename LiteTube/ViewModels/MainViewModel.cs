@@ -152,9 +152,23 @@ namespace LiteTube.ViewModels
 
         public async void Notify(UpdateSettingsEventArgs e)
         {
-            MostPopularViewModel.Items.Clear();
-            await MostPopularViewModel.FirstLoad();
             await LoadData();
+        }
+
+        public override void Notify(ConnectionEventArgs e)
+        {
+            base.Notify(e);
+            LayoutHelper.InvokeFromUIThread(async () =>
+            {
+                if (!e.IsConnected)
+                {
+                    CategoryItems.Clear();
+                    IsDataLoaded = false;
+                    return;
+                }
+
+                await LoadData();
+            });
         }
     }
 }

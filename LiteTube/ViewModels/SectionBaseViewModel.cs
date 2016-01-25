@@ -141,7 +141,7 @@ namespace LiteTube.ViewModels
                 return;
 
             var responseList = await GetItems(string.Empty);
-            if (responseList == null)
+            if (responseList == null || responseList.PageInfo == null)
             {
                 IsLoading = false;
                 if (!Items.Any())
@@ -302,14 +302,15 @@ namespace LiteTube.ViewModels
             SetSelected();
         }
 
-        public void Notify(ConnectionEventArgs e)
+        public virtual void Notify(ConnectionEventArgs e)
         {
-            if (!e.IsConnected)
+            LayoutHelper.InvokeFromUIThread(() =>
             {
-                Items.Clear();    
-            }
+                IsConnected = e.IsConnected;
 
-            IsConnected = e.IsConnected;
+                if (!e.IsConnected)
+                    Items.Clear();
+            });
         }
     }
 }

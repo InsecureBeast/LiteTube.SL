@@ -92,6 +92,9 @@ namespace LiteTube.DataModel
 
         public void Login()
         {
+            if (!_isConnected)
+                return;
+
             _remoteDataSource.Login();
         }
 
@@ -175,11 +178,11 @@ namespace LiteTube.DataModel
         
         public async Task<IEnumerable<IVideoCategory>> GetCategories()
         {
-            if (_categories.Any())
-                return _categories;
-
             if (!_isConnected)
                 return null;
+
+            if (_categories.Any())
+                return _categories;
 
             var list = await _remoteDataSource.GetCategories(_region);
             foreach (var item in list)
@@ -192,13 +195,13 @@ namespace LiteTube.DataModel
 
         public async Task<IChannel> GetChannel(string channelId)
         {
+            if (!_isConnected)
+                return null;
+
             var ch = _channels.FirstOrDefault(c => c.Id == channelId);
             if (ch != null)
                 return ch;
 
-            if (!_isConnected)
-                return null;
-            
             ch = await _remoteDataSource.GetChannel(channelId);
             if (ch != null)
                 _channels.Add(ch);
@@ -231,11 +234,11 @@ namespace LiteTube.DataModel
 
         public async Task<IEnumerable<IGuideCategory>> GetGuideCategories()
         {
-            if (_guideCategories.Any())
-                return _guideCategories;
-
             if (!_isConnected)
                 return null;
+
+            if (_guideCategories.Any())
+                return _guideCategories;
 
             var list = await _remoteDataSource.GetGuideCategories(_region);
             foreach (var item in list)
