@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 
@@ -8,7 +9,8 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
 
-        public RelatedVideosViewModel(IVideoItem videoItem, IDataSource dataSource) : base(dataSource)
+        public RelatedVideosViewModel(IVideoItem videoItem, IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             _videoId = videoItem.Details.Video.Id;
         }

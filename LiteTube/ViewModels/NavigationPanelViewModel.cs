@@ -9,6 +9,7 @@ namespace LiteTube.ViewModels
     public class NavigationPanelViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>
     {
         private readonly IDataSource _datasource;
+        private readonly ConnectionListener _connectionListener;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Common.RelayCommand _homeCommand;
@@ -25,9 +26,10 @@ namespace LiteTube.ViewModels
         private string _profileSecondDisplayName;
         private string _profileChannelId;
 
-        public NavigationPanelViewModel(IDataSource datasource)
+        public NavigationPanelViewModel(IDataSource datasource, ConnectionListener connectionListener)
         {
             _datasource = datasource;
+            _connectionListener = connectionListener;
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _homeCommand = new Common.RelayCommand(Home);
@@ -194,7 +196,7 @@ namespace LiteTube.ViewModels
 
         private void Settings()
         {
-            NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_datasource));
+            NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_datasource, _connectionListener));
         }
 
         private bool CanSettings()
@@ -204,12 +206,12 @@ namespace LiteTube.ViewModels
 
         private void Search(object page)
         {
-            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(_datasource));
+            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(_datasource, _connectionListener));
         }
 
         private void LoadChannel(string channelId)
         {
-            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _datasource));
+            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _datasource, _connectionListener));
         }
 
         private void LoadProfileInfo()

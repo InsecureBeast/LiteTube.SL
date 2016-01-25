@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ namespace LiteTube.ViewModels
     {
         private bool _canLoad = false;
 
-        public ActivitySectionViewModel(IVideoList activity, IDataSource dataSource) : base(dataSource)
+        public ActivitySectionViewModel(IVideoList activity, IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("RecommendedSectionHeader");
@@ -17,7 +19,8 @@ namespace LiteTube.ViewModels
             Title = "Activity"; //TODO Localize
         }
 
-        public ActivitySectionViewModel(IDataSource dataSource) : base(dataSource)
+        public ActivitySectionViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("RecommendedSectionHeader");

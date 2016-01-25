@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ namespace LiteTube.ViewModels
     {
         private string _searchString;
 
-        public SearchPageViewModel(IDataSource dataSource) : base(dataSource)
+        public SearchPageViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             _uniqueId = Guid.NewGuid().ToString();
             IsLoading = false;

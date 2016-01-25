@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using LiteTube.ViewModels.Nodes;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ namespace LiteTube.ViewModels
 {
     class FavoritesViewModel : SectionBaseViewModel
     {
-        public FavoritesViewModel(IDataSource datasource) : base(datasource)
+        public FavoritesViewModel(IDataSource datasource, ConnectionListener connectionListener)
+            : base(datasource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("FavoritesSectionHeader");

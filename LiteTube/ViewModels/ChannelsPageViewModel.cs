@@ -13,9 +13,10 @@ namespace LiteTube.ViewModels
     class ChannelListPageViewModel : SectionBaseViewModel
     {
         private readonly string _categoryId;
-        private ObservableCollection<ChannelNodeViewModel> _channels;
+        private readonly ObservableCollection<ChannelNodeViewModel> _channels;
 
-        public ChannelListPageViewModel(string categoryId, string title, IDataSource dataSource) : base(dataSource)
+        public ChannelListPageViewModel(string categoryId, string title, IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             _uniqueId = categoryId;
             _categoryId = categoryId;
@@ -66,7 +67,7 @@ namespace LiteTube.ViewModels
         internal override void NavigateTo(NavigationObject navObject)
         {
             var id = ((ChannelNodeViewModel)navObject.ViewModel).Channel.Id;
-            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(id, _dataSource);
+            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(id, _dataSource, _connectionListener);
             App.NavigateTo("/ChannelPage.xaml");
         }
     }

@@ -13,6 +13,7 @@ namespace LiteTube.ViewModels
         private Uri _videoUri;
         private IChannel _channel;
         private readonly IDataSource _dataSource;
+        private readonly ConnectionListener _connectionListener;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private RelatedVideosViewModel _relatedViewModel;
         private CommentsViewModel _commentsViewModel;
@@ -43,11 +44,12 @@ namespace LiteTube.ViewModels
         private ulong _likes;
         private ulong _dislikes;
 
-        public VideoPageViewModel(string videoId, IDataSource dataSource)
+        public VideoPageViewModel(string videoId, IDataSource dataSource, ConnectionListener connectionListener)
         {
             Likes = 0;
             Dislikes = 0;
             _dataSource = dataSource;
+            _connectionListener = connectionListener;
             _channelSubscribers = 0;
             _channelVideoCount = 0;
 
@@ -58,7 +60,7 @@ namespace LiteTube.ViewModels
             _dislikeCommand = new RelayCommand(Dislike, CanLike);
             _addFavoritesCommand = new RelayCommand(AddFavorites);
 
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource, _connectionListener);
 
             LoadVideoItem(videoId);
         }
@@ -467,8 +469,8 @@ namespace LiteTube.ViewModels
                 if (videoItem.PublishedAt != null) 
                     PublishedAt = videoItem.PublishedAt.Value.ToString("D");
                 ChannelId = videoItem.ChannelId;
-                RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource);
-                CommentsViewModel = new CommentsViewModel(VideoId, _dataSource);
+                RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource, _connectionListener);
+                CommentsViewModel = new CommentsViewModel(VideoId, _dataSource, _connectionListener);
 
                 SetLikesAndDislikes(videoItem.Details.Video);
                 SetChannelInfo(_channelId);

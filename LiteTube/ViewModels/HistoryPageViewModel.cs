@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 
@@ -6,7 +7,8 @@ namespace LiteTube.ViewModels
 {
     class HistoryPageViewModel : SectionBaseViewModel
     {
-        public HistoryPageViewModel(IDataSource datasource) : base(datasource)
+        public HistoryPageViewModel(IDataSource datasource, ConnectionListener connectionListener)
+            : base(datasource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("HistorySectionHeader");

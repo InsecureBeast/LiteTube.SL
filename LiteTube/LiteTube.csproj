@@ -106,6 +106,7 @@
     <Compile Include="ChannelPage.xaml.cs">
       <DependentUpon>ChannelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\ConnectionListener.cs" />
     <Compile Include="Common\ExceptionDialog.cs" />
     <Compile Include="Common\Extensions\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />

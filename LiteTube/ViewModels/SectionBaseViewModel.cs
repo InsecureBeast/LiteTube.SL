@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Windows.Input;
 using LiteTube.ViewModels.Nodes;
+using Microsoft.Phone.Shell;
 using MyToolkit.Command;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
@@ -17,12 +19,13 @@ namespace LiteTube.ViewModels
     /// Модель для отображения определенной секции. 
     /// Например видео канала или самого популярного
     /// </summary>
-    public class SectionBaseViewModel : PropertyChangedBase //IHubSection, IDataSourceContext
+    public class SectionBaseViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
     {
         protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
         protected string _uniqueId;
         protected string _title;
         protected readonly IDataSource _dataSource;
+        protected readonly ConnectionListener _connectionListener;
         protected Frame _frame;
         protected bool _hasItems;
         private readonly Common.RelayCommand _loadMoreCommand;
@@ -36,12 +39,21 @@ namespace LiteTube.ViewModels
         protected string _pageToken = string.Empty;
         //private ListViewSelectionMode _selectionMode;
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
+        private bool _isConnected = true;
 
-        public SectionBaseViewModel(IDataSource dataSource)
+        public SectionBaseViewModel(IDataSource dataSource, ConnectionListener connectionListener)
         {
+            if (dataSource == null) 
+                throw new ArgumentNullException("dataSource");
+            if (connectionListener == null) 
+                throw new ArgumentNullException("connectionListener");
+            
             _dataSource = dataSource;
+            _connectionListener = connectionListener;
+            _connectionListener.Subscribe(this);
+
             _hasItems = true;
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource, connectionListener);
             Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
@@ -51,6 +63,8 @@ namespace LiteTube.ViewModels
             //SelectionMode = ListViewSelectionMode.None;
             IsItemClickEnabled = true;
             _selectedItems = new ObservableCollection<NodeViewModelBase>();
+
+            _isConnected = ConnectionListener.CheckNetworkAvailability();
         }
 
         public NavigationPanelViewModel NavigationPanelViewModel
@@ -85,7 +99,10 @@ namespace LiteTube.ViewModels
 
         public bool IsLoading
         {
-            get { return _isLoading; }
+            get
+            {
+                return _isConnected && _isLoading;
+            }
             protected set
             {
                 _isLoading = value;
@@ -139,11 +156,24 @@ namespace LiteTube.ViewModels
 
         public bool IsEmpty
         {
-            get { return _isEmpty; }
+            get
+            {
+                return _isConnected && _isEmpty;
+            }
             protected set
             {
                 _isEmpty = value;
                 NotifyOfPropertyChanged(() => IsEmpty);
+            }
+        }
+
+        public bool IsConnected
+        {
+            get { return _isConnected; }
+            protected set
+            {
+                _isConnected = value;
+                NotifyOfPropertyChanged(() => IsConnected);
             }
         }
 
@@ -245,7 +275,7 @@ namespace LiteTube.ViewModels
                 return;
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
-            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _dataSource));
+            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _dataSource, _connectionListener));
         }
 
         protected void ShowProgressIndicator()
@@ -254,12 +284,12 @@ namespace LiteTube.ViewModels
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("LoadingString");
             //statusBar.ProgressIndicator.Text = arstring;
-            //SystemTray.ProgressIndicator.IsVisible = true;
+            SystemTray.ProgressIndicator.IsVisible = true;
         }
 
         protected void HideProgressIndicator()
         {
-            //SystemTray.ProgressIndicator.IsVisible = false;
+            SystemTray.ProgressIndicator.IsVisible = false;
         }
 
         protected virtual void DeleteItems()
@@ -270,6 +300,16 @@ namespace LiteTube.ViewModels
         protected virtual void SelectItems()
         {
             SetSelected();
+        }
+
+        public void Notify(ConnectionEventArgs e)
+        {
+            if (!e.IsConnected)
+            {
+                Items.Clear();    
+            }
+
+            IsConnected = e.IsConnected;
         }
     }
 }

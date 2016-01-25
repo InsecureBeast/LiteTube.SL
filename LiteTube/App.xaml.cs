@@ -34,7 +34,7 @@ namespace LiteTube
                 if (_viewModel == null)
                 {
                     _container.Build();
-                    _viewModel = new MainViewModel(_container.DataSource);
+                    _viewModel = new MainViewModel(_container.DataSource, _container.ConnectionListener);
                 }
 
                 return _viewModel;

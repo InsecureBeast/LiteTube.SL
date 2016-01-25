@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 
@@ -8,7 +9,8 @@ namespace LiteTube.ViewModels
     {
         //private bool _canLoad = false;
 
-        public RecommendedSectionViewModel(IDataSource dataSource) : base(dataSource)
+        public RecommendedSectionViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("RecommendedSectionHeader");

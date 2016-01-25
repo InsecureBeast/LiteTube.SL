@@ -19,15 +19,16 @@ namespace LiteTube.ViewModels
         private readonly ProfileSectionViewModel _profileSectionViewModel;
         private readonly ActivitySectionViewModel _activitySectionViewModel;
 
-        public MainViewModel(IDataSource dataSource) : base(dataSource)
+        public MainViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             if (dataSource == null) 
                 throw new ArgumentNullException("dataSource");
             
-            _mostPopularViewModel = new MostPopularViewModel(dataSource);
-            _profileSectionViewModel = new ProfileSectionViewModel(dataSource);
+            _mostPopularViewModel = new MostPopularViewModel(dataSource, _connectionListener);
+            _profileSectionViewModel = new ProfileSectionViewModel(dataSource, connectionListener);
             _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
-            _activitySectionViewModel = new ActivitySectionViewModel(dataSource);
+            _activitySectionViewModel = new ActivitySectionViewModel(dataSource, _connectionListener);
 
             dataSource.Subscribe((IListener<UpdateSettingsEventArgs>)this);
             dataSource.Subscribe((IListener<UpdateContextEventArgs>)this);
@@ -75,6 +76,11 @@ namespace LiteTube.ViewModels
             get { return !string.IsNullOrEmpty(SettingsHelper.GetUserId()); }
         }
 
+        public ConnectionListener ConnectionListener
+        {
+            get { return _connectionListener; }
+        }
+
         /// <summary>
         /// Creates and adds a few VideoItemViewModel objects into the Items collection.
         /// </summary>
@@ -114,6 +120,9 @@ namespace LiteTube.ViewModels
         private async Task LoadGuideCategories()
         {
             var sections = await _dataSource.GetCategories();
+            if (sections == null)
+                return;
+
             _categoryItems.Clear();
             foreach (var section in sections)
             {
@@ -126,7 +135,7 @@ namespace LiteTube.ViewModels
             var viewModel = (VideoCategoryNodeViewModel)navObject.ViewModel;
             var categoryId = viewModel.CategoryId;
             var title = viewModel.Title;
-            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _dataSource);
+            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _dataSource, _connectionListener);
             App.NavigateTo("/SectionPage.xaml");
         }
 

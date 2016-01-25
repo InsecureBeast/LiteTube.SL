@@ -14,13 +14,13 @@ namespace LiteTube.ViewModels
         private string _selectedRegion;
         private string _selectedQuality;
         
-        public SettingsViewModel(IDataSource dataSource)
+        public SettingsViewModel(IDataSource dataSource, ConnectionListener connectionListener)
         {
             _dataSource = dataSource;
             _languages = new ObservableCollection<string>(I18nLanguages.Languages);
             var videoQuality = new VideoQuality();
             _videoQualities = new ObservableCollection<string>(videoQuality.GetQualityNames());
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource, connectionListener);
             _navigatioPanelViewModel.IsSettingsSelected = true;
             _selectedRegion = SettingsHelper.GetRegionName();
             _selectedQuality = SettingsHelper.GetQuality();

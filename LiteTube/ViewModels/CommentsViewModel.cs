@@ -19,7 +19,8 @@ namespace LiteTube.ViewModels
         private string _commentText;
         private bool _isAddingComment;
 
-        public CommentsViewModel(string videoId, IDataSource dataSource) : base(dataSource)
+        public CommentsViewModel(string videoId, IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             _videoId = videoId;
             LoadProfile();
@@ -86,10 +87,10 @@ namespace LiteTube.ViewModels
         {
             foreach (var item in items)
             {
-                _comments.Add(new CommentNodeViewModel(item, _dataSource));
+                _comments.Add(new CommentNodeViewModel(item, _dataSource, _connectionListener));
                 foreach (var replayItem in item.ReplayComments.OrderBy(c => c.PublishedAt))
                 {
-                    _comments.Add(new CommentNodeViewModel(replayItem, _dataSource));
+                    _comments.Add(new CommentNodeViewModel(replayItem, _dataSource, _connectionListener));
                 }
             }
 
@@ -117,7 +118,7 @@ namespace LiteTube.ViewModels
                 IsAddingComment = false;
                 return;
             }
-            _comments.Insert(0, new CommentNodeViewModel(myComment, _dataSource));
+            _comments.Insert(0, new CommentNodeViewModel(myComment, _dataSource, _connectionListener));
             CommentText = string.Empty;
             IsAddingComment = false;            
         }

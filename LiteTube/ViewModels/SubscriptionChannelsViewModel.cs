@@ -12,9 +12,10 @@ namespace LiteTube.ViewModels
 {
     class SubscriptionChannelsViewModel : SectionBaseViewModel
     {
-        private ObservableCollection<SubscriptionNodeViewModel> _channels;
+        private readonly ObservableCollection<SubscriptionNodeViewModel> _channels;
 
-        public SubscriptionChannelsViewModel(IDataSource dataSource) : base(dataSource)
+        public SubscriptionChannelsViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+            : base(dataSource, connectionListener)
         {
             _channels = new ObservableCollection<SubscriptionNodeViewModel>();
         }
@@ -47,7 +48,7 @@ namespace LiteTube.ViewModels
             if (model == null)
                 return;
 
-            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(model.Id, _dataSource));
+            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(model.Id, _dataSource, _connectionListener));
         }
 
         internal void AddItems(IEnumerable<ISubscription> items)

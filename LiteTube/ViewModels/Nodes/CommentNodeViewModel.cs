@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using Microsoft.Phone.Shell;
 using MyToolkit.Command;
@@ -13,8 +14,9 @@ namespace LiteTube.ViewModels.Nodes
     {
         private RelayCommand<string> _channelCommand;
         private IDataSource _datasource;
+        private readonly ConnectionListener _connectionListener;
 
-        public CommentNodeViewModel(IComment comment, IDataSource datasource)
+        public CommentNodeViewModel(IComment comment, IDataSource datasource, ConnectionListener connectionListener)
         {
             TextDisplay = comment.TextDisplay;
             AuthorDisplayName = comment.AuthorDisplayName;
@@ -23,10 +25,11 @@ namespace LiteTube.ViewModels.Nodes
             LikeCount = comment.LikeCount;
             PublishedAt = comment.PublishedAt;
             PublishedAtRaw = comment.PublishedAtRaw;
-            ReplayComments = comment.ReplayComments.Select(c => new CommentNodeViewModel(c, datasource));
+            ReplayComments = comment.ReplayComments.Select(c => new CommentNodeViewModel(c, datasource, _connectionListener));
             IsReplay = comment.IsReplay;
 
             _datasource = datasource;
+            _connectionListener = connectionListener;
             _channelCommand = new RelayCommand<string>(LoadChannel);
         }
 
@@ -47,7 +50,7 @@ namespace LiteTube.ViewModels.Nodes
 
         private void LoadChannel(string channelId)
         {
-            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _datasource);
+            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _datasource, _connectionListener);
             App.NavigateTo("/ChannelPage.xaml");
         }
     }

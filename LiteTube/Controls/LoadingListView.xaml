@@ -19,6 +19,12 @@
                        Text="Items not found"
                        Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="Check internet connection"
+                       Style="{StaticResource LoadingTextBlockStyle}"
+                       Visibility="{Binding IsConnected, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
     

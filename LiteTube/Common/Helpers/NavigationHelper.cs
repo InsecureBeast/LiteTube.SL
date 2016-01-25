@@ -38,7 +38,8 @@ namespace LiteTube.Common.Helpers
         public static void GoToFindPage()
         {
             var datasource = App.ViewModel.DataSource;
-            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource));
+            var connectionListener = App.ViewModel.ConnectionListener;
+            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource, connectionListener));
         }
 
         public static bool Contains(string url)
