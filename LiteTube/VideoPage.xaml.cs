@@ -10,6 +10,7 @@ using LiteTube.ViewModels;
 using System.Diagnostics;
 using Windows.Devices.Sensors;
 using LiteTube.Common;
+using Microsoft.PlayerFramework;
 
 namespace LiteTube
 {
@@ -22,6 +23,10 @@ namespace LiteTube
         private readonly IApplicationBar _sendApplicationBar;
         private readonly ApplicationBarIconButton _sendApplicationBarButton;
         private readonly ApplicationBarIconButton _favoritesApplicationBarButton;
+        private MediaState _deactivatedState;
+        private MediaState _playerState;
+        private bool _resumed;
+        private TimeSpan _playerPosition;
 
         public VideoPage()
         {
@@ -29,9 +34,12 @@ namespace LiteTube
             Loaded += OnLoaded;
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            player.MediaOpened += PlayerOnMediaOpened;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
+            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
+            PhoneApplicationService.Current.Activated += Current_Activated;
 
             _sensor = SimpleOrientationSensor.GetDefault();
 
@@ -43,11 +51,23 @@ namespace LiteTube
             _currentApplicationBar.Mode = ApplicationBarMode.Minimized;
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Find.png", "Find", Find_Click));
-            _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video url", CopyVideoUrk_Click));
+            _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video url", CopyVideoUrl_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click);
 
             ApplicationBar = _currentApplicationBar;
+        }
+
+        private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (!_resumed) 
+                return;
+
+            LayoutHelper.InvokeFromUIThread(() =>
+            {
+                _resumed = false;
+                player.Position = _playerPosition;
+            });
         }
 
         private void CommentTextBoxOnTextChanged(object sender, TextChangedEventArgs textChangedEventArgs)
@@ -73,6 +93,13 @@ namespace LiteTube
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (e.Uri.OriginalString.Contains("resume"))
+            {
+                _resumed = true;
+                var arr = e.Uri.OriginalString.Split('=');
+                _playerPosition = TimeSpan.Parse(arr[3]);
+            }
+
             NavigationHelper.OnNavigatedTo(this);
             _sensor.OrientationChanged += Sensor_OrientationChanged;
 
@@ -90,6 +117,7 @@ namespace LiteTube
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            _playerState = player.GetMediaState();
             base.OnNavigatedFrom(e);
             _sensor.OrientationChanged -= Sensor_OrientationChanged;
             //player.Dispose();
@@ -253,13 +281,41 @@ namespace LiteTube
             viewModel.AddFavoritesCommand.Execute(null);
         }
 
-        private void CopyVideoUrk_Click(object sender, EventArgs eventArgs)
+        private void CopyVideoUrl_Click(object sender, EventArgs eventArgs)
         {
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
 
             Clipboard.SetText(string.Format("https://www.youtube.com/watch?v={0}", viewModel.VideoId));
+        }
+
+        private void Current_Activated(object sender, ActivatedEventArgs e)
+        {
+            if (_deactivatedState != null)
+            {
+                NavigationService.RemoveBackEntry();
+
+                LayoutHelper.InvokeFromUIThread(() => 
+                {
+                    _resumed = true;
+                    player.RestoreMediaState(_deactivatedState);
+                    
+                    var viewModel = DataContext as VideoPageViewModel;
+                    if (viewModel == null)
+                        return;
+
+                    var view = string.Format("/VideoPage.xaml?videoId={0}&resume={1}&pos={2}", viewModel.VideoId, Guid.NewGuid(), _playerPosition);
+                    NavigationHelper.Navigate(view, viewModel);
+                });
+            }
+        }
+
+        private void Current_Deactivated(object sender, DeactivatedEventArgs e)
+        {
+            player.Close(); // shut things like ads down.
+            _deactivatedState = _playerState;
+            _playerPosition = player.VirtualPosition;
         }
     }
 }
