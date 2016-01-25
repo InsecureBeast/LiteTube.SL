@@ -47,10 +47,12 @@ namespace LiteTube.Controls
 
         private void Feedback_Click(object sender, RoutedEventArgs e)
         {
-            EmailComposeTask emailComposeTask = new EmailComposeTask();
-            emailComposeTask.Subject = "LiteTube feedback";
-            emailComposeTask.Body = "[Your feedback here]";
-            emailComposeTask.To = "[LiteTube Team]dmitriev.pe@yandex.ru";
+            var emailComposeTask = new EmailComposeTask
+            {
+                Subject = "LiteTube feedback",
+                Body = "[Your feedback here]",
+                To = "dmitriev.pe@yandex.ru"
+            };
             emailComposeTask.Show();
         }
 

@@ -15,5 +15,15 @@ namespace LiteTube.Common.Tools
             button.Click += handler;
             return button;
         }
+
+        public static ApplicationBarMenuItem CreateAApplicationBarMenuItem(string caption, EventHandler handler)
+        {
+            var button = new ApplicationBarMenuItem
+            {
+                Text = caption
+            };
+            button.Click += handler;
+            return button;
+        }
     }
 }

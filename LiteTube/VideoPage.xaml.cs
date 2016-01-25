@@ -40,8 +40,10 @@ namespace LiteTube
             _sendApplicationBar.Buttons.Add(_sendApplicationBarButton);
 
             _currentApplicationBar = new ApplicationBar();
+            _currentApplicationBar.Mode = ApplicationBarMode.Minimized;
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Find.png", "Find", Find_Click));
+            _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video url", CopyVideoUrk_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click);
 
@@ -249,6 +251,15 @@ namespace LiteTube
                 return;
 
             viewModel.AddFavoritesCommand.Execute(null);
+        }
+
+        private void CopyVideoUrk_Click(object sender, EventArgs eventArgs)
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            Clipboard.SetText(string.Format("https://www.youtube.com/watch?v={0}", viewModel.VideoId));
         }
     }
 }
