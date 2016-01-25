@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -10,6 +11,7 @@ using LiteTube.ViewModels;
 using System.Diagnostics;
 using Windows.Devices.Sensors;
 using LiteTube.Common;
+using Microsoft.PlayerFramework;
 
 namespace LiteTube
 {
@@ -22,6 +24,10 @@ namespace LiteTube
         private readonly IApplicationBar _sendApplicationBar;
         private readonly ApplicationBarIconButton _sendApplicationBarButton;
         private readonly ApplicationBarIconButton _favoritesApplicationBarButton;
+        private MediaState _deactivatedState;
+        private MediaState _playerState;
+        private bool _resumed;
+        private TimeSpan _playerPosition;
 
         public VideoPage()
         {
@@ -29,10 +35,11 @@ namespace LiteTube
             Loaded += OnLoaded;
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            player.MediaOpened += PlayerOnMediaOpened;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
-
+            
             _sensor = SimpleOrientationSensor.GetDefault();
 
             _sendApplicationBar = new ApplicationBar();
@@ -43,11 +50,23 @@ namespace LiteTube
             _currentApplicationBar.Mode = ApplicationBarMode.Minimized;
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Find.png", "Find", Find_Click));
-            _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video url", CopyVideoUrk_Click));
+            _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video url", CopyVideoUrl_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click);
 
             ApplicationBar = _currentApplicationBar;
+        }
+
+        private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (!_resumed) 
+                return;
+
+            LayoutHelper.InvokeFromUIThread(() =>
+            {
+                _resumed = false;
+                player.Position = _playerPosition;
+            });
         }
 
         private void CommentTextBoxOnTextChanged(object sender, TextChangedEventArgs textChangedEventArgs)
@@ -74,8 +93,7 @@ namespace LiteTube
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
-            _sensor.OrientationChanged += Sensor_OrientationChanged;
-
+            
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
@@ -86,13 +104,34 @@ namespace LiteTube
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
             }
+
+            string pos;
+            if (NavigationContext.QueryString.TryGetValue("pos", out pos))
+            {
+                _resumed = true;
+
+                //pos exists therefore it's a reload, so delete the last entry
+                //from the navigation stack
+                var str = string.Format("/VideoPage.xaml?videoId={0}", viewModel.VideoId);
+                if (!NavigationHelper.Contains(str))
+                    return;
+                
+                if (NavigationService.CanGoBack)
+                    NavigationService.RemoveBackEntry();
+
+                _playerPosition = TimeSpan.Parse(pos);
+            }
+
+            _sensor.OrientationChanged += Sensor_OrientationChanged;
+            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
+            PhoneApplicationService.Current.Activated += Current_Activated;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            base.OnNavigatedFrom(e);
+            _playerState = player.GetMediaState();
             _sensor.OrientationChanged -= Sensor_OrientationChanged;
-            //player.Dispose();
+            base.OnNavigatedFrom(e);
         }
 
         private void Sensor_OrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
@@ -253,13 +292,43 @@ namespace LiteTube
             viewModel.AddFavoritesCommand.Execute(null);
         }
 
-        private void CopyVideoUrk_Click(object sender, EventArgs eventArgs)
+        private void CopyVideoUrl_Click(object sender, EventArgs eventArgs)
         {
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
 
             Clipboard.SetText(string.Format("https://www.youtube.com/watch?v={0}", viewModel.VideoId));
+        }
+
+        private void Current_Activated(object sender, ActivatedEventArgs e)
+        {
+            if (_deactivatedState != null)
+            {
+
+                PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
+                PhoneApplicationService.Current.Activated -= Current_Activated;
+
+                LayoutHelper.InvokeFromUIThread(() => 
+                {
+                    _resumed = true;
+                    player.RestoreMediaState(_deactivatedState);
+                    
+                        var viewModel = DataContext as VideoPageViewModel;
+                        if (viewModel == null)
+                            return;
+
+                        var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", viewModel.VideoId, _playerPosition, Guid.NewGuid());
+                        NavigationHelper.Navigate(view, viewModel);
+                });
+            }
+        }
+
+        private void Current_Deactivated(object sender, DeactivatedEventArgs e)
+        {
+            player.Close(); // shut things like ads down.
+            _deactivatedState = _playerState;
+            _playerPosition = player.VirtualPosition;
         }
     }
 }
