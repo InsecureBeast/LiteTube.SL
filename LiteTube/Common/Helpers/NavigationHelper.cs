@@ -40,5 +40,11 @@ namespace LiteTube.Common.Helpers
             var datasource = App.ViewModel.DataSource;
             NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource));
         }
+
+        public static bool Contains(string url)
+        {
+            var list = App.RootFrame.BackStack.ToList();
+            return list.Any(journalEntry => journalEntry.Source.OriginalString.Contains(url));
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -38,9 +39,7 @@ namespace LiteTube
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
-            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
-            PhoneApplicationService.Current.Activated += Current_Activated;
-
+            
             _sensor = SimpleOrientationSensor.GetDefault();
 
             _sendApplicationBar = new ApplicationBar();
@@ -93,16 +92,8 @@ namespace LiteTube
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Uri.OriginalString.Contains("resume"))
-            {
-                _resumed = true;
-                var arr = e.Uri.OriginalString.Split('=');
-                _playerPosition = TimeSpan.Parse(arr[3]);
-            }
-
             NavigationHelper.OnNavigatedTo(this);
-            _sensor.OrientationChanged += Sensor_OrientationChanged;
-
+            
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
@@ -113,14 +104,34 @@ namespace LiteTube
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
             }
+
+            string pos;
+            if (NavigationContext.QueryString.TryGetValue("pos", out pos))
+            {
+                _resumed = true;
+
+                //pos exists therefore it's a reload, so delete the last entry
+                //from the navigation stack
+                var str = string.Format("/VideoPage.xaml?videoId={0}", viewModel.VideoId);
+                if (!NavigationHelper.Contains(str))
+                    return;
+                
+                if (NavigationService.CanGoBack)
+                    NavigationService.RemoveBackEntry();
+
+                _playerPosition = TimeSpan.Parse(pos);
+            }
+
+            _sensor.OrientationChanged += Sensor_OrientationChanged;
+            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
+            PhoneApplicationService.Current.Activated += Current_Activated;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _playerState = player.GetMediaState();
-            base.OnNavigatedFrom(e);
             _sensor.OrientationChanged -= Sensor_OrientationChanged;
-            //player.Dispose();
+            base.OnNavigatedFrom(e);
         }
 
         private void Sensor_OrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
@@ -294,19 +305,21 @@ namespace LiteTube
         {
             if (_deactivatedState != null)
             {
-                NavigationService.RemoveBackEntry();
+
+                PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
+                PhoneApplicationService.Current.Activated -= Current_Activated;
 
                 LayoutHelper.InvokeFromUIThread(() => 
                 {
                     _resumed = true;
                     player.RestoreMediaState(_deactivatedState);
                     
-                    var viewModel = DataContext as VideoPageViewModel;
-                    if (viewModel == null)
-                        return;
+                        var viewModel = DataContext as VideoPageViewModel;
+                        if (viewModel == null)
+                            return;
 
-                    var view = string.Format("/VideoPage.xaml?videoId={0}&resume={1}&pos={2}", viewModel.VideoId, Guid.NewGuid(), _playerPosition);
-                    NavigationHelper.Navigate(view, viewModel);
+                        var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", viewModel.VideoId, _playerPosition, Guid.NewGuid());
+                        NavigationHelper.Navigate(view, viewModel);
                 });
             }
         }
