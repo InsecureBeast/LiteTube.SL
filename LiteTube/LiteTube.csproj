@@ -111,6 +111,7 @@
     <Compile Include="Common\Extensions\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />
     <Compile Include="Common\Helpers\NavigationHelper.cs" />
+    <Compile Include="Common\ProgressIndicatorHolder.cs" />
     <Compile Include="Common\ScrollViewerMonitor.cs" />
     <Compile Include="Common\SubscribeCommand.cs" />
     <Compile Include="Common\Tools\ApplicationBarHelper.cs" />

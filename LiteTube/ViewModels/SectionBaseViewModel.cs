@@ -40,6 +40,7 @@ namespace LiteTube.ViewModels
         //private ListViewSelectionMode _selectionMode;
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
         private bool _isConnected = true;
+        private ProgressIndicator _progressIndicator;
 
         public SectionBaseViewModel(IDataSource dataSource, ConnectionListener connectionListener)
         {
@@ -155,6 +156,19 @@ namespace LiteTube.ViewModels
             {
                 _isConnected = value;
                 NotifyOfPropertyChanged(() => IsConnected);
+            }
+        }
+
+        public ProgressIndicator ProgressIndicator
+        {
+            get { return _progressIndicator; }
+            set
+            {
+                if (value == _progressIndicator)
+                    return;
+
+                _progressIndicator = value;
+                NotifyOfPropertyChanged(() => ProgressIndicator);
             }
         }
 
@@ -291,12 +305,18 @@ namespace LiteTube.ViewModels
             indicator.IsVisible = true;
             indicator.IsIndeterminate = true;
 
+            ProgressIndicator = indicator;
             App.ViewModel.ProgressIndicator = indicator;
+            App.ViewModel.IndicatorHolder.ProgressIndicator = indicator;
+            //ProgressIndicatorHolder.Instance.ProgressIndicator = indicator;
         }
 
         protected void HideProgressIndicator()
         {
-            App.ViewModel.ProgressIndicator = new ProgressIndicator();
+            ProgressIndicator = null;
+            App.ViewModel.ProgressIndicator = null;
+            App.ViewModel.IndicatorHolder.ProgressIndicator = null;
+            //ProgressIndicatorHolder.Instance.ProgressIndicator = null;
         }
 
         protected virtual void DeleteItems()

@@ -16,6 +16,7 @@
     SupportedOrientations="Portrait"  
     Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
+    shell:SystemTray.ProgressIndicator="{Binding ProgressIndicator}"
     Style="{StaticResource PageThemeStyle}"
     ApplicationBar="{StaticResource GlobalAppBar}">
 

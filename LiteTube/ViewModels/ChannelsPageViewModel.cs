@@ -74,6 +74,8 @@ namespace LiteTube.ViewModels
             IsLoading = false;
             if (!_channels.Any())
                 IsEmpty = true;
+
+            HideProgressIndicator();
         }
 
         internal override void NavigateTo(NavigationObject navObject)

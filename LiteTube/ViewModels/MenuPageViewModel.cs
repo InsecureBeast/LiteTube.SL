@@ -32,6 +32,7 @@ namespace LiteTube.ViewModels
 
         private int _selectedIndex;
         private bool _isConnected;
+        private ProgressIndicator _progressIndicator;
         //private PreventNavigationHelper _navigationHelper;
 
         public MenuPageViewModel(int index, IDataSource dataSource, ConnectionListener connectionListener)
@@ -54,6 +55,10 @@ namespace LiteTube.ViewModels
             SelectedIndex = index;
 
             _isConnected = ConnectionListener.CheckNetworkAvailability();
+            App.ViewModel.IndicatorHolder.Subscribe(() =>
+            {
+                ProgressIndicator = App.ViewModel.IndicatorHolder.ProgressIndicator;
+            });
         }
 
         public ObservableCollection<GuideCategoryNodeViewModel> Categories
@@ -135,6 +140,19 @@ namespace LiteTube.ViewModels
         public bool IsFavoritesSelectedVisible
         {
             get { return _favoritesViewModel.IsItemClickEnabled && _selectedIndex == 2; }
+        }
+
+        public ProgressIndicator ProgressIndicator
+        {
+            get { return _progressIndicator; }
+            set
+            {
+                if (value == _progressIndicator)
+                    return;
+
+                _progressIndicator = value;
+                NotifyOfPropertyChanged(() => ProgressIndicator);
+            }
         }
 
         private void OnSelectedIndexChanged(int index)
