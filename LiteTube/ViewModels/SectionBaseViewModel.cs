@@ -188,6 +188,7 @@ namespace LiteTube.ViewModels
             if (Items.Count > 0)
                 return;
 
+            ShowProgressIndicator();
             IsLoading = true;
 
             var responseList = await GetItems(string.Empty);
@@ -196,6 +197,7 @@ namespace LiteTube.ViewModels
                 IsLoading = false;
                 if (!Items.Any())
                     IsEmpty = true;
+                HideProgressIndicator();
                 return;
             }
 
@@ -243,6 +245,8 @@ namespace LiteTube.ViewModels
             IsLoading = false;
             if (!Items.Any())
                 IsEmpty = true;
+
+            HideProgressIndicator();
         }
 
         private async void LoadMore()
@@ -282,16 +286,17 @@ namespace LiteTube.ViewModels
 
         protected void ShowProgressIndicator()
         {
-            //var statusBar = StatusBar.GetForCurrentView();
-            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //var arstring = resourceLoader.GetString("LoadingString");
-            //statusBar.ProgressIndicator.Text = arstring;
-            SystemTray.ProgressIndicator.IsVisible = true;
+            var indicator = new ProgressIndicator();
+            indicator.Text = "Loading...";
+            indicator.IsVisible = true;
+            indicator.IsIndeterminate = true;
+
+            App.ViewModel.ProgressIndicator = indicator;
         }
 
         protected void HideProgressIndicator()
         {
-            SystemTray.ProgressIndicator.IsVisible = false;
+            App.ViewModel.ProgressIndicator = new ProgressIndicator();
         }
 
         protected virtual void DeleteItems()

@@ -18,6 +18,7 @@ namespace LiteTube.ViewModels
         private readonly ObservableCollection<VideoCategoryNodeViewModel> _categoryItems;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
         private readonly ActivitySectionViewModel _activitySectionViewModel;
+        private ProgressIndicator _progressIndicator;
 
         public MainViewModel(IDataSource dataSource, ConnectionListener connectionListener)
             : base(dataSource, connectionListener)
@@ -79,6 +80,19 @@ namespace LiteTube.ViewModels
         public ConnectionListener ConnectionListener
         {
             get { return _connectionListener; }
+        }
+
+        public ProgressIndicator ProgressIndicator
+        {
+            get { return _progressIndicator; }
+            set
+            {
+                if (value == _progressIndicator)
+                    return;
+
+                _progressIndicator = value;
+                NotifyOfPropertyChanged(()=> ProgressIndicator);
+            }
         }
 
         /// <summary>
