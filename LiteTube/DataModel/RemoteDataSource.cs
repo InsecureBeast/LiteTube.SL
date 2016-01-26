@@ -53,7 +53,7 @@ namespace LiteTube.DataModel
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
     }
     
-    class RemoteDataSource : IRemoteDataSource
+    class RemoteDataSource : IRemoteDataSource, IListener<ConnectionEventArgs>
     {
         private readonly IYouTubeService _youTubeServiceControl;
         private YouTubeService _youTubeService;
@@ -62,22 +62,17 @@ namespace LiteTube.DataModel
         private string _watchLaterPlayList;
         private string _likesPlayList;
         private string _favorites;
-        private readonly PlaylistCahce _playlistCache;
-        private readonly SubscriptionsHolder _subscriptionsHolder;
-        private readonly YouTubeWeb _youTubeWeb;
+        private PlaylistCahce _playlistCache;
+        private SubscriptionsHolder _subscriptionsHolder;
+        private YouTubeWeb _youTubeWeb;
         private const long SEARCH_PAGE_MAX_RESULT = 45;
         private MProfile _profileInfo;
 
-        public RemoteDataSource(IYouTubeService youTubeServiceControl)
+        public RemoteDataSource(IYouTubeService youTubeServiceControl, ConnectionListener connectionListener)
         {
             _youTubeServiceControl = youTubeServiceControl;
-            _youTubeService = _youTubeServiceControl.GetService();
-            _playlistCache = new PlaylistCahce();
-            _subscriptionsHolder = new SubscriptionsHolder(youTubeServiceControl);
-            _youTubeWeb = new YouTubeWeb();
-
-            //TODO proxy!!! Обернуть вызовы через прокси
-            //WebRequest.DefaultWebProxy = new WebProxy();
+            connectionListener.Subscribe(this);
+            Initialize();
         }
 
         public void Login()
@@ -679,6 +674,20 @@ namespace LiteTube.DataModel
         public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
         {
             return await YouTubeWeb.HttpGetAutoCompleteAsync(query);
+        }
+
+        public void Notify(ConnectionEventArgs e)
+        {
+            if (e.IsConnected)
+                Initialize();
+        }
+
+        private void Initialize()
+        {
+            _youTubeService = _youTubeServiceControl.GetService();
+            _playlistCache = new PlaylistCahce();
+            _subscriptionsHolder = new SubscriptionsHolder(_youTubeServiceControl);
+            _youTubeWeb = new YouTubeWeb();
         }
     }
 }
