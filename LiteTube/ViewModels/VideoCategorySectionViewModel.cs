@@ -26,5 +26,17 @@ namespace LiteTube.ViewModels
         {
             return await _dataSource.GetCategoryVideoList(_categoryId, nextPageToken);
         }
+
+        public override void Notify(ConnectionEventArgs e)
+        {
+            base.Notify(e);
+            if (e.IsConnected)
+            {
+                LayoutHelper.InvokeFromUIThread(async () =>
+                {
+                    await FirstLoad();
+                });
+            }
+        }
     }
 }

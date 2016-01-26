@@ -160,14 +160,16 @@ namespace LiteTube.ViewModels
             base.Notify(e);
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                if (!e.IsConnected)
+                IsConnected = e.IsConnected;
+
+                if (e.IsConnected)
                 {
-                    CategoryItems.Clear();
-                    IsDataLoaded = false;
+                    await LoadData();
                     return;
                 }
 
-                await LoadData();
+                if (CategoryItems.Count > 0)
+                    IsConnected = true;
             });
         }
     }

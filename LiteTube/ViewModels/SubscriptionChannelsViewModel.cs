@@ -25,6 +25,24 @@ namespace LiteTube.ViewModels
             get { return _channels; }
         }
 
+        public override void Notify(ConnectionEventArgs e)
+        {
+            base.Notify(e);
+            LayoutHelper.InvokeFromUIThread(async () =>
+            {
+                IsConnected = e.IsConnected;
+
+                if (e.IsConnected)
+                {
+                    await FirstLoad();
+                    return;
+                }
+
+                if (CategoryItems.Count > 0)
+                    IsConnected = true;
+            });
+        }
+
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
             return await _dataSource.GetSubscribtions(nextPageToken);

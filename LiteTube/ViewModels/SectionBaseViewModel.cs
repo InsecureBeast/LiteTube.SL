@@ -135,25 +135,6 @@ namespace LiteTube.ViewModels
             }
         }
 
-        internal async Task FirstLoad()
-        {
-            if (Items.Count > 0)
-                return;
-
-            var responseList = await GetItems(string.Empty);
-            if (responseList == null || responseList.PageInfo == null)
-            {
-                IsLoading = false;
-                if (!Items.Any())
-                    IsEmpty = true;
-                return;
-            }
-               
-            LoadItems(responseList);
-            _pageToken = responseList.NextPageToken;
-            _hasItems = !string.IsNullOrEmpty(_pageToken);
-        }
-
         public bool IsEmpty
         {
             get
@@ -200,6 +181,27 @@ namespace LiteTube.ViewModels
         public void SetNavigationFrame(Frame frame)
         {
             _frame = frame;
+        }
+
+        internal async Task FirstLoad()
+        {
+            if (Items.Count > 0)
+                return;
+
+            IsLoading = true;
+
+            var responseList = await GetItems(string.Empty);
+            if (responseList == null || responseList.PageInfo == null)
+            {
+                IsLoading = false;
+                if (!Items.Any())
+                    IsEmpty = true;
+                return;
+            }
+
+            LoadItems(responseList);
+            _pageToken = responseList.NextPageToken;
+            _hasItems = !string.IsNullOrEmpty(_pageToken);
         }
 
         internal virtual void LoadItems(IResponceList videoList)
@@ -308,8 +310,14 @@ namespace LiteTube.ViewModels
             {
                 IsConnected = e.IsConnected;
 
-                if (!e.IsConnected)
-                    Items.Clear();
+                if (e.IsConnected)
+                    return;
+
+                IsEmpty = false;
+                IsLoading = false;
+
+                if (Items.Count > 0)
+                    IsConnected = true;
             });
         }
     }

@@ -283,7 +283,20 @@ namespace LiteTube.ViewModels
 
         public void Notify(ConnectionEventArgs e)
         {
-            IsConnected = e.IsConnected;
+            LayoutHelper.InvokeFromUIThread(async () =>
+            {
+                IsConnected = e.IsConnected;
+
+                if (e.IsConnected)
+                {
+                    LoadCategories();
+                    return;
+                }
+
+                if (Categories.Count > 0)
+                    IsConnected = true;
+
+            });
         }
     }
 }
