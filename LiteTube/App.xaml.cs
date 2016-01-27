@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using LiteTube.Common.Tools;
 using Microsoft.Phone.Controls;
@@ -156,8 +157,15 @@ namespace LiteTube
                 Debugger.Break();
             }
 
-            _container.DialogService.ShowException(e.ExceptionObject);
             e.Handled = true;
+
+            if (e.ExceptionObject is LiteTubeException)
+            {
+                _container.DialogService.ShowError(e.ExceptionObject);
+                return;
+            }
+
+            _container.DialogService.ShowException(e.ExceptionObject);
         }
 
         #region Phone application initialization

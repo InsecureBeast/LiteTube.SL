@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Windows;
 using Microsoft.Phone.Controls;
 
 namespace LiteTube.Common
@@ -8,7 +9,7 @@ namespace LiteTube.Common
     {
         private static Exception _exception;
 
-        public static void ShowDialog(Exception exception)
+        public static void ShowError(Exception exception)
         {
             _exception = exception;
 
@@ -88,6 +89,11 @@ namespace LiteTube.Common
             }
 
             return ex.Message; 
+        }
+
+        public static void ShowDialog(Exception exception)
+        {
+            MessageBox.Show("");
         }
     }
 }

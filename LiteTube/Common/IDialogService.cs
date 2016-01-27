@@ -19,12 +19,12 @@ namespace LiteTube.Common
 
         public void ShowError(Exception exception)
         {
-            
+            ExceptionDialog.ShowDialog(exception);
         }
 
         public void ShowException(Exception exception)
         {
-            ExceptionDialog.ShowDialog(exception);
+            ExceptionDialog.ShowError(exception);
         }
     }
 }

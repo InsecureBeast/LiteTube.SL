@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using LiteTube.DataClasses;
@@ -199,25 +200,37 @@ namespace LiteTube.ViewModels
 
         internal async Task FirstLoad()
         {
-            if (Items.Count > 0)
-                return;
+            try
+            {
+                if (Items.Count > 0)
+                    return;
 
-            ShowProgressIndicator();
-            IsLoading = true;
+                ShowProgressIndicator();
+                IsLoading = true;
 
-            var responseList = await GetItems(string.Empty);
-            if (responseList == null || responseList.PageInfo == null)
+                var responseList = await GetItems(string.Empty);
+                if (responseList == null || responseList.PageInfo == null)
+                {
+                    IsLoading = false;
+                    if (!Items.Any())
+                        IsEmpty = true;
+                    HideProgressIndicator();
+                    return;
+                }
+
+                LoadItems(responseList);
+                _pageToken = responseList.NextPageToken;
+                _hasItems = !string.IsNullOrEmpty(_pageToken);
+
+                HideProgressIndicator();
+            }
+            catch (WebException e)
             {
                 IsLoading = false;
-                if (!Items.Any())
-                    IsEmpty = true;
-                HideProgressIndicator();
-                return;
+                IsEmpty = true;
+                IsConnected = true;
+                throw new LiteTubeException(e);
             }
-
-            LoadItems(responseList);
-            _pageToken = responseList.NextPageToken;
-            _hasItems = !string.IsNullOrEmpty(_pageToken);
         }
 
         internal virtual void LoadItems(IResponceList videoList)
@@ -259,34 +272,42 @@ namespace LiteTube.ViewModels
             IsLoading = false;
             if (!Items.Any())
                 IsEmpty = true;
-
-            HideProgressIndicator();
         }
 
         private async void LoadMore()
         {
-            if (!_hasItems)
-                return;
-
-            if (_inCall)
-                return;
-
-            _inCall = true;
-            ShowProgressIndicator();
-            var result = await GetItems(_pageToken);
-            if (result == null)
+            try
             {
-                _inCall = false;
-                _hasItems = false;
-                HideProgressIndicator();
-                return;
-            }
+                if (!_hasItems)
+                    return;
 
-            LoadItems(result);
-            _pageToken = result.NextPageToken;
-            _hasItems = !string.IsNullOrEmpty(_pageToken);
-            _inCall = false;
-            HideProgressIndicator();
+                if (_inCall)
+                    return;
+
+                _inCall = true;
+                ShowProgressIndicator();
+                var result = await GetItems(_pageToken);
+                if (result == null)
+                {
+                    _inCall = false;
+                    _hasItems = false;
+                    HideProgressIndicator();
+                    return;
+                }
+
+                LoadItems(result);
+                _pageToken = result.NextPageToken;
+                _hasItems = !string.IsNullOrEmpty(_pageToken);
+                _inCall = false;
+                HideProgressIndicator();
+            }
+            catch (WebException e)
+            {
+                IsLoading = false;
+                IsEmpty = true;
+                IsConnected = true;
+                throw new LiteTubeException(e);
+            }
         }
 
         internal virtual void NavigateTo(NavigationObject navObject)
