@@ -6,7 +6,6 @@ namespace LiteTube.ViewModels.Nodes
     {
         private readonly ISubscription _subscription;
         private readonly string _id;
-        private readonly string _videoId;
 
         public SubscriptionNodeViewModel(ISubscription subscription)
         {
@@ -40,7 +39,7 @@ namespace LiteTube.ViewModels.Nodes
 
         public override string VideoId
         {
-            get { return _videoId; }
+            get { return string.Empty; }
         }
     }
 }

@@ -61,11 +61,9 @@ namespace LiteTube.DataModel
         private IList<IGuideCategory> _guideCategories;
         private readonly List<IChannel> _channels;
         private readonly IDeviceHistory _deviceHistory;
-        private  EventHandler _settingsUpdated;
         private string _region;
         private readonly int _maxPageResult;
         private YouTubeQuality _quality;
-        private EventHandler _contextUpdated;
         private readonly Notifier<UpdateContextEventArgs> _contextNotifier = new Notifier<UpdateContextEventArgs>();
         private readonly Notifier<UpdateSettingsEventArgs> _settingsNotifier = new Notifier<UpdateSettingsEventArgs>();
         private bool _isConnected;

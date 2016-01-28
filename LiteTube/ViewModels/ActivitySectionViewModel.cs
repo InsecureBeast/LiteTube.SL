@@ -8,8 +8,6 @@ namespace LiteTube.ViewModels
 {
     public class ActivitySectionViewModel : SectionBaseViewModel
     {
-        private bool _canLoad = false;
-
         public ActivitySectionViewModel(IVideoList activity, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {

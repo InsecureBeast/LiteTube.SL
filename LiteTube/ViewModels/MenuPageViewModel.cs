@@ -301,7 +301,7 @@ namespace LiteTube.ViewModels
 
         public void Notify(ConnectionEventArgs e)
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUIThread(() =>
             {
                 IsConnected = e.IsConnected;
 

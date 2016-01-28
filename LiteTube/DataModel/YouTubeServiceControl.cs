@@ -60,7 +60,7 @@ namespace LiteTube.DataModel
             return _youTubeServiceAuth;
         }
 
-        public async Task Logout()
+        public /*async*/ Task Logout()
         {
             if (_credential != null)
             {
@@ -71,6 +71,7 @@ namespace LiteTube.DataModel
                 SettingsHelper.SaveUserId(string.Empty);
                 _youTubeService = GetYTService();
             }
+            return null;
         }
 
         public void Login()

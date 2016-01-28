@@ -375,7 +375,7 @@ namespace LiteTube.ViewModels
                     var url = await _dataSource.GetVideoUriAsync(videoId);
                     VideoUri = url.Uri;
                 }
-                catch(YouTubeUriNotFoundException e)
+                catch(YouTubeUriNotFoundException)
                 {
                     IsPaid = true;
                 }
