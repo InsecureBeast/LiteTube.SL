@@ -22,10 +22,13 @@ namespace LiteTube.ViewModels
         public CommentsViewModel(string videoId, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
+            if (string.IsNullOrEmpty(videoId))
+                return;
+
             _videoId = videoId;
-            LoadProfile();
             _comments = new ObservableCollection<CommentNodeViewModel>();
             _addCommentCommand = new RelayCommand(AddComment);
+            LoadProfile();
         }
 
         public ObservableCollection<CommentNodeViewModel> Comments

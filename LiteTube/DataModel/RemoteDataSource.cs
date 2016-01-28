@@ -674,18 +674,39 @@ namespace LiteTube.DataModel
 
         protected override void OnConnectionChanged(ConnectionEventArgs e)
         {
-            if (e.IsConnected)
+            if (!e.IsConnected)
+            {
+                _youTubeService = null;
+                _youTubeWeb = null;
+                _subscriptionsHolder = null;
+            }
+            else
+            {
                 Initialize();
+            }
 
             Notify(e);
         }
 
         private void Initialize()
         {
-            _youTubeService = _youTubeServiceControl.GetService();
+            if (string.IsNullOrEmpty(SettingsHelper.GetRefreshToken()))
+            {
+                LayoutHelper.InvokeFromUIThread(async () =>
+                {
+                    await _youTubeServiceControl.RefreshToken(SettingsHelper.GetUserId());
+                });
+                _youTubeService = _youTubeServiceControl.GetAuthorizedService();
+            }
+            else
+            {
+                _youTubeService = _youTubeServiceControl.GetService();    
+            }
+            
             _playlistCache = new PlaylistCahce();
             _subscriptionsHolder = new SubscriptionsHolder(_youTubeServiceControl);
             _youTubeWeb = new YouTubeWeb();
+            
         }
     }
 }

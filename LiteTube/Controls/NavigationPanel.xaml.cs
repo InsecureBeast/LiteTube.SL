@@ -51,7 +51,7 @@ namespace LiteTube.Controls
             {
                 Subject = "LiteTube feedback",
                 Body = "[Your feedback here]",
-                To = "dmitriev.pe@yandex.ru"
+                To = "pe.dmitriev@gmail.com"
             };
             emailComposeTask.Show();
         }

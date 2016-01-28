@@ -1,5 +1,4 @@
-﻿using LiteTube.Common;
-using LiteTube.DataClasses;
+﻿using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 
@@ -12,6 +11,9 @@ namespace LiteTube.ViewModels
         public RelatedVideosViewModel(IVideoItem videoItem, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
+            if (videoItem == null)
+                return;
+            
             _videoId = videoItem.Details.Video.Id;
         }
 

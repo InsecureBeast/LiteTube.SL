@@ -167,7 +167,7 @@ namespace LiteTube.DataModel
             var initializer = new GoogleAuthorizationCodeFlow.Initializer
             {
                 ClientSecrets = clientSecrets,
-                Scopes = new [] { YouTubeService.Scope.YoutubeForceSsl }
+                Scopes = new[] { YouTubeService.Scope.YoutubeForceSsl, YouTubeService.Scope.Youtube, YouTubeService.Scope.YoutubeUpload }
             };
 
             var flow = new GoogleAuthorizationCodeFlow(initializer);

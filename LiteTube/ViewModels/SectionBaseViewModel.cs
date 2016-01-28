@@ -228,7 +228,8 @@ namespace LiteTube.ViewModels
                 IsLoading = false;
                 IsEmpty = true;
                 IsConnected = true;
-                throw;
+
+                HideProgressIndicator();
             }
         }
 
@@ -305,7 +306,8 @@ namespace LiteTube.ViewModels
                 IsLoading = false;
                 IsEmpty = true;
                 IsConnected = true;
-                throw;
+
+                HideProgressIndicator();
             }
         }
 
@@ -326,7 +328,7 @@ namespace LiteTube.ViewModels
             indicator.IsIndeterminate = true;
 
             ProgressIndicator = indicator;
-            App.ViewModel.ProgressIndicator = indicator;
+            //App.ViewModel.ProgressIndicator = indicator;
             App.ViewModel.IndicatorHolder.ProgressIndicator = indicator;
             //ProgressIndicatorHolder.Instance.ProgressIndicator = indicator;
         }
@@ -334,7 +336,7 @@ namespace LiteTube.ViewModels
         protected void HideProgressIndicator()
         {
             ProgressIndicator = null;
-            App.ViewModel.ProgressIndicator = null;
+            //App.ViewModel.ProgressIndicator = null;
             App.ViewModel.IndicatorHolder.ProgressIndicator = null;
             //ProgressIndicatorHolder.Instance.ProgressIndicator = null;
         }

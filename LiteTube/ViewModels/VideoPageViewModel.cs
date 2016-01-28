@@ -1,4 +1,5 @@
 ﻿using LiteTube.Common;
+using LiteTube.Common.Helpers;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using MyToolkit.Multimedia;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 
 namespace LiteTube.ViewModels
 {
-    public class VideoPageViewModel : PropertyChangedBase
+    public class VideoPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
     {
         private Uri _videoUri;
         private IChannel _channel;
@@ -48,8 +49,10 @@ namespace LiteTube.ViewModels
         {
             Likes = 0;
             Dislikes = 0;
+            VideoId = videoId;
             _dataSource = dataSource;
             _connectionListener = connectionListener;
+            _connectionListener.Subscribe(this);
             _channelSubscribers = 0;
             _channelVideoCount = 0;
 
@@ -360,6 +363,15 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public void Notify(ConnectionEventArgs e)
+        {
+            if (e.IsConnected)
+            {
+                var view = string.Format("/VideoPage.xaml?videoId={0}", _videoId);
+                NavigationHelper.Navigate(view, new VideoPageViewModel(_videoId, _dataSource, _connectionListener));
+            }
+        }
+
         public override string ToString()
         {
             return Title;
@@ -459,7 +471,14 @@ namespace LiteTube.ViewModels
             LayoutHelper.InvokeFromUIThread(async () =>
             {
                 var videoItem = await _dataSource.GetVideoItem(videoId);
-                VideoId = videoItem.Details.Video.Id;
+
+                RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource, _connectionListener);
+                CommentsViewModel = new CommentsViewModel(VideoId, _dataSource, _connectionListener);
+                
+                if (videoItem == null)
+                    return;
+
+                //VideoId = videoItem.Details.Video.Id;
                 Title = videoItem.Details.Title;
                 ChannelTitle = videoItem.ChannelTitle;
                 Description = videoItem.Details.Description;
@@ -469,9 +488,7 @@ namespace LiteTube.ViewModels
                 if (videoItem.PublishedAt != null) 
                     PublishedAt = videoItem.PublishedAt.Value.ToString("D");
                 ChannelId = videoItem.ChannelId;
-                RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource, _connectionListener);
-                CommentsViewModel = new CommentsViewModel(VideoId, _dataSource, _connectionListener);
-
+                
                 SetLikesAndDislikes(videoItem.Details.Video);
                 SetChannelInfo(_channelId);
                 SetVideoRating(VideoId);
