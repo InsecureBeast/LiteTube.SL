@@ -9,7 +9,7 @@ namespace LiteTube.ViewModels
     public class NavigationPanelViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>
     {
         private readonly IDataSource _datasource;
-        private readonly ConnectionListener _connectionListener;
+        private readonly IConnectionListener _connectionListener;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Common.RelayCommand _homeCommand;
@@ -26,7 +26,7 @@ namespace LiteTube.ViewModels
         private string _profileSecondDisplayName;
         private string _profileChannelId;
 
-        public NavigationPanelViewModel(IDataSource datasource, ConnectionListener connectionListener)
+        public NavigationPanelViewModel(IDataSource datasource, IConnectionListener connectionListener)
         {
             _datasource = datasource;
             _connectionListener = connectionListener;

@@ -10,19 +10,17 @@ namespace LiteTube
         private IYouTubeService _youTubeService;
         private IDialogService _dialogService;
         private IDeviceHistory _deviceHistory;
-        private ConnectionListener _connectionListener;
 
         public void Build()
         {
-            _connectionListener = new ConnectionListener();
             _deviceHistory = new DeviceHistory();
             _youTubeService = new YouTubeServiceControl();
-            _remoteDataSource = new RemoteDataSource(_youTubeService, _connectionListener);
+            _remoteDataSource = new RemoteDataSource(_youTubeService);
             var region = SettingsHelper.GetRegion();
             var quality = SettingsHelper.GetQuality();
             const int maxPageResult = 30;
             var remoteExceptionWrapper = new DataSourceExceptionWrapper(_remoteDataSource);
-            _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, _deviceHistory, quality, _connectionListener);
+            _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, _deviceHistory, quality, (IConnectionListener) _remoteDataSource);
             _dialogService = new DialogService(_deviceHistory);
         }
 
@@ -36,9 +34,9 @@ namespace LiteTube
             get { return _dialogService; }
         }
 
-        internal ConnectionListener ConnectionListener
+        internal IConnectionListener ConnectionListener
         {
-            get { return _connectionListener; }
+            get { return (IConnectionListener)_remoteDataSource; }
         }
     }
 }

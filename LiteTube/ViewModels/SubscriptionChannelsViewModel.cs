@@ -14,7 +14,7 @@ namespace LiteTube.ViewModels
     {
         private readonly ObservableCollection<SubscriptionNodeViewModel> _channels;
 
-        public SubscriptionChannelsViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public SubscriptionChannelsViewModel(IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _channels = new ObservableCollection<SubscriptionNodeViewModel>();

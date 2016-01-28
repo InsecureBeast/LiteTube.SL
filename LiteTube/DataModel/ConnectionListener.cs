@@ -1,12 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LiteTube.Common;
 using Microsoft.Phone.Net.NetworkInformation;
 
-namespace LiteTube.Common
+namespace LiteTube.DataModel
 {
+    public interface IConnectionListener
+    {
+        void Subscribe(IListener<ConnectionEventArgs> listener);
+        void Notify(ConnectionEventArgs e);
+        bool CheckNetworkAvailability();
+    }
+    
     public sealed class ConnectionEventArgs : EventArgs
     {
         public bool IsConnected { get; private set; }
@@ -17,7 +21,7 @@ namespace LiteTube.Common
         }
     }
 
-    public class ConnectionListener
+    public class ConnectionListener : IConnectionListener
     {
         private readonly Notifier<ConnectionEventArgs> _notifier = new Notifier<ConnectionEventArgs>();
 
@@ -25,15 +29,19 @@ namespace LiteTube.Common
         {
             // Subscribe to the NetworkAvailabilityChanged event
             DeviceNetworkInformation.NetworkAvailabilityChanged += ChangeDetected;
-
         }
 
         public void Subscribe(IListener<ConnectionEventArgs> listener)
         {
             _notifier.Subscribe(listener);
         }
-    
-        public static bool CheckNetworkAvailability()
+
+        public void Notify(ConnectionEventArgs e)
+        {
+            _notifier.Notify(e);
+        }
+
+        public bool CheckNetworkAvailability()
         {
             // this is coming true even when i disconnected my pc from internet.
             // i also make the dataconnection off of the emulator
@@ -44,6 +52,10 @@ namespace LiteTube.Common
             return ni != NetworkInterfaceType.None;
         }
 
+        protected virtual void OnConnectionChanged(ConnectionEventArgs e)
+        {
+        }
+
         private void ChangeDetected(object sender, NetworkNotificationEventArgs e)
         {
             ConnectionEventArgs connectionEventArgs;
@@ -51,15 +63,13 @@ namespace LiteTube.Common
             {
                 case NetworkNotificationType.InterfaceConnected:
                     connectionEventArgs = new ConnectionEventArgs(true);
-                    _notifier.Notify(connectionEventArgs);
+                    OnConnectionChanged(connectionEventArgs);
                     break;
                 case NetworkNotificationType.InterfaceDisconnected:
                     connectionEventArgs = new ConnectionEventArgs(false);
-                    _notifier.Notify(connectionEventArgs);
+                    OnConnectionChanged(connectionEventArgs);
                     break;
                 case NetworkNotificationType.CharacteristicUpdate:
-                    break;
-                default:
                     break;
             }
         }

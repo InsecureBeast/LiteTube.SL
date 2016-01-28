@@ -12,11 +12,11 @@ namespace LiteTube.ViewModels.Nodes
 {
     public class CommentNodeViewModel 
     {
-        private RelayCommand<string> _channelCommand;
-        private IDataSource _datasource;
-        private readonly ConnectionListener _connectionListener;
+        private readonly RelayCommand<string> _channelCommand;
+        private readonly IDataSource _datasource;
+        private readonly IConnectionListener _connectionListener;
 
-        public CommentNodeViewModel(IComment comment, IDataSource datasource, ConnectionListener connectionListener)
+        public CommentNodeViewModel(IComment comment, IDataSource datasource, IConnectionListener connectionListener)
         {
             TextDisplay = comment.TextDisplay;
             AuthorDisplayName = comment.AuthorDisplayName;

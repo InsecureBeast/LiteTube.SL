@@ -10,7 +10,7 @@ namespace LiteTube.ViewModels
     {
         private bool _canLoad = false;
 
-        public ActivitySectionViewModel(IVideoList activity, IDataSource dataSource, ConnectionListener connectionListener)
+        public ActivitySectionViewModel(IVideoList activity, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
@@ -19,7 +19,7 @@ namespace LiteTube.ViewModels
             Title = "Activity"; //TODO Localize
         }
 
-        public ActivitySectionViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public ActivitySectionViewModel(IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");

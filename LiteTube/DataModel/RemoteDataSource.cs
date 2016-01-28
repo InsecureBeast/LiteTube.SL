@@ -1,7 +1,6 @@
 ﻿using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using LiteTube.DataClasses;
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
@@ -11,8 +10,6 @@ using MyToolkit.Multimedia;
 using System.Net;
 using Google;
 using Windows.ApplicationModel.Activation;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace LiteTube.DataModel
 {
@@ -53,7 +50,7 @@ namespace LiteTube.DataModel
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
     }
     
-    class RemoteDataSource : IRemoteDataSource, IListener<ConnectionEventArgs>
+    class RemoteDataSource : ConnectionListener, IRemoteDataSource
     {
         private readonly IYouTubeService _youTubeServiceControl;
         private YouTubeService _youTubeService;
@@ -68,10 +65,9 @@ namespace LiteTube.DataModel
         private const long SEARCH_PAGE_MAX_RESULT = 45;
         private MProfile _profileInfo;
 
-        public RemoteDataSource(IYouTubeService youTubeServiceControl, ConnectionListener connectionListener)
+        public RemoteDataSource(IYouTubeService youTubeServiceControl)
         {
             _youTubeServiceControl = youTubeServiceControl;
-            connectionListener.Subscribe(this);
             Initialize();
         }
 
@@ -676,10 +672,12 @@ namespace LiteTube.DataModel
             return await YouTubeWeb.HttpGetAutoCompleteAsync(query);
         }
 
-        public void Notify(ConnectionEventArgs e)
+        protected override void OnConnectionChanged(ConnectionEventArgs e)
         {
             if (e.IsConnected)
                 Initialize();
+
+            Notify(e);
         }
 
         private void Initialize()

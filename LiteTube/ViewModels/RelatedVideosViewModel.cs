@@ -9,7 +9,7 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
 
-        public RelatedVideosViewModel(IVideoItem videoItem, IDataSource dataSource, ConnectionListener connectionListener)
+        public RelatedVideosViewModel(IVideoItem videoItem, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _videoId = videoItem.Details.Video.Id;

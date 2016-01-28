@@ -10,7 +10,7 @@ namespace LiteTube.ViewModels
 {
     class FavoritesViewModel : SectionBaseViewModel
     {
-        public FavoritesViewModel(IDataSource datasource, ConnectionListener connectionListener)
+        public FavoritesViewModel(IDataSource datasource, IConnectionListener connectionListener)
             : base(datasource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");

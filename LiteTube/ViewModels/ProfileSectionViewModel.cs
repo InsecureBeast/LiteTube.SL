@@ -16,9 +16,9 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _videoCategoryCommand;
         private readonly RelayCommand<FrameworkElement> _favoritesCommand;
         private readonly IDataSource _datasource;
-        private readonly ConnectionListener _connectionListener;
+        private readonly IConnectionListener _connectionListener;
 
-        public ProfileSectionViewModel(IDataSource datasource, ConnectionListener connectionListener)
+        public ProfileSectionViewModel(IDataSource datasource, IConnectionListener connectionListener)
         {
             _datasource = datasource;
             _connectionListener = connectionListener;

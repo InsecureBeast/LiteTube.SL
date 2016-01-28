@@ -106,11 +106,12 @@
     <Compile Include="ChannelPage.xaml.cs">
       <DependentUpon>ChannelPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\ConnectionListener.cs" />
+    <Compile Include="DataModel\ConnectionListener.cs" />
     <Compile Include="Common\ExceptionDialog.cs" />
     <Compile Include="Common\Extensions\ControlExtensions.cs" />
     <Compile Include="Common\DeviceHistory.cs" />
     <Compile Include="Common\Helpers\NavigationHelper.cs" />
+    <Compile Include="Common\LiteTubeException.cs" />
     <Compile Include="Common\ProgressIndicatorHolder.cs" />
     <Compile Include="Common\ScrollViewerMonitor.cs" />
     <Compile Include="Common\SubscribeCommand.cs" />

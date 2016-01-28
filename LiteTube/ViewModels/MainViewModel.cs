@@ -20,7 +20,7 @@ namespace LiteTube.ViewModels
         private readonly ActivitySectionViewModel _activitySectionViewModel;
         private ProgressIndicatorHolder _indicatorHolder;
 
-        public MainViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public MainViewModel(IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             if (dataSource == null) 
@@ -78,7 +78,7 @@ namespace LiteTube.ViewModels
             get { return !string.IsNullOrEmpty(SettingsHelper.GetUserId()); }
         }
 
-        public ConnectionListener ConnectionListener
+        public IConnectionListener ConnectionListener
         {
             get { return _connectionListener; }
         }

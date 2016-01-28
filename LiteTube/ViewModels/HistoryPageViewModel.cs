@@ -7,7 +7,7 @@ namespace LiteTube.ViewModels
 {
     class HistoryPageViewModel : SectionBaseViewModel
     {
-        public HistoryPageViewModel(IDataSource datasource, ConnectionListener connectionListener)
+        public HistoryPageViewModel(IDataSource datasource, IConnectionListener connectionListener)
             : base(datasource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");

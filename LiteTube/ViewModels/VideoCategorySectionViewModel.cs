@@ -9,7 +9,7 @@ namespace LiteTube.ViewModels
     {
         private readonly string _categoryId;
 
-        public VideoCategorySectionViewModel(string categoryId, string title, IDataSource dataSource, ConnectionListener connectionListener)
+        public VideoCategorySectionViewModel(string categoryId, string title, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _categoryId = categoryId;

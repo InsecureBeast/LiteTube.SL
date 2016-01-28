@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using LiteTube.DataClasses;
@@ -26,7 +25,7 @@ namespace LiteTube.ViewModels
         protected string _uniqueId;
         protected string _title;
         protected readonly IDataSource _dataSource;
-        protected readonly ConnectionListener _connectionListener;
+        protected readonly IConnectionListener _connectionListener;
         protected Frame _frame;
         protected bool _hasItems;
         private readonly Common.RelayCommand _loadMoreCommand;
@@ -43,7 +42,7 @@ namespace LiteTube.ViewModels
         private bool _isConnected = true;
         private ProgressIndicator _progressIndicator;
 
-        public SectionBaseViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public SectionBaseViewModel(IDataSource dataSource, IConnectionListener connectionListener)
         {
             if (dataSource == null) 
                 throw new ArgumentNullException("dataSource");
@@ -66,7 +65,7 @@ namespace LiteTube.ViewModels
             IsItemClickEnabled = true;
             _selectedItems = new ObservableCollection<NodeViewModelBase>();
 
-            _isConnected = ConnectionListener.CheckNetworkAvailability();
+            _isConnected = connectionListener.CheckNetworkAvailability();
         }
 
         public NavigationPanelViewModel NavigationPanelViewModel
@@ -224,12 +223,12 @@ namespace LiteTube.ViewModels
 
                 HideProgressIndicator();
             }
-            catch (WebException e)
+            catch (Exception)
             {
                 IsLoading = false;
                 IsEmpty = true;
                 IsConnected = true;
-                throw new LiteTubeException(e);
+                throw;
             }
         }
 
@@ -301,12 +300,12 @@ namespace LiteTube.ViewModels
                 _inCall = false;
                 HideProgressIndicator();
             }
-            catch (WebException e)
+            catch (Exception)
             {
                 IsLoading = false;
                 IsEmpty = true;
                 IsConnected = true;
-                throw new LiteTubeException(e);
+                throw;
             }
         }
 

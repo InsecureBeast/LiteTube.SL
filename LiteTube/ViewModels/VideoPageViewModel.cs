@@ -13,7 +13,7 @@ namespace LiteTube.ViewModels
         private Uri _videoUri;
         private IChannel _channel;
         private readonly IDataSource _dataSource;
-        private readonly ConnectionListener _connectionListener;
+        private readonly IConnectionListener _connectionListener;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private RelatedVideosViewModel _relatedViewModel;
         private CommentsViewModel _commentsViewModel;
@@ -44,7 +44,7 @@ namespace LiteTube.ViewModels
         private ulong _likes;
         private ulong _dislikes;
 
-        public VideoPageViewModel(string videoId, IDataSource dataSource, ConnectionListener connectionListener)
+        public VideoPageViewModel(string videoId, IDataSource dataSource, IConnectionListener connectionListener)
         {
             Likes = 0;
             Dislikes = 0;

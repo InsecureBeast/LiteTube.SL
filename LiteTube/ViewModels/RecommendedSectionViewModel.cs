@@ -9,7 +9,7 @@ namespace LiteTube.ViewModels
     {
         //private bool _canLoad = false;
 
-        public RecommendedSectionViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public RecommendedSectionViewModel(IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");

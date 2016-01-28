@@ -18,7 +18,7 @@ namespace LiteTube.ViewModels
     class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
     {
         private readonly IDataSource _dataSource;
-        private readonly ConnectionListener _connectionListener;
+        private readonly IConnectionListener _connectionListener;
         private readonly RecommendedSectionViewModel _recommendedSectionViewModel;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private readonly SubscriptionChannelsViewModel _subscriptions;
@@ -35,7 +35,7 @@ namespace LiteTube.ViewModels
         private ProgressIndicator _progressIndicator;
         //private PreventNavigationHelper _navigationHelper;
 
-        public MenuPageViewModel(int index, IDataSource dataSource, ConnectionListener connectionListener)
+        public MenuPageViewModel(int index, IDataSource dataSource, IConnectionListener connectionListener)
         {
             _dataSource = dataSource;
             _connectionListener = connectionListener;
@@ -54,7 +54,7 @@ namespace LiteTube.ViewModels
 
             SelectedIndex = index;
 
-            _isConnected = ConnectionListener.CheckNetworkAvailability();
+            _isConnected = connectionListener.CheckNetworkAvailability();
             App.ViewModel.IndicatorHolder.Subscribe(() =>
             {
                 ProgressIndicator = App.ViewModel.IndicatorHolder.ProgressIndicator;

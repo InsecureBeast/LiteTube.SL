@@ -15,7 +15,7 @@ namespace LiteTube.ViewModels
         private readonly string _categoryId;
         private readonly ObservableCollection<ChannelNodeViewModel> _channels;
 
-        public ChannelListPageViewModel(string categoryId, string title, IDataSource dataSource, ConnectionListener connectionListener)
+        public ChannelListPageViewModel(string categoryId, string title, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _uniqueId = categoryId;

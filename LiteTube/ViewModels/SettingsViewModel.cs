@@ -14,7 +14,7 @@ namespace LiteTube.ViewModels
         private string _selectedRegion;
         private string _selectedQuality;
         
-        public SettingsViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public SettingsViewModel(IDataSource dataSource, IConnectionListener connectionListener)
         {
             _dataSource = dataSource;
             _languages = new ObservableCollection<string>(I18nLanguages.Languages);

@@ -10,7 +10,7 @@ namespace LiteTube.ViewModels
     {
         private string _searchString;
 
-        public SearchPageViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public SearchPageViewModel(IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _uniqueId = Guid.NewGuid().ToString();

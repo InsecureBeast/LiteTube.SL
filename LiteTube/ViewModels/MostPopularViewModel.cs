@@ -9,7 +9,7 @@ namespace LiteTube.ViewModels
     {
         private readonly IVideoList _videoList;
 
-        public MostPopularViewModel(IVideoList videoList, IDataSource dataSource, ConnectionListener connectionListener)
+        public MostPopularViewModel(IVideoList videoList, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _videoList = videoList;
@@ -19,7 +19,7 @@ namespace LiteTube.ViewModels
             //Title = arstring;
         }
 
-        public MostPopularViewModel(IDataSource dataSource, ConnectionListener connectionListener)
+        public MostPopularViewModel(IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");

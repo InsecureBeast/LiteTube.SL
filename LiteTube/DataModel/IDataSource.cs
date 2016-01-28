@@ -70,7 +70,7 @@ namespace LiteTube.DataModel
         private readonly Notifier<UpdateSettingsEventArgs> _settingsNotifier = new Notifier<UpdateSettingsEventArgs>();
         private bool _isConnected;
 
-        public DataSource(IRemoteDataSource remoteDataSource, string region, int maxPageResult, IDeviceHistory deviceHistory, string quality, ConnectionListener connectionListener)
+        public DataSource(IRemoteDataSource remoteDataSource, string region, int maxPageResult, IDeviceHistory deviceHistory, string quality, IConnectionListener connectionListener)
         {
             _remoteDataSource = remoteDataSource;
             _categories = new List<IVideoCategory>();
@@ -82,7 +82,7 @@ namespace LiteTube.DataModel
             _qualityHelper = new VideoQuality();
             _quality = _qualityHelper.GetQualityEnum(quality);
             connectionListener.Subscribe(this);
-            _isConnected = ConnectionListener.CheckNetworkAvailability();
+            _isConnected = connectionListener.CheckNetworkAvailability();
         }
 
         public bool IsAuthorized

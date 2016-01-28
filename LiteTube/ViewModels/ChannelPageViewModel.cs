@@ -18,7 +18,7 @@ namespace LiteTube.ViewModels
         private UnsubscribeCommand _unsubscribeCommand;
         private bool _isSubscribed;
 
-        public ChannelPageViewModel(string channelId, IDataSource dataSource, ConnectionListener connectionListener)
+        public ChannelPageViewModel(string channelId, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _channelId = channelId;

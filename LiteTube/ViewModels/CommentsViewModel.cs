@@ -19,7 +19,7 @@ namespace LiteTube.ViewModels
         private string _commentText;
         private bool _isAddingComment;
 
-        public CommentsViewModel(string videoId, IDataSource dataSource, ConnectionListener connectionListener)
+        public CommentsViewModel(string videoId, IDataSource dataSource, IConnectionListener connectionListener)
             : base(dataSource, connectionListener)
         {
             _videoId = videoId;
