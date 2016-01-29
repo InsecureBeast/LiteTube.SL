@@ -1,4 +1,5 @@
-﻿using LiteTube.Common;
+﻿using System;
+using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace LiteTube.ViewModels
     {
         private readonly string _categoryId;
 
-        public VideoCategorySectionViewModel(string categoryId, string title, IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public VideoCategorySectionViewModel(string categoryId, string title, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             _categoryId = categoryId;
             Title = title;
@@ -24,7 +25,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetCategoryVideoList(_categoryId, nextPageToken);
+            return await _getGeDataSource().GetCategoryVideoList(_categoryId, nextPageToken);
         }
 
         public override void Notify(ConnectionEventArgs e)

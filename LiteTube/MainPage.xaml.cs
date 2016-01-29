@@ -36,7 +36,7 @@ namespace LiteTube
                 if (string.IsNullOrEmpty(userId))
                     return;
 
-                await App.ViewModel.DataSource.LoginSilently(string.Empty);
+                await App.ViewModel.GetGeDataSource().LoginSilently(string.Empty);
             }
         }
 

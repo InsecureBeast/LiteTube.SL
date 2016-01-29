@@ -6,14 +6,14 @@ namespace LiteTube.Common
 {
     class SubscribeCommand : ICommand
     {
-        private readonly IDataSource _dataSource;
+        private readonly Func<IDataSource> _getDataSource;
         private readonly Func<string> _getChannelId;
         private readonly Action _postAction;
         private bool _isRequested;
 
-        public SubscribeCommand(IDataSource dataSource, Func<string> getChannelId, Action postAction)
+        public SubscribeCommand(Func<IDataSource> getGetDataSource, Func<string> getChannelId, Action postAction)
         {
-            _dataSource = dataSource;
+            _getDataSource = getGetDataSource;
             _getChannelId = getChannelId;
             _postAction = postAction;
         }
@@ -22,7 +22,7 @@ namespace LiteTube.Common
         
         public bool CanExecute(object parameter)
         {
-            return !_isRequested && _dataSource.IsAuthorized;
+            return !_isRequested && _getDataSource().IsAuthorized;
         }
 
         public void Execute(object parameter)
@@ -30,7 +30,7 @@ namespace LiteTube.Common
             LayoutHelper.InvokeFromUIThread(async () =>
             {
                 InvalidateCommands(true);
-                await _dataSource.Subscribe(_getChannelId());
+                await _getDataSource().Subscribe(_getChannelId());
                 _postAction();
                 InvalidateCommands(false);
             });

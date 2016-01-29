@@ -21,15 +21,39 @@ namespace LiteTube.DataModel
         }
     }
 
-    public class ConnectionListener : IConnectionListener
+    //класс следящий зы подключением и оповещающий подписчиков об изменениях
+    public class ConnectionListener : BaseConnectionListener
     {
-        private readonly Notifier<ConnectionEventArgs> _notifier = new Notifier<ConnectionEventArgs>();
-
         public ConnectionListener()
         {
             // Subscribe to the NetworkAvailabilityChanged event
             DeviceNetworkInformation.NetworkAvailabilityChanged += ChangeDetected;
+
         }
+
+        private void ChangeDetected(object sender, NetworkNotificationEventArgs e)
+        {
+            ConnectionEventArgs connectionEventArgs;
+            switch (e.NotificationType)
+            {
+                case NetworkNotificationType.InterfaceConnected:
+                    connectionEventArgs = new ConnectionEventArgs(true);
+                    Notify(connectionEventArgs);
+                    break;
+                case NetworkNotificationType.InterfaceDisconnected:
+                    connectionEventArgs = new ConnectionEventArgs(false);
+                    Notify(connectionEventArgs);
+                    break;
+                case NetworkNotificationType.CharacteristicUpdate:
+                    break;
+            }
+        }
+    }
+
+    //класс просто оповещение о подключении
+    public class BaseConnectionListener : IConnectionListener
+    {
+        private readonly Notifier<ConnectionEventArgs> _notifier = new Notifier<ConnectionEventArgs>();
 
         public void Subscribe(IListener<ConnectionEventArgs> listener)
         {
@@ -50,28 +74,6 @@ namespace LiteTube.DataModel
             var ni = NetworkInterface.NetworkInterfaceType;
             // this part is coming none  
             return ni != NetworkInterfaceType.None;
-        }
-
-        protected virtual void OnConnectionChanged(ConnectionEventArgs e)
-        {
-        }
-
-        private void ChangeDetected(object sender, NetworkNotificationEventArgs e)
-        {
-            ConnectionEventArgs connectionEventArgs;
-            switch (e.NotificationType)
-            {
-                case NetworkNotificationType.InterfaceConnected:
-                    connectionEventArgs = new ConnectionEventArgs(true);
-                    OnConnectionChanged(connectionEventArgs);
-                    break;
-                case NetworkNotificationType.InterfaceDisconnected:
-                    connectionEventArgs = new ConnectionEventArgs(false);
-                    OnConnectionChanged(connectionEventArgs);
-                    break;
-                case NetworkNotificationType.CharacteristicUpdate:
-                    break;
-            }
         }
     }
 }

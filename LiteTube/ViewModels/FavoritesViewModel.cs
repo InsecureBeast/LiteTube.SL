@@ -1,4 +1,5 @@
-﻿using LiteTube.Common;
+﻿using System;
+using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using LiteTube.ViewModels.Nodes;
@@ -10,7 +11,7 @@ namespace LiteTube.ViewModels
 {
     class FavoritesViewModel : SectionBaseViewModel
     {
-        public FavoritesViewModel(IDataSource datasource, IConnectionListener connectionListener)
+        public FavoritesViewModel(Func<IDataSource> datasource, IConnectionListener connectionListener)
             : base(datasource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
@@ -26,7 +27,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            var res = await _dataSource.GetFavorites(nextPageToken);
+            var res = await _getGeDataSource().GetFavorites(nextPageToken);
             return res;
         }
 
@@ -59,7 +60,7 @@ namespace LiteTube.ViewModels
             var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
             foreach (var item in items)
             {
-                await _dataSource.RemoveFromFavorites(item.Id);
+                await _getGeDataSource().RemoveFromFavorites(item.Id);
                 Items.Remove(item);
             }
         }

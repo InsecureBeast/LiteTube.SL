@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Collections.Generic;
@@ -19,8 +20,8 @@ namespace LiteTube.ViewModels
         private string _commentText;
         private bool _isAddingComment;
 
-        public CommentsViewModel(string videoId, IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public CommentsViewModel(string videoId, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             if (string.IsNullOrEmpty(videoId))
                 return;
@@ -74,7 +75,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await base._dataSource.GetComments(_videoId, nextPageToken);
+            return await base._getGeDataSource().GetComments(_videoId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -90,10 +91,10 @@ namespace LiteTube.ViewModels
         {
             foreach (var item in items)
             {
-                _comments.Add(new CommentNodeViewModel(item, _dataSource, _connectionListener));
+                _comments.Add(new CommentNodeViewModel(item, _getGeDataSource, _connectionListener));
                 foreach (var replayItem in item.ReplayComments.OrderBy(c => c.PublishedAt))
                 {
-                    _comments.Add(new CommentNodeViewModel(replayItem, _dataSource, _connectionListener));
+                    _comments.Add(new CommentNodeViewModel(replayItem, _getGeDataSource, _connectionListener));
                 }
             }
 
@@ -106,7 +107,7 @@ namespace LiteTube.ViewModels
         {
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                _profile = await _dataSource.GetProfile();
+                _profile = await _getGeDataSource().GetProfile();
                 NotifyOfPropertyChanged(() => ProfileImage);
             });
         }
@@ -115,13 +116,13 @@ namespace LiteTube.ViewModels
         {
             IsAddingComment = true;
             var myChannelId = _profile.ChannelId;
-            var myComment = await _dataSource.AddComment(myChannelId, _videoId, CommentText);
+            var myComment = await _getGeDataSource().AddComment(myChannelId, _videoId, CommentText);
             if (myComment == null)
             {
                 IsAddingComment = false;
                 return;
             }
-            _comments.Insert(0, new CommentNodeViewModel(myComment, _dataSource, _connectionListener));
+            _comments.Insert(0, new CommentNodeViewModel(myComment, _getGeDataSource, _connectionListener));
             CommentText = string.Empty;
             IsAddingComment = false;            
         }

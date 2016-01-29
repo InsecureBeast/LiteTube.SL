@@ -98,8 +98,17 @@ namespace LiteTube.DataClasses
 
     class MComment : IComment
     {
+        public static IComment Empty
+        {
+            get { return new MComment((Comment)null); }
+        }
+        
+        
         public MComment(Comment comment)
         {
+            if (comment == null)
+                return;
+
             var authorSnippet = comment.Snippet;
             AuthorChannelId = authorSnippet.AuthorChannelId.Value;
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
@@ -115,6 +124,9 @@ namespace LiteTube.DataClasses
 
         public MComment(CommentThread comment)
         {
+            if (comment == null)
+                return;
+
             var authorSnippet = comment.Snippet.TopLevelComment.Snippet;
             AuthorChannelId = authorSnippet.AuthorChannelId.Value;
             AuthorDisplayName = authorSnippet.AuthorDisplayName;

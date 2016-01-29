@@ -28,6 +28,9 @@ namespace LiteTube.DataClasses
     {
         public MChannel(Channel channel)
         {
+            if (channel == null)
+                return;
+            
             Id = channel.Id;
             if (channel.BrandingSettings != null)
                 Image = channel.BrandingSettings.Image.BannerMobileImageUrl;
@@ -36,7 +39,12 @@ namespace LiteTube.DataClasses
             Thumbnails = new MThumbnailDetails(channel.Snippet.Thumbnails);
             Statistics = new MChannelStatistics(channel.Statistics);
         }
-    
+
+        public static IChannel Empty
+        {
+            get { return new MChannel(null);}
+        }
+
         public string Id
         {
             get;

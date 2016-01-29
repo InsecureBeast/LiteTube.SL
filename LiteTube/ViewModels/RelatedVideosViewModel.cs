@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using System;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 
@@ -8,8 +9,8 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
 
-        public RelatedVideosViewModel(IVideoItem videoItem, IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public RelatedVideosViewModel(IVideoItem videoItem, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             if (videoItem == null)
                 return;
@@ -19,7 +20,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetRelatedVideoList(_videoId, nextPageToken);
+            return await _getGeDataSource().GetRelatedVideoList(_videoId, nextPageToken);
         }
     }
 }

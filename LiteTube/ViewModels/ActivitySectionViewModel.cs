@@ -8,8 +8,8 @@ namespace LiteTube.ViewModels
 {
     public class ActivitySectionViewModel : SectionBaseViewModel
     {
-        public ActivitySectionViewModel(IVideoList activity, IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public ActivitySectionViewModel(IVideoList activity, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("RecommendedSectionHeader");
@@ -17,8 +17,8 @@ namespace LiteTube.ViewModels
             Title = "Activity"; //TODO Localize
         }
 
-        public ActivitySectionViewModel(IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public ActivitySectionViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("RecommendedSectionHeader");
@@ -33,7 +33,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetActivity(nextPageToken);
+            return await _getGeDataSource().GetActivity(nextPageToken);
         }
     }
 }

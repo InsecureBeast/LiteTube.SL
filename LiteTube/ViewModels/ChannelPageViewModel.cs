@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
@@ -18,8 +19,8 @@ namespace LiteTube.ViewModels
         private UnsubscribeCommand _unsubscribeCommand;
         private bool _isSubscribed;
 
-        public ChannelPageViewModel(string channelId, IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public ChannelPageViewModel(string channelId, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             _channelId = channelId;
 
@@ -95,7 +96,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetChannelVideoList(_channelId, nextPageToken);
+            return await _getGeDataSource().GetChannelVideoList(_channelId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -114,15 +115,15 @@ namespace LiteTube.ViewModels
 
         private void InitializeCommands()
         {
-            _subscribeCommand = new SubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
-            _unsubscribeCommand = new UnsubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
+            _subscribeCommand = new SubscribeCommand(_getGeDataSource, () => _channelId, InvalidateCommands);
+            _unsubscribeCommand = new UnsubscribeCommand(_getGeDataSource, () => _channelId, InvalidateCommands);
         }
 
         private void LoadChannel(string channelId)
         {
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                var ch = await _dataSource.GetChannel(channelId);
+                var ch = await _getGeDataSource().GetChannel(channelId);
                 _uniqueId = ch.Id;
                 Title = ch.Title;
                 Description = ch.Description;
@@ -131,13 +132,13 @@ namespace LiteTube.ViewModels
                 ChannelImage = ch.Thumbnails.Medium.Url;
                 Image = ch.Image;
                 _channel = ch;
-                IsSubscribed = _dataSource.IsSubscribed(channelId);
+                IsSubscribed = _getGeDataSource().IsSubscribed(channelId);
             });
         }
 
         private void InvalidateCommands()
         {
-            IsSubscribed = _dataSource.IsSubscribed(_channelId);
+            IsSubscribed = _getGeDataSource().IsSubscribed(_channelId);
         }
     }
 }

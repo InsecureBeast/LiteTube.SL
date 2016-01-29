@@ -20,20 +20,20 @@ namespace LiteTube.ViewModels
         private readonly ActivitySectionViewModel _activitySectionViewModel;
         private ProgressIndicatorHolder _indicatorHolder;
 
-        public MainViewModel(IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public MainViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
-            if (dataSource == null) 
-                throw new ArgumentNullException("dataSource");
+            if (geDataSource == null) 
+                throw new ArgumentNullException("geDataSource");
 
             _indicatorHolder = new ProgressIndicatorHolder();
-            _mostPopularViewModel = new MostPopularViewModel(dataSource, _connectionListener);
-            _profileSectionViewModel = new ProfileSectionViewModel(dataSource, connectionListener);
+            _mostPopularViewModel = new MostPopularViewModel(geDataSource, _connectionListener);
+            _profileSectionViewModel = new ProfileSectionViewModel(geDataSource, connectionListener);
             _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
-            _activitySectionViewModel = new ActivitySectionViewModel(dataSource, _connectionListener);
+            _activitySectionViewModel = new ActivitySectionViewModel(geDataSource, _connectionListener);
 
-            dataSource.Subscribe((IListener<UpdateSettingsEventArgs>)this);
-            dataSource.Subscribe((IListener<UpdateContextEventArgs>)this);
+            geDataSource().Subscribe((IListener<UpdateSettingsEventArgs>)this);
+            geDataSource().Subscribe((IListener<UpdateContextEventArgs>)this);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace LiteTube.ViewModels
             
             await _mostPopularViewModel.FirstLoad();
             await LoadGuideCategories();
-            if (_dataSource.IsAuthorized)
+            if (_getGeDataSource().IsAuthorized)
                 await _activitySectionViewModel.FirstLoad();
 
             IsDataLoaded = true;
@@ -112,7 +112,7 @@ namespace LiteTube.ViewModels
 
             if (result.ResponseStatus == WebAuthenticationStatus.Success)
             {
-                await DataSource.ContinueWebAuthentication(args, string.Empty);
+                await GetGeDataSource().ContinueWebAuthentication(args, string.Empty);
             }
             else if (result.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
             {
@@ -126,7 +126,7 @@ namespace LiteTube.ViewModels
 
         private async Task LoadGuideCategories()
         {
-            var sections = await _dataSource.GetCategories();
+            var sections = await _getGeDataSource().GetCategories();
             if (sections == null)
                 return;
 
@@ -142,13 +142,13 @@ namespace LiteTube.ViewModels
             var viewModel = (VideoCategoryNodeViewModel)navObject.ViewModel;
             var categoryId = viewModel.CategoryId;
             var title = viewModel.Title;
-            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _dataSource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _getGeDataSource, _connectionListener);
             App.NavigateTo("/SectionPage.xaml");
         }
 
         public async void Notify(UpdateContextEventArgs e)
         {
-            if (_dataSource.IsAuthorized)
+            if (_getGeDataSource().IsAuthorized)
             {
                 ActivitySectionViewModel.Items.Clear();
                 await ActivitySectionViewModel.FirstLoad();

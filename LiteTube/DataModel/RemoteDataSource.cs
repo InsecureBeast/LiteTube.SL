@@ -50,7 +50,7 @@ namespace LiteTube.DataModel
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
     }
     
-    class RemoteDataSource : ConnectionListener, IRemoteDataSource
+    class RemoteDataSource : IRemoteDataSource
     {
         private readonly IYouTubeService _youTubeServiceControl;
         private YouTubeService _youTubeService;
@@ -60,15 +60,18 @@ namespace LiteTube.DataModel
         private string _likesPlayList;
         private string _favorites;
         private PlaylistCahce _playlistCache;
-        private SubscriptionsHolder _subscriptionsHolder;
-        private YouTubeWeb _youTubeWeb;
+        private readonly SubscriptionsHolder _subscriptionsHolder;
+        private readonly YouTubeWeb _youTubeWeb;
         private const long SEARCH_PAGE_MAX_RESULT = 45;
         private MProfile _profileInfo;
 
         public RemoteDataSource(IYouTubeService youTubeServiceControl)
         {
             _youTubeServiceControl = youTubeServiceControl;
-            Initialize();
+            _youTubeService = _youTubeServiceControl.GetService();
+            _playlistCache = new PlaylistCahce();
+            _subscriptionsHolder = new SubscriptionsHolder(_youTubeServiceControl);
+            _youTubeWeb = new YouTubeWeb();
         }
 
         public void Login()
@@ -670,43 +673,6 @@ namespace LiteTube.DataModel
         public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
         {
             return await YouTubeWeb.HttpGetAutoCompleteAsync(query);
-        }
-
-        protected override void OnConnectionChanged(ConnectionEventArgs e)
-        {
-            if (!e.IsConnected)
-            {
-                _youTubeService = null;
-                _youTubeWeb = null;
-                _subscriptionsHolder = null;
-            }
-            else
-            {
-                Initialize();
-            }
-
-            Notify(e);
-        }
-
-        private void Initialize()
-        {
-            if (string.IsNullOrEmpty(SettingsHelper.GetRefreshToken()))
-            {
-                LayoutHelper.InvokeFromUIThread(async () =>
-                {
-                    await _youTubeServiceControl.RefreshToken(SettingsHelper.GetUserId());
-                });
-                _youTubeService = _youTubeServiceControl.GetAuthorizedService();
-            }
-            else
-            {
-                _youTubeService = _youTubeServiceControl.GetService();    
-            }
-            
-            _playlistCache = new PlaylistCahce();
-            _subscriptionsHolder = new SubscriptionsHolder(_youTubeServiceControl);
-            _youTubeWeb = new YouTubeWeb();
-            
         }
     }
 }

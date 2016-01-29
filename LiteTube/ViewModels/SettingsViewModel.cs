@@ -1,4 +1,5 @@
-﻿using LiteTube.Common;
+﻿using System;
+using LiteTube.Common;
 using System.Collections.ObjectModel;
 using LiteTube.DataModel;
 
@@ -8,19 +9,19 @@ namespace LiteTube.ViewModels
     {
         private readonly ObservableCollection<string> _languages;
         private readonly ObservableCollection<string> _videoQualities;
-        private readonly IDataSource _dataSource;
+        private readonly Func<IDataSource> _getDataSource;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private readonly string _title;
         private string _selectedRegion;
         private string _selectedQuality;
-        
-        public SettingsViewModel(IDataSource dataSource, IConnectionListener connectionListener)
+
+        public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
-            _dataSource = dataSource;
+            _getDataSource = getGetDataSource;
             _languages = new ObservableCollection<string>(I18nLanguages.Languages);
             var videoQuality = new VideoQuality();
             _videoQualities = new ObservableCollection<string>(videoQuality.GetQualityNames());
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource, connectionListener);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
             _navigatioPanelViewModel.IsSettingsSelected = true;
             _selectedRegion = SettingsHelper.GetRegionName();
             _selectedQuality = SettingsHelper.GetQuality();
@@ -66,7 +67,7 @@ namespace LiteTube.ViewModels
         {
             SettingsHelper.SaveQuality(_selectedQuality);
             SettingsHelper.SaveRegion(_selectedRegion);
-            _dataSource.Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
+            _getDataSource().Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
         }
     }
 }

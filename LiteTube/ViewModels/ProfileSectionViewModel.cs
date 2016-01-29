@@ -15,12 +15,12 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _recommendedCommand;
         private readonly RelayCommand<FrameworkElement> _videoCategoryCommand;
         private readonly RelayCommand<FrameworkElement> _favoritesCommand;
-        private readonly IDataSource _datasource;
+        private readonly Func<IDataSource> _getDatasource;
         private readonly IConnectionListener _connectionListener;
 
-        public ProfileSectionViewModel(IDataSource datasource, IConnectionListener connectionListener)
+        public ProfileSectionViewModel(Func<IDataSource> getDatasource, IConnectionListener connectionListener)
         {
-            _datasource = datasource;
+            _getDatasource = getDatasource;
             _connectionListener = connectionListener;
             _subscriptionsCommand = new RelayCommand<FrameworkElement>(Subscriptions);
             _historyCommand = new RelayCommand<FrameworkElement>(GetHistory);
@@ -28,7 +28,7 @@ namespace LiteTube.ViewModels
             _videoCategoryCommand = new RelayCommand<FrameworkElement>(VideoCategories);
             _favoritesCommand = new RelayCommand<FrameworkElement>(Favorites);
 
-            _datasource.Subscribe(this);
+            _getDatasource().Subscribe(this);
         }
 
         public ICommand SubsribtionsCommand
@@ -58,38 +58,38 @@ namespace LiteTube.ViewModels
 
         public bool IsAuthorized
         {
-            get { return _datasource.IsAuthorized; }
+            get { return _getDatasource().IsAuthorized; }
         }
 
         private void Recommended(FrameworkElement control)
         {
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(0, _datasource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(0, _getDatasource, _connectionListener);
             App.NavigateTo("/MenuPage.xaml?item=0");
         }
 
         private void Subscriptions(FrameworkElement control)
         {
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(1, _datasource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(1, _getDatasource, _connectionListener);
             App.NavigateTo("/MenuPage.xaml?item=1");
         }
 
         private void GetHistory(FrameworkElement control)
         {
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(3, _datasource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(3, _getDatasource, _connectionListener);
             App.NavigateTo("/MenuPage.xaml?item=3");
         }
 
         private void VideoCategories(FrameworkElement control)
         {
             var index = IsAuthorized ? 4 : 0;
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _datasource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _getDatasource, _connectionListener);
             App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
         }
 
         private void Favorites(FrameworkElement control)
         {
             var index = 2;
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _datasource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _getDatasource, _connectionListener);
             App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
             ////var index = IsAuthorized ? 2 : 0; //TODO favorites saved on device!!
         }

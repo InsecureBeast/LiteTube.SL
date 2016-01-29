@@ -35,13 +35,19 @@
                      Grid.Row="1"
                      Margin="0,-12,0,0"
                      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=Default}">
+
+            <phone:Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding}" Style="{StaticResource PivotItemHeaderTextStyle}" />
+                    </Grid>
+                </DataTemplate>
+            </phone:Pivot.HeaderTemplate>
+            
             <!--Pivot item one-->
             <phone:PivotItem Name="RecommendedItem"
+                             Header="recommended for you"
                              Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="recommended for you"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="RecommendedList"
                                   Content="{Binding RecommendedSectionViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
@@ -49,11 +55,8 @@
 
             <!--Pivot item two-->
             <phone:PivotItem Name="SubscribtionsItem"
+                             Header="subscribtions"
                              Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="subscribtions"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="SubscriptionsList"
                                   Content="{Binding SubscriptionChannelsViewModel}"
                                   ContentTemplate="{StaticResource CategoryLoadingListView}"/>
@@ -61,11 +64,8 @@
 
             <!--Pivot item three-->
             <phone:PivotItem Name="FavoritesItem"
+                             Header="favorites"
                              Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="favorites"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="FavoritesList"
                                   Content="{Binding FavoritesViewModel}"
                                   ContentTemplate="{StaticResource LoadingListViewContextMenu}"/>
@@ -74,21 +74,14 @@
             <!--Pivot item four-->
             <phone:PivotItem Name="HistoryItem"
                              Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="watch history"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item five-->
-            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="channels"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}"
+                             Header="channels">
                 <ListBox ItemsSource="{Binding Categories}"
                          Name="VideoCategoriesList"
                          toolkit:TiltEffect.IsTiltEnabled="True"

@@ -17,7 +17,7 @@ namespace LiteTube.ViewModels
 {
     class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
     {
-        private readonly IDataSource _dataSource;
+        private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
         private readonly RecommendedSectionViewModel _recommendedSectionViewModel;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
@@ -35,16 +35,16 @@ namespace LiteTube.ViewModels
         private ProgressIndicator _progressIndicator;
         //private PreventNavigationHelper _navigationHelper;
 
-        public MenuPageViewModel(int index, IDataSource dataSource, IConnectionListener connectionListener)
+        public MenuPageViewModel(int index, Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
-            _dataSource = dataSource;
+            _getDataSource = getGetDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource, connectionListener);
-            _recommendedSectionViewModel = new RecommendedSectionViewModel(dataSource, connectionListener);
-            _subscriptions = new SubscriptionChannelsViewModel(dataSource, connectionListener);
-            _history = new HistoryPageViewModel(dataSource, connectionListener);
-            _favoritesViewModel = new FavoritesViewModel(dataSource, connectionListener);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
+            _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener);
+            _subscriptions = new SubscriptionChannelsViewModel(_getDataSource, connectionListener);
+            _history = new HistoryPageViewModel(_getDataSource, connectionListener);
+            _favoritesViewModel = new FavoritesViewModel(_getDataSource, connectionListener);
             _favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
             _categories = new ObservableCollection<GuideCategoryNodeViewModel>();
 
@@ -119,7 +119,7 @@ namespace LiteTube.ViewModels
 
         public bool IsAuthorized
         {
-            get { return _dataSource.IsAuthorized; }
+            get { return _getDataSource().IsAuthorized; }
         }
 
         public bool IsConnected
@@ -130,11 +130,6 @@ namespace LiteTube.ViewModels
                 _isConnected = value;
                 NotifyOfPropertyChanged(() => IsConnected);
             }
-        }
-
-        public IDataSource DataSource
-        {
-            get { return _dataSource; }
         }
 
         public bool IsFavoritesSelectedVisible
@@ -231,7 +226,7 @@ namespace LiteTube.ViewModels
 
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                var sections = await _dataSource.GetGuideCategories();
+                var sections = await _getDataSource().GetGuideCategories();
                 if (sections == null)
                     return;
                 
@@ -251,7 +246,7 @@ namespace LiteTube.ViewModels
             var items = _favoritesViewModel.SelectedItems;
             foreach (var item in items)
             {
-                await _dataSource.RemoveFromFavorites(item.Id);
+                await _getDataSource().RemoveFromFavorites(item.Id);
                 _favoritesViewModel.Items.Remove(item);
             }
         }
@@ -295,7 +290,7 @@ namespace LiteTube.ViewModels
             var id = item.CategoryId;
             var title = item.Title;
             var view = string.Format("/ChannelListPage.xaml?categoriId={0}", id);
-            var viewModel = new ChannelListPageViewModel(id, title, _dataSource, _connectionListener);
+            var viewModel = new ChannelListPageViewModel(id, title, _getDataSource, _connectionListener);
             NavigationHelper.Navigate(view, viewModel);
         }
 

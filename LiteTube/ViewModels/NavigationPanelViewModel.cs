@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using LiteTube.Common;
 using LiteTube.DataModel;
 using MyToolkit.Command;
@@ -8,7 +9,7 @@ namespace LiteTube.ViewModels
 {
     public class NavigationPanelViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>
     {
-        private readonly IDataSource _datasource;
+        private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
@@ -26,9 +27,9 @@ namespace LiteTube.ViewModels
         private string _profileSecondDisplayName;
         private string _profileChannelId;
 
-        public NavigationPanelViewModel(IDataSource datasource, IConnectionListener connectionListener)
+        public NavigationPanelViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener)
         {
-            _datasource = datasource;
+            _getDataSource = getDataSource;
             _connectionListener = connectionListener;
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
@@ -37,7 +38,7 @@ namespace LiteTube.ViewModels
             _searchCommand = new RelayCommand<object>(Search);
             _channelCommand = new RelayCommand<string>(LoadChannel);
 
-            _datasource.Subscribe(this);
+            _getDataSource().Subscribe(this);
         }
 
         public ICommand LoginCommand
@@ -68,11 +69,6 @@ namespace LiteTube.ViewModels
         public ICommand ChannelCommand
         {
             get { return _channelCommand; }
-        }
-
-        public IDataSource DataSource
-        {
-            get { return _datasource; }
         }
 
         public bool IsMenuSelected
@@ -108,7 +104,7 @@ namespace LiteTube.ViewModels
 
         public bool IsAuthorized
         {
-            get { return _datasource.IsAuthorized; }
+            get { return _getDataSource().IsAuthorized; }
         }
 
         public string ProfileImage
@@ -176,7 +172,7 @@ namespace LiteTube.ViewModels
 
         private void Login()
         {
-            _datasource.Login();
+            _getDataSource().Login();
             Home();
         }
 
@@ -184,7 +180,7 @@ namespace LiteTube.ViewModels
         {
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                await _datasource.Logout();
+                await _getDataSource().Logout();
                 Home();
             });
         }
@@ -196,7 +192,7 @@ namespace LiteTube.ViewModels
 
         private void Settings()
         {
-            NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_datasource, _connectionListener));
+            NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_getDataSource, _connectionListener));
         }
 
         private bool CanSettings()
@@ -206,12 +202,12 @@ namespace LiteTube.ViewModels
 
         private void Search(object page)
         {
-            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(_datasource, _connectionListener));
+            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(_getDataSource, _connectionListener));
         }
 
         private void LoadChannel(string channelId)
         {
-            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _datasource, _connectionListener));
+            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _getDataSource, _connectionListener));
         }
 
         private void LoadProfileInfo()
@@ -222,7 +218,7 @@ namespace LiteTube.ViewModels
                 ProfileDisplayName = string.Empty;
                 ProfileSecondDisplayName = string.Empty;
 
-                var profile = await _datasource.GetProfile();
+                var profile = await _getDataSource().GetProfile();
                 ProfileImage = profile.Image;
                 var names = profile.DisplayName.Split(' ');
                 if (names.Length >= 1)

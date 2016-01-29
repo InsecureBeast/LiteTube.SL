@@ -1,4 +1,5 @@
-﻿using LiteTube.Common;
+﻿using System;
+using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace LiteTube.ViewModels
 {
     class HistoryPageViewModel : SectionBaseViewModel
     {
-        public HistoryPageViewModel(IDataSource datasource, IConnectionListener connectionListener)
+        public HistoryPageViewModel(Func<IDataSource> datasource, IConnectionListener connectionListener)
             : base(datasource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
@@ -23,7 +24,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetHistory(nextPageToken);
+            return await _getGeDataSource().GetHistory(nextPageToken);
         }
     }
 }

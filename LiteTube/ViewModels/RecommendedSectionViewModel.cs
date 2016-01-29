@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
@@ -9,8 +10,8 @@ namespace LiteTube.ViewModels
     {
         //private bool _canLoad = false;
 
-        public RecommendedSectionViewModel(IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public RecommendedSectionViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("RecommendedSectionHeader");
@@ -30,7 +31,7 @@ namespace LiteTube.ViewModels
             //    _canLoad = true;
             //    return null;
             //}
-            return await _dataSource.GetRecommended(nextPageToken);
+            return await _getGeDataSource().GetRecommended(nextPageToken);
         }
     }
 }

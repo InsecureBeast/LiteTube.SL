@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using System;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -15,8 +16,8 @@ namespace LiteTube.ViewModels
         private readonly string _categoryId;
         private readonly ObservableCollection<ChannelNodeViewModel> _channels;
 
-        public ChannelListPageViewModel(string categoryId, string title, IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public ChannelListPageViewModel(string categoryId, string title, Func<IDataSource> getGetGeDataSource, IConnectionListener connectionListener)
+            : base(getGetGeDataSource, connectionListener)
         {
             _uniqueId = categoryId;
             _categoryId = categoryId;
@@ -49,7 +50,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetChannels(_categoryId, nextPageToken);
+            return await _getGeDataSource().GetChannels(_categoryId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -81,7 +82,7 @@ namespace LiteTube.ViewModels
         internal override void NavigateTo(NavigationObject navObject)
         {
             var id = ((ChannelNodeViewModel)navObject.ViewModel).Channel.Id;
-            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(id, _dataSource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(id, _getGeDataSource, _connectionListener);
             App.NavigateTo("/ChannelPage.xaml");
         }
     }

@@ -1,5 +1,4 @@
-﻿using LiteTube.Common;
-using LiteTube.DataClasses;
+﻿using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using Microsoft.Phone.Shell;
 using MyToolkit.Command;
@@ -13,10 +12,10 @@ namespace LiteTube.ViewModels.Nodes
     public class CommentNodeViewModel 
     {
         private readonly RelayCommand<string> _channelCommand;
-        private readonly IDataSource _datasource;
+        private readonly Func<IDataSource> _getDatasource;
         private readonly IConnectionListener _connectionListener;
 
-        public CommentNodeViewModel(IComment comment, IDataSource datasource, IConnectionListener connectionListener)
+        public CommentNodeViewModel(IComment comment, Func<IDataSource> getDatasource, IConnectionListener connectionListener)
         {
             TextDisplay = comment.TextDisplay;
             AuthorDisplayName = comment.AuthorDisplayName;
@@ -25,10 +24,10 @@ namespace LiteTube.ViewModels.Nodes
             LikeCount = comment.LikeCount;
             PublishedAt = comment.PublishedAt;
             PublishedAtRaw = comment.PublishedAtRaw;
-            ReplayComments = comment.ReplayComments.Select(c => new CommentNodeViewModel(c, datasource, _connectionListener));
+            ReplayComments = comment.ReplayComments.Select(c => new CommentNodeViewModel(c, getDatasource, _connectionListener));
             IsReplay = comment.IsReplay;
 
-            _datasource = datasource;
+            _getDatasource = getDatasource;
             _connectionListener = connectionListener;
             _channelCommand = new RelayCommand<string>(LoadChannel);
         }
@@ -50,7 +49,7 @@ namespace LiteTube.ViewModels.Nodes
 
         private void LoadChannel(string channelId)
         {
-            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _datasource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _getDatasource, _connectionListener);
             App.NavigateTo("/ChannelPage.xaml");
         }
     }

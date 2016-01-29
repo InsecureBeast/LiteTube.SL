@@ -43,11 +43,11 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            if (!viewModel.IsConnected)
-            {
-                Pivot.SelectedIndex = _selectedIndex;
-                return;
-            }
+            //if (!viewModel.IsConnected)
+            //{
+            //    Pivot.SelectedIndex = _selectedIndex;
+            //    return;
+            //}
 
             if (!viewModel.IsAuthorized)
             {

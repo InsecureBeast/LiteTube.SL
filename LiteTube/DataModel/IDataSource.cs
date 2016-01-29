@@ -53,7 +53,7 @@ namespace LiteTube.DataModel
         void Unsubscribe(IListener<UpdateContextEventArgs> listener);
     }
 
-    class DataSource : IDataSource, IListener<ConnectionEventArgs>
+    class DataSource : IDataSource
     {
         private readonly IRemoteDataSource _remoteDataSource;
         private readonly IList<IVideoCategory> _categories;
@@ -66,9 +66,8 @@ namespace LiteTube.DataModel
         private YouTubeQuality _quality;
         private readonly Notifier<UpdateContextEventArgs> _contextNotifier = new Notifier<UpdateContextEventArgs>();
         private readonly Notifier<UpdateSettingsEventArgs> _settingsNotifier = new Notifier<UpdateSettingsEventArgs>();
-        private bool _isConnected;
 
-        public DataSource(IRemoteDataSource remoteDataSource, string region, int maxPageResult, IDeviceHistory deviceHistory, string quality, IConnectionListener connectionListener)
+        public DataSource(IRemoteDataSource remoteDataSource, string region, int maxPageResult, IDeviceHistory deviceHistory, string quality)
         {
             _remoteDataSource = remoteDataSource;
             _categories = new List<IVideoCategory>();
@@ -79,8 +78,6 @@ namespace LiteTube.DataModel
             _deviceHistory = deviceHistory;
             _qualityHelper = new VideoQuality();
             _quality = _qualityHelper.GetQualityEnum(quality);
-            connectionListener.Subscribe(this);
-            _isConnected = connectionListener.CheckNetworkAvailability();
         }
 
         public bool IsAuthorized
@@ -90,17 +87,11 @@ namespace LiteTube.DataModel
 
         public void Login()
         {
-            if (!_isConnected)
-                return;
-
             _remoteDataSource.Login();
         }
 
         public async Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username)
         {
-            if (!_isConnected)
-                return string.Empty;
-
             var result = await _remoteDataSource.ContinueWebAuthentication(args, username);
             _contextNotifier.Notify(new UpdateContextEventArgs());
             return result;
@@ -108,18 +99,12 @@ namespace LiteTube.DataModel
      
         public async Task Logout()
         {
-            if (!_isConnected)
-                return;
-            
             await _remoteDataSource.Logout();
             _contextNotifier.Notify(new UpdateContextEventArgs());
         }
 
         public async Task LoginSilently(string username)
         {
-            if (!_isConnected)
-                return;
-
             await _remoteDataSource.LoginSilently(username);
             _contextNotifier.Notify(new UpdateContextEventArgs());
         }
@@ -137,25 +122,16 @@ namespace LiteTube.DataModel
 
         public async Task<IVideoList> GetActivity(string pageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetActivity(_region, _maxPageResult, pageToken);
         }
 
         public async Task<IVideoList> GetMostPopular(string pageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetMostPopular(_region, _maxPageResult, pageToken);
         }
 
         public async Task<IGuideCategory> GetRecommendedForYouCategory()
         {
-            if (!_isConnected)
-                return null;
-
             var recommended = _guideCategories.FirstOrDefault();
             if (recommended == null)
             {
@@ -176,9 +152,6 @@ namespace LiteTube.DataModel
         
         public async Task<IEnumerable<IVideoCategory>> GetCategories()
         {
-            if (!_isConnected)
-                return null;
-
             if (_categories.Any())
                 return _categories;
 
@@ -193,9 +166,6 @@ namespace LiteTube.DataModel
 
         public async Task<IChannel> GetChannel(string channelId)
         {
-            if (!_isConnected)
-                return null;
-
             var ch = _channels.FirstOrDefault(c => c.Id == channelId);
             if (ch != null)
                 return ch;
@@ -208,33 +178,21 @@ namespace LiteTube.DataModel
 
         public async Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetRelatedVideos(videoId, _maxPageResult, pageToken);
         }
 
         public async Task<IVideoList> GetCategoryVideoList(string categoryId, string pageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetCategoryVideoList(categoryId, _region, _maxPageResult, pageToken);
         }
 
         public async Task<IVideoList> GetChannelVideoList(string channelId, string pageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetChannelVideoList(channelId, _region, _maxPageResult, pageToken);
         }
 
         public async Task<IEnumerable<IGuideCategory>> GetGuideCategories()
         {
-            if (!_isConnected)
-                return null;
-
             if (_guideCategories.Any())
                 return _guideCategories;
 
@@ -249,174 +207,111 @@ namespace LiteTube.DataModel
 
         public Task<IChannelList> GetChannels(string categoryId, string nextPageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return _remoteDataSource.GetChannels(categoryId, _region, _maxPageResult, nextPageToken);
         }
 
         public async Task<IVideoList> Search(string searchString, string nextPageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.Search(searchString, _maxPageResult, nextPageToken);
         }
 
         public async Task<ICommentList> GetComments(string videoId, string nextPageToken)
         {
             //TODO: cache
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetComments(videoId, _maxPageResult, nextPageToken);
         }
 
         public async Task<ISubscriptionList> GetSubscribtions(string nextPageToken)
         {
-            if (!_isConnected)
-                return null;
-
             //TODO: cache
             return await _remoteDataSource.GetSubscribtions(_maxPageResult, nextPageToken);
         }
 
         public async Task<IVideoList> GetHistory(string nextPageToken)
         {
-            if (!_isConnected)
-                return null;
-
             //TODO: cache
             return await _remoteDataSource.GetHistory(_maxPageResult, nextPageToken);
         }
 
         public async Task Subscribe(string channelId)
         {
-            if (!_isConnected)
-                return;
-
             await _remoteDataSource.Subscribe(channelId);
         }
 
         public bool IsSubscribed(string channelId)
         {
-            if (!_isConnected)
-                return false;
-
             return _remoteDataSource.IsSubscribed(channelId);
         }
 
         public async Task Unsubscribe(string subscriptionId)
         {
-            if (!_isConnected)
-                return;
-
             await _remoteDataSource.Unsubscribe(subscriptionId);
         }
 
         public string GetSubscriptionId(string channelId)
         {
-            if (!_isConnected)
-                return null;
-
             return _remoteDataSource.GetSubscriptionId(channelId);
         }
 
         public async Task SetRating(string videoId, RatingEnum rating)
         {
-            if (!_isConnected)
-                return;
-
             await _remoteDataSource.SetRating(videoId, rating);
         }
 
         public async Task<RatingEnum> GetRating(string videoId)
         {
-            if (!_isConnected)
-                return RatingEnum.None;
-
             return await _remoteDataSource.GetRating(videoId);
         }
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            if (!_isConnected)
-                return null;
-
             _deviceHistory.Add(videoId);
             return await _remoteDataSource.GetVideoUriAsync(videoId, quality);
         }
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId)
         {
-            if (!_isConnected)
-                return null;
-
             _deviceHistory.Add(videoId);
             return await _remoteDataSource.GetVideoUriAsync(videoId, _quality);
         }
 
         public async Task<IVideoList> GetRecommended(string pageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetRecommended(pageToken);
         }
 
         public async Task AddToFavorites(string videoId)
         {
-            if (!_isConnected)
-                return;
-
             await _remoteDataSource.AddToFavorites(videoId);
         }
 
         public async Task RemoveFromFavorites(string playlistItemId)
         {
-            if (!_isConnected)
-                return;
-
             await _remoteDataSource.RemoveFromFavorites(playlistItemId);
         }
 
         public async Task<IResponceList> GetFavorites(string nextPageToken)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetFavorites(_maxPageResult, nextPageToken);
         }
 
         public async Task<IVideoItem> GetVideoItem(string videoId)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetVideoItem(videoId);
         }
 
         public async Task<IProfile> GetProfile()
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetProfile();
         }
 
         public async Task<IComment> AddComment(string channelId, string videoId, string text)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.AddComment(channelId, videoId, text);
         }
 
         public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
         {
-            if (!_isConnected)
-                return null;
-
             return await _remoteDataSource.GetAutoCompleteSearchItems(query);
         }
 
@@ -438,11 +333,6 @@ namespace LiteTube.DataModel
         public void Unsubscribe(IListener<UpdateContextEventArgs> listener)
         {
             _contextNotifier.Unsubscribe(listener);
-        }
-
-        public void Notify(ConnectionEventArgs e)
-        {
-            _isConnected = e.IsConnected;
         }
     }
 }

@@ -13,6 +13,9 @@ namespace LiteTube.DataClasses
     {
         public MChannelList(ChannelListResponse channelListResponse)
         {
+            if (channelListResponse == null)
+                return;
+
             ETag = channelListResponse.ETag;
             EventId = channelListResponse.EventId;
             NextPageToken = channelListResponse.NextPageToken;
@@ -21,6 +24,11 @@ namespace LiteTube.DataClasses
             //TokenPagination = new MTokenPagination(channelListResponse.TokenPagination);
             VisitorId = channelListResponse.VisitorId;
             Items = channelListResponse.Items.Select(channel => new MChannel(channel)).Cast<IChannel>().ToList();
+        }
+
+        public static IChannelList EmptyList
+        {
+            get { return new MChannelList(null);}
         }
 
         public string ETag

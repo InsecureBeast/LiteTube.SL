@@ -6,14 +6,14 @@ namespace LiteTube.Common
 {
     class UnsubscribeCommand : ICommand
     {
-        private readonly IDataSource _dataSource;
+        private readonly Func<IDataSource> _getDataSource;
         private readonly Func<string> _getChannelId;
         private readonly Action _postAction;
         private bool _isRequested;
 
-        public UnsubscribeCommand(IDataSource dataSource, Func<string> getChannelId, Action postAction)
+        public UnsubscribeCommand(Func<IDataSource> getDataSource, Func<string> getChannelId, Action postAction)
         {
-            _dataSource = dataSource;
+            _getDataSource = getDataSource;
             _getChannelId = getChannelId;
             _postAction = postAction;
         }
@@ -22,7 +22,7 @@ namespace LiteTube.Common
         
         public bool CanExecute(object parameter)
         {
-            return !_isRequested && _dataSource.IsAuthorized;
+            return !_isRequested && _getDataSource().IsAuthorized;
         }
 
         public void Execute(object parameter)
@@ -31,11 +31,11 @@ namespace LiteTube.Common
             {
                 InvalidateCommands(true);
 
-                var subscriptionId = _dataSource.GetSubscriptionId(_getChannelId());
+                var subscriptionId = _getDataSource().GetSubscriptionId(_getChannelId());
                 if (string.IsNullOrEmpty(subscriptionId))
                     return;
 
-                await _dataSource.Unsubscribe(subscriptionId);
+                await _getDataSource().Unsubscribe(subscriptionId);
                 _postAction();
                 InvalidateCommands(false);
             });

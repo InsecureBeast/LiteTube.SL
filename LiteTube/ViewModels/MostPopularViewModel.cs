@@ -1,4 +1,5 @@
-﻿using LiteTube.Common;
+﻿using System;
+using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace LiteTube.ViewModels
     {
         private readonly IVideoList _videoList;
 
-        public MostPopularViewModel(IVideoList videoList, IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public MostPopularViewModel(IVideoList videoList, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             _videoList = videoList;
             _uniqueId = videoList.GetHashCode().ToString();
@@ -19,8 +20,8 @@ namespace LiteTube.ViewModels
             //Title = arstring;
         }
 
-        public MostPopularViewModel(IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public MostPopularViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
             //var arstring = resourceLoader.GetString("PopularSectionHeader");
@@ -34,7 +35,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetMostPopular(nextPageToken);
+            return await _getGeDataSource().GetMostPopular(nextPageToken);
         }
     }
 }

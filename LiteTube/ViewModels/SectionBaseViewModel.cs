@@ -24,7 +24,7 @@ namespace LiteTube.ViewModels
         protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
         protected string _uniqueId;
         protected string _title;
-        protected readonly IDataSource _dataSource;
+        protected readonly Func<IDataSource> _getGeDataSource;
         protected readonly IConnectionListener _connectionListener;
         protected Frame _frame;
         protected bool _hasItems;
@@ -42,19 +42,19 @@ namespace LiteTube.ViewModels
         private bool _isConnected = true;
         private ProgressIndicator _progressIndicator;
 
-        public SectionBaseViewModel(IDataSource dataSource, IConnectionListener connectionListener)
+        public SectionBaseViewModel(Func<IDataSource> getGetGeDataSource, IConnectionListener connectionListener)
         {
-            if (dataSource == null) 
-                throw new ArgumentNullException("dataSource");
+            if (getGetGeDataSource == null)
+                throw new ArgumentNullException("getGetGeDataSource");
             if (connectionListener == null) 
                 throw new ArgumentNullException("connectionListener");
-            
-            _dataSource = dataSource;
+
+            _getGeDataSource = getGetGeDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
 
             _hasItems = true;
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource, connectionListener);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_getGeDataSource, connectionListener);
             Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
@@ -93,9 +93,9 @@ namespace LiteTube.ViewModels
         public string ImagePath { get; private set; }
         public ObservableCollection<NodeViewModelBase> Items { get; private set; }
 
-        public IDataSource DataSource
+        public Func<IDataSource> GetGeDataSource
         {
-            get { return _dataSource; }
+            get { return _getGeDataSource; }
         }
 
         public bool IsLoading
@@ -317,7 +317,7 @@ namespace LiteTube.ViewModels
                 return;
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
-            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _dataSource, _connectionListener));
+            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getGeDataSource, _connectionListener));
         }
 
         protected void ShowProgressIndicator()

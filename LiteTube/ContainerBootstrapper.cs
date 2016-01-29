@@ -5,28 +5,21 @@ namespace LiteTube
 {
     class ContainerBootstrapper
     {
-        private IDataSource _dataSource;
-        private IRemoteDataSource _remoteDataSource;
-        private IYouTubeService _youTubeService;
         private IDialogService _dialogService;
         private IDeviceHistory _deviceHistory;
+        private Context _context;
 
         public void Build()
         {
             _deviceHistory = new DeviceHistory();
-            _youTubeService = new YouTubeServiceControl();
-            _remoteDataSource = new RemoteDataSource(_youTubeService);
-            var region = SettingsHelper.GetRegion();
-            var quality = SettingsHelper.GetQuality();
-            const int maxPageResult = 30;
-            var remoteExceptionWrapper = new DataSourceExceptionWrapper(_remoteDataSource);
-            _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, _deviceHistory, quality, (IConnectionListener) _remoteDataSource);
+            _context = new Context(_deviceHistory);
+            _context.BuidContext();
             _dialogService = new DialogService(_deviceHistory);
         }
 
-        internal IDataSource DataSource
+        internal IDataSource GetDataSource()
         {
-            get { return _dataSource; }
+            return _context.DataSource;
         }
 
         internal IDialogService DialogService
@@ -36,7 +29,7 @@ namespace LiteTube
 
         internal IConnectionListener ConnectionListener
         {
-            get { return (IConnectionListener)_remoteDataSource; }
+            get { return _context.ConnectionListener; }
         }
     }
 }

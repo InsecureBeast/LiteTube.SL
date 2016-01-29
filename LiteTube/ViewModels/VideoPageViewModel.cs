@@ -13,7 +13,7 @@ namespace LiteTube.ViewModels
     {
         private Uri _videoUri;
         private IChannel _channel;
-        private readonly IDataSource _dataSource;
+        private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private RelatedVideosViewModel _relatedViewModel;
@@ -45,25 +45,25 @@ namespace LiteTube.ViewModels
         private ulong _likes;
         private ulong _dislikes;
 
-        public VideoPageViewModel(string videoId, IDataSource dataSource, IConnectionListener connectionListener)
+        public VideoPageViewModel(string videoId, Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
             Likes = 0;
             Dislikes = 0;
             VideoId = videoId;
-            _dataSource = dataSource;
+            _getDataSource = getGetDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
             _channelSubscribers = 0;
             _channelVideoCount = 0;
 
-            _subscribeCommand = new SubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
-            _unsubscribeCommand = new UnsubscribeCommand(_dataSource, () => _channelId, InvalidateCommands);
+            _subscribeCommand = new SubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
+            _unsubscribeCommand = new UnsubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
 
             _likeCommand = new RelayCommand(Like, CanLike);
             _dislikeCommand = new RelayCommand(Dislike, CanLike);
             _addFavoritesCommand = new RelayCommand(AddFavorites);
 
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_dataSource, _connectionListener);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
 
             LoadVideoItem(videoId);
         }
@@ -318,11 +318,6 @@ namespace LiteTube.ViewModels
             }
         }
 
-        public IDataSource DataSource
-        {
-            get { return _dataSource; }
-        }
-
         public string ChannelId
         {
             get { return _channelId; }
@@ -368,7 +363,7 @@ namespace LiteTube.ViewModels
             if (e.IsConnected)
             {
                 var view = string.Format("/VideoPage.xaml?videoId={0}", _videoId);
-                NavigationHelper.Navigate(view, new VideoPageViewModel(_videoId, _dataSource, _connectionListener));
+                NavigationHelper.Navigate(view, new VideoPageViewModel(_videoId, _getDataSource, _connectionListener));
             }
         }
 
@@ -384,7 +379,7 @@ namespace LiteTube.ViewModels
                 try
                 {
                     IsPaid = false;
-                    var url = await _dataSource.GetVideoUriAsync(videoId);
+                    var url = await _getDataSource().GetVideoUriAsync(videoId);
                     VideoUri = url.Uri;
                 }
                 catch(YouTubeUriNotFoundException)
@@ -408,23 +403,23 @@ namespace LiteTube.ViewModels
         {
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                var channelInfo = await _dataSource.GetChannel(channelId);
+                var channelInfo = await _getDataSource().GetChannel(channelId);
                 ChannelImage = channelInfo.Thumbnails.Medium.Url;
                 ChannelSubscribers = channelInfo.Statistics.SubscriberCount;
                 ChannelVideoCount = channelInfo.Statistics.VideoCount;
                 _channel = channelInfo;
-                IsSubscribed = _dataSource.IsSubscribed(_channelId);
+                IsSubscribed = _getDataSource().IsSubscribed(_channelId);
             });
         }
 
         private void SetVideoRating(string videoId)
         {
-            if (!_dataSource.IsAuthorized)
+            if (!_getDataSource().IsAuthorized)
                 return;
 
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                var rating = await _dataSource.GetRating(videoId);
+                var rating = await _getDataSource().GetRating(videoId);
                 if (rating == RatingEnum.Dislike)
                 {
                     IsDisliked = true;
@@ -452,7 +447,7 @@ namespace LiteTube.ViewModels
 
         private bool CanLike()
         {
-            return _dataSource.IsAuthorized;
+            return _getDataSource().IsAuthorized;
         }
 
         private async Task SetRating()
@@ -463,17 +458,17 @@ namespace LiteTube.ViewModels
             if (_isDisliked)
                 rating = RatingEnum.Dislike;
 
-            await _dataSource.SetRating(VideoId, rating);
+            await _getDataSource().SetRating(VideoId, rating);
         }
 
         private void LoadVideoItem(string videoId)
         {
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                var videoItem = await _dataSource.GetVideoItem(videoId);
+                var videoItem = await _getDataSource().GetVideoItem(videoId);
 
-                RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _dataSource, _connectionListener);
-                CommentsViewModel = new CommentsViewModel(VideoId, _dataSource, _connectionListener);
+                RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _getDataSource, _connectionListener);
+                CommentsViewModel = new CommentsViewModel(VideoId, _getDataSource, _connectionListener);
                 
                 if (videoItem == null)
                     return;
@@ -498,12 +493,12 @@ namespace LiteTube.ViewModels
 
         private async void AddFavorites()
         {
-            await _dataSource.AddToFavorites(_videoId);
+            await _getDataSource().AddToFavorites(_videoId);
         }
 
         private void InvalidateCommands()
         {
-            IsSubscribed = _dataSource.IsSubscribed(_channelId);
+            IsSubscribed = _getDataSource().IsSubscribed(_channelId);
         }
     }
 }

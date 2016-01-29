@@ -270,7 +270,7 @@ namespace LiteTube
 
         private void Find_Click(object sender, EventArgs e)
         {
-            var datasource = App.ViewModel.DataSource;
+            var datasource = App.ViewModel.GetGeDataSource;
             var connectionListener = App.ViewModel.ConnectionListener;
             NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource, connectionListener));
         }

@@ -75,7 +75,7 @@ namespace LiteTube
 
         private async void SearchBox_OnPopulating(object sender, PopulatingEventArgs e)
         {
-            var result = await App.ViewModel.DataSource.GetAutoCompleteSearchItems(SearchBox.Text);
+            var result = await App.ViewModel.GetGeDataSource().GetAutoCompleteSearchItems(SearchBox.Text);
             
             _autoCompleteItems.Clear();
             foreach (var str in result)

@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using System;
+using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using LiteTube.ViewModels.Nodes;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace LiteTube.ViewModels
     {
         private readonly ObservableCollection<SubscriptionNodeViewModel> _channels;
 
-        public SubscriptionChannelsViewModel(IDataSource dataSource, IConnectionListener connectionListener)
-            : base(dataSource, connectionListener)
+        public SubscriptionChannelsViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+            : base(geDataSource, connectionListener)
         {
             _channels = new ObservableCollection<SubscriptionNodeViewModel>();
         }
@@ -45,7 +46,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _dataSource.GetSubscribtions(nextPageToken);
+            return await _getGeDataSource().GetSubscribtions(nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -66,7 +67,7 @@ namespace LiteTube.ViewModels
             if (model == null)
                 return;
 
-            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(model.Id, _dataSource, _connectionListener));
+            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(model.Id, _getGeDataSource, _connectionListener));
         }
 
         internal void AddItems(IEnumerable<ISubscription> items)
