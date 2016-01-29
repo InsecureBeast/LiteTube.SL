@@ -21,12 +21,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("Login methode called");
+                Debug.WriteLine("Login method called");
                 _remoteDataSource.Login();
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Login methode called with exception " + e.Message);
+                Debug.WriteLine("Login method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -35,12 +35,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("ContinueWebAuthentication methode called");
+                Debug.WriteLine("ContinueWebAuthentication method called");
                 return _remoteDataSource.ContinueWebAuthentication(args, username);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("ContinueWebAuthentication methode called with exception " + e.Message);
+                Debug.WriteLine("ContinueWebAuthentication method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -49,26 +49,27 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("Logout methode called");
+                Debug.WriteLine("Logout method called");
                 return _remoteDataSource.Logout();
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Logout methode called with exception " + e.Message);
+                Debug.WriteLine("Logout method called with exception " + e.Message);
                 throw e;
             }
         }
 
-        public Task LoginSilently(string username)
+        public async Task LoginSilently(string username)
         {
             try
             {
-                Debug.WriteLine("Logout methode called");
-                return _remoteDataSource.LoginSilently(username);
+                Debug.WriteLine("LoginSilently method called");
+                await _remoteDataSource.LoginSilently(username);
+                Debug.WriteLine("LoginSilently method call ended");
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Logout methode called with exception " + e.Message );
+                Debug.WriteLine("LoginSilently method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -86,12 +87,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetCategories methode called");
+                Debug.WriteLine("GetCategories method called");
                 return _remoteDataSource.GetCategories(culture);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetCategories methode called with exception " + e.Message);
+                Debug.WriteLine("GetCategories method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -100,12 +101,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetActivity methode called");
+                Debug.WriteLine("GetActivity method called");
                 return _remoteDataSource.GetActivity(culture, maxResult, pageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetActivity methode called with exception " + e.Message);
+                Debug.WriteLine("GetActivity method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -114,12 +115,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetRecommended methode called");
+                Debug.WriteLine("GetRecommended method called");
                 return _remoteDataSource.GetRecommended(pageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetRecommended methode called with exception " + e.Message);
+                Debug.WriteLine("GetRecommended method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -128,12 +129,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetMostPopular methode called");
+                Debug.WriteLine("GetMostPopular method called");
                 return _remoteDataSource.GetMostPopular(culture, maxResult, pageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetMostPopular methode called with exception " + e.Message);
+                Debug.WriteLine("GetMostPopular method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -142,12 +143,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetChannel methode called");
+                Debug.WriteLine("GetChannel method called");
                 return _remoteDataSource.GetChannel(channelId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetChannel methode called with exception " + e.Message);
+                Debug.WriteLine("GetChannel method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -156,12 +157,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetRelatedVideos methode called");
+                Debug.WriteLine("GetRelatedVideos method called");
                 return _remoteDataSource.GetRelatedVideos(videoId, maxResult, pageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetRelatedVideos methode called with exception " + e.Message);
+                Debug.WriteLine("GetRelatedVideos method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -170,12 +171,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetCategoryVideoList methode called");
+                Debug.WriteLine("GetCategoryVideoList method called");
                 return _remoteDataSource.GetCategoryVideoList(categoryId, culture, maxResult, pageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetCategoryVideoList methode called with exception " + e.Message);
+                Debug.WriteLine("GetCategoryVideoList method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -184,12 +185,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetChannelVideoList methode called");
+                Debug.WriteLine("GetChannelVideoList method called");
                 return _remoteDataSource.GetChannelVideoList(channelId, culture, maxPageResult, pageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetChannelVideoList methode called with exception " + e.Message);
+                Debug.WriteLine("GetChannelVideoList method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -198,12 +199,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetGuideCategories methode called");
+                Debug.WriteLine("GetGuideCategories method called");
                 return _remoteDataSource.GetGuideCategories(culture);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetGuideCategories methode called with exception " + e.Message);
+                Debug.WriteLine("GetGuideCategories method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -212,12 +213,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetChannels methode called");
+                Debug.WriteLine("GetChannels method called");
                 return _remoteDataSource.GetChannels(categoryId, culture, maxPageResult, nextPageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetChannels methode called with exception " + e.Message);
+                Debug.WriteLine("GetChannels method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -226,12 +227,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("Search methode called");
+                Debug.WriteLine("Search method called");
                 return _remoteDataSource.Search(searchString, maxResult, nextPageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Search methode called with exception " + e.Message);
+                Debug.WriteLine("Search method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -240,12 +241,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetComments methode called");
+                Debug.WriteLine("GetComments method called");
                 return _remoteDataSource.GetComments(videoId, maxResult, nextPageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetComments methode called with exception " + e.Message);
+                Debug.WriteLine("GetComments method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -254,12 +255,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetSubscribtions methode called");
+                Debug.WriteLine("GetSubscribtions method called");
                 return _remoteDataSource.GetSubscribtions(maxResult, nextPageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetSubscribtions methode called with exception " + e.Message);
+                Debug.WriteLine("GetSubscribtions method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -268,12 +269,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetHistory methode called");
+                Debug.WriteLine("GetHistory method called");
                 return _remoteDataSource.GetHistory(maxResult, nextPageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetHistory methode called with exception " + e.Message);
+                Debug.WriteLine("GetHistory method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -282,12 +283,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("IsSubscribed methode called");
+                Debug.WriteLine("IsSubscribed method called");
                 return _remoteDataSource.IsSubscribed(channelId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("IsSubscribed methode called with exception " + e.Message);
+                Debug.WriteLine("IsSubscribed method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -296,12 +297,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetSubscriptionId methode called");
+                Debug.WriteLine("GetSubscriptionId method called");
                 return _remoteDataSource.GetSubscriptionId(channelId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetSubscriptionId methode called with exception " + e.Message);
+                Debug.WriteLine("GetSubscriptionId method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -310,12 +311,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("Subscribe methode called");
+                Debug.WriteLine("Subscribe method called");
                 return _remoteDataSource.Subscribe(channelId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Subscribe methode called with exception " + e.Message);
+                Debug.WriteLine("Subscribe method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -324,12 +325,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("Unsubscribe methode called");
+                Debug.WriteLine("Unsubscribe method called");
                 return _remoteDataSource.Unsubscribe(subscriptionId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Unsubscribe methode called with exception " + e.Message);
+                Debug.WriteLine("Unsubscribe method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -338,12 +339,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("SetRating methode called");
+                Debug.WriteLine("SetRating method called");
                 return _remoteDataSource.SetRating(videoId, rating);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("SetRating methode called with exception " + e.Message);
+                Debug.WriteLine("SetRating method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -352,12 +353,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetRating methode called");
+                Debug.WriteLine("GetRating method called");
                 return _remoteDataSource.GetRating(videoId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetRating methode called with exception " + e.Message);
+                Debug.WriteLine("GetRating method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -366,12 +367,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetVideoUriAsync methode called");
+                Debug.WriteLine("GetVideoUriAsync method called");
                 return _remoteDataSource.GetVideoUriAsync(videoId, quality);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetVideoUriAsync methode called with exception " + e.Message);
+                Debug.WriteLine("GetVideoUriAsync method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -380,12 +381,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("AddToFavorites methode called");
+                Debug.WriteLine("AddToFavorites method called");
                 return _remoteDataSource.AddToFavorites(videoId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("AddToFavorites methode called with exception " + e.Message);
+                Debug.WriteLine("AddToFavorites method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -394,12 +395,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("RemoveFromFavorites methode called");
+                Debug.WriteLine("RemoveFromFavorites method called");
                 return _remoteDataSource.RemoveFromFavorites(playlistItemId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("RemoveFromFavorites methode called with exception " + e.Message);
+                Debug.WriteLine("RemoveFromFavorites method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -408,12 +409,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetFavorites methode called");
+                Debug.WriteLine("GetFavorites method called");
                 return _remoteDataSource.GetFavorites(maxResult, nextPageToken);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetFavorites methode called with exception " + e.Message);
+                Debug.WriteLine("GetFavorites method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -422,12 +423,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetVideoItem methode called");
+                Debug.WriteLine("GetVideoItem method called");
                 return _remoteDataSource.GetVideoItem(videoId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetVideoItem methode called with exception " + e.Message);
+                Debug.WriteLine("GetVideoItem method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -436,12 +437,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetProfile methode called");
+                Debug.WriteLine("GetProfile method called");
                 return _remoteDataSource.GetProfile();
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetProfile methode called with exception " + e.Message);
+                Debug.WriteLine("GetProfile method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -450,12 +451,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("AddComment methode called");
+                Debug.WriteLine("AddComment method called");
                 return _remoteDataSource.AddComment(channelId, videoId, text);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("AddComment methode called with exception " + e.Message);
+                Debug.WriteLine("AddComment method called with exception " + e.Message);
                 throw e;
             }
         }
@@ -464,12 +465,12 @@ namespace LiteTube.DataModel
         {
             try
             {
-                Debug.WriteLine("GetAutoCompleteSearchItems methode called");
+                Debug.WriteLine("GetAutoCompleteSearchItems method called");
                 return _remoteDataSource.GetAutoCompleteSearchItems(query);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetAutoCompleteSearchItems methode called with exception " + e.Message);
+                Debug.WriteLine("GetAutoCompleteSearchItems method called with exception " + e.Message);
                 throw e;
             }
         }

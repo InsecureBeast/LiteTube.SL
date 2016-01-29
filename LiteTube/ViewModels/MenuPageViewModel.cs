@@ -41,13 +41,17 @@ namespace LiteTube.ViewModels
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
-            _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener);
-            _subscriptions = new SubscriptionChannelsViewModel(_getDataSource, connectionListener);
-            _history = new HistoryPageViewModel(_getDataSource, connectionListener);
-            _favoritesViewModel = new FavoritesViewModel(_getDataSource, connectionListener);
-            _favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
             _categories = new ObservableCollection<GuideCategoryNodeViewModel>();
-
+            
+            if (_getDataSource().IsAuthorized)
+            {
+                _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener);
+                _subscriptions = new SubscriptionChannelsViewModel(_getDataSource, connectionListener);
+                _history = new HistoryPageViewModel(_getDataSource, connectionListener);
+                _favoritesViewModel = new FavoritesViewModel(_getDataSource, connectionListener);
+                _favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
+            }
+            
             _selectCommand = new Common.RelayCommand(SelectItems);
             _deleteCommand = new Common.RelayCommand(DeleteItems, CanDelete);
             _categoryCommand = new RelayCommand<NavigationObject>(CategoryLoad);
@@ -55,10 +59,10 @@ namespace LiteTube.ViewModels
             SelectedIndex = index;
 
             _isConnected = connectionListener.CheckNetworkAvailability();
-            App.ViewModel.IndicatorHolder.Subscribe(() =>
-            {
-                ProgressIndicator = App.ViewModel.IndicatorHolder.ProgressIndicator;
-            });
+            //App.ViewModel.IndicatorHolder.Subscribe(() =>
+            //{
+            //    ProgressIndicator = App.ViewModel.IndicatorHolder.ProgressIndicator;
+            //});
         }
 
         public ObservableCollection<GuideCategoryNodeViewModel> Categories
@@ -152,10 +156,9 @@ namespace LiteTube.ViewModels
 
         private void OnSelectedIndexChanged(int index)
         {
-            _favoritesViewModel.SetNonSelected();
-
             if (IsAuthorized)
             {
+                _favoritesViewModel.SetNonSelected();
                 SetAuthorizedSelection(index);
                 return;
             }
@@ -308,7 +311,6 @@ namespace LiteTube.ViewModels
 
                 if (Categories.Count > 0)
                     IsConnected = true;
-
             });
         }
     }

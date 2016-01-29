@@ -73,6 +73,7 @@
 
             <!--Pivot item four-->
             <phone:PivotItem Name="HistoryItem"
+                             Header="watch history"
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"

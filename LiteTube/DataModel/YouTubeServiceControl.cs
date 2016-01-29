@@ -68,7 +68,6 @@ namespace LiteTube.DataModel
                 _credential = null;
                 SettingsHelper.SaveUserRefreshToken(string.Empty);
                 SettingsHelper.SaveUserAccessToken(string.Empty);
-                SettingsHelper.SaveUserId(string.Empty);
                 _youTubeService = GetYTService();
             }
             return null;
@@ -114,7 +113,6 @@ namespace LiteTube.DataModel
             _youTubeServiceAuth = GetYTService(_credential);
             SettingsHelper.SaveUserRefreshToken(_credential.Token.RefreshToken);
             SettingsHelper.SaveUserAccessToken(_credential.Token.AccessToken);
-            SettingsHelper.SaveUserId(_credential.UserId);
             return _credential.UserId;
         }
 
@@ -172,6 +170,7 @@ namespace LiteTube.DataModel
 
             var flow = new GoogleAuthorizationCodeFlow(initializer);
             _credential = new UserCredential(flow, username, token);
+            Thread.Sleep(500);
             var res = await _credential.RefreshTokenAsync(CancellationToken.None);
             _youTubeServiceAuth = GetYTService(_credential);
             SettingsHelper.SaveUserRefreshToken(_credential.Token.RefreshToken);

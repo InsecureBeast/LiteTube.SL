@@ -55,24 +55,6 @@ namespace LiteTube.Common
             return new Dictionary<string, DateTime>();
         }
 
-        internal static string GetUserId()
-        {
-            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("UserId"))
-            {
-                var userId = (string)(ApplicationData.Current.RoamingSettings.Values["UserId"]);
-                if (!string.IsNullOrEmpty(userId))
-                {
-                    return userId;
-                }
-            }
-            return string.Empty;
-        }
-
-        internal static void SaveUserId(string userId)
-        {
-            ApplicationData.Current.RoamingSettings.Values["UserId"] = userId;
-        }
-
         internal static void SaveQuality(string qualityName)
         {
             ApplicationData.Current.RoamingSettings.Values["Quality"] = qualityName;
@@ -119,6 +101,11 @@ namespace LiteTube.Common
             }
 
             return token;
+        }
+
+        internal static bool IsContainsAuthorizationData()
+        {
+            return ApplicationData.Current.RoamingSettings.Values.ContainsKey("AccessToken");
         }
     }
 }

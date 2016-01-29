@@ -32,8 +32,7 @@ namespace LiteTube
             {
                 await App.ViewModel.LoadData();
 
-                var userId = SettingsHelper.GetRefreshToken();
-                if (string.IsNullOrEmpty(userId))
+                if (!SettingsHelper.IsContainsAuthorizationData())
                     return;
 
                 await App.ViewModel.GetGeDataSource().LoginSilently(string.Empty);

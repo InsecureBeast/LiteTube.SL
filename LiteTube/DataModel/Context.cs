@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using LiteTube.Common;
 
 namespace LiteTube.DataModel
@@ -39,23 +40,24 @@ namespace LiteTube.DataModel
             get { return _baseConnectionListener; }
         }
 
-        public void Notify(ConnectionEventArgs e)
+        public async void Notify(ConnectionEventArgs e)
         {
-            lock (this)
+            if (!e.IsConnected)
             {
-                if (!e.IsConnected)
-                {
-                    Dispose();
-                    _baseConnectionListener.Notify(e);
-                    return;
-                }
-
-                if (_remoteDataSource != null)
-                    return;
-
-                BuidContext();
-                _baseConnectionListener.Notify(e); 
+                Dispose();
+                _baseConnectionListener.Notify(e);
+                return;
             }
+
+            if (_remoteDataSource != null)
+                return;
+
+            BuidContext();
+
+            if (SettingsHelper.IsContainsAuthorizationData())
+                await _dataSource.LoginSilently(string.Empty);
+            
+            _baseConnectionListener.Notify(e);
         }
 
         public void Dispose()

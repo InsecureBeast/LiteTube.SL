@@ -360,11 +360,11 @@ namespace LiteTube.ViewModels
 
         public void Notify(ConnectionEventArgs e)
         {
-            if (e.IsConnected)
-            {
-                var view = string.Format("/VideoPage.xaml?videoId={0}", _videoId);
-                NavigationHelper.Navigate(view, new VideoPageViewModel(_videoId, _getDataSource, _connectionListener));
-            }
+            //if (e.IsConnected)
+            //{
+            //    var view = string.Format("/VideoPage.xaml?videoId={0}", _videoId);
+            //    NavigationHelper.Navigate(view, new VideoPageViewModel(_videoId, _getDataSource, _connectionListener));
+            //}
         }
 
         public override string ToString()

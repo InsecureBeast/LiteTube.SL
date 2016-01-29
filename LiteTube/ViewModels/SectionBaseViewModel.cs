@@ -230,6 +230,8 @@ namespace LiteTube.ViewModels
                 IsConnected = true;
 
                 HideProgressIndicator();
+
+                throw;
             }
         }
 
@@ -272,6 +274,8 @@ namespace LiteTube.ViewModels
             IsLoading = false;
             if (!Items.Any())
                 IsEmpty = true;
+
+            HideProgressIndicator();
         }
 
         private async void LoadMore()
@@ -308,6 +312,8 @@ namespace LiteTube.ViewModels
                 IsConnected = true;
 
                 HideProgressIndicator();
+
+                throw;
             }
         }
 
