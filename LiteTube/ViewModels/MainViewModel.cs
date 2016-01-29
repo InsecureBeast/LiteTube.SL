@@ -18,7 +18,7 @@ namespace LiteTube.ViewModels
         private readonly ObservableCollection<VideoCategoryNodeViewModel> _categoryItems;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
         private readonly ActivitySectionViewModel _activitySectionViewModel;
-        private ProgressIndicatorHolder _indicatorHolder;
+        private readonly ProgressIndicatorHolder _indicatorHolder;
 
         public MainViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)

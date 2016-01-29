@@ -17,7 +17,7 @@ namespace LiteTube.DataModel
     {
         void Login();
         Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
-        Task Logout();
+        void Logout();
         Task LoginSilently(string username);
         bool IsAuthorized { get; }
         Task<IEnumerable<IVideoCategory>> GetCategories(string culture);
@@ -94,9 +94,9 @@ namespace LiteTube.DataModel
             _youTubeService = _youTubeServiceControl.GetAuthorizedService();
         }
 
-        public async Task Logout()
+        public void Logout()
         {
-            await _youTubeServiceControl.Logout();
+            _youTubeServiceControl.Logout();
             _youTubeService = _youTubeServiceControl.GetService();
             _subscriptionsHolder.Clear();
         }

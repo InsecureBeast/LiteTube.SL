@@ -60,17 +60,16 @@ namespace LiteTube.DataModel
             return _youTubeServiceAuth;
         }
 
-        public /*async*/ Task Logout()
+        public void Logout()
         {
-            if (_credential != null)
-            {
-                //await _credential.RevokeTokenAsync(new CancellationToken());
-                _credential = null;
-                SettingsHelper.SaveUserRefreshToken(string.Empty);
-                SettingsHelper.SaveUserAccessToken(string.Empty);
-                _youTubeService = GetYTService();
-            }
-            return null;
+            if (_credential == null) 
+                return;
+            
+            //await _credential.RevokeTokenAsync(new CancellationToken());
+            _credential = null;
+            SettingsHelper.SaveUserRefreshToken(string.Empty);
+            SettingsHelper.SaveUserAccessToken(string.Empty);
+            _youTubeService = GetYTService();
         }
 
         public void Login()

@@ -87,11 +87,9 @@ namespace LiteTube.DataModel
             throw new NotImplementedException();
         }
 
-        public Task Logout()
+        public void Logout()
         {
-            Task result= null;
-            Enqueue(() => { result = _remote.Logout(); });
-            return result;
+            Enqueue(() => _remote.Logout());
         }
 
         public Task LoginSilently(string username)

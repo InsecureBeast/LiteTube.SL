@@ -30,9 +30,8 @@ namespace LiteTube.DataModel
             return null;
         }
 
-        public Task Logout()
+        public void Logout()
         {
-            return null;
         }
 
         public void Update(string region, string quality)

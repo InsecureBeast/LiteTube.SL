@@ -178,11 +178,8 @@ namespace LiteTube.ViewModels
 
         private void Logout()
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
-            {
-                await _getDataSource().Logout();
-                Home();
-            });
+            _getDataSource().Logout();
+            Home();
         }
 
         private void Home()

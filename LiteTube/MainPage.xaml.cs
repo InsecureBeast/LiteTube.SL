@@ -14,8 +14,6 @@ namespace LiteTube
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private readonly DispatcherTimer _timer = new DispatcherTimer();
-
         // Constructor
         public MainPage()
         {

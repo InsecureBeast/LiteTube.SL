@@ -105,7 +105,7 @@ namespace LiteTube.Common
 
         internal static bool IsContainsAuthorizationData()
         {
-            return ApplicationData.Current.RoamingSettings.Values.ContainsKey("AccessToken");
+            return !string.IsNullOrEmpty(GetAccessToken());
         }
     }
 }

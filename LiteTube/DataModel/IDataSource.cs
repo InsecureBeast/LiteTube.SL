@@ -15,7 +15,7 @@ namespace LiteTube.DataModel
         Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
         bool IsAuthorized { get; }
         Task LoginSilently(string username);
-        Task Logout();
+        void Logout();
         void Update(string region, string quality);
         Task<IVideoList> GetActivity(string pageToken);
         Task<IVideoList> GetRecommended(string pageToken);
@@ -97,9 +97,9 @@ namespace LiteTube.DataModel
             return result;
         }
      
-        public async Task Logout()
+        public void Logout()
         {
-            await _remoteDataSource.Logout();
+            _remoteDataSource.Logout();
             _contextNotifier.Notify(new UpdateContextEventArgs());
         }
 

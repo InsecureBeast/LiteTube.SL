@@ -45,12 +45,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task Logout()
+        public void Logout()
         {
             try
             {
                 Debug.WriteLine("Logout method called");
-                return _remoteDataSource.Logout();
+                _remoteDataSource.Logout();
             }
             catch (Exception e)
             {
