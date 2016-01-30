@@ -307,12 +307,14 @@ namespace LiteTube
                     _resumed = true;
                     player.RestoreMediaState(_deactivatedState);
                     
-                        var viewModel = DataContext as VideoPageViewModel;
-                        if (viewModel == null)
-                            return;
+                    var viewModel = DataContext as VideoPageViewModel;
+                    if (viewModel == null)
+                        return;
 
-                        var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", viewModel.VideoId, _playerPosition, Guid.NewGuid());
-                        NavigationHelper.Navigate(view, viewModel);
+                    //viewModel.Reload();
+
+                    var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", viewModel.VideoId, _playerPosition, Guid.NewGuid());
+                    NavigationHelper.Navigate(view, viewModel);
                 });
             }
         }

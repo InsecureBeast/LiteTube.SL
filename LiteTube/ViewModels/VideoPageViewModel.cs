@@ -1,5 +1,4 @@
 ﻿using LiteTube.Common;
-using LiteTube.Common.Helpers;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using MyToolkit.Multimedia;
@@ -360,16 +359,18 @@ namespace LiteTube.ViewModels
 
         public void Notify(ConnectionEventArgs e)
         {
-            //if (e.IsConnected)
-            //{
-            //    var view = string.Format("/VideoPage.xaml?videoId={0}", _videoId);
-            //    NavigationHelper.Navigate(view, new VideoPageViewModel(_videoId, _getDataSource, _connectionListener));
-            //}
+            if (e.IsConnected)
+                LoadVideoItem(_videoId);
         }
 
         public override string ToString()
         {
             return Title;
+        }
+
+        public void Reload()
+        {
+            LoadVideoItem(_videoId);
         }
 
         private void SetVideoUri(string videoId)
@@ -463,17 +464,18 @@ namespace LiteTube.ViewModels
 
         private void LoadVideoItem(string videoId)
         {
+            RelatedVideosViewModel = new RelatedVideosViewModel(VideoId, _getDataSource, _connectionListener);
+            CommentsViewModel = new CommentsViewModel(VideoId, _getDataSource, _connectionListener);
+
             LayoutHelper.InvokeFromUIThread(async () =>
             {
-                var videoItem = await _getDataSource().GetVideoItem(videoId);
+                if (!_connectionListener.CheckNetworkAvailability())
+                    return;
 
-                RelatedVideosViewModel = new RelatedVideosViewModel(videoItem, _getDataSource, _connectionListener);
-                CommentsViewModel = new CommentsViewModel(VideoId, _getDataSource, _connectionListener);
-                
+                var videoItem = await _getDataSource().GetVideoItem(videoId);
                 if (videoItem == null)
                     return;
 
-                //VideoId = videoItem.Details.Video.Id;
                 Title = videoItem.Details.Title;
                 ChannelTitle = videoItem.ChannelTitle;
                 Description = videoItem.Details.Description;

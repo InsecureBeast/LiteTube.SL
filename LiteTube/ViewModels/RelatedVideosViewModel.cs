@@ -9,13 +9,13 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
 
-        public RelatedVideosViewModel(IVideoItem videoItem, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
+        public RelatedVideosViewModel(string videoId, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)
         {
-            if (videoItem == null)
+            if (videoId == null)
                 return;
             
-            _videoId = videoItem.Details.Video.Id;
+            _videoId = videoId;
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
