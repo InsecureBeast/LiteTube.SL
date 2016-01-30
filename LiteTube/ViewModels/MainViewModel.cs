@@ -95,7 +95,7 @@ namespace LiteTube.ViewModels
         {
             IsLoading = true;
             IsEmpty = false;
-            
+
             await _mostPopularViewModel.FirstLoad();
             await LoadGuideCategories();
             if (_getGeDataSource().IsAuthorized)
@@ -159,6 +159,9 @@ namespace LiteTube.ViewModels
 
         public async void Notify(UpdateSettingsEventArgs e)
         {
+            _mostPopularViewModel.Items.Clear();
+            if (IsAuthorized)
+                _activitySectionViewModel.Items.Clear();
             await LoadData();
         }
 
