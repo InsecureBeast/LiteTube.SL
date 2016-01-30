@@ -58,16 +58,6 @@ namespace LiteTube
             }
         }
 
-        private void Find_Click(object sender, EventArgs e)
-        {
-            var textbox = VisualHelper.FindChild<TextBox>(SearchBox);
-            if (textbox == null)
-                return;
-
-            SearchBox.Focus();
-            //textbox.SelectAll();
-        }
-
         private void Home_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoHome();

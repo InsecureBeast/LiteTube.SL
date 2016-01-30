@@ -15,7 +15,7 @@ namespace LiteTube.ViewModels
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Common.RelayCommand _homeCommand;
         private readonly Common.RelayCommand _settingsCommand;
-        private readonly RelayCommand<object> _searchCommand;
+        private readonly Common.RelayCommand _searchCommand;
         private readonly RelayCommand<string> _channelCommand;
         private bool _isMenuSelected = false;
         private bool _isSettingsSelected = false;
@@ -35,7 +35,7 @@ namespace LiteTube.ViewModels
             _logoutCommand = new Common.RelayCommand(Logout);
             _homeCommand = new Common.RelayCommand(Home);
             _settingsCommand = new Common.RelayCommand(Settings, CanSettings);
-            _searchCommand = new RelayCommand<object>(Search);
+            _searchCommand = new Common.RelayCommand(Search);
             _channelCommand = new RelayCommand<string>(LoadChannel);
 
             _getDataSource().Subscribe(this);
@@ -197,7 +197,7 @@ namespace LiteTube.ViewModels
             return !_isSettingsSelected;
         }
 
-        private void Search(object page)
+        private void Search()
         {
             NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(_getDataSource, _connectionListener));
         }

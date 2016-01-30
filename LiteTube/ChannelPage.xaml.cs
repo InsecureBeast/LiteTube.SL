@@ -84,11 +84,6 @@ namespace LiteTube
             NavigationHelper.GoHome();
         }
 
-        private void Find_Click(object sender, EventArgs e)
-        {
-            NavigationHelper.GoToFindPage();
-        }
-
         private void Subscribe_Click(object sender, EventArgs e)
         {
             var viewModel = DataContext as ChannelPageViewModel;

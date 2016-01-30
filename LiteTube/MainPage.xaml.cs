@@ -36,10 +36,5 @@ namespace LiteTube
                 await App.ViewModel.GetGeDataSource().LoginSilently(string.Empty);
             }
         }
-
-        private void Find_Click(object sender, EventArgs e)
-        {
-            NavigationHelper.GoToFindPage();
-        }
     }
 }

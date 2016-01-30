@@ -290,11 +290,6 @@ namespace LiteTube
             }
         }
 
-        private void Find_Click(object sender, EventArgs e)
-        {
-            NavigationHelper.GoToFindPage();
-        }
-
         private void Home_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoHome();

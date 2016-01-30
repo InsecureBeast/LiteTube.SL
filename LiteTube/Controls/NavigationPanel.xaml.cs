@@ -25,19 +25,16 @@ namespace LiteTube.Controls
         {
             var page = VisualHelper.FindParent<Page>(this);
             BackgroundGridPopup.Height = page.ActualHeight;
-            BackgroundGridPopup1.Height = page.ActualHeight;
         }
 
         private void Popup_Closed(object sender, EventArgs eventArgs)
         {
             MainMenuButton.IsChecked = false;
-            LoginMenuButton.IsChecked = false;
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             MainMenuButton.IsChecked = false;
-            LoginMenuButton.IsChecked = false;
         }
 
         private void About_Click(object sender, RoutedEventArgs e)
@@ -59,7 +56,6 @@ namespace LiteTube.Controls
         private void BackgroundPopup_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             MainMenuButton.IsChecked = false;
-            LoginMenuButton.IsChecked = false;
         }
     }
 }

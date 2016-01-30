@@ -49,7 +49,6 @@ namespace LiteTube
             _currentApplicationBar = new ApplicationBar();
             _currentApplicationBar.Mode = ApplicationBarMode.Minimized;
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
-            _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Find.png", "Find", Find_Click));
             _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video url", CopyVideoUrl_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click);
@@ -266,13 +265,6 @@ namespace LiteTube
 
             SupportedOrientations = SupportedPageOrientation.Portrait;
             Orientation = PageOrientation.Portrait;
-        }
-
-        private void Find_Click(object sender, EventArgs e)
-        {
-            var datasource = App.ViewModel.GetGeDataSource;
-            var connectionListener = App.ViewModel.ConnectionListener;
-            NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(datasource, connectionListener));
         }
 
         private void Send_Click(object sender, EventArgs e)
