@@ -64,6 +64,9 @@ namespace LiteTube
 
         private void AddAppBarButtons()
         {
+            if (!ViewModel.NavigationPanelViewModel.IsAuthorized)
+                return;
+
             if (ViewModel.IsSubscribed)
             {
                 ApplicationBar.Buttons.Add(_unsubscribeButton);

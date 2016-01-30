@@ -22,10 +22,16 @@ namespace LiteTube.DataModel
         public void BuidContext()
         {
             var youTubeService = new YouTubeServiceControl();
-            _remoteDataSource = new RemoteDataSource(youTubeService);
             var region = SettingsHelper.GetRegion();
             var quality = SettingsHelper.GetQuality();
             const int maxPageResult = 30;
+            if (!_baseConnectionListener.CheckNetworkAvailability())
+            {
+                _dataSource = new NullableDataSource();
+                return;
+            }
+
+            _remoteDataSource = new RemoteDataSource(youTubeService);
             var remoteExceptionWrapper = new DataSourceExceptionWrapper(_remoteDataSource);
             _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, _deviceHistory, quality);
         }

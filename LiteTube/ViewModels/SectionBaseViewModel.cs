@@ -155,6 +155,8 @@ namespace LiteTube.ViewModels
             protected set
             {
                 _isConnected = value;
+                if (!_isConnected)
+                    HideProgressIndicator();
                 NotifyOfPropertyChanged(() => IsConnected);
             }
         }
@@ -201,6 +203,9 @@ namespace LiteTube.ViewModels
         {
             try
             {
+                if (!IsConnected)
+                    return;
+
                 if (Items.Count > 0)
                     return;
 
@@ -282,6 +287,9 @@ namespace LiteTube.ViewModels
         {
             try
             {
+                if (!IsConnected)
+                    return;
+
                 if (!_hasItems)
                     return;
 
