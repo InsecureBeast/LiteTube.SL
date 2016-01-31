@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
+using System.Threading;
 
 namespace LiteTube
 {
@@ -53,6 +54,8 @@ namespace LiteTube
         /// </summary>
         public App()
         {
+            var cu = Thread.CurrentThread.CurrentCulture;
+
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 

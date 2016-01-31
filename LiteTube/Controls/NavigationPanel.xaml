@@ -40,7 +40,7 @@
                       ContentTemplate="{StaticResource MenuIcon}"
                       Style="{StaticResource NavigationControlToggleButtonStyle}"/>
 
-        <TextBlock Text="LiteTube"
+        <TextBlock Text="LigthTube"
                    Grid.Row="0"
                    Grid.Column="1"
                    Margin="0,6,0,0"

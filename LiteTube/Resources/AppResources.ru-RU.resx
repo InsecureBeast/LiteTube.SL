@@ -126,138 +126,138 @@
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
-    <value>LiteTube</value>
+    <value>LightTube</value>
   </data>
   <data name="Activity" xml:space="preserve">
-    <value>Activity</value>
+    <value>Лента новостей</value>
   </data>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>О программе</value>
   </data>
   <data name="AboutText" xml:space="preserve">
     <value>Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может передавать только видео, не поддерживает загрузки/кеширование. Пожалуйста, обратите внимание, что загрузка не допускается YouTube.</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
-    <value>Add to favorites</value>
+    <value>Добавить в избранное</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="ChannelInfo" xml:space="preserve">
-    <value>channel info</value>
+    <value>Отмена</value>
   </data>
   <data name="Channels" xml:space="preserve">
-    <value>channels</value>
+    <value>каналы</value>
   </data>
   <data name="CheckConnection" xml:space="preserve">
-    <value>Check internet connection</value>
+    <value>Проверьте соединение с интернет</value>
   </data>
   <data name="Comments" xml:space="preserve">
-    <value>comments</value>
+    <value>коментарии</value>
   </data>
   <data name="Copyright" xml:space="preserve">
-    <value>Copyright (c) 2016. All right reserved.</value>
+    <value>Copyright (c) 2016. Все права защищены.</value>
   </data>
   <data name="CopyVideoLink" xml:space="preserve">
-    <value>copy video link</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>копировать ссылку на видео</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>details</value>
+    <value>детали</value>
   </data>
   <data name="Empty" xml:space="preserve">
-    <value>Items not found</value>
+    <value>Элементы не найдены</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>favorites</value>
+    <value>избранное</value>
   </data>
   <data name="Feedback" xml:space="preserve">
-    <value>feedback</value>
+    <value>обратная связь</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>Home</value>
+    <value>Домой</value>
   </data>
   <data name="JoinedString" xml:space="preserve">
-    <value>joined</value>
+    <value>присоединился</value>
   </data>
   <data name="Loading" xml:space="preserve">
-    <value>Loading...</value>
+    <value>Загрузка...</value>
   </data>
   <data name="Menu" xml:space="preserve">
-    <value>Menu</value>
+    <value>Меню</value>
   </data>
   <data name="MostPopular" xml:space="preserve">
-    <value>Most popular</value>
+    <value>Популярное сейчас</value>
   </data>
   <data name="NoMatchVideo" xml:space="preserve">
     <value>No matching YouTube video or audio stream URI could be found. The video may not be available in your country, is private or uses RTMPE (protected streaming).</value>
   </data>
   <data name="PublishedAt" xml:space="preserve">
-    <value>Published at</value>
+    <value>Опубликовано</value>
   </data>
   <data name="RecommendedForYou" xml:space="preserve">
-    <value>recommended for you</value>
+    <value>рекомендовано вам</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Обновить</value>
   </data>
   <data name="RelatedVideos" xml:space="preserve">
-    <value>related videos</value>
+    <value>связанные видео</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Сохранить</value>
   </data>
   <data name="SelectRegion" xml:space="preserve">
-    <value>Select region</value>
+    <value>Выберите регион</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Send</value>
+    <value>Отправить</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>settings</value>
+    <value>настройки</value>
   </data>
   <data name="SignIn" xml:space="preserve">
-    <value>Sign In</value>
-  </data>
-  <data name="SignInTooltip" xml:space="preserve">
-    <value>Please sign in to use this features</value>
+    <value>Войти</value>
   </data>
   <data name="SignOut" xml:space="preserve">
-    <value>Sign out</value>
+    <value>Выйти</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
-    <value>Subscribe</value>
+    <value>Подписаться</value>
   </data>
   <data name="Subscribers" xml:space="preserve">
-    <value>subscribers</value>
+    <value>подписчиков</value>
   </data>
   <data name="Subscriptions" xml:space="preserve">
-    <value>subscriptions</value>
+    <value>подписки</value>
   </data>
   <data name="Unsubscribe" xml:space="preserve">
-    <value>Unsubscribe</value>
+    <value>Отменить подписку</value>
   </data>
   <data name="UsingSoftware" xml:space="preserve">
-    <value>Software</value>
+    <value>ПО</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Версия</value>
   </data>
   <data name="VideoCategories" xml:space="preserve">
-    <value>Video categories</value>
+    <value>Категории видео</value>
   </data>
   <data name="VideoQuality" xml:space="preserve">
-    <value>Video quality</value>
+    <value>Качество видео</value>
   </data>
   <data name="videos" xml:space="preserve">
-    <value>videos</value>
+    <value>видео</value>
   </data>
   <data name="Views" xml:space="preserve">
-    <value>views</value>
+    <value>просмотров</value>
   </data>
   <data name="WatchHistory" xml:space="preserve">
-    <value>watch history</value>
+    <value>история просмотров</value>
+  </data>
+  <data name="ChannelInfo" xml:space="preserve">
+    <value>о канале</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="SignInTooltip" xml:space="preserve">
+    <value>Пожалуйста, войдите в свой аккаунт, чтобы использовать все возможности приложения.</value>
   </data>
 </root>

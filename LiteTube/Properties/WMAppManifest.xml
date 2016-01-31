@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2014/deployment" AppPlatformVersion="8.1">
   <DefaultLanguage xmlns="" code="en-US" />
+  <Languages xmlns="">
+    <Language code="ru" />
+  </Languages>
   <App xmlns="" ProductID="{a6dc8489-f102-4558-95b0-3fc6b3abbab0}" Title="LiteTube" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="LiteTube author" Description="Sample description" SDOptOut="false" BackUpOptOut="false" Publisher="LiteTube" PublisherID="{cc081fd0-ea82-4a65-b081-4d0fc767871a}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>

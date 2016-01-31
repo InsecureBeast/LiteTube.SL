@@ -8,21 +8,19 @@
         <Grid>
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       x:Uid="Loading"
-                       Text="Loading..."
+                       Text="{Binding Path=LocalizedResources.Loading, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       x:Uid="IsEmpty"
-                       Text="Items not found"
+                       Text="{Binding Path=LocalizedResources.Empty, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Text="Check internet connection"
+                       Text="{Binding Path=LocalizedResources.CheckConnection, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsConnected, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
         </Grid>
@@ -99,7 +97,7 @@
                 <TextBlock TextWrapping="NoWrap"
                            Text="{Binding PublishedAt}"
                            Style="{StaticResource PhoneTextSmallStyle}">
-                    <Run Text="Published at " x:Uid="PublishedAt"/>
+                    <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
                     <Run Text="{Binding PublishedAt}" />
                 </TextBlock>
             </StackPanel>
@@ -112,7 +110,7 @@
                               ContentTemplate="{StaticResource LoadingListViewItem}"/>
             <toolkit:ContextMenuService.ContextMenu>
                 <toolkit:ContextMenu Name="ContextMenu">
-                    <toolkit:MenuItem Name="Delete"  Header="Delete" Command="{Binding DeleteCommand}"/>
+                    <toolkit:MenuItem Name="Delete"  Header="{Binding Path=LocalizedResources.Delete, Source={StaticResource LocalizedStrings}}" Command="{Binding DeleteCommand}"/>
                 </toolkit:ContextMenu>
             </toolkit:ContextMenuService.ContextMenu>
         </Grid>

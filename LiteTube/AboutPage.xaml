@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <TextBlock Text="About" 
+        <TextBlock Text="{Binding Path=LocalizedResources.About, Source={StaticResource LocalizedStrings}}" 
                    Style="{StaticResource TitleTextBlockStyle}"/>
 
         <!--ContentPanel - place additional content here-->
@@ -30,16 +30,17 @@
               Grid.Row="1"
               Margin="24,12,24,0">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="LiteTube"/>
-                <TextBlock Text="Version 1.0.0.0"/>
-                <TextBlock Text="Copyright 2016. All rights reserved."/>
-                
-                <TextBlock Text="Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может передавать только видео, не поддерживает загрузки/кеширование. Пожалуйста, обратите внимание, что загрузка не допускается YouTube."
+                <TextBlock Text="LightTube"/>
+                <TextBlock Text="Version 1.0.0.0"
+                           Name="VrsionTblk"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.Copyright, Source={StaticResource LocalizedStrings}}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.AboutText, Source={StaticResource LocalizedStrings}}"
                            Foreground="{StaticResource PhoneSecondaryForegroundBrush}"
                            Margin="{StaticResource DefaultTextBlockMargin}"
                            TextWrapping="Wrap"/>
                 
-                <TextBlock Text="Software"
+                <TextBlock Text="{Binding Path=LocalizedResources.UsingSoftware, Source={StaticResource LocalizedStrings}}"
                            Style="{StaticResource TitleTextBlockStyle}"
                            Margin="0"/>
                 <HyperlinkButton Content="MyToolkit Extended" 

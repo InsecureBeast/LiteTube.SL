@@ -43,7 +43,7 @@ namespace LiteTube.ViewModels
         {
             get
             {
-                return AppResources.SampleProperty;
+                return AppResources.About;
             }
         }
 

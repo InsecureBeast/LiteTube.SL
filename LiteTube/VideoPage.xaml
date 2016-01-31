@@ -43,7 +43,7 @@
             <!--Pivot item one-->
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
-                    <TextBlock Text="details"
+                    <TextBlock Text="{Binding Path=LocalizedResources.Details, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ScrollViewer>
@@ -118,7 +118,7 @@
                                        Style ="{StaticResource PhoneTextSmallStyle}"
                                        VerticalAlignment="Center">
                                 <Run Text="{Binding ViewCount}" />
-                                <Run Text="views" x:Uid="Views"/>
+                                <Run Text="{Binding Path=LocalizedResources.Views, Source={StaticResource LocalizedStrings}}"/>
                             </TextBlock>
                         </Grid>
 
@@ -156,34 +156,50 @@
                                            TextTrimming="WordEllipsis"
                                            HorizontalAlignment="Left">
                                     <Run Text="{Binding ChannelSubscribers}" />
-                                    <Run Text="subscribers" x:Uid="Subscribers"/>
+                                    <Run Text="{Binding Path=LocalizedResources.Subscribers, Source={StaticResource LocalizedStrings}}"/>
                                 </TextBlock>
                                 <TextBlock TextWrapping="NoWrap"
                                            TextTrimming="WordEllipsis"
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            HorizontalAlignment="Left">
                                 <Run Text="{Binding ChannelVideoCount}" />
-                                <Run Text="videos" x:Uid="Videos"/>
+                                <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                                 </TextBlock>
                             </StackPanel>
 
-                            <Button Content="Subscribe"
-                                    x:Uid="SubscribeButton"
-                                    Grid.Column="2"
-                                    Margin="0,8,8,8"
+                            <Button Grid.Column="2"
+                                    Margin="0,0,8,0"
+                                    Width="140"
+                                    Height="60"
                                     Command="{Binding SubscribeCommand}"
-                                    FontSize="{StaticResource PhoneFontSizeSmall}"
+                                    Style="{StaticResource ContentButtonStyle}"
+                                    Padding="5"
                                     Visibility="{Binding IsSubscribed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                    HorizontalAlignment="Right"/>
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Path=LocalizedResources.Subscribe, Source={StaticResource LocalizedStrings}}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           FontWeight="Normal"
+                                           Margin="5"/>
+                            </Button>
 
-                            <Button Content="Unsubscribe"
-                                    x:Uid="UnsubscribeButton"
-                                    Grid.Column="3"
+                            <Button Grid.Column="3"
                                     HorizontalAlignment="Right"
-                                    FontSize="{StaticResource PhoneFontSizeSmall}"
-                                    Margin="0,8,8,8"
+                                    Style="{StaticResource ContentButtonStyle}"
+                                    Padding="5"
+                                    Margin="0,0,8,0"
+                                    Width="140"
+                                    Height="60"
                                     Command="{Binding UnsubscribeCommand}"
-                                    Visibility="{Binding IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    Visibility="{Binding IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="{Binding Path=LocalizedResources.Unsubscribe, Source={StaticResource LocalizedStrings}}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           FontWeight="Normal"
+                                           Margin="5"/>
+                            </Button>
                         </Grid>
 
                         <TextBlock Grid.Row="3"
@@ -191,7 +207,7 @@
                                    Style="{StaticResource PhoneTextNormalStyle}"
                                    Margin="{StaticResource DefaultControlMargin}"
                                    x:Name="publishedTextBlock">
-                            <Run Text="Published at" x:Uid="PublishedAt" />
+                            <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}" />
                             <Run Text="{Binding PublishedAt}"/>
                         </TextBlock>
 
@@ -207,7 +223,7 @@
             <!--Pivot item two-->
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
-                    <TextBlock Text="related"
+                    <TextBlock Text="{Binding Path=LocalizedResources.RelatedVideos, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 
@@ -218,7 +234,7 @@
             <!--Pivot item three-->
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
-                    <TextBlock Text="comments"
+                    <TextBlock Text="{Binding Path=LocalizedResources.Comments, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <Grid>
@@ -276,7 +292,7 @@
             <Border Background="#BF000000"
                     Name="PaidTextBlock"
                     Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TextBlock Text="No matching YouTube video or audio stream URI could be found. The video may not be available in your country, is private or uses RTMPE (protected streaming)."
+                <TextBlock Text="{Binding Path=LocalizedResources.NoMatchVideo, Source={StaticResource LocalizedStrings}}"
                            TextWrapping="Wrap"
                            Foreground="White"
                            Margin="25,0,25,0"

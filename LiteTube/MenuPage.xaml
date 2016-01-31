@@ -46,7 +46,7 @@
             
             <!--Pivot item one-->
             <phone:PivotItem Name="RecommendedItem"
-                             Header="recommended for you"
+                             Header="{Binding Path=LocalizedResources.RecommendedForYou, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="RecommendedList"
                                   Content="{Binding RecommendedSectionViewModel}"
@@ -55,7 +55,7 @@
 
             <!--Pivot item two-->
             <phone:PivotItem Name="SubscribtionsItem"
-                             Header="subscribtions"
+                             Header="{Binding Path=LocalizedResources.Subscriptions, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="SubscriptionsList"
                                   Content="{Binding SubscriptionChannelsViewModel}"
@@ -64,7 +64,7 @@
 
             <!--Pivot item three-->
             <phone:PivotItem Name="FavoritesItem"
-                             Header="favorites"
+                             Header="{Binding Path=LocalizedResources.Favorites, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="FavoritesList"
                                   Content="{Binding FavoritesViewModel}"
@@ -73,7 +73,7 @@
 
             <!--Pivot item four-->
             <phone:PivotItem Name="HistoryItem"
-                             Header="watch history"
+                             Header="{Binding Path=LocalizedResources.WatchHistory, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
@@ -82,7 +82,7 @@
 
             <!--Pivot item five-->
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}"
-                             Header="channels">
+                             Header="{Binding Path=LocalizedResources.Channels, Source={StaticResource LocalizedStrings}}">
                 <ListBox ItemsSource="{Binding Categories}"
                          Name="VideoCategoriesList"
                          toolkit:TiltEffect.IsTiltEnabled="True"

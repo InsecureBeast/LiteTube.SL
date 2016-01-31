@@ -56,10 +56,9 @@
         </Grid>
 
         <phone:Pivot Grid.Row="2">
-            <phone:PivotItem x:Uid="VideosPivotItem"
-                             Margin="{StaticResource DefaultListBoxMargin}">
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
-                    <TextBlock Text="videos"
+                    <TextBlock Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter Content="{Binding}"
@@ -68,7 +67,7 @@
 
             <phone:PivotItem Margin="24,10,24,0">
                 <phone:PivotItem.Header>
-                    <TextBlock Text="channel info"
+                    <TextBlock Text="{Binding Path=LocalizedResources.ChannelInfo, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ScrollViewer>
@@ -78,12 +77,12 @@
                                    MaxWidth="180" 
                                    HorizontalAlignment="Left">
                                 <Run Text="{Binding ChannelSubscribers}" />
-                                <Run Text="subscribers" x:Uid="Subscribers"/>
+                                <Run Text="{Binding Path=LocalizedResources.Subscribers, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
                         <TextBlock TextWrapping="NoWrap"
                                    TextTrimming="WordEllipsis">
                                 <Run Text="{Binding ChannelVideoCount}"/>
-                                <Run Text="videos" x:Uid="Videos"/>
+                                <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
                         <TextBlock Text="{Binding Description}"
                                    TextWrapping="Wrap" />

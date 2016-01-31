@@ -68,7 +68,7 @@
             </phone:Panorama.Background>-->
 
             <!--Panorama item one-->
-            <phone:PanoramaItem Header="Activity"
+            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.Activity, Source={StaticResource LocalizedStrings}}"
                                 HeaderTemplate="{StaticResource MiddlePanoramaHeader}"
                                 Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!--Single line list with text wrapping-->
@@ -77,7 +77,7 @@
                                   Style="{StaticResource PanoramaContentStyle}"/>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="Most polpular"
+            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.MostPopular, Source={StaticResource LocalizedStrings}}"
                                 HeaderTemplate="{StaticResource MiddlePanoramaHeader}">
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding MostPopularViewModel}"
@@ -85,7 +85,7 @@
                                   Style="{StaticResource PanoramaContentStyle}"/>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="Main menu"
+            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.Menu, Source={StaticResource LocalizedStrings}}"
                                 x:Uid="MenuSection"
                                 HeaderTemplate="{StaticResource MiddlePanoramaHeader}">
                 <ContentPresenter Content="{Binding ProfileSectionViewModel}"
@@ -93,7 +93,7 @@
                                   Style="{StaticResource PanoramaContentStyle}"/>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="Video categories"
+            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.VideoCategories, Source={StaticResource LocalizedStrings}}"
                                 HeaderTemplate="{StaticResource MiddlePanoramaHeader}">
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding}"

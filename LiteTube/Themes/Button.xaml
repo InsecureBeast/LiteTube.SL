@@ -245,6 +245,7 @@
 
     <Style x:Key="ContentButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
         <Setter Property="Background" Value="{StaticResource PhoneAccentBrush}" />
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Padding" Value="0" />

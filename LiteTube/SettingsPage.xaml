@@ -22,8 +22,7 @@
                     Margin="12">
 
             <TextBlock Name="Region"
-                       Text="Select region"
-                       x:Uid="SelectRegion"
+                       Text="{Binding Path=LocalizedResources.SelectRegion, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextLargeStyle}"
                        Margin="{StaticResource DefaultTextBlockMargin}"/>
             <toolkit:ListPicker ItemsSource="{Binding Languages}"
@@ -42,8 +41,7 @@
             </toolkit:ListPicker>
 
             <TextBlock Name="VideoQuality"
-                       Text="Video quality"
-                       x:Uid="VideoQuality"
+                       Text="{Binding Path=LocalizedResources.VideoQuality, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextLargeStyle}"
                        Margin="{StaticResource DefaultTextBlockMargin}"
                        HorizontalAlignment="Left" />

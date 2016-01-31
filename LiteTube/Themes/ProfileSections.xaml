@@ -31,7 +31,7 @@
 
                         <TextBlock Grid.Column="0"
                                    Grid.ColumnSpan="2"
-                                   Text="Please sign in to use this features"
+                                   Text="{Binding Path=LocalizedResources.SignInTooltip, Source={StaticResource LocalizedStrings}}"
                                    TextWrapping="Wrap"
                                    VerticalAlignment="Center"
                                    FontSize="{StaticResource PhoneFontSizeMedium}"
@@ -56,11 +56,11 @@
                             <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}"
                                        Text="{Binding ProfileSecondDisplayName}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"/>
-                            <TextBlock TextWrapping="NoWrap"
+                            <TextBlock TextWrapping="Wrap"
                                        Margin="0,10,0,0"
                                        FontSize="{StaticResource PhoneFontSizeNormal}"
                                        Foreground="{StaticResource PhoneSecondaryForegroundBrush}">
-                                <Run Text="joined" x:Uid="Joined" />
+                                <Run Text="{Binding Path=LocalizedResources.JoinedString, Source={StaticResource LocalizedStrings}}" />
                                 <Run Text="{Binding ProfileRegistered}"/>
                             </TextBlock>
                         </StackPanel>
@@ -80,8 +80,7 @@
                                 <ContentPresenter ContentTemplate="{StaticResource SignInIcon}"
                                                   HorizontalAlignment="Center" 
                                                   Margin="15"/>
-                                <TextBlock Text="Sign in"
-                                           x:Uid="SignIn"
+                                <TextBlock Text="{Binding Path=LocalizedResources.SignIn, Source={StaticResource LocalizedStrings}}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
                                            Style="{StaticResource PhoneTextNormalStyle}"
@@ -94,7 +93,7 @@
                                 Command="{Binding LogoutCommand}"
                                 Grid.Row="0" 
                                 Grid.Column="2"
-                                Width="90"
+                                Width="100"
                                 Height="100"
                                 Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 Style="{StaticResource ContentButtonStyle}"
@@ -105,8 +104,7 @@
                                 <ContentPresenter ContentTemplate="{StaticResource SignOutIcon}"
                                                   HorizontalAlignment="Center" 
                                                   Margin="15"/>
-                                <TextBlock Text="Sign out"
-                                           x:Uid="SignOut"
+                                <TextBlock Text="{Binding Path=LocalizedResources.SignOut, Source={StaticResource LocalizedStrings}}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
                                            Style="{StaticResource PhoneTextNormalStyle}"
@@ -126,9 +124,8 @@
                             VerticalAlignment="Center">
                     <ContentPresenter ContentTemplate="{StaticResource RecommendedIcon}"
                                         HorizontalAlignment="Left" />
-                    <TextBlock Text="recommended for you"
-                                x:Uid="Recommended"
-                                Style="{StaticResource SectionTextBlockStyle}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.RecommendedForYou, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}"/>
                 </StackPanel>
             </ListBoxItem>
 
@@ -140,8 +137,7 @@
                             VerticalAlignment="Center">
                     <ContentPresenter ContentTemplate="{StaticResource SubscribtionsIcon}"
                                       HorizontalAlignment="Left" />
-                    <TextBlock Text="subscribtions"
-                               x:Uid="SubscribtionsUid"
+                    <TextBlock Text="{Binding Path=LocalizedResources.Subscriptions, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource SectionTextBlockStyle}"/>
                 </StackPanel>
             </ListBoxItem>
@@ -168,8 +164,7 @@
                             VerticalAlignment="Center">
                     <ContentPresenter ContentTemplate="{StaticResource FavoriteIcon}"
                                       HorizontalAlignment="Left" />
-                    <TextBlock Text="favorites"
-                               x:Uid="Favorites"
+                    <TextBlock Text="{Binding Path=LocalizedResources.Favorites, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource SectionTextBlockStyle}" />
                 </StackPanel>
             </ListBoxItem>
@@ -182,8 +177,7 @@
                             VerticalAlignment="Center">
                     <ContentPresenter ContentTemplate="{StaticResource HistoryIcon}"
                                       HorizontalAlignment="Left" />
-                    <TextBlock Text="watch history"
-                               x:Uid="History"
+                    <TextBlock Text="{Binding Path=LocalizedResources.WatchHistory, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource SectionTextBlockStyle}" />
                 </StackPanel>
             </ListBoxItem>
@@ -195,8 +189,7 @@
                             VerticalAlignment="Center">
                     <ContentPresenter ContentTemplate="{StaticResource VideoCategoryIcon}"
                                       HorizontalAlignment="Left" />
-                    <TextBlock Text="channels"
-                               x:Uid="Channels"
+                    <TextBlock Text="{Binding Path=LocalizedResources.Channels, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource SectionTextBlockStyle}"/>
                 </StackPanel>
             </ListBoxItem>
