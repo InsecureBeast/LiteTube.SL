@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using LiteTube.Resources;
+using System.Reflection;
 
 namespace LiteTube
 {
@@ -15,6 +17,13 @@ namespace LiteTube
         public AboutPage()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var varsion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            VrsionTblk.Text = string.Format("{0} {1}", AppResources.Version, varsion);
         }
     }
 }

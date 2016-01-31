@@ -32,13 +32,14 @@
             <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
             <converters:InverseObjectToVisibilityConverter x:Key="InverseObjectToVisibilityConverter"/>
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+            <converters:LowerCaseConverter x:Key="LowerCaseConverter"/>
             
             <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
 
             <local:LocalizedStrings xmlns:local="clr-namespace:LiteTube" x:Key="LocalizedStrings"/>
 
             <shell:ApplicationBar x:Key="GlobalAppBar" IsVisible="True" IsMenuEnabled="True">
-                <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click" />
+                <!--<shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click" />-->
                 <!--<shell:ApplicationBar.MenuItems>
                     <shell:ApplicationBarMenuItem Text="MenuItem 1" Click="MenuItem1_Click" />
                     <shell:ApplicationBarMenuItem Text="MenuItem 2" Click="MenuItem2_Click" />

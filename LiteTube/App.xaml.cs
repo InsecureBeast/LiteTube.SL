@@ -114,6 +114,7 @@ namespace LiteTube
         {
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
+            BuildLocalizedApplicationBar();
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -128,6 +129,7 @@ namespace LiteTube
 
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
+            BuildLocalizedApplicationBar();
         }
 
         // Code to execute when the application is deactivated (sent to background)
@@ -299,6 +301,14 @@ namespace LiteTube
         private void Home_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoHome();
+        }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            // Set the page's AplipcationBar to a new instance of ApplicationBar.
+            var appBar = Application.Current.Resources["GlobalAppBar"] as ApplicationBar;
+            var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
+            appBar.Buttons.Add(homeButton);
         }
     }
 }

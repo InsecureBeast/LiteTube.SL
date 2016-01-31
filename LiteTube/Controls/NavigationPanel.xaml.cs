@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using Microsoft.Phone.Tasks;
+using LiteTube.Resources;
 
 namespace LiteTube.Controls
 {
@@ -46,7 +47,7 @@ namespace LiteTube.Controls
         {
             var emailComposeTask = new EmailComposeTask
             {
-                Subject = "LiteTube feedback",
+                Subject = string.Format("{0} feedback", AppResources.ApplicationTitle),
                 Body = "[Your feedback here]",
                 To = "pe.dmitriev@gmail.com"
             };

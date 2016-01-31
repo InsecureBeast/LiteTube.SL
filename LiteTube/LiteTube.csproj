@@ -107,6 +107,7 @@
     <Compile Include="ChannelPage.xaml.cs">
       <DependentUpon>ChannelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\LowerCaseConverter.cs" />
     <Compile Include="DataModel\ConnectionListener.cs" />
     <Compile Include="Common\ExceptionDialog.cs" />
     <Compile Include="Common\Extensions\ControlExtensions.cs" />

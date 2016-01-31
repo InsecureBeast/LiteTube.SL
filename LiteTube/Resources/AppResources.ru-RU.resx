@@ -122,7 +122,7 @@
     <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
   </data>
   <data name="ResourceLanguage" xml:space="preserve">
-    <value>en-US</value>
+    <value>ru-RU</value>
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
@@ -186,7 +186,7 @@
     <value>Популярное сейчас</value>
   </data>
   <data name="NoMatchVideo" xml:space="preserve">
-    <value>No matching YouTube video or audio stream URI could be found. The video may not be available in your country, is private or uses RTMPE (protected streaming).</value>
+    <value>Не найден соответствующий запросу YouTube видео или аудио поток. Видео может быть недоступно в вашей стране, является частным или использует RTMP (защищенный поток).</value>
   </data>
   <data name="PublishedAt" xml:space="preserve">
     <value>Опубликовано</value>
@@ -258,6 +258,6 @@
     <value>Удалить</value>
   </data>
   <data name="SignInTooltip" xml:space="preserve">
-    <value>Пожалуйста, войдите в свой аккаунт, чтобы использовать все возможности приложения.</value>
+    <value>Войдите в свой аккаунт, чтобы использовать все возможности приложения</value>
   </data>
 </root>

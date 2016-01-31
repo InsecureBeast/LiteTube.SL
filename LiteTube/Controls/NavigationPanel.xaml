@@ -40,7 +40,7 @@
                       ContentTemplate="{StaticResource MenuIcon}"
                       Style="{StaticResource NavigationControlToggleButtonStyle}"/>
 
-        <TextBlock Text="LigthTube"
+        <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
                    Grid.Row="0"
                    Grid.Column="1"
                    Margin="0,6,0,0"
@@ -87,120 +87,21 @@
                 HorizontalAlignment="Left"
                 Closed="Popup_Closed">
             <StackPanel Background="{StaticResource NavigationPanelBrush}">
-                <controls:NavigationButton Text="feedback"
+                <controls:NavigationButton Text="{Binding Path=LocalizedResources.Feedback, Source={StaticResource LocalizedStrings}}"
                                            Width="{StaticResource MenuWidth}"
                                            Click="Feedback_Click"/>
-                <controls:NavigationButton Text="about"
+                <controls:NavigationButton Text="{Binding Path=LocalizedResources.About, Source={StaticResource LocalizedStrings}, Converter={StaticResource LowerCaseConverter}}"
                                            Width="{StaticResource MenuWidth}"
                                            Click="About_Click"/>
                 <Rectangle Height="1"
                            Width="{StaticResource MenuWidth}"
                            Fill="{StaticResource NavigationPanelButtonPressedBackgroundBrush}"/>
                 
-                <controls:NavigationButton Text="settings"
+                <controls:NavigationButton Text="{Binding Path=LocalizedResources.Settings, Source={StaticResource LocalizedStrings}}"
                                            Icon="{StaticResource SettingsIcon}"
                                            Width="{StaticResource MenuWidth}"
                                            Command="{Binding SettingsCommand}"/>
             </StackPanel>
-        </Popup>
-
-        <Popup  Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                Name="UserPopup"
-                IsOpen="{Binding Path=IsChecked, ElementName=LoginMenuButton}"
-                HorizontalAlignment="Left"
-                Closed="Popup_Closed">
-            <Grid Background="{StaticResource PhoneBackgroundBrush}"
-                  Width="{Binding ElementName=LayoutRoot, Path=ActualWidth}">
-
-                <Grid Margin="20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="10"/>
-                    </Grid.RowDefinitions>
-
-                    <Image Grid.Column="0"
-                           Height="100"
-                           Width="90"
-                           Stretch="Fill"
-                           Source="{Binding ProfileImage}"/>
-
-                    <StackPanel Grid.Row="0" 
-                                Grid.Column="1"
-                                Margin="20,0,0,0"
-                                Orientation="Vertical">
-                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}"
-                                   Text="{Binding ProfileDisplayName}"/>
-                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}"
-                                   Text="{Binding ProfileSecondDisplayName}"/>
-                        <TextBlock TextWrapping="NoWrap"
-                                   Style="{StaticResource PhoneTextNormalStyle}"
-                                   Visibility="{Binding ProfileRegistered, Converter={StaticResource ObjectToVisibilityConverter}}">
-                            <Run Text="joined" x:Uid="Joined" />
-                            <Run Text="{Binding ProfileRegistered}"/>
-                        </TextBlock>
-                    </StackPanel>
-
-                    <Button HorizontalAlignment="Right"
-                            Command="{Binding LoginCommand}"
-                            Grid.Row="0" 
-                            Grid.Column="2"
-                            Width="90"
-                            Height="100"
-                            Visibility="{Binding IsAuthorized, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                            Click="LoginButton_Click"
-                            Style="{StaticResource ContentButtonStyle}"
-                            x:Name="LoginButton">
-                        <StackPanel Orientation="Vertical" 
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                            <ContentPresenter ContentTemplate="{StaticResource SignInIcon}"
-                                              HorizontalAlignment="Center" 
-                                              Margin="15"/>
-                            <TextBlock Text="Sign in"
-                                       x:Uid="SignIn"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       Style="{StaticResource PhoneTextNormalStyle}"
-                                       Foreground="White"
-                                       Margin="0,0,0,10"/>
-                        </StackPanel>
-                    </Button>
-
-                    <Button HorizontalAlignment="Right"
-                            Command="{Binding LogoutCommand}"
-                            Click="LoginButton_Click"
-                            Grid.Row="0" 
-                            Grid.Column="2"
-                            Width="90"
-                            Height="100"
-                            Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Style="{StaticResource ContentButtonStyle}"
-                            x:Name="LoginoutButton">
-                        <StackPanel Orientation="Vertical" 
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                            <ContentPresenter ContentTemplate="{StaticResource SignOutIcon}"
-                                              HorizontalAlignment="Center" 
-                                              Margin="15"/>
-                            <TextBlock Text="Sign out"
-                                       x:Uid="SignOut"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       Style="{StaticResource PhoneTextNormalStyle}"
-                                       Foreground="White"
-                                       Margin="0,0,0,10"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
-            </Grid>
         </Popup>
     </Grid>
 </UserControl>

@@ -30,7 +30,7 @@
               Grid.Row="1"
               Margin="24,12,24,0">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="LightTube"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"/>
                 <TextBlock Text="Version 1.0.0.0"
                            Name="VrsionTblk"/>
                 <TextBlock Text="{Binding Path=LocalizedResources.Copyright, Source={StaticResource LocalizedStrings}}"/>

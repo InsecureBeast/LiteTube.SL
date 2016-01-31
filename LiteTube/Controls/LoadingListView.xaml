@@ -6,21 +6,15 @@
 
     <DataTemplate x:Key="LoadingTextBlockDataTemplate">
         <Grid>
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Text="{Binding Path=LocalizedResources.Loading, Source={StaticResource LocalizedStrings}}"
+            <TextBlock Text="{Binding Path=LocalizedResources.Loading, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Text="{Binding Path=LocalizedResources.Empty, Source={StaticResource LocalizedStrings}}"
+            <TextBlock Text="{Binding Path=LocalizedResources.Empty, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Text="{Binding Path=LocalizedResources.CheckConnection, Source={StaticResource LocalizedStrings}}"
+            <TextBlock Text="{Binding Path=LocalizedResources.CheckConnection, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource LoadingTextBlockStyle}"
                        Visibility="{Binding IsConnected, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
         </Grid>
