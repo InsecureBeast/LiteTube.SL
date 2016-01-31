@@ -41,7 +41,7 @@
                                      x:Uid="SearchBox"
                                      x:Name="SearchBox"
                                      KeyUp="TextBox_KeyUp"
-                                     Margin="24,0,20,5"/>
+                                     Margin="13,0,15,2"/>
         </Border>
 
         <ContentPresenter Grid.Row="2"
