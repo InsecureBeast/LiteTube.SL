@@ -308,6 +308,8 @@ namespace LiteTube
             // Set the page's AplipcationBar to a new instance of ApplicationBar.
             var appBar = Application.Current.Resources["GlobalAppBar"] as ApplicationBar;
             var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
+            appBar.Buttons.Clear();
+            appBar.MenuItems.Clear();
             appBar.Buttons.Add(homeButton);
         }
     }
