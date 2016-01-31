@@ -49,7 +49,8 @@ namespace LiteTube
             _currentApplicationBar = new ApplicationBar();
             _currentApplicationBar.Mode = ApplicationBarMode.Minimized;
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", "Home", Home_Click));
-            _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video url", CopyVideoUrl_Click));
+            _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Refresh.png", "Refresh", Refresh_Click));
+            _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem("Copy video link", CopyVideoUrl_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", "Add to favorites", AddToFavorites_Click);
 
@@ -276,6 +277,11 @@ namespace LiteTube
             viewModel.CommentsViewModel.AddCommentCommand.Execute(null);
         }
 
+        private void Refresh_Click(object sender, EventArgs e)
+        {
+            Reload();
+        }
+
         private void AddToFavorites_Click(object sender, EventArgs e)
         {
             var viewModel = DataContext as VideoPageViewModel;
@@ -302,21 +308,26 @@ namespace LiteTube
                 PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
                 PhoneApplicationService.Current.Activated -= Current_Activated;
 
-                LayoutHelper.InvokeFromUIThread(() => 
+                LayoutHelper.InvokeFromUIThread(() =>
                 {
                     _resumed = true;
                     player.RestoreMediaState(_deactivatedState);
-                    
-                    var viewModel = DataContext as VideoPageViewModel;
-                    if (viewModel == null)
-                        return;
 
-                    //viewModel.Reload();
-
-                    var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", viewModel.VideoId, _playerPosition, Guid.NewGuid());
-                    NavigationHelper.Navigate(view, viewModel);
+                    Reload();
                 });
             }
+        }
+
+        private void Reload()
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            //viewModel.Reload();
+
+            var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", viewModel.VideoId, _playerPosition, Guid.NewGuid());
+            NavigationHelper.Navigate(view, viewModel);
         }
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
