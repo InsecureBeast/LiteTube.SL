@@ -11,7 +11,113 @@
 
     <DataTemplate x:Key="ProfileSectionsDataTemplate">
         <ListBox toolkit:TiltEffect.IsTiltEnabled="True"
-                 Margin="0">
+                 Margin="0"
+                 ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
+
+            <ListBoxItem toolkit:TiltEffect.SuppressTilt="True"
+                         Margin="0,5,0,10">
+                <Grid Background="{StaticResource PhoneBackgroundBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   Text="Please sign in to use this features"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"
+                                   FontSize="{StaticResource PhoneFontSizeMedium}"
+                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                   Visibility="{Binding ProfileRegistered, Converter={StaticResource InverseObjectToVisibilityConverter}}"/>
+                        
+                        <Image Grid.Column="0"
+                               Height="100"
+                               Width="100"
+                               Stretch="Fill"
+                               Visibility="{Binding ProfileRegistered, Converter={StaticResource ObjectToVisibilityConverter}}"
+                               Source="{Binding ProfileImage}"/>
+
+                        <StackPanel Grid.Row="0" 
+                                    Grid.Column="1"
+                                    Margin="10,-8,0,0"
+                                    Visibility="{Binding ProfileRegistered, Converter={StaticResource ObjectToVisibilityConverter}}"
+                                    Orientation="Vertical">
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                       Text="{Binding ProfileDisplayName}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"/>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                       Text="{Binding ProfileSecondDisplayName}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"/>
+                            <TextBlock TextWrapping="NoWrap"
+                                       Margin="0,10,0,0"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       Foreground="{StaticResource PhoneSecondaryForegroundBrush}">
+                                <Run Text="joined" x:Uid="Joined" />
+                                <Run Text="{Binding ProfileRegistered}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{Binding LoginCommand}"
+                                Grid.Row="0" 
+                                Grid.Column="2"
+                                Width="100"
+                                Height="100"
+                                Visibility="{Binding IsAuthorized, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                Style="{StaticResource ContentButtonStyle}"
+                                x:Name="LoginButton">
+                            <StackPanel Orientation="Vertical" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <ContentPresenter ContentTemplate="{StaticResource SignInIcon}"
+                                                  HorizontalAlignment="Center" 
+                                                  Margin="15"/>
+                                <TextBlock Text="Sign in"
+                                           x:Uid="SignIn"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Style="{StaticResource PhoneTextNormalStyle}"
+                                           Foreground="White"
+                                           Margin="0,0,0,10"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{Binding LogoutCommand}"
+                                Grid.Row="0" 
+                                Grid.Column="2"
+                                Width="90"
+                                Height="100"
+                                Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Style="{StaticResource ContentButtonStyle}"
+                                x:Name="LoginoutButton">
+                            <StackPanel Orientation="Vertical" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <ContentPresenter ContentTemplate="{StaticResource SignOutIcon}"
+                                                  HorizontalAlignment="Center" 
+                                                  Margin="15"/>
+                                <TextBlock Text="Sign out"
+                                           x:Uid="SignOut"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Style="{StaticResource PhoneTextNormalStyle}"
+                                           Foreground="White"
+                                           Margin="0,0,0,10"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </ListBoxItem>
+            
             <ListBoxItem common:ItemClickCommand.Command="{Binding RecommendedCommand}"
                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                          Margin="0,0,0,10">

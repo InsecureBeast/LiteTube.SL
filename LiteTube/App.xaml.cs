@@ -118,10 +118,13 @@ namespace LiteTube
         private async void Application_Activated(object sender, ActivatedEventArgs e)
         {
             // Ensure that application state is restored appropriately
-            if (!App.ViewModel.IsDataLoaded)
+            if (!ViewModel.IsDataLoaded)
             {
-                await App.ViewModel.LoadData();
+                await ViewModel.LoadData();
             }
+
+            //TODO get from settings))
+            ThemeManager.GoToLightTheme();
         }
 
         // Code to execute when the application is deactivated (sent to background)

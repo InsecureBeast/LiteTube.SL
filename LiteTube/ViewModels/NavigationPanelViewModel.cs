@@ -39,6 +39,8 @@ namespace LiteTube.ViewModels
             _channelCommand = new RelayCommand<string>(LoadChannel);
 
             _getDataSource().Subscribe(this);
+
+            LoadProfileInfo();
         }
 
         public ICommand LoginCommand

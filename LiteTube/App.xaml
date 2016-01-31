@@ -30,6 +30,7 @@
             <converters:UppercaseConverter x:Key="UppercaseConverter"/>
             <converters:CommentMarginConverter x:Key="CommentMarginConverter"/>
             <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
+            <converters:InverseObjectToVisibilityConverter x:Key="InverseObjectToVisibilityConverter"/>
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
             
             <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
