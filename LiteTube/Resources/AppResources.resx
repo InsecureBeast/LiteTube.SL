@@ -156,7 +156,7 @@
     <value>comments</value>
   </data>
   <data name="Copyright" xml:space="preserve">
-    <value>Copyright (c) 2016. All right reserved.</value>
+    <value>Copyright © 2016. All right reserved.</value>
   </data>
   <data name="CopyVideoLink" xml:space="preserve">
     <value>copy video link</value>
@@ -180,7 +180,7 @@
     <value>Home</value>
   </data>
   <data name="JoinedString" xml:space="preserve">
-    <value>joined</value>
+    <value>with us since</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
@@ -259,5 +259,17 @@
   </data>
   <data name="WatchHistory" xml:space="preserve">
     <value>watch history</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Unable to perform the operation. Please try again.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ExceptionTitle" xml:space="preserve">
+    <value>Whoops! Something went wrong!</value>
   </data>
 </root>

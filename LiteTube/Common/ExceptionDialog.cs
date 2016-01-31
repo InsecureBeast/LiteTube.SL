@@ -2,6 +2,7 @@
 using System.Net;
 using System.Windows;
 using Microsoft.Phone.Controls;
+using LiteTube.Resources;
 
 namespace LiteTube.Common
 {
@@ -51,49 +52,34 @@ namespace LiteTube.Common
 
         private static string GetTitle()
         {
-            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //var str = resourceLoader.GetString("ExceptionPageTitle");
-            //return str;
-            return "Whoops! Something went wrong!";
+            return AppResources.ExceptionTitle;
         }
 
         private static string GetSendCommandCaption()
         {
-            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //var str = resourceLoader.GetString("SendErrorButton");
-            //return str;
-            return "Send";
+            return AppResources.Send;
         }
 
         private static string GetCloseCommandCaption()
         {
-            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //var str = resourceLoader.GetString("CloseErrorButton");
-            //return str;
-            return "Close";
+            return AppResources.Close;
         }
 
         private static string GetMessage(Exception exception)
         {
             var ex = exception as WebException;
             if (ex == null)
-            {
                 return exception.Message;
-            }
 
             if (ex.Status == WebExceptionStatus.ConnectFailure || (int)ex.Status == 1)
-            {
-                //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-                //return resourceLoader.GetString("CheckConnectionMesage");
-                return "Check connection";
-            }
+                return AppResources.CheckConnection;
 
             return ex.Message; 
         }
 
         public static void ShowDialog(Exception exception)
         {
-            MessageBox.Show("");
+            MessageBox.Show(AppResources.ErrorMessage, AppResources.ErrorTitle, MessageBoxButton.OK);
         }
     }
 }

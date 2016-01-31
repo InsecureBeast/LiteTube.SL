@@ -153,7 +153,7 @@
     <value>коментарии</value>
   </data>
   <data name="Copyright" xml:space="preserve">
-    <value>Copyright (c) 2016. Все права защищены.</value>
+    <value>Copyright © 2016. Все права защищены.</value>
   </data>
   <data name="CopyVideoLink" xml:space="preserve">
     <value>копировать ссылку на видео</value>
@@ -174,7 +174,7 @@
     <value>Домой</value>
   </data>
   <data name="JoinedString" xml:space="preserve">
-    <value>присоединился</value>
+    <value>с нами с</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Загрузка...</value>
@@ -259,5 +259,17 @@
   </data>
   <data name="SignInTooltip" xml:space="preserve">
     <value>Войдите в свой аккаунт, чтобы использовать все возможности приложения</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Не получилось выполнить операцию. Пожалуйста попробуйте еще раз.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="ExceptionTitle" xml:space="preserve">
+    <value>Упс! Что-то пошло не так!</value>
   </data>
 </root>

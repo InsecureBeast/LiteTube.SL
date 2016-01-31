@@ -47,18 +47,19 @@
 
                         <StackPanel Grid.Row="0" 
                                     Grid.Column="1"
-                                    Margin="10,-8,0,0"
+                                    Margin="10,-10,0,0"
                                     Visibility="{Binding ProfileRegistered, Converter={StaticResource ObjectToVisibilityConverter}}"
                                     Orientation="Vertical">
-                            <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeLarge}"
                                        Text="{Binding ProfileDisplayName}"
-                                       Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                       Foreground="{StaticResource PhoneForegroundBrush}"/>
                             <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}"
                                        Text="{Binding ProfileSecondDisplayName}"
-                                       Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Margin="0,-6,0,0"/>
                             <TextBlock TextWrapping="Wrap"
                                        Margin="0,10,0,0"
-                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSecondaryForegroundBrush}">
                                 <Run Text="{Binding Path=LocalizedResources.JoinedString, Source={StaticResource LocalizedStrings}}" />
                                 <Run Text="{Binding ProfileRegistered}"/>

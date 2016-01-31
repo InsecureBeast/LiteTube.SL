@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.ViewModels.Nodes;
+using System.Net;
 
 namespace LiteTube.ViewModels
 {
@@ -114,17 +115,27 @@ namespace LiteTube.ViewModels
         
         private async void AddComment()
         {
-            IsAddingComment = true;
-            var myChannelId = _profile.ChannelId;
-            var myComment = await _getGeDataSource().AddComment(myChannelId, _videoId, CommentText);
-            if (myComment == null)
+            try
+            {
+                IsAddingComment = true;
+                var myChannelId = _profile.ChannelId;
+                var myComment = await _getGeDataSource().AddComment(myChannelId, _videoId, CommentText);
+                if (myComment == null)
+                {
+                    IsAddingComment = false;
+                    CommentText = string.Empty;
+                    return;
+                }
+                _comments.Insert(0, new CommentNodeViewModel(myComment, _getGeDataSource, _connectionListener));
+                CommentText = string.Empty;
+                IsAddingComment = false;
+            }
+            catch (WebException e)
             {
                 IsAddingComment = false;
-                return;
-            }
-            _comments.Insert(0, new CommentNodeViewModel(myComment, _getGeDataSource, _connectionListener));
-            CommentText = string.Empty;
-            IsAddingComment = false;            
+                CommentText = string.Empty;
+                throw new LiteTubeException(e);
+            }      
         }
     }
 }

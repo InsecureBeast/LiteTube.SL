@@ -142,6 +142,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to comments.
         /// </summary>
         public static string Comments {
@@ -151,7 +160,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright (c) 2016. All right reserved..
+        ///   Looks up a localized string similar to Copyright © 2016. All right reserved..
         /// </summary>
         public static string Copyright {
             get {
@@ -196,6 +205,33 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to perform the operation. Please try again..
+        /// </summary>
+        public static string ErrorMessage {
+            get {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string ErrorTitle {
+            get {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whoops! Something went wrong!.
+        /// </summary>
+        public static string ExceptionTitle {
+            get {
+                return ResourceManager.GetString("ExceptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to favorites.
         /// </summary>
         public static string Favorites {
@@ -223,7 +259,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to joined.
+        ///   Looks up a localized string similar to with us since.
         /// </summary>
         public static string JoinedString {
             get {
