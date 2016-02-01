@@ -129,6 +129,7 @@ namespace LiteTube.ViewModels
                 _comments.Insert(0, new CommentNodeViewModel(myComment, _getGeDataSource, _connectionListener));
                 CommentText = string.Empty;
                 IsAddingComment = false;
+                IsEmpty = false;
             }
             catch (WebException e)
             {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using LiteTube.Common;
 
 namespace LiteTube
 {
@@ -17,21 +18,23 @@ namespace LiteTube
 
         internal static async Task SendException(Exception exception, IEnumerable<string> region)
         {
-            var builder = new StringBuilder();
-            //0 -10 video
-            var ids = region.Take(10);
-            foreach (var id in ids)
+            try
             {
-                builder.AppendLine(id);
-                builder.AppendLine(",");
+                var builder = new StringBuilder();
+                builder.AppendFormat("Region - {0}", SettingsHelper.GetRegion());
+                builder.AppendFormat("Quality - {0}", SettingsHelper.GetQuality());
+                builder.AppendFormat("Is Authorized - {0}", SettingsHelper.IsContainsAuthorizationData());
+                await Send(exception, builder.ToString());
             }
-
-            await Send(exception, builder.ToString());
+            catch (Exception)
+            {
+                ;
+            }
         }
 
-        private static async Task Send(Exception exception, string videoIds)
+        private static async Task Send(Exception exception, string addInfo)
         {
-            string url = "https://bitbucket.org/api/1.0/repositories/insecureBeast/litetube/issues/";
+            const string url = "https://bitbucket.org/api/1.0/repositories/insecureBeast/litetube/issues/";
             var request = WebRequest.Create(url) as HttpWebRequest;
 
             string credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes("insecureBeast" + ":" + "GM9d3Lqw"));
@@ -39,7 +42,7 @@ namespace LiteTube
             request.Method = "POST";
             request.ContentType = @"application/x-www-form-urlencoded";
 
-            var exceptionInfo = BuildExceptionInfo(exception, videoIds);
+            var exceptionInfo = BuildExceptionInfo(exception, addInfo);
             var postData = string.Format("title={0}&content={1}&status=new&priority=trivial&kind=bug", exception.Message, exceptionInfo);
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             var dataStream = await request.GetRequestStreamAsync();
@@ -53,7 +56,7 @@ namespace LiteTube
             }
         }
 
-        private static string BuildExceptionInfo(Exception exception, string region)
+        private static string BuildExceptionInfo(Exception exception, string addInfo)
         {
             var builder = new StringBuilder();
             builder.AppendLine();
@@ -70,7 +73,8 @@ namespace LiteTube
             }
 
             builder.AppendLine();
-            builder.AppendLine("Region: " + region);
+            builder.AppendLine("Additional info:");
+            builder.AppendLine(addInfo);
             return builder.ToString();
         }
     }
