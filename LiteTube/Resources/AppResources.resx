@@ -135,7 +135,7 @@
     <value>About</value>
   </data>
   <data name="AboutText" xml:space="preserve">
-    <value>Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может передавать только видео, не поддерживает загрузки/кеширование. Пожалуйста, обратите внимание, что загрузка не допускается YouTube.</value>
+    <value>Easy-to-use application for Youtube with intuitive user interface.</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
     <value>Add to favorites</value>

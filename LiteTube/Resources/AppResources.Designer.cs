@@ -70,7 +70,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может передавать только видео, не поддерживает загрузки/кеширование. Пожалуйста, обратите внимание, что загрузка не допускается YouTube..
+        ///   Looks up a localized string similar to Easy-to-use application for Youtube with intuitive user interface..
         /// </summary>
         public static string AboutText {
             get {
