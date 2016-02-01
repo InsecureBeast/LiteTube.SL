@@ -1,0 +1,36 @@
+var fso   = new ActiveXObject("Scripting.FileSystemObject");
+var shell = new ActiveXObject("WScript.Shell");
+var ForReading = 1, ForWriting = 2, ForAppending = 8;
+ 
+var projectDir = "Properties/";
+
+var hgRevNum               = shell.Exec("hg identify --num");
+var rev                    = hgRevNum.StdOut.ReadAll();
+var hg_revision            = String(rev).replace(/\n/g,"").replace(/\+/g,"");
+var hg_local_modifications = '';
+ 
+if( String(rev).replace(/\n/g, "").indexOf("+") != -1 )
+{
+   hg_local_modifications = '+';
+}
+ 
+var hgChangeset  = shell.Exec("hg parents --template \"{node}\"");
+var changeset    = hgChangeset.StdOut.ReadAll();
+var hg_changeset = String(changeset).replace(/\n/g,"");
+ 
+var hgChangesetShort    = shell.Exec("hg parents --template \"{node|short}\"");
+var changeset_short     = hgChangesetShort.StdOut.ReadAll();
+var hg_changeset_short  = String(changeset_short).replace(/\n/g,"");
+ 
+var tmplFile = fso.OpenTextFile( projectDir + 'AssemblyInfo.cs.tmpl', ForReading, false );
+var strContents = tmplFile.ReadAll();
+tmplFile.Close();
+ 
+strContents = String(strContents).replace(/\$REVISION\$/g, hg_revision );
+strContents = String(strContents).replace(/\$LOCAL_MODIFICATIONS\$/g, hg_local_modifications );
+strContents = String(strContents).replace(/\$CHANGESET\$/g, hg_changeset );
+strContents = String(strContents).replace(/\$SHORT_CHANGESET\$/g, hg_changeset_short )
+ 
+var asmFile = fso.CreateTextFile( projectDir + 'AssemblyInfo.cs', ForWriting, true );
+asmFile.Write( strContents );
+asmFile.Close();

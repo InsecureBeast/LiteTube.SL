@@ -42,14 +42,14 @@ namespace LiteTube.ViewModels
         private bool _isConnected = true;
         private ProgressIndicator _progressIndicator;
 
-        public SectionBaseViewModel(Func<IDataSource> getGetGeDataSource, IConnectionListener connectionListener)
+        public SectionBaseViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener)
         {
-            if (getGetGeDataSource == null)
-                throw new ArgumentNullException("getGetGeDataSource");
+            if (getGeDataSource == null)
+                throw new ArgumentNullException("getGeDataSource");
             if (connectionListener == null) 
                 throw new ArgumentNullException("connectionListener");
 
-            _getGeDataSource = getGetGeDataSource;
+            _getGeDataSource = getGeDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
 

@@ -37,10 +37,7 @@ namespace LiteTube.ViewModels
             _settingsCommand = new Common.RelayCommand(Settings, CanSettings);
             _searchCommand = new Common.RelayCommand(Search);
             _channelCommand = new RelayCommand<string>(LoadChannel);
-
             _getDataSource().Subscribe(this);
-
-            LoadProfileInfo();
         }
 
         public ICommand LoginCommand
@@ -155,10 +152,7 @@ namespace LiteTube.ViewModels
             set
             {
                 _isProfileChecked = value;
-                if (_isProfileChecked)
-                {
-                    LoadProfileInfo();
-                }
+                NotifyOfPropertyChanged(() => IsProfileChecked);
             }
         }
 
@@ -207,28 +201,6 @@ namespace LiteTube.ViewModels
         private void LoadChannel(string channelId)
         {
             NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _getDataSource, _connectionListener));
-        }
-
-        private void LoadProfileInfo()
-        {
-            LayoutHelper.InvokeFromUIThread(async () =>
-            {
-                ProfileImage = null;
-                ProfileDisplayName = string.Empty;
-                ProfileSecondDisplayName = string.Empty;
-
-                var profile = await _getDataSource().GetProfile();
-                ProfileImage = profile.Image;
-                var names = profile.DisplayName.Split(' ');
-                if (names.Length >= 1)
-                    ProfileDisplayName = names[0];
-                if (names.Length >= 2)
-                    ProfileSecondDisplayName = names[1];
-                if (profile.Registered != null)
-                    ProfileRegistered = profile.Registered.Value.ToString("d");
-
-                ProfileChannelId = profile.ChannelId;
-            });
         }
 
         public void Notify(UpdateContextEventArgs e)

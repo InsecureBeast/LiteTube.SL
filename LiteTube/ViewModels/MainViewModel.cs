@@ -23,14 +23,11 @@ namespace LiteTube.ViewModels
         public MainViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)
         {
-            if (geDataSource == null) 
-                throw new ArgumentNullException("geDataSource");
-
             _indicatorHolder = new ProgressIndicatorHolder();
-            _mostPopularViewModel = new MostPopularViewModel(geDataSource, _connectionListener);
-            _profileSectionViewModel = new ProfileSectionViewModel(geDataSource, connectionListener);
+            _mostPopularViewModel = new MostPopularViewModel(_getGeDataSource, _connectionListener);
+            _profileSectionViewModel = new ProfileSectionViewModel(_getGeDataSource, connectionListener);
             _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
-            _activitySectionViewModel = new ActivitySectionViewModel(geDataSource, _connectionListener);
+            _activitySectionViewModel = new ActivitySectionViewModel(_getGeDataSource, _connectionListener);
 
             geDataSource().Subscribe((IListener<UpdateSettingsEventArgs>)this);
             geDataSource().Subscribe((IListener<UpdateContextEventArgs>)this);
@@ -93,6 +90,9 @@ namespace LiteTube.ViewModels
         /// </summary>
         public async Task LoadData()
         {
+            if (IsDataLoaded)
+                return;
+            
             IsLoading = true;
             IsEmpty = false;
 
@@ -110,21 +110,23 @@ namespace LiteTube.ViewModels
             IsEmpty = !CategoryItems.Any();
         }
 
+        public async Task ReloadData()
+        {
+            IsDataLoaded = false;
+            await LoadData();
+        }
+
         public async void ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args)
         {
             WebAuthenticationResult result = args.WebAuthenticationResult;
 
             if (result.ResponseStatus == WebAuthenticationStatus.Success)
             {
-                await GetGeDataSource().ContinueWebAuthentication(args, string.Empty);
+                await _getGeDataSource().ContinueWebAuthentication(args, string.Empty);
             }
             else if (result.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
             {
                 //OutputToken("HTTP Error returned by AuthenticateAsync() : " + result.ResponseErrorDetail.ToString());
-            }
-            else
-            {
-                //OutputToken("Error returned by AuthenticateAsync() : " + result.ResponseStatus.ToString());
             }
         }
 
@@ -152,20 +154,12 @@ namespace LiteTube.ViewModels
 
         public async void Notify(UpdateContextEventArgs e)
         {
-            if (_getGeDataSource().IsAuthorized)
-            {
-                ActivitySectionViewModel.Items.Clear();
-                await ActivitySectionViewModel.FirstLoad();
-            }
-
+            await LoadData();
             NotifyOfPropertyChanged(() => IsAuthorized);
         }
 
         public async void Notify(UpdateSettingsEventArgs e)
         {
-            _mostPopularViewModel.Items.Clear();
-            if (IsAuthorized)
-                _activitySectionViewModel.Items.Clear();
             await LoadData();
         }
 
@@ -178,7 +172,18 @@ namespace LiteTube.ViewModels
 
                 if (e.IsConnected)
                 {
-                    await LoadData();
+                    IsLoading = true;
+                    IsEmpty = false;
+
+                    await LoadGuideCategories();
+                    if (_getGeDataSource().IsAuthorized)
+                    {
+                        _activitySectionViewModel.Items.Clear();
+                        await _activitySectionViewModel.FirstLoad();
+                    }
+                    IsDataLoaded = true;
+                    IsLoading = false;
+                    IsEmpty = !CategoryItems.Any();
                     return;
                 }
 

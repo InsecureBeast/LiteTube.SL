@@ -27,6 +27,19 @@ namespace LiteTube.ViewModels
             return Title;
         }
 
+        public override void Notify(ConnectionEventArgs e)
+        {
+            base.Notify(e);
+            LayoutHelper.InvokeFromUIThread(async () =>
+            {
+                if (!e.IsConnected)
+                    return;
+
+                Items.Clear();
+                await FirstLoad();    
+            });
+        }
+
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
             return await _getGeDataSource().GetMostPopular(nextPageToken);
