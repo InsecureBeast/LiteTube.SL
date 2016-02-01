@@ -15,17 +15,11 @@ namespace LiteTube.ViewModels
         {
             _videoList = videoList;
             _uniqueId = videoList.GetHashCode().ToString();
-            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //var arstring = resourceLoader.GetString("PopularSectionHeader");
-            //Title = arstring;
         }
 
         public MostPopularViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)
         {
-            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //var arstring = resourceLoader.GetString("PopularSectionHeader");
-            //Title = arstring;
         }
 
         public override string ToString()

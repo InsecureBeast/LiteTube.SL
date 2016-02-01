@@ -21,7 +21,7 @@
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/ProfileSections.xaml"/>
+                <ResourceDictionary Source="Controls/ProfileSections.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="MiddlePanoramaHeader">

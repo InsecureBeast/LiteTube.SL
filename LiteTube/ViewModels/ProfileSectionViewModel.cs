@@ -8,7 +8,7 @@ using LiteTube.Common;
 
 namespace LiteTube.ViewModels
 {
-    public class ProfileSectionViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>
+    public class ProfileSectionViewModel : PropertyChangedBase, IListener<UpdateContextEventArgs>, IListener<ConnectionEventArgs>
     {
         private readonly RelayCommand<FrameworkElement> _subscriptionsCommand;
         private readonly RelayCommand<FrameworkElement> _historyCommand;
@@ -39,6 +39,7 @@ namespace LiteTube.ViewModels
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _getDataSource().Subscribe(this);
+            _connectionListener.Subscribe(this);
         }
 
         public ICommand SubsribtionsCommand
@@ -214,6 +215,12 @@ namespace LiteTube.ViewModels
 
                 ProfileChannelId = profile.ChannelId;
             });
+        }
+
+        public void Notify(ConnectionEventArgs e)
+        {
+            if (e.IsConnected)
+                LoadProfileInfo();
         }
     }
 }

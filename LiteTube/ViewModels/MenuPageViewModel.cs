@@ -1,17 +1,15 @@
-﻿using LiteTube.DataModel;
-using LiteTube.Controls;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Collections.ObjectModel;
-using LiteTube.Common;
 using System.Windows.Input;
 using System;
 using System.Linq;
 using System.Collections.Specialized;
 using Microsoft.Phone.Shell;
-using MyToolkit.Command;
-using LiteTube.ViewModels.Nodes;
 using Windows.Phone.UI.Input;
 using LiteTube.Common.Helpers;
+using LiteTube.DataModel;
+using MyToolkit.Command;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels
 {
