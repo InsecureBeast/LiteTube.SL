@@ -49,6 +49,8 @@ namespace LiteTube
         /// <returns>The root frame of the Phone Application.</returns>
         public static PhoneApplicationFrame RootFrame { get; private set; }
 
+        public WebAuthenticationBrokerContinuationEventArgs WabContinuationArgs { get; set; }
+
         /// <summary>
         /// Constructor for the Application object.
         /// </summary>
@@ -92,7 +94,7 @@ namespace LiteTube
         // prevents crash when trying to navigate to current page
         public static void NavigateTo(string url)
         {
-            var frame = App.Current.RootVisual as PhoneApplicationFrame;
+            var frame = Current.RootVisual as PhoneApplicationFrame;
             if ((frame == null) || (url == frame.CurrentSource.ToString()))
                 return;
             frame.Navigate(new Uri(url, UriKind.Relative));
@@ -100,12 +102,8 @@ namespace LiteTube
 
         // Code to execute when a contract activation such as a file open or save picker returns 
         // with the picked file or other return values
-        private void Application_ContractActivated(object sender, IActivatedEventArgs e)
+        private async void Application_ContractActivated(object sender, IActivatedEventArgs e)
         {
-            if (e is WebAuthenticationBrokerContinuationEventArgs)
-            {
-                ViewModel.ContinueWebAuthentication((WebAuthenticationBrokerContinuationEventArgs)e);
-            }
         }
 
         // Code to execute when the application is launching (eg, from Start)
@@ -128,7 +126,7 @@ namespace LiteTube
             }
 
             //TODO get from settings))
-            ThemeManager.GoToLightTheme();
+            //ThemeManager.GoToLightTheme();
             BuildLocalizedApplicationBar();
         }
 

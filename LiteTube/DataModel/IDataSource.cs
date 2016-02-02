@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.Common;
-using System;
-using Windows.ApplicationModel.Activation;
 using MyToolkit.Multimedia;
 
 namespace LiteTube.DataModel
 {
     public interface IDataSource
     {
-        void Login();
-        Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
+        Task Login();
         bool IsAuthorized { get; }
         Task LoginSilently(string username);
         void Logout();
@@ -85,16 +82,10 @@ namespace LiteTube.DataModel
             get { return _remoteDataSource.IsAuthorized; }
         }
 
-        public void Login()
+        public async Task Login()
         {
-            _remoteDataSource.Login();
-        }
-
-        public async Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username)
-        {
-            var result = await _remoteDataSource.ContinueWebAuthentication(args, username);
+            await _remoteDataSource.Login();
             _contextNotifier.Notify(new UpdateContextEventArgs());
-            return result;
         }
      
         public void Logout()

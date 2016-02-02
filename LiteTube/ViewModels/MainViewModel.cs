@@ -116,20 +116,6 @@ namespace LiteTube.ViewModels
             await LoadData();
         }
 
-        public async void ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args)
-        {
-            WebAuthenticationResult result = args.WebAuthenticationResult;
-
-            if (result.ResponseStatus == WebAuthenticationStatus.Success)
-            {
-                await _getGeDataSource().ContinueWebAuthentication(args, string.Empty);
-            }
-            else if (result.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
-            {
-                //OutputToken("HTTP Error returned by AuthenticateAsync() : " + result.ResponseErrorDetail.ToString());
-            }
-        }
-
         private async Task LoadGuideCategories()
         {
             var sections = await _getGeDataSource().GetCategories();
@@ -154,13 +140,13 @@ namespace LiteTube.ViewModels
 
         public async void Notify(UpdateContextEventArgs e)
         {
-            await LoadData();
+            await ReloadData();
             NotifyOfPropertyChanged(() => IsAuthorized);
         }
 
         public async void Notify(UpdateSettingsEventArgs e)
         {
-            await LoadData();
+            await ReloadData();
         }
 
         public override void Notify(ConnectionEventArgs e)

@@ -180,7 +180,6 @@
     <Compile Include="DataModel\NullableDataSource.cs" />
     <Compile Include="DataModel\PlaylistCahce.cs" />
     <Compile Include="DataModel\RemoteDataSource.cs" />
-    <Compile Include="DataModel\RemoteDataSourceThreadSafe.cs" />
     <Compile Include="DataModel\SubscriptionsHolder.cs" />
     <Compile Include="DataModel\VideoItemsCache.cs" />
     <Compile Include="DataModel\YouTubeConstants.cs" />

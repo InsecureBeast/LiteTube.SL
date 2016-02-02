@@ -34,14 +34,25 @@ namespace LiteTube
         // Load data for the ViewModel Items
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            //var appObject = Application.Current as App;
+            //if (appObject == null)
+            //    return;
+
+            //if (appObject.WabContinuationArgs != null)
+            //{
+            //    await App.ViewModel.Login(appObject.WabContinuationArgs);
+            //    appObject.WabContinuationArgs = null;
+            //}
+
+
             if (App.ViewModel.IsDataLoaded) 
                 return;
             
             if (SettingsHelper.IsContainsAuthorizationData())
+                //загрузка произойдет когда прийдет нотификация об изменении состояния контекста
                 await App.ViewModel.GetGeDataSource().LoginSilently(string.Empty);
-
-            //загрузка произойдет когда прийдет нотификация об изменении состояния контекста
-            //await App.ViewModel.LoadData();
+            else
+                await App.ViewModel.LoadData();    
         }
 
         private async void Refresh_Click(object sender, EventArgs e)

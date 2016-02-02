@@ -37,7 +37,6 @@ namespace LiteTube.ViewModels
             _settingsCommand = new Common.RelayCommand(Settings, CanSettings);
             _searchCommand = new Common.RelayCommand(Search);
             _channelCommand = new RelayCommand<string>(LoadChannel);
-            _getDataSource().Subscribe(this);
         }
 
         public ICommand LoginCommand

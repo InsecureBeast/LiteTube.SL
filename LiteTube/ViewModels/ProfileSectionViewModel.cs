@@ -184,9 +184,9 @@ namespace LiteTube.ViewModels
             LoadProfileInfo();
         }
 
-        private void Login()
+        private async void Login()
         {
-            _getDataSource().Login();
+            await _getDataSource().Login();
         }
 
         private void Logout()

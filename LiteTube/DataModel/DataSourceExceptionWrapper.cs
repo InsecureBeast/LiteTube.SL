@@ -17,30 +17,16 @@ namespace LiteTube.DataModel
             _remoteDataSource = remoteDataSource;
         }
 
-        public void Login()
+        public Task Login()
         {
             try
             {
                 Debug.WriteLine("Login method called");
-                _remoteDataSource.Login();
+                return _remoteDataSource.Login();
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Login method called with exception " + e.Message);
-                throw e;
-            }
-        }
-
-        public Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username)
-        {
-            try
-            {
-                Debug.WriteLine("ContinueWebAuthentication method called");
-                return _remoteDataSource.ContinueWebAuthentication(args, username);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("ContinueWebAuthentication method called with exception " + e.Message);
                 throw e;
             }
         }

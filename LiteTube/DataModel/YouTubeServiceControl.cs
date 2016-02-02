@@ -3,15 +3,11 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Services;
-using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using LiteTube.Common;
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Windows.Security.Authentication.Web;
 
 namespace LiteTube.DataModel
 {
@@ -72,43 +68,14 @@ namespace LiteTube.DataModel
             _youTubeService = GetYTService();
         }
 
-        public void Login()
+        public async Task Login()
         {
-            try
-            {
-                var googleURL = "https://accounts.google.com/o/oauth2/auth?client_id=" + Uri.EscapeDataString(CLIENT_ID) + "&redirect_uri=" + Uri.EscapeDataString(REDIRECT_URI) + "&response_type=code&scope=" + Uri.EscapeDataString("https://www.googleapis.com/auth/youtube");
-                var startUri = new Uri(googleURL);
-                //var endUri = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
-                // When using the desktop flow, the success code is displayed in the html title of this end uri
-                var endUri = new Uri("https://accounts.google.com/o/oauth2/approval?");
-                WebAuthenticationBroker.AuthenticateAndContinue(startUri, endUri, null, WebAuthenticationOptions.UseTitle);
-            }
-            catch (Exception Error)
-            {
-                //
-                // Bad Parameter, SSL/TLS Errors and Network Unavailable errors are to be handled here.
-                //
-                Debug.WriteLine(Error.ToString());
-            }
+            await Authorize();
         }
 
-        public async Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username)
+        private async Task<string> Authorize()
         {
-            //await PasswordVaultDataStore.Default.StoreAsync<SerializableWebAuthResult>
-            //(
-            //    SerializableWebAuthResult.Name,
-            //    new SerializableWebAuthResult(args.WebAuthenticationResult)
-            //);
-
-		    var userId = await Authorize(username);
-
-            //await PasswordVaultDataStore.Default.DeleteAsync<SerializableWebAuthResult>(SerializableWebAuthResult.Name);
-            return userId;
-        }
-
-        private async Task<string> Authorize(string username)
-        {
-            _credential = await GetUserCredential(username);
+            _credential = await GetUserCredential();
             _youTubeServiceAuth = GetYTService(_credential);
             SettingsHelper.SaveUserRefreshToken(_credential.Token.RefreshToken);
             SettingsHelper.SaveUserAccessToken(_credential.Token.AccessToken);
@@ -120,19 +87,16 @@ namespace LiteTube.DataModel
             get { return _credential != null; }
         }
 
-        private async Task<UserCredential> GetUserCredential(string username)
+        private async Task<UserCredential> GetUserCredential()
         {
-            if (string.IsNullOrEmpty(username))
-                username = "user";
-
-           var clientSecrets = new ClientSecrets
+            var clientSecrets = new ClientSecrets
             {
                 ClientId = CLIENT_ID,
                 ClientSecret = SECRET
             };
 
-            var scope = new List<string>() { YouTubeService.Scope.YoutubeForceSsl };
-            return await GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scope, username, CancellationToken.None);
+            var scope = new List<string>() { YouTubeService.Scope.YoutubeForceSsl, YouTubeService.Scope.Youtube, YouTubeService.Scope.YoutubeUpload };
+            return await GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scope, "user", CancellationToken.None);
         }
 
         private YouTubeService GetYTService(UserCredential credential = null)

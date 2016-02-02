@@ -9,11 +9,10 @@ namespace LiteTube.DataModel
         string ApiKey { get; }
         YouTubeService GetService();
         YouTubeService GetAuthorizedService();
+        Task Login();
+        Task RefreshToken(string username);
         void Logout();
         bool IsAuthorized { get; }
-        void Login();
-        Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
-        Task RefreshToken(string username);
         string OAuthToken { get; }
     }
 }

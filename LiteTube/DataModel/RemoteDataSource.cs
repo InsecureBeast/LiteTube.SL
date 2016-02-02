@@ -9,14 +9,12 @@ using LiteTube.Common;
 using MyToolkit.Multimedia;
 using System.Net;
 using Google;
-using Windows.ApplicationModel.Activation;
 
 namespace LiteTube.DataModel
 {
     interface IRemoteDataSource
     {
-        void Login();
-        Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username);
+        Task Login();
         void Logout();
         Task LoginSilently(string username);
         bool IsAuthorized { get; }
@@ -74,17 +72,11 @@ namespace LiteTube.DataModel
             _youTubeWeb = new YouTubeWeb();
         }
 
-        public void Login()
+        public async Task Login()
         {
-            _youTubeServiceControl.Login();
-        }
-
-        public async Task<string> ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args, string username)
-        {
-            var userId = await _youTubeServiceControl.ContinueWebAuthentication(args, username);
+            await _youTubeServiceControl.Login();
             _youTubeService = _youTubeServiceControl.GetAuthorizedService();
             await _subscriptionsHolder.Init();
-            return userId;
         }
 
         public async Task LoginSilently(string username)
