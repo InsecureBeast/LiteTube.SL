@@ -259,7 +259,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to with us since.
+        ///   Looks up a localized string similar to joined.
         /// </summary>
         public static string JoinedString {
             get {

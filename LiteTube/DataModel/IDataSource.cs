@@ -1,4 +1,5 @@
-﻿using LiteTube.DataClasses;
+﻿using System;
+using LiteTube.DataClasses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -84,8 +85,16 @@ namespace LiteTube.DataModel
 
         public async Task Login()
         {
-            await _remoteDataSource.Login();
-            _contextNotifier.Notify(new UpdateContextEventArgs());
+            try
+            {
+                await _remoteDataSource.Login();
+                _contextNotifier.Notify(new UpdateContextEventArgs());
+            }
+            catch (Exception)
+            {
+                //TODO
+                ;
+            }
         }
      
         public void Logout()

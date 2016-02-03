@@ -180,7 +180,7 @@
     <value>Home</value>
   </data>
   <data name="JoinedString" xml:space="preserve">
-    <value>with us since</value>
+    <value>joined</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
