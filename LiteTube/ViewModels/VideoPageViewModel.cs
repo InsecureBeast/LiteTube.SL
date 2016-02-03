@@ -70,7 +70,7 @@ namespace LiteTube.ViewModels
         public string VideoId
         {
             get { return _videoId; }
-            private set
+            set
             {   _videoId = value;
                 NotifyOfPropertyChanged(() => VideoId);
             }

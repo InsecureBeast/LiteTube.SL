@@ -99,6 +99,8 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
+            PhoneApplicationService.Current.State["VideoId"] = viewModel.VideoId;
+
             if (viewModel.NavigationPanelViewModel.IsAuthorized)
             {
                 if (_currentApplicationBar.Buttons.Contains(_favoritesApplicationBarButton))
@@ -326,8 +328,10 @@ namespace LiteTube
                 return;
 
             //viewModel.Reload();
+            var videoId = PhoneApplicationService.Current.State["VideoId"].ToString();
+            viewModel.VideoId = videoId;
 
-            var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", viewModel.VideoId, _playerPosition, Guid.NewGuid());
+            var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", videoId, _playerPosition, Guid.NewGuid());
             NavigationHelper.Navigate(view, viewModel);
         }
 
@@ -336,6 +340,12 @@ namespace LiteTube
             player.Close(); // shut things like ads down.
             _deactivatedState = _playerState;
             _playerPosition = player.VirtualPosition;
+
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            PhoneApplicationService.Current.State["VideoId"] = viewModel.VideoId;
         }
     }
 }

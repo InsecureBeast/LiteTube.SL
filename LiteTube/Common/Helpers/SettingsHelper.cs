@@ -107,5 +107,21 @@ namespace LiteTube.Common
         {
             return !string.IsNullOrEmpty(GetAccessToken());
         }
+
+        internal static string GetCurrentVideoId()
+        {
+            var videoId = string.Empty;
+            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("VideoId"))
+            {
+                videoId = (string)(ApplicationData.Current.RoamingSettings.Values["Region"]);
+            }
+
+            return videoId;
+        }
+
+        internal static void SaveCurrentVideoId(string videoId)
+        {
+            ApplicationData.Current.RoamingSettings.Values["VideoId"] = videoId;
+        }
     }
 }
