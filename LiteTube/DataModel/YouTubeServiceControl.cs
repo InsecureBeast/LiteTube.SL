@@ -8,6 +8,7 @@ using LiteTube.Common;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using LiteTube.Resources;
 
 namespace LiteTube.DataModel
 {
@@ -15,7 +16,7 @@ namespace LiteTube.DataModel
     {
         private const string SECRET = "OWnSxF8rkgle-KhsKNCI8yNF";
         private const string API_KEY = "AIzaSyDWezZRg-dUvNumjTow51ShtIgLA642whM";
-        private const string APP_NAME = "LiteTube";
+        private string APP_NAME = AppResources.ApplicationTitle;
         private const string CLIENT_ID = "936038716924-oj9advoucgt9flrh07du3ovqsp6tlur1.apps.googleusercontent.com";
         private const string REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
         private YouTubeService _youTubeService;

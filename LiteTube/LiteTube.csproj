@@ -141,7 +141,6 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\VideoQuality.cs" />
     <Compile Include="Common\Helpers\VisualHelper.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="Controls\GenericListView.cs" />
     <Compile Include="Controls\NavigationPanel.xaml.cs">
