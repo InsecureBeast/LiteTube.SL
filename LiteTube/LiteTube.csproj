@@ -521,6 +521,7 @@
     <Error Condition="!Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>cscript.exe "$(ProjectDir)\hgVersion.jse"</PreBuildEvent>
+    <PreBuildEvent>cd "$(ProjectDir)"
+cscript.exe "$(ProjectDir)\hgVersion.jse"</PreBuildEvent>
   </PropertyGroup>
 </Project>
