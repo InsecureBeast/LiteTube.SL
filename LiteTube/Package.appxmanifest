@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="98eec6ff-6905-4347-a9c9-ce3eb4cb6e61" Publisher="CN=dmitriev_pe" Version="1.0.0.0" />
+  <Identity Name="431942A1E79CE.LightTube" Publisher="CN=C0AA424B-F412-4BA9-ACD7-E493FDF61DE4" Version="1.0.0.115" />
   <mp:PhoneIdentity PhoneProductId="a6dc8489-f102-4558-95b0-3fc6b3abbab0" PhonePublisherId="cc081fd0-ea82-4a65-b081-4d0fc767871a" />
   <Properties>
-    <DisplayName>LiteTube</DisplayName>
-    <PublisherDisplayName>dmitrievpe</PublisherDisplayName>
+    <DisplayName>LightTube</DisplayName>
+    <PublisherDisplayName>Павел Дмитриев</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -21,13 +21,6 @@
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
       </m3:VisualElements>
-      <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="AgHost.BackgroundTask">
-          <BackgroundTasks>
-            <Task Type="systemEvent" />
-          </BackgroundTasks>
-        </Extension>
-      </Extensions>
     </Application>
   </Applications>
   <Extensions>

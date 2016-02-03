@@ -20,7 +20,7 @@
     </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>LiteTube_$(Configuration)_$(Platform).xap</XapFilename>
+    <XapFilename>LightTube_Release_ARM.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>LiteTube.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
