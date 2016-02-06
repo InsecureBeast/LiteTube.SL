@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="431942A1E79CE.LightTube" Publisher="CN=C0AA424B-F412-4BA9-ACD7-E493FDF61DE4" Version="1.0.1.118" />
-  <mp:PhoneIdentity PhoneProductId="a6dc8489-f102-4558-95b0-3fc6b3abbab0" PhonePublisherId="cc081fd0-ea82-4a65-b081-4d0fc767871a" />
+  <Identity Name="431942A1E79CE.LightTube" Publisher="CN=C0AA424B-F412-4BA9-ACD7-E493FDF61DE4" Version="1.0.1.120" />
+  <mp:PhoneIdentity PhoneProductId="a6dc8489-f102-4558-95b0-3fc6b3abbab0" PhonePublisherId="31d81e4d-e90c-4228-a973-2be6dfd53362" />
   <Properties>
     <DisplayName>LightTube</DisplayName>
-    <PublisherDisplayName>Pavel Dmitriev</PublisherDisplayName>
+    <PublisherDisplayName>Павел Дмитриев</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="AGHost.exe" EntryPoint="MainPage.xaml">
-      <m3:VisualElements DisplayName="LigthTube" Square150x150Logo="Assets\SquareTile150x150.png" Square44x44Logo="Assets\Logo.png" Description="Ligth weight YouTube application for windows phone" ForegroundText="light" BackgroundColor="#464646">
+      <m3:VisualElements DisplayName="LightTube" Square150x150Logo="Assets\SquareTile150x150.png" Square44x44Logo="Assets\Logo.png" Description="Ligth weight YouTube application for windows phone" ForegroundText="light" BackgroundColor="#464646">
         <m3:DefaultTile Square71x71Logo="Assets\SquareTile71x71.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
