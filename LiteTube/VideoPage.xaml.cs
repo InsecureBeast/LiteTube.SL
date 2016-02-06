@@ -56,6 +56,8 @@ namespace LiteTube
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", AppResources.AddToFavorites, AddToFavorites_Click);
 
             ApplicationBar = _currentApplicationBar;
+
+            OnOrientationChanged(new OrientationChangedEventArgs(Orientation));
         }
 
         private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)

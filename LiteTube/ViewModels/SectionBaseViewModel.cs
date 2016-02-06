@@ -251,7 +251,7 @@ namespace LiteTube.ViewModels
 
         internal virtual Task<IResponceList> GetItems(string nextPageToken)
         {
-            return null; 
+            return null;// new Task<IResponceList>(() => MResponceList.Empty);
         }
 
         internal void SetNonSelected()
@@ -316,7 +316,7 @@ namespace LiteTube.ViewModels
             catch (Exception)
             {
                 IsLoading = false;
-                IsEmpty = true;
+                IsEmpty = false;
                 IsConnected = true;
 
                 HideProgressIndicator();
