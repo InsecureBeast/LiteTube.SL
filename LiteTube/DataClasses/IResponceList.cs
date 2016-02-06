@@ -26,4 +26,47 @@ namespace LiteTube.DataClasses
         ITokenPagination TokenPagination { get; }
         string VisitorId { get; }
     }
+
+    class MResponceList : IResponceList
+    {
+        public static IResponceList Empty
+        {
+            get { return new MResponceList(); }
+        }
+
+        public string ETag
+        {
+            get { return string.Empty; }
+        }
+
+        public string EventId
+        {
+            get { return string.Empty; }
+        }
+
+        public string NextPageToken
+        {
+            get { return string.Empty; }
+        }
+
+        public IPageInfo PageInfo
+        {
+            get { return MPageInfo.Empty; }
+        }
+
+        public string PrevPageToken
+        {
+            get { return string.Empty; }
+        }
+
+        public ITokenPagination TokenPagination
+        {
+            get { return MTokenPagination.Empty; }
+        }
+
+        public string VisitorId
+        {
+            get { return string.Empty; }
+        }
+    }
 }

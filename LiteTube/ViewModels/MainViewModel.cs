@@ -31,6 +31,8 @@ namespace LiteTube.ViewModels
 
             geDataSource().Subscribe((IListener<UpdateSettingsEventArgs>)this);
             geDataSource().Subscribe((IListener<UpdateContextEventArgs>)this);
+
+            _hasItems = false;
         }
 
         /// <summary>

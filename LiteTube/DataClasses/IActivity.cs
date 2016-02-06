@@ -278,6 +278,11 @@ namespace LiteTube.DataClasses
             ETag = tokenPagination.ETag;
         }
 
+        public static ITokenPagination Empty
+        {
+            get { return new MTokenPagination(null); }
+        }
+
         public string ETag
         {
             get; 
@@ -296,6 +301,12 @@ namespace LiteTube.DataClasses
             ResultsPerPage = pageInfo.ResultsPerPage;
             TotalResults = pageInfo.TotalResults;
         }
+
+        public static IPageInfo Empty
+        {
+            get { return new MPageInfo(null); }
+        }
+
         public string ETag
         {
             get;

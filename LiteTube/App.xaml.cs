@@ -126,7 +126,7 @@ namespace LiteTube
             }
 
             //TODO get from settings))
-            //ThemeManager.GoToLightTheme();
+            ThemeManager.GoToLightTheme();
             BuildLocalizedApplicationBar();
         }
 
