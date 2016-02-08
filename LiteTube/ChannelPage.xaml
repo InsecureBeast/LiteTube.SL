@@ -73,8 +73,6 @@
                 <ScrollViewer>
                     <StackPanel>
                         <TextBlock TextWrapping="NoWrap"
-                                   TextTrimming="WordEllipsis"
-                                   MaxWidth="180" 
                                    HorizontalAlignment="Left">
                                 <Run Text="{Binding ChannelSubscribers}" />
                                 <Run Text="{Binding Path=LocalizedResources.Subscribers, Source={StaticResource LocalizedStrings}}"/>

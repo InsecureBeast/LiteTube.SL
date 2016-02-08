@@ -10,16 +10,16 @@ namespace LiteTube.DataModel
     {
         public Task Login()
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public bool IsAuthorized
         {
-            get { return !string.IsNullOrEmpty(SettingsHelper.GetRefreshToken()); }
+            get { return false; }
         }
         public Task LoginSilently(string username)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public void Logout()
@@ -32,22 +32,22 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> GetActivity(string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetRecommended(string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetMostPopular(string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetCategoryVideoList(string categoryId, string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IEnumerable<IVideoCategory>> GetCategories()
@@ -67,12 +67,12 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetChannelVideoList(string channelId, string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IChannelList> GetChannels(string categoryId, string nextPageToken)
@@ -82,7 +82,7 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> Search(string searchString, string nextPageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<ICommentList> GetComments(string videoId, string nextPageToken)
@@ -97,7 +97,7 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> GetHistory(string nextPageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public bool IsSubscribed(string channelId)
@@ -107,52 +107,52 @@ namespace LiteTube.DataModel
 
         public string GetSubscriptionId(string channelId)
         {
-            return null;
+            return string.Empty;
         }
 
         public Task Subscribe(string channelId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task Unsubscribe(string subscriptionId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task SetRating(string videoId, RatingEnum rating)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task<RatingEnum> GetRating(string videoId)
         {
-            return null;
+            return Task.Run(() => { return RatingEnum.None; });
         }
 
         public Task<YouTubeUri> GetVideoUriAsync(string videoId)
         {
-            return null;
+            return Task.Run(() => { return new YouTubeUri(); });
         }
 
         public Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            return null;
+            return Task.Run(() => { return new YouTubeUri(); });
         }
 
         public Task AddToFavorites(string videoId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task RemoveFromFavorites(string playlistItemId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task<IResponceList> GetFavorites(string nextPageToken)
         {
-            return new Task<IResponceList>(() => MVideoList.EmptyVideoList);
+            return new Task<IResponceList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoItem> GetVideoItem(string videoId)

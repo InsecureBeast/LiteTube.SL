@@ -29,7 +29,7 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<NavigationObject> _categoryCommand;
 
         private int _selectedIndex;
-        private bool _isConnected;
+        private bool _isConnected = true;
         private ProgressIndicator _progressIndicator;
         //private PreventNavigationHelper _navigationHelper;
 
@@ -40,7 +40,7 @@ namespace LiteTube.ViewModels
             _connectionListener.Subscribe(this);
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
             _categories = new ObservableCollection<GuideCategoryNodeViewModel>();
-            
+
             if (_getDataSource().IsAuthorized)
             {
                 _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener);
@@ -132,6 +132,16 @@ namespace LiteTube.ViewModels
                 _isConnected = value;
                 NotifyOfPropertyChanged(() => IsConnected);
             }
+        }
+        
+        public bool IsLoading
+        {
+            get { return false; }
+        }
+
+        public bool IsEmpty
+        {
+            get { return false; }
         }
 
         public bool IsFavoritesSelectedVisible

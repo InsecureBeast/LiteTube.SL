@@ -15,6 +15,9 @@ namespace LiteTube.DataClasses
     {
         public MPlaylistItemList(PlaylistItemListResponse response)
         {
+            if (response == null)
+                return;
+
             ETag = response.ETag;
             EventId = response.EventId;
             Kind = response.Kind;
@@ -25,6 +28,11 @@ namespace LiteTube.DataClasses
             VisitorId = response.VisitorId;
             var items = response.Items.Where(i => i.Snippet.Title != "Deleted video");
             Items = items.Select(i => new MPlayListItem(i)).ToList<IPlayListItem>();
+        }
+
+        public static IPlaylistItemList Empty
+        {
+            get { return new MPlaylistItemList(null); }
         }
 
         public string ETag

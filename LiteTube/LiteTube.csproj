@@ -100,6 +100,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\LoginStatusTextConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BugTreckerReporter.cs" />
     <Compile Include="ChannelListPage.xaml.cs">

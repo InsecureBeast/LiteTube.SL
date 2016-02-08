@@ -25,10 +25,6 @@ namespace LiteTube.ViewModels
             _navigatioPanelViewModel.IsSettingsSelected = true;
             _selectedRegion = SettingsHelper.GetRegionName();
             _selectedQuality = SettingsHelper.GetQuality();
-
-            //var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //_title = resourceLoader.GetString("SettingsPageTitle");
-            _title = "Settings"; //TODO localize
         }
 
         public NavigationPanelViewModel NavigationPanelViewModel

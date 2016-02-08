@@ -67,17 +67,19 @@ namespace LiteTube.DataModel
             SettingsHelper.SaveUserRefreshToken(string.Empty);
             SettingsHelper.SaveUserAccessToken(string.Empty);
             _youTubeService = GetYTService();
+            _youTubeServiceAuth = null;
         }
 
         public async Task Login()
         {
             await Authorize();
+            _youTubeService = GetYTService();
+            _youTubeServiceAuth = GetYTService(_credential);
         }
 
         private async Task<string> Authorize()
         {
             _credential = await GetUserCredential();
-            _youTubeServiceAuth = GetYTService(_credential);
             SettingsHelper.SaveUserRefreshToken(_credential.Token.RefreshToken);
             SettingsHelper.SaveUserAccessToken(_credential.Token.AccessToken);
             return _credential.UserId;
@@ -97,7 +99,7 @@ namespace LiteTube.DataModel
             };
 
             var scope = new List<string>() { YouTubeService.Scope.YoutubeForceSsl, YouTubeService.Scope.Youtube, YouTubeService.Scope.YoutubeUpload };
-            return await GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scope, "user", CancellationToken.None);
+            return await GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scope, Guid.NewGuid().ToString(), CancellationToken.None);
         }
 
         private YouTubeService GetYTService(UserCredential credential = null)

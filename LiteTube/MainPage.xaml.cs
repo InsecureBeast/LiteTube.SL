@@ -43,14 +43,14 @@ namespace LiteTube
             //    await App.ViewModel.Login(appObject.WabContinuationArgs);
             //    appObject.WabContinuationArgs = null;
             //}
-
+           
 
             if (App.ViewModel.IsDataLoaded) 
                 return;
             
             if (SettingsHelper.IsContainsAuthorizationData())
                 //загрузка произойдет когда прийдет нотификация об изменении состояния контекста
-                await App.ViewModel.GetGeDataSource().LoginSilently(string.Empty);
+                await App.ViewModel.GetDataSource().LoginSilently(string.Empty);
             else
                 await App.ViewModel.LoadData();    
         }

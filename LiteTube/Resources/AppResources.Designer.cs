@@ -124,6 +124,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel not found. Try to create channel on YouTube site..
+        /// </summary>
+        public static string ChannelNotFoundTooltip {
+            get {
+                return ResourceManager.GetString("ChannelNotFoundTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to channels.
         /// </summary>
         public static string Channels {

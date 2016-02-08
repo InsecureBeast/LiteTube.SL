@@ -38,6 +38,11 @@ namespace LiteTube.ViewModels
             get { return _comments; }
         }
 
+        public bool IsAuthorized
+        {
+            get { return _getGeDataSource().IsAuthorized; }
+        }
+
         public string ProfileImage
         {
             get
@@ -76,7 +81,10 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await base._getGeDataSource().GetComments(_videoId, nextPageToken);
+            if (_comments.Count > 0)
+                IsLoading = false;
+
+            return await _getGeDataSource().GetComments(_videoId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)

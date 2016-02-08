@@ -33,6 +33,7 @@
             <converters:InverseObjectToVisibilityConverter x:Key="InverseObjectToVisibilityConverter"/>
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
             <converters:LowerCaseConverter x:Key="LowerCaseConverter"/>
+            <converters:LoginStatusTextConverter x:Key="LoginStatusTextConverter"/>
             
             <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
 

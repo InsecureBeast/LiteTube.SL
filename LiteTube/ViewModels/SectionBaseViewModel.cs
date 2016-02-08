@@ -12,6 +12,7 @@ using Microsoft.Phone.Shell;
 using MyToolkit.Command;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+using LiteTube.Resources;
 
 namespace LiteTube.ViewModels
 {
@@ -93,7 +94,7 @@ namespace LiteTube.ViewModels
         public string ImagePath { get; private set; }
         public ObservableCollection<NodeViewModelBase> Items { get; private set; }
 
-        public Func<IDataSource> GetGeDataSource
+        public Func<IDataSource> GetDataSource
         {
             get { return _getGeDataSource; }
         }
@@ -251,7 +252,7 @@ namespace LiteTube.ViewModels
 
         internal virtual Task<IResponceList> GetItems(string nextPageToken)
         {
-            return null;// new Task<IResponceList>(() => MResponceList.Empty);
+            return Task.Run(() => { return MResponceList.Empty; });
         }
 
         internal void SetNonSelected()
@@ -337,7 +338,7 @@ namespace LiteTube.ViewModels
         protected void ShowProgressIndicator()
         {
             var indicator = new ProgressIndicator();
-            indicator.Text = "Loading...";
+            indicator.Text = AppResources.Loading;
             indicator.IsVisible = true;
             indicator.IsIndeterminate = true;
 
