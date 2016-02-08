@@ -252,7 +252,7 @@ namespace LiteTube.ViewModels
 
         internal virtual Task<IResponceList> GetItems(string nextPageToken)
         {
-            return null;// new Task<IResponceList>(() => MResponceList.Empty);
+            return Task.Run(() => { return MResponceList.Empty; });
         }
 
         internal void SetNonSelected()

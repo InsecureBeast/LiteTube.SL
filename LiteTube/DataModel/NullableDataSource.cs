@@ -10,16 +10,16 @@ namespace LiteTube.DataModel
     {
         public Task Login()
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public bool IsAuthorized
         {
-            get { return !string.IsNullOrEmpty(SettingsHelper.GetRefreshToken()); }
+            get { return false; }
         }
         public Task LoginSilently(string username)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public void Logout()
@@ -107,47 +107,47 @@ namespace LiteTube.DataModel
 
         public string GetSubscriptionId(string channelId)
         {
-            return null;
+            return string.Empty;
         }
 
         public Task Subscribe(string channelId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task Unsubscribe(string subscriptionId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task SetRating(string videoId, RatingEnum rating)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task<RatingEnum> GetRating(string videoId)
         {
-            return null;
+            return Task.Run(() => { return RatingEnum.None; });
         }
 
         public Task<YouTubeUri> GetVideoUriAsync(string videoId)
         {
-            return null;
+            return Task.Run(() => { return new YouTubeUri(); });
         }
 
         public Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            return null;
+            return Task.Run(() => { return new YouTubeUri(); });
         }
 
         public Task AddToFavorites(string videoId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task RemoveFromFavorites(string playlistItemId)
         {
-            return null;
+            return Task.Run(() => { });
         }
 
         public Task<IResponceList> GetFavorites(string nextPageToken)
