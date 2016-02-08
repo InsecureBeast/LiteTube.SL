@@ -77,12 +77,14 @@ namespace LiteTube.DataModel
             await _youTubeServiceControl.Login();
             _youTubeService = _youTubeServiceControl.GetAuthorizedService();
             await _subscriptionsHolder.Init();
+            await GetProfile();
         }
 
         public async Task LoginSilently(string username)
         {
             await _youTubeServiceControl.RefreshToken(username);
             await _subscriptionsHolder.Init();
+            await GetProfile();
             _youTubeService = _youTubeServiceControl.GetAuthorizedService();
         }
 
@@ -642,6 +644,9 @@ namespace LiteTube.DataModel
                 const string displayName = "";
                 return new MProfile(string.Empty, image, displayName);
             }
+
+            if (_profileInfo != null)
+                return _profileInfo;
 
             await SetRelatedPlaylists();
             if (_profileInfo == null)

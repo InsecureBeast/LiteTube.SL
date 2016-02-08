@@ -157,6 +157,7 @@ namespace LiteTube.ViewModels
             LayoutHelper.InvokeFromUIThread(async () =>
             {
                 IsConnected = e.IsConnected;
+                NotifyOfPropertyChanged(() => IsAuthorized);
 
                 if (e.IsConnected)
                 {
@@ -164,7 +165,7 @@ namespace LiteTube.ViewModels
                     IsEmpty = false;
 
                     await LoadGuideCategories();
-                    if (_getGeDataSource().IsAuthorized)
+                    if (IsAuthorized)
                     {
                         _activitySectionViewModel.Items.Clear();
                         await _activitySectionViewModel.FirstLoad();
