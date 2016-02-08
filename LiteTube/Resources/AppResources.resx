@@ -272,4 +272,7 @@
   <data name="ExceptionTitle" xml:space="preserve">
     <value>Whoops! Something went wrong!</value>
   </data>
+  <data name="ChannelNotFoundTooltip" xml:space="preserve">
+    <value>Channel not found. Try to create channel on YouTube site.</value>
+  </data>
 </root>

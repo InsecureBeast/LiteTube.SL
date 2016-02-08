@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:common="clr-namespace:LiteTube.Common">
+    xmlns:common="clr-namespace:LiteTube.Common"
+    xmlns:viewModels="clr-namespace:LiteTube.ViewModels">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Themes/ProfileIcons.xaml" />
@@ -30,24 +31,23 @@
 
                         <TextBlock Grid.Column="0"
                                    Grid.ColumnSpan="2"
-                                   Text="{Binding Path=LocalizedResources.SignInTooltip, Source={StaticResource LocalizedStrings}}"
+                                   Text="{Binding LoginStatus, Converter={StaticResource LoginStatusTextConverter}}"
                                    TextWrapping="Wrap"
                                    VerticalAlignment="Center"
                                    FontSize="{StaticResource PhoneFontSizeMedium}"
-                                   Foreground="{StaticResource PhoneSubtleBrush}"
-                                   Visibility="{Binding ProfileRegistered, Converter={StaticResource InverseObjectToVisibilityConverter}}"/>
+                                   Foreground="{StaticResource PhoneSubtleBrush}" />
                         
                         <Image Grid.Column="0"
                                Height="110"
                                Width="110"
                                Stretch="Fill"
-                               Visibility="{Binding ProfileRegistered, Converter={StaticResource ObjectToVisibilityConverter}}"
-                               Source="{Binding ProfileImage}"/>
+                               Source="{Binding ProfileImage}"
+                               Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                         <StackPanel Grid.Row="0" 
                                     Grid.Column="1"
                                     Margin="10,-10,0,0"
-                                    Visibility="{Binding ProfileRegistered, Converter={StaticResource ObjectToVisibilityConverter}}"
+                                    Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Orientation="Vertical">
                             <TextBlock FontSize="{StaticResource PhoneFontSizeLarge}"
                                        Text="{Binding ProfileDisplayName}"

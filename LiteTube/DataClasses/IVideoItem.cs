@@ -59,11 +59,6 @@ namespace LiteTube.DataClasses
 
     class MVideoList : IVideoList
     {
-        public static MVideoList EmptyVideoList
-        {
-            get { return new MVideoList(null); }
-        }
-
         public MVideoList(VideoListResponse response)
         {
             if (response == null)

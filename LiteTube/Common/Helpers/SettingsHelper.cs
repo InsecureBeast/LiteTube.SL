@@ -92,6 +92,22 @@ namespace LiteTube.Common
             ApplicationData.Current.RoamingSettings.Values["AccessToken"] = accessToken;
         }
 
+        internal static void SaveIsRevokedAccessToken(bool isRevoked)
+        {
+            ApplicationData.Current.RoamingSettings.Values["IsRevokedAccessToken"] = isRevoked;
+        }
+
+        internal static bool GetIsRevokedAccessToken()
+        {
+            var isRevoked = false;
+            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("IsRevokedAccessToken"))
+            {
+                isRevoked = (bool)(ApplicationData.Current.RoamingSettings.Values["IsRevokedAccessToken"]);
+            }
+
+            return isRevoked;
+        }
+
         internal static string GetAccessToken()
         {
             var token = string.Empty;

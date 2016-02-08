@@ -272,4 +272,7 @@
   <data name="ExceptionTitle" xml:space="preserve">
     <value>Упс! Что-то пошло не так!</value>
   </data>
+  <data name="ChannelNotFoundTooltip" xml:space="preserve">
+    <value>Канал не найден. Попробуйте создать свой канал на сайте YouTube.</value>
+  </data>
 </root>

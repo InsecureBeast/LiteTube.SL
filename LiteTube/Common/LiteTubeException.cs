@@ -9,6 +9,10 @@ namespace LiteTube.Common
 {
     public class LiteTubeException : Exception
     {
+        public LiteTubeException(string message) : base(message)
+        {
+        }
+
         public LiteTubeException(Exception e) : base(e.Message)
         {
         }

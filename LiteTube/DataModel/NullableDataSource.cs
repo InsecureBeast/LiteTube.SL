@@ -32,22 +32,22 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> GetActivity(string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetRecommended(string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetMostPopular(string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetCategoryVideoList(string categoryId, string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IEnumerable<IVideoCategory>> GetCategories()
@@ -67,12 +67,12 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoList> GetChannelVideoList(string channelId, string pageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<IChannelList> GetChannels(string categoryId, string nextPageToken)
@@ -82,7 +82,7 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> Search(string searchString, string nextPageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public Task<ICommentList> GetComments(string videoId, string nextPageToken)
@@ -97,7 +97,7 @@ namespace LiteTube.DataModel
 
         public Task<IVideoList> GetHistory(string nextPageToken)
         {
-            return new Task<IVideoList>(() => MVideoList.EmptyVideoList);
+            return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
         public bool IsSubscribed(string channelId)
@@ -152,7 +152,7 @@ namespace LiteTube.DataModel
 
         public Task<IResponceList> GetFavorites(string nextPageToken)
         {
-            return new Task<IResponceList>(() => MVideoList.EmptyVideoList);
+            return new Task<IResponceList>(() => MVideoList.Empty);
         }
 
         public Task<IVideoItem> GetVideoItem(string videoId)
