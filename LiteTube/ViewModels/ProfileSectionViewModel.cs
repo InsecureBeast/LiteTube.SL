@@ -27,6 +27,7 @@ namespace LiteTube.ViewModels
         private string _profileSecondDisplayName;
         private string _profileChannelId;
         private LoginStatus _loginStatus;
+        private bool _loginProcess;
 
         public ProfileSectionViewModel(Func<IDataSource> getDatasource, IConnectionListener connectionListener)
         {
@@ -197,6 +198,7 @@ namespace LiteTube.ViewModels
 
         private async void Login()
         {
+            _loginProcess = true;
             await _getDataSource().Login();
         }
 
@@ -207,40 +209,36 @@ namespace LiteTube.ViewModels
 
         private void LoadProfileInfo()
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
+            ProfileImage = null;
+            ProfileDisplayName = string.Empty;
+            ProfileSecondDisplayName = string.Empty;
+            ProfileRegistered = null;
+
+            var profile = _getDataSource().GetProfile();
+            if (profile == null)
             {
-                try
-                {
-                    ProfileImage = null;
-                    ProfileDisplayName = string.Empty;
-                    ProfileSecondDisplayName = string.Empty;
-                    ProfileRegistered = null;
-
-                    var profile = await _getDataSource().GetProfile();
-                    ProfileImage = profile.Image;
-                    var names = profile.DisplayName.Split(' ');
-                    if (names.Length >= 1)
-                        ProfileDisplayName = names[0];
-                    if (names.Length >= 2)
-                        ProfileSecondDisplayName = names[1];
-                    if (profile.Registered != null)
-                        ProfileRegistered = profile.Registered.Value.ToString("d");
-
-                    ProfileChannelId = profile.ChannelId;
-
-                    NotifyOfPropertyChanged(() => IsAuthorized);
-
-                    if (profile.Registered == null)
-                        LoginStatus = LoginStatus.NotLogged;
-                    else
-                        LoginStatus = LoginStatus.Logged;
-                }
-                catch (LiteTubeException)
-                {
+                if (_loginProcess)
                     LoginStatus = LoginStatus.NotFound;
-                    NotifyOfPropertyChanged(() => IsAuthorized);
-                }
-            });
+                else
+                    LoginStatus = LoginStatus.NotLogged;
+                NotifyOfPropertyChanged(() => IsAuthorized);
+                _loginProcess = false;
+                return;
+            }
+
+            ProfileImage = profile.Image;
+            var names = profile.DisplayName.Split(' ');
+            if (names.Length >= 1)
+                ProfileDisplayName = names[0];
+            if (names.Length >= 2)
+                ProfileSecondDisplayName = names[1];
+            if (profile.Registered != null)
+                ProfileRegistered = profile.Registered.Value.ToString("d");
+
+            ProfileChannelId = profile.ChannelId;
+            LoginStatus = LoginStatus.Logged;
+            NotifyOfPropertyChanged(() => IsAuthorized);
+            _loginProcess = false;
         }
 
         public void Notify(ConnectionEventArgs e)

@@ -419,7 +419,7 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IProfile> GetProfile()
+        public IProfile GetProfile()
         {
             try
             {

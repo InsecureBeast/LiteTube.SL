@@ -160,9 +160,9 @@ namespace LiteTube.DataModel
             return new Task<IVideoItem>(() => MVideoItem.Empty);
         }
 
-        public Task<IProfile> GetProfile()
+        public IProfile GetProfile()
         {
-            return new Task<IProfile>(() => new MProfile(string.Empty, string.Empty, string.Empty));
+            return new MProfile(string.Empty, string.Empty, string.Empty);
         }
 
         public Task<IComment> AddComment(string channelId, string videoId, string text)

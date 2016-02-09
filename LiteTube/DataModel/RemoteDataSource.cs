@@ -43,7 +43,7 @@ namespace LiteTube.DataModel
         Task RemoveFromFavorites(string playlistItemId);
         Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
-        Task<IProfile> GetProfile();
+        IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
     }
@@ -77,15 +77,15 @@ namespace LiteTube.DataModel
             await _youTubeServiceControl.Login();
             _youTubeService = _youTubeServiceControl.GetAuthorizedService();
             await _subscriptionsHolder.Init();
-            await GetProfile();
+            await LoadProfileInfo();
         }
 
         public async Task LoginSilently(string username)
         {
             await _youTubeServiceControl.RefreshToken(username);
             await _subscriptionsHolder.Init();
-            await GetProfile();
             _youTubeService = _youTubeServiceControl.GetAuthorizedService();
+            await LoadProfileInfo();
         }
 
         public void Logout()
@@ -93,6 +93,7 @@ namespace LiteTube.DataModel
             _youTubeServiceControl.Logout();
             _youTubeService = _youTubeServiceControl.GetService();
             _subscriptionsHolder.Clear();
+            ClearProfileInfo();
         }
 
         public async Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken)
@@ -481,99 +482,6 @@ namespace LiteTube.DataModel
             return url;
         }
 
-        private async Task SetRelatedPlaylists()
-        {
-            if (_historyPlayListId == null || _uploadPlayList == null ||
-                _watchLaterPlayList == null || _likesPlayList == null ||
-                _favorites == null || _profileInfo == null)
-            {
-                var youTubeService = _youTubeServiceControl.GetAuthorizedService();
-                var request = youTubeService.Channels.List("contentDetails,snippet");
-                request.Key = _youTubeServiceControl.ApiKey;
-                request.PageToken = string.Empty;
-                request.Mine = true;
-                //request.OauthToken = _youTubeServiceControl.OAuthToken;
-
-                var response = await request.ExecuteAsync();
-                var item = response.Items.FirstOrDefault();
-                if (item == null)
-                    return;
-
-                _historyPlayListId = item.ContentDetails.RelatedPlaylists.WatchHistory;
-                _uploadPlayList = item.ContentDetails.RelatedPlaylists.Uploads;
-                _watchLaterPlayList = item.ContentDetails.RelatedPlaylists.WatchLater;
-                _likesPlayList = item.ContentDetails.RelatedPlaylists.Likes;
-                _favorites = item.ContentDetails.RelatedPlaylists.Favorites;
-
-                var name = item.Snippet.Title;
-                var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
-                var registered = item.Snippet.PublishedAt;
-                var channelId = item.Id;
-                _profileInfo = new MProfile(channelId, image, name, registered);
-            }
-        }
-
-        private async Task InsertHistory(string videoId)
-        {
-            if (!IsAuthorized)
-                return;
-
-            await SetRelatedPlaylists();
-            var newPlaylistItem = new PlaylistItem
-            {
-                Snippet = new PlaylistItemSnippet
-                {
-                    PlaylistId = _historyPlayListId,
-                    ResourceId = new ResourceId { Kind = "youtube#video", VideoId = videoId }
-                }
-            };
-            var youtubeService = _youTubeServiceControl.GetAuthorizedService();
-            var request = youtubeService.PlaylistItems.Insert(newPlaylistItem, "snippet");
-            request.Key = _youTubeServiceControl.ApiKey;
-            //request.OauthToken = _youTubeServiceControl.OAuthToken;
-
-            newPlaylistItem = await request.ExecuteAsync();
-        }
-
-        private async Task<IVideoList> GetChannelVideosWeb(string channelId, string nextPageToken)
-        {
-            var res = await _youTubeWeb.GetChannelVideos(channelId, _youTubeServiceControl.OAuthToken, nextPageToken);
-            if (res == null)
-                return MVideoList.Empty;
-
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
-
-            var videos = await GetVideo(videoIds.ToString());
-            videos.NextPageToken = res.NextPageToken;
-            return new MVideoList(videos);
-        }
-
-        private async Task<IVideoList> GetChannelVideosApi(string channelId, int maxPageResult, string nextPageToken)
-        {
-            var request = _youTubeService.Search.List("snippet,id");
-            request.Key = _youTubeServiceControl.ApiKey;
-            request.PageToken = nextPageToken;
-            request.MaxResults = maxPageResult;
-            request.Type = "video";
-            request.ChannelId = channelId;
-            request.Order = SearchResource.ListRequest.OrderEnum.Date;
-
-            var response = await request.ExecuteAsync();
-            var ids = new StringBuilder();
-            foreach (var item in response.Items)
-            {
-                ids.AppendLine(item.Id.VideoId);
-                ids.AppendLine(",");
-            }
-            var videoDetails = await GetVideoDetails(ids.ToString());
-            return new MVideoList(response, videoDetails);
-        }
-
         public async Task AddToFavorites(string videoId)
         {
             if (!IsAuthorized)
@@ -636,26 +544,8 @@ namespace LiteTube.DataModel
             return new MVideoItem(video);
         }
 
-        public async Task<IProfile> GetProfile()
+        public IProfile GetProfile()
         {
-            if (!_youTubeServiceControl.IsAuthorized)
-            {
-                const string image = "https://yt3.ggpht.com/-v6fA9YDXkMs/AAAAAAAAAAI/AAAAAAAAAAA/_GjtZC3QejY/s88-c-k-no/photo.jpg";
-                const string displayName = "";
-                return new MProfile(string.Empty, image, displayName);
-            }
-
-            if (_profileInfo != null)
-                return _profileInfo;
-
-            await SetRelatedPlaylists();
-            if (_profileInfo == null)
-            {
-                //await _youTubeServiceControl.RevokeTokenAsync();
-                _youTubeServiceControl.Logout();
-                throw new LiteTubeException("Youtube channel not found");
-            }
-
             return _profileInfo;
         }
 
@@ -698,6 +588,128 @@ namespace LiteTube.DataModel
         public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
         {
             return await YouTubeWeb.HttpGetAutoCompleteAsync(query);
+        }
+
+        //private void CheckProfile()
+        //{
+        //    if (!_youTubeServiceControl.IsAuthorized)
+        //    {
+        //        const string image = "https://yt3.ggpht.com/-v6fA9YDXkMs/AAAAAAAAAAI/AAAAAAAAAAA/_GjtZC3QejY/s88-c-k-no/photo.jpg";
+        //        const string displayName = "";
+        //        new MProfile(string.Empty, image, displayName);
+        //    }
+
+        //    if (_profileInfo == null)
+        //    {
+        //        _youTubeServiceControl.Logout();
+        //        throw new LiteTubeException("YouTube channel not found");
+        //    }
+        //}
+
+        private async Task LoadProfileInfo()
+        {
+            if (_historyPlayListId == null || _uploadPlayList == null ||
+                _watchLaterPlayList == null || _likesPlayList == null ||
+                _favorites == null || _profileInfo == null)
+            {
+                var youTubeService = _youTubeServiceControl.GetAuthorizedService();
+                var request = youTubeService.Channels.List("contentDetails,snippet");
+                request.Key = _youTubeServiceControl.ApiKey;
+                request.PageToken = string.Empty;
+                request.Mine = true;
+                //request.OauthToken = _youTubeServiceControl.OAuthToken;
+
+                var response = await request.ExecuteAsync();
+                var item = response.Items.FirstOrDefault();
+                if (item == null)
+                {
+                    Logout();
+                    return;
+                }
+
+                _historyPlayListId = item.ContentDetails.RelatedPlaylists.WatchHistory;
+                _uploadPlayList = item.ContentDetails.RelatedPlaylists.Uploads;
+                _watchLaterPlayList = item.ContentDetails.RelatedPlaylists.WatchLater;
+                _likesPlayList = item.ContentDetails.RelatedPlaylists.Likes;
+                _favorites = item.ContentDetails.RelatedPlaylists.Favorites;
+
+                var name = item.Snippet.Title;
+                var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
+                var registered = item.Snippet.PublishedAt;
+                var channelId = item.Id;
+                _profileInfo = new MProfile(channelId, image, name, registered);
+            }
+        }
+
+        private void ClearProfileInfo()
+        {
+            _historyPlayListId = null;
+            _uploadPlayList = null;
+            _watchLaterPlayList = null;
+            _likesPlayList = null;
+            _favorites = null;
+            _profileInfo = null;
+        }
+
+        private async Task InsertHistory(string videoId)
+        {
+            if (!IsAuthorized)
+                return;
+
+            await LoadProfileInfo();
+            var newPlaylistItem = new PlaylistItem
+            {
+                Snippet = new PlaylistItemSnippet
+                {
+                    PlaylistId = _historyPlayListId,
+                    ResourceId = new ResourceId { Kind = "youtube#video", VideoId = videoId }
+                }
+            };
+            var youtubeService = _youTubeServiceControl.GetAuthorizedService();
+            var request = youtubeService.PlaylistItems.Insert(newPlaylistItem, "snippet");
+            request.Key = _youTubeServiceControl.ApiKey;
+            //request.OauthToken = _youTubeServiceControl.OAuthToken;
+
+            newPlaylistItem = await request.ExecuteAsync();
+        }
+
+        private async Task<IVideoList> GetChannelVideosWeb(string channelId, string nextPageToken)
+        {
+            var res = await _youTubeWeb.GetChannelVideos(channelId, _youTubeServiceControl.OAuthToken, nextPageToken);
+            if (res == null)
+                return MVideoList.Empty;
+
+            var videoIds = new StringBuilder();
+            foreach (var id in res.Ids)
+            {
+                videoIds.AppendLine(id);
+                videoIds.AppendLine(",");
+            }
+
+            var videos = await GetVideo(videoIds.ToString());
+            videos.NextPageToken = res.NextPageToken;
+            return new MVideoList(videos);
+        }
+
+        private async Task<IVideoList> GetChannelVideosApi(string channelId, int maxPageResult, string nextPageToken)
+        {
+            var request = _youTubeService.Search.List("snippet,id");
+            request.Key = _youTubeServiceControl.ApiKey;
+            request.PageToken = nextPageToken;
+            request.MaxResults = maxPageResult;
+            request.Type = "video";
+            request.ChannelId = channelId;
+            request.Order = SearchResource.ListRequest.OrderEnum.Date;
+
+            var response = await request.ExecuteAsync();
+            var ids = new StringBuilder();
+            foreach (var item in response.Items)
+            {
+                ids.AppendLine(item.Id.VideoId);
+                ids.AppendLine(",");
+            }
+            var videoDetails = await GetVideoDetails(ids.ToString());
+            return new MVideoList(response, videoDetails);
         }
     }
 }

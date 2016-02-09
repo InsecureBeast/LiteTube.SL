@@ -74,7 +74,11 @@ namespace LiteTube.ViewModels
 
         public bool IsAuthorized
         {
-            get { return _getGeDataSource().IsAuthorized; }
+            get
+            { 
+                //return _getGeDataSource().IsAuthorized; 
+                return SettingsHelper.IsContainsAuthorizationData();
+            }
         }
 
         public IConnectionListener ConnectionListener

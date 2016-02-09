@@ -114,11 +114,8 @@ namespace LiteTube.ViewModels
 
         private void LoadProfile()
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
-            {
-                _profile = await _getGeDataSource().GetProfile();
-                NotifyOfPropertyChanged(() => ProfileImage);
-            });
+            _profile = _getGeDataSource().GetProfile();
+            NotifyOfPropertyChanged(() => ProfileImage);
         }
         
         private async void AddComment()

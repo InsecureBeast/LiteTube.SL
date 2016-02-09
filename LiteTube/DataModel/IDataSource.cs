@@ -41,7 +41,7 @@ namespace LiteTube.DataModel
         Task RemoveFromFavorites(string playlistItemId);
         Task<IResponceList> GetFavorites(string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
-        Task<IProfile> GetProfile();
+        IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
 
@@ -92,8 +92,7 @@ namespace LiteTube.DataModel
             }
             catch (Exception)
             {
-                //TODO
-                ;
+                _contextNotifier.Notify(new UpdateContextEventArgs());
             }
         }
      
@@ -300,9 +299,9 @@ namespace LiteTube.DataModel
             return await _remoteDataSource.GetVideoItem(videoId);
         }
 
-        public async Task<IProfile> GetProfile()
+        public IProfile GetProfile()
         {
-            return await _remoteDataSource.GetProfile();
+            return _remoteDataSource.GetProfile();
         }
 
         public async Task<IComment> AddComment(string channelId, string videoId, string text)
