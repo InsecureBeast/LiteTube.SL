@@ -21,9 +21,10 @@ namespace LiteTube
             try
             {
                 var builder = new StringBuilder();
-                builder.AppendFormat("Region - {0}", SettingsHelper.GetRegion());
-                builder.AppendFormat("Quality - {0}", SettingsHelper.GetQuality());
-                builder.AppendFormat("Is Authorized - {0}", SettingsHelper.IsContainsAuthorizationData());
+                builder.AppendFormat("Version - {0}{1}", System.Reflection.Assembly.GetExecutingAssembly().ImageRuntimeVersion, Environment.NewLine);
+                builder.AppendFormat("Region - {0}{1}", SettingsHelper.GetRegion(), Environment.NewLine);
+                builder.AppendFormat("Quality - {0}{1}", SettingsHelper.GetQuality(), Environment.NewLine);
+                builder.AppendFormat("Is Authorized - {0}{1}", SettingsHelper.IsContainsAuthorizationData(), Environment.NewLine);
                 await Send(exception, builder.ToString());
             }
             catch (Exception)
