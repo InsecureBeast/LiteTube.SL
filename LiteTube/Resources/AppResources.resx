@@ -275,4 +275,7 @@
   <data name="ChannelNotFoundTooltip" xml:space="preserve">
     <value>Channel not found. Try to create channel on YouTube site.</value>
   </data>
+  <data name="LikedVideos" xml:space="preserve">
+    <value>liked</value>
+  </data>
 </root>

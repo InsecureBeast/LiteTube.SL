@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiteTube.DataClasses;
-using Windows.ApplicationModel.Activation;
 using System.Diagnostics;
 using MyToolkit.Multimedia;
 
@@ -401,6 +400,20 @@ namespace LiteTube.DataModel
             catch (Exception e)
             {
                 Debug.WriteLine("GetFavorites method called with exception " + e.Message);
+                throw e;
+            }
+        }
+
+        public Task<IResponceList> GetLiked(int maxResult, string nextPageToken)
+        {
+            try
+            {
+                Debug.WriteLine("GetLiked method called");
+                return _remoteDataSource.GetLiked(maxResult, nextPageToken);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetLiked method called with exception " + e.Message);
                 throw e;
             }
         }

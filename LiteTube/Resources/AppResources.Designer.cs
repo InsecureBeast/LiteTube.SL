@@ -277,6 +277,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to liked.
+        /// </summary>
+        public static string LikedVideos {
+            get {
+                return ResourceManager.GetString("LikedVideos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {

@@ -86,4 +86,20 @@
         </Border>
     </DataTemplate>
 
+    <DataTemplate x:Key="LikedIcon">
+        <Border Background="#FFAE2A26"
+                Width="70"
+                Height="70"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <TextBlock Text="&#xe19f;"
+                       FontFamily="Segoe UI Symbol"
+                       Foreground="White"
+                       Width="40"
+                       Height="40"
+                       FontSize="35"
+                       Margin="0,-5,0,0"/>
+        </Border>
+    </DataTemplate>
+
 </ResourceDictionary>

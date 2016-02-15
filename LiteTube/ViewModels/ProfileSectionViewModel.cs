@@ -15,6 +15,7 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _recommendedCommand;
         private readonly RelayCommand<FrameworkElement> _videoCategoryCommand;
         private readonly RelayCommand<FrameworkElement> _favoritesCommand;
+        private readonly RelayCommand<FrameworkElement> _likedCommand;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Func<IDataSource> _getDataSource;
@@ -38,6 +39,7 @@ namespace LiteTube.ViewModels
             _recommendedCommand = new RelayCommand<FrameworkElement>(Recommended);
             _videoCategoryCommand = new RelayCommand<FrameworkElement>(VideoCategories);
             _favoritesCommand = new RelayCommand<FrameworkElement>(Favorites);
+            _likedCommand = new RelayCommand<FrameworkElement>(Liked);
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _getDataSource().Subscribe(this);
@@ -68,6 +70,11 @@ namespace LiteTube.ViewModels
         public ICommand FavoritesCommand
         {
             get { return _favoritesCommand; }
+        }
+
+        public ICommand LikedCommand
+        {
+            get { return _likedCommand; }
         }
 
         public ICommand LoginCommand
@@ -158,42 +165,52 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public void Notify(UpdateContextEventArgs e)
+        {
+            LoadProfileInfo();
+        }
+
+        public void Notify(ConnectionEventArgs e)
+        {
+            if (e.IsConnected)
+                LoadProfileInfo();
+        }
+
         private void Recommended(FrameworkElement control)
         {
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(0, _getDataSource, _connectionListener);
-            App.NavigateTo("/MenuPage.xaml?item=0");
+            NavigateTo(0);
         }
 
         private void Subscriptions(FrameworkElement control)
         {
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(1, _getDataSource, _connectionListener);
-            App.NavigateTo("/MenuPage.xaml?item=1");
+            NavigateTo(1);
         }
 
         private void GetHistory(FrameworkElement control)
         {
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(3, _getDataSource, _connectionListener);
-            App.NavigateTo("/MenuPage.xaml?item=3");
+            NavigateTo(4);
         }
 
         private void VideoCategories(FrameworkElement control)
         {
-            var index = IsAuthorized ? 4 : 0;
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _getDataSource, _connectionListener);
-            App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
+            var index = IsAuthorized ? 5 : 0;
+            NavigateTo(index);
         }
 
         private void Favorites(FrameworkElement control)
         {
-            var index = 2;
-            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _getDataSource, _connectionListener);
-            App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
-            ////var index = IsAuthorized ? 2 : 0; //TODO favorites saved on device!!
+            NavigateTo(2);
         }
 
-        public void Notify(UpdateContextEventArgs e)
+        private void Liked(FrameworkElement control)
         {
-            LoadProfileInfo();
+            NavigateTo(3);
+        }
+
+        private void NavigateTo(int index)
+        {
+            PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _getDataSource, _connectionListener);
+            App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
         }
 
         private async void Login()
@@ -239,12 +256,6 @@ namespace LiteTube.ViewModels
             LoginStatus = LoginStatus.Logged;
             NotifyOfPropertyChanged(() => IsAuthorized);
             _loginProcess = false;
-        }
-
-        public void Notify(ConnectionEventArgs e)
-        {
-            if (e.IsConnected)
-                LoadProfileInfo();
         }
     }
 

@@ -72,6 +72,15 @@
             </phone:PivotItem>
 
             <!--Pivot item four-->
+            <phone:PivotItem Name="LikedItem"
+                             Header="{Binding Path=LocalizedResources.LikedVideos, Source={StaticResource LocalizedStrings}}"
+                             Margin="{StaticResource DefaultListBoxMargin}">
+                <ContentPresenter x:Name="LikedList"
+                                  Content="{Binding LikedViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListViewContextMenu}"/>
+            </phone:PivotItem>
+
+            <!--Pivot item five-->
             <phone:PivotItem Name="HistoryItem"
                              Header="{Binding Path=LocalizedResources.WatchHistory, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
@@ -80,7 +89,7 @@
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
-            <!--Pivot item five-->
+            <!--Pivot item six-->
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}"
                              Header="{Binding Path=LocalizedResources.Channels, Source={StaticResource LocalizedStrings}}">
                 <ListBox ItemsSource="{Binding Categories}"

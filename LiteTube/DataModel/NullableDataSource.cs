@@ -155,6 +155,11 @@ namespace LiteTube.DataModel
             return new Task<IResponceList>(() => MVideoList.Empty);
         }
 
+        public Task<IResponceList> GetLiked(string nextPageToken)
+        {
+            return new Task<IResponceList>(() => MVideoList.Empty);
+        }
+
         public Task<IVideoItem> GetVideoItem(string videoId)
         {
             return new Task<IVideoItem>(() => MVideoItem.Empty);

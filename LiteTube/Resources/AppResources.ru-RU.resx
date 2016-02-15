@@ -275,4 +275,7 @@
   <data name="ChannelNotFoundTooltip" xml:space="preserve">
     <value>Канал не найден. Попробуйте создать свой канал на сайте YouTube.</value>
   </data>
+  <data name="LikedVideos" xml:space="preserve">
+    <value>понравившиеся</value>
+  </data>
 </root>

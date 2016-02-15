@@ -22,6 +22,7 @@ namespace LiteTube.ViewModels
         private readonly SubscriptionChannelsViewModel _subscriptions;
         private readonly HistoryPageViewModel _history;
         private readonly FavoritesViewModel _favoritesViewModel;
+        private readonly LikedViewModel _likedViewModel;
         private readonly ObservableCollection<GuideCategoryNodeViewModel> _categories;
 
         private readonly Common.RelayCommand _selectCommand;
@@ -47,6 +48,7 @@ namespace LiteTube.ViewModels
                 _subscriptions = new SubscriptionChannelsViewModel(_getDataSource, connectionListener);
                 _history = new HistoryPageViewModel(_getDataSource, connectionListener);
                 _favoritesViewModel = new FavoritesViewModel(_getDataSource, connectionListener);
+                _likedViewModel = new LikedViewModel(_getDataSource, connectionListener);
                 _favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
             }
             
@@ -91,6 +93,11 @@ namespace LiteTube.ViewModels
         public FavoritesViewModel FavoritesViewModel
         {
             get { return _favoritesViewModel; }
+        }
+
+        public LikedViewModel LikedViewModel
+        {
+            get { return _likedViewModel; }
         }
 
         public ICommand SelectCommand
@@ -197,11 +204,16 @@ namespace LiteTube.ViewModels
                     break;
 
                 case 3:
+                    Debug.WriteLine("liked");
+                    await LikedViewModel.FirstLoad();
+                    break;
+
+                case 4:
                     Debug.WriteLine("history");
                     await HistoryPageViewModel.FirstLoad();
                     break;
 
-                case 4:
+                case 5:
                     Debug.WriteLine("Video categories");
                     LoadCategories();
                     break;
