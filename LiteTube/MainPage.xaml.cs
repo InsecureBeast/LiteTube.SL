@@ -34,17 +34,6 @@ namespace LiteTube
         // Load data for the ViewModel Items
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            //var appObject = Application.Current as App;
-            //if (appObject == null)
-            //    return;
-
-            //if (appObject.WabContinuationArgs != null)
-            //{
-            //    await App.ViewModel.Login(appObject.WabContinuationArgs);
-            //    appObject.WabContinuationArgs = null;
-            //}
-           
-
             if (App.ViewModel.IsDataLoaded) 
                 return;
             
