@@ -101,7 +101,7 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            PhoneApplicationService.Current.State["VideoId"] = viewModel.VideoId;
+            SettingsHelper.SaveCurrentVideoId(viewModel.VideoId);
 
             if (viewModel.NavigationPanelViewModel.IsAuthorized)
             {
@@ -315,26 +315,22 @@ namespace LiteTube
 
                 LayoutHelper.InvokeFromUIThread(() =>
                 {
-                    _resumed = true;
                     player.RestoreMediaState(_deactivatedState);
 
+                    if (_resumed) 
+                        return;
+                    
                     Reload();
+                    _resumed = true;
                 });
             }
         }
 
         private void Reload()
         {
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            //viewModel.Reload();
-            var videoId = PhoneApplicationService.Current.State["VideoId"].ToString();
-            viewModel.VideoId = videoId;
-
+            var videoId = SettingsHelper.GetCurrentVideoId();
             var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", videoId, _playerPosition, Guid.NewGuid());
-            NavigationHelper.Navigate(view, viewModel);
+            NavigationHelper.Navigate(view, new VideoPageViewModel(videoId, App.ViewModel.GetDataSource, App.ViewModel.ConnectionListener));
         }
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
@@ -342,12 +338,6 @@ namespace LiteTube
             player.Close(); // shut things like ads down.
             _deactivatedState = _playerState;
             _playerPosition = player.VirtualPosition;
-
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            PhoneApplicationService.Current.State["VideoId"] = viewModel.VideoId;
         }
     }
 }
