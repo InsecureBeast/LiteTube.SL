@@ -40,6 +40,7 @@ namespace LiteTube.DataModel
         Task AddToFavorites(string videoId);
         Task RemoveFromFavorites(string playlistItemId);
         Task<IResponceList> GetFavorites(string nextPageToken);
+        Task<IResponceList> GetLiked(string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
@@ -292,6 +293,11 @@ namespace LiteTube.DataModel
         public async Task<IResponceList> GetFavorites(string nextPageToken)
         {
             return await _remoteDataSource.GetFavorites(_maxPageResult, nextPageToken);
+        }
+
+        public async Task<IResponceList> GetLiked(string nextPageToken)
+        {
+            return await _remoteDataSource.GetLiked(_maxPageResult, nextPageToken);
         }
 
         public async Task<IVideoItem> GetVideoItem(string videoId)

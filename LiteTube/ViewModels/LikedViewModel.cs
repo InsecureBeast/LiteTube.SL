@@ -1,30 +1,23 @@
 ﻿using System;
-using LiteTube.Common;
-using LiteTube.DataClasses;
-using LiteTube.DataModel;
-using LiteTube.ViewModels.Nodes;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LiteTube.DataClasses;
+using LiteTube.DataModel;
+using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube.ViewModels
 {
-    class FavoritesViewModel : SectionBaseViewModel
+    class LikedViewModel : SectionBaseViewModel
     {
-        public FavoritesViewModel(Func<IDataSource> datasource, IConnectionListener connectionListener)
-            : base(datasource, connectionListener)
+        public LikedViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener) 
+            : base(getGeDataSource, connectionListener)
         {
-        }
-
-        public override string ToString()
-        {
-            return Title;
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            var res = await _getGeDataSource().GetFavorites(nextPageToken);
-            return res;
+            return await _getGeDataSource().GetLiked(nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -43,22 +36,12 @@ namespace LiteTube.ViewModels
             {
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
-                Items.Add(new PlayListItemNodeViewModel(item, Delete));
+                Items.Add(new PlayListItemNodeViewModel(item));
             }
 
             IsLoading = false;
             if (!Items.Any())
                 IsEmpty = true;
-        }
-
-        private async Task Delete()
-        {
-            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
-            foreach (var item in items)
-            {
-                await _getGeDataSource().RemoveFromFavorites(item.Id);
-                Items.Remove(item);
-            }
         }
     }
 }

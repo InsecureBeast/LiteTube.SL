@@ -11,7 +11,6 @@ namespace LiteTube.ViewModels
         private readonly ObservableCollection<string> _videoQualities;
         private readonly Func<IDataSource> _getDataSource;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
-        private readonly string _title;
         private string _selectedRegion;
         private string _selectedQuality;
 
@@ -40,11 +39,6 @@ namespace LiteTube.ViewModels
         public ObservableCollection<string> VideoQualities
         {
             get { return _videoQualities; }
-        }
-
-        public string Title
-        {
-            get { return _title; }
         }
 
         public string SelectedRegion

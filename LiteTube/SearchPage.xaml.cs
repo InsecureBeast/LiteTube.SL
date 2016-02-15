@@ -39,6 +39,9 @@ namespace LiteTube
             NavigationHelper.OnNavigatedTo(this);
 
             var model = DataContext as SearchPageViewModel;
+            if (model == null)
+                return;
+
             if (model.Items.Count > 0)
                 _firstLoad = false;
         }

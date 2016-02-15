@@ -9,13 +9,18 @@ namespace LiteTube.ViewModels.Nodes
 {
     class PlayListItemNodeViewModel : NodeViewModelBase
     {
-        private string _videoId;
-        private string _id;
+        private readonly string _videoId;
+        private readonly string _id;
         private readonly Func<Task> _deleteFunc;
-        private bool _isSelected;
         private readonly RelayCommand _deleteCommand;
+        private bool _isSelected;
 
-        public PlayListItemNodeViewModel(IPlayListItem item, Func<Task> deleteFunc)
+        public PlayListItemNodeViewModel(IPlayListItem item, Func<Task> deleteFunc) : this(item)
+        {
+            _deleteFunc = deleteFunc;
+        }
+
+        public PlayListItemNodeViewModel(IPlayListItem item)
         {
             PlayListItem = item;
             _id = item.Id;
@@ -23,10 +28,10 @@ namespace LiteTube.ViewModels.Nodes
             Title = item.Snippet.Title;
             Description = item.Snippet.Description;
             ImagePath = item.Snippet.Thumbnails.Medium.Url;
-            PublishedAt = item.Snippet.PublishedAt.Value.ToString("d", CultureInfo.CurrentCulture);
+            if (item.Snippet.PublishedAt != null)
+                PublishedAt = item.Snippet.PublishedAt.Value.ToString("d", CultureInfo.CurrentCulture);
 
             _deleteCommand = new RelayCommand(Delete);
-            _deleteFunc = deleteFunc;
         }
 
         public ICommand DeleteCommand
@@ -68,6 +73,8 @@ namespace LiteTube.ViewModels.Nodes
         private async void Delete()
         {
             IsSelected = true;
+            if (_deleteFunc == null)
+                return;
             await _deleteFunc();
         }
     }

@@ -103,13 +103,14 @@ namespace LiteTube.ViewModels
             IsEmpty = false;
 
             _mostPopularViewModel.Items.Clear();
-            await _mostPopularViewModel.FirstLoad();
-            await LoadGuideCategories();
             if (_getGeDataSource().IsAuthorized)
             {
                 _activitySectionViewModel.Items.Clear();
-                await _activitySectionViewModel.FirstLoad();
+                _activitySectionViewModel.FirstLoad();
             }
+
+            _mostPopularViewModel.FirstLoad();
+            await LoadGuideCategories();
 
             IsDataLoaded = true;
             IsLoading = false;

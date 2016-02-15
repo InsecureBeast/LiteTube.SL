@@ -240,7 +240,7 @@
     <value>Unsubscribe</value>
   </data>
   <data name="UsingSoftware" xml:space="preserve">
-    <value>Software</value>
+    <value>Third-party software</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
@@ -274,5 +274,8 @@
   </data>
   <data name="ChannelNotFoundTooltip" xml:space="preserve">
     <value>Channel not found. Try to create channel on YouTube site.</value>
+  </data>
+  <data name="LikedVideos" xml:space="preserve">
+    <value>liked</value>
   </data>
 </root>
