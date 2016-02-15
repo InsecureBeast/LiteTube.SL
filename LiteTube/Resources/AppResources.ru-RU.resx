@@ -135,7 +135,7 @@
     <value>О программе</value>
   </data>
   <data name="AboutText" xml:space="preserve">
-    <value>Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может передавать только видео, не поддерживает загрузки/кеширование. Пожалуйста, обратите внимание, что загрузка не допускается YouTube.</value>
+    <value>Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может воспроизводить только видео, не поддерживает загрузки или кеширование. Пожалуйста, обратите внимание, что загрузка не допускается политикой YouTube.</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
     <value>Добавить в избранное</value>
@@ -231,7 +231,7 @@
     <value>Отменить подписку</value>
   </data>
   <data name="UsingSoftware" xml:space="preserve">
-    <value>ПО</value>
+    <value>Стороннее ПО</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Версия</value>

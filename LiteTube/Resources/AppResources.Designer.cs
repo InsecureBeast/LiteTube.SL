@@ -475,7 +475,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Software.
+        ///   Looks up a localized string similar to Third-party software.
         /// </summary>
         public static string UsingSoftware {
             get {
