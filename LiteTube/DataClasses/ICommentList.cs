@@ -134,7 +134,7 @@ namespace LiteTube.DataClasses
             LikeCount = authorSnippet.LikeCount;
             PublishedAt = authorSnippet.PublishedAt;
             if (PublishedAt != null)
-                PublishedAtRaw = PublishedAt.Value.ToString("f");
+                PublishedAtRaw = PublishedAt.Value.ToString("g");
             TextDisplay = authorSnippet.TextDisplay;
             IsReplay = false;
 

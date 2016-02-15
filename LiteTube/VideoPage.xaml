@@ -150,7 +150,8 @@
                                                  Command="{Binding NavigationPanelViewModel.ChannelCommand}"
                                                  CommandParameter="{Binding ChannelId}"
                                                  FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                 HorizontalAlignment="Left"/>
+                                                 HorizontalAlignment="Left"
+                                                 HorizontalContentAlignment="Left"/>
                                 <TextBlock TextWrapping="NoWrap"
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            TextTrimming="WordEllipsis"
@@ -169,7 +170,7 @@
 
                             <Button Grid.Column="2"
                                     Margin="0,0,8,0"
-                                    Width="140"
+                                    Width="130"
                                     Height="60"
                                     Command="{Binding SubscribeCommand}"
                                     Style="{StaticResource ContentButtonStyle}"
@@ -189,7 +190,7 @@
                                     Style="{StaticResource ContentButtonStyle}"
                                     Padding="5"
                                     Margin="0,0,8,0"
-                                    Width="140"
+                                    Width="130"
                                     Height="60"
                                     Command="{Binding UnsubscribeCommand}"
                                     Visibility="{Binding IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
