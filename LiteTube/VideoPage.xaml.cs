@@ -124,7 +124,8 @@ namespace LiteTube
                 if (NavigationService.CanGoBack)
                     NavigationService.RemoveBackEntry();
 
-                _playerPosition = TimeSpan.Parse(pos);
+                _playerPosition = TimeSpan.Zero;
+                TimeSpan.TryParse(pos, out _playerPosition);
             }
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
@@ -307,23 +308,18 @@ namespace LiteTube
 
         private void Current_Activated(object sender, ActivatedEventArgs e)
         {
-            if (_deactivatedState != null)
-            {
+            if (_deactivatedState == null) 
+                return;
+            
+            PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
+            PhoneApplicationService.Current.Activated -= Current_Activated;
 
-                PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
-                PhoneApplicationService.Current.Activated -= Current_Activated;
-
-                LayoutHelper.InvokeFromUIThread(() =>
-                {
-                    player.RestoreMediaState(_deactivatedState);
-
-                    if (_resumed) 
-                        return;
+            player.RestoreMediaState(_deactivatedState);
+            if (_resumed) 
+                return;
                     
-                    Reload();
-                    _resumed = true;
-                });
-            }
+            Reload();
+            _resumed = true;
         }
 
         private void Reload()
@@ -335,9 +331,11 @@ namespace LiteTube
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            player.Close(); // shut things like ads down.
             _deactivatedState = _playerState;
             _playerPosition = player.VirtualPosition;
+
+            player.Close(); // shut things like ads down.
+            player.Dispose();
         }
     }
 }
