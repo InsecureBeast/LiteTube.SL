@@ -56,8 +56,6 @@ namespace LiteTube
         /// </summary>
         public App()
         {
-            var cu = Thread.CurrentThread.CurrentCulture;
-
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
@@ -306,6 +304,9 @@ namespace LiteTube
             // Set the page's AplipcationBar to a new instance of ApplicationBar.
             var appBar = Application.Current.Resources["GlobalAppBar"] as ApplicationBar;
             var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
+            if (appBar == null) 
+                return;
+            
             appBar.Buttons.Clear();
             appBar.MenuItems.Clear();
             appBar.Buttons.Add(homeButton);
