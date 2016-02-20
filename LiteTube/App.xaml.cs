@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
@@ -15,7 +11,6 @@ using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
-using System.Threading;
 
 namespace LiteTube
 {
@@ -24,32 +19,15 @@ namespace LiteTube
         private static MainViewModel _viewModel = null;
         private static readonly ContainerBootstrapper _container = new ContainerBootstrapper();
 
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
-        public static MainViewModel ViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (_viewModel == null)
-                {
-                    _container.Build();
-                    _viewModel = new MainViewModel(() => _container.GetDataSource(), _container.ConnectionListener);
-                }
+        // Set to Home when the app is launched from Primary tile.
+        // Set to DeepLink when the app is launched from Deep Link.
+        private SessionType _sessionType = SessionType.None;
 
-                return _viewModel;
-            }
-        }
+        // Set to true when the page navigation is being reset 
+        bool _wasRelaunched = false;
 
-        /// <summary>
-        /// Provides easy access to the root frame of the Phone Application.
-        /// </summary>
-        /// <returns>The root frame of the Phone Application.</returns>
-        public static PhoneApplicationFrame RootFrame { get; private set; }
-
-        public WebAuthenticationBrokerContinuationEventArgs WabContinuationArgs { get; set; }
+        // set to true when 5 min passed since the app was relaunched
+        bool _mustClearPagestack = false;
 
         /// <summary>
         /// Constructor for the Application object.
@@ -89,6 +67,31 @@ namespace LiteTube
             }
         }
 
+        /// <summary>
+        /// A static ViewModel used by the views to bind against.
+        /// </summary>
+        /// <returns>The MainViewModel object.</returns>
+        public static MainViewModel ViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (_viewModel == null)
+                {
+                    _container.Build();
+                    _viewModel = new MainViewModel(() => _container.GetDataSource(), _container.ConnectionListener);
+                }
+
+                return _viewModel;
+            }
+        }
+
+        /// <summary>
+        /// Provides easy access to the root frame of the Phone Application.
+        /// </summary>
+        /// <returns>The root frame of the Phone Application.</returns>
+        public static PhoneApplicationFrame RootFrame { get; private set; }
+
         // prevents crash when trying to navigate to current page
         public static void NavigateTo(string url)
         {
@@ -111,12 +114,28 @@ namespace LiteTube
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
             BuildLocalizedApplicationBar();
+
+            // When a new instance of the app is launched, clear all deactivation settings
+            RemoveCurrentDeactivationSettings();
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private async void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            // If some interval has passed since the app was deactivated (30 seconds in this example),
+            // then remember to clear the back stack of pages
+            _mustClearPagestack = CheckDeactivationTimeStamp();
+
+
+            // If IsApplicationInstancePreserved is not true, then set the session type to the value
+            // saved in isolated storage. This will make sure the session type is correct for an
+            // app that is being resumed after being tombstoned.
+            if (!e.IsApplicationInstancePreserved)
+            {
+                RestoreSessionType();
+            }
+
             // Ensure that application state is restored appropriately
             if (!ViewModel.IsDataLoaded)
             {
@@ -132,7 +151,8 @@ namespace LiteTube
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            // Ensure that required application state is persisted here.
+            // When the applicaiton is deactivated, save the current deactivation settings to isolated storage
+            SaveCurrentDeactivationSettings();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
@@ -140,6 +160,8 @@ namespace LiteTube
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
             PhoneApplicationService.Current.State["model"] = null;
+            // When the application closes, delete any deactivation settings from isolated storage
+            RemoveCurrentDeactivationSettings();
         }
 
         // Code to execute if a navigation fails
@@ -194,6 +216,9 @@ namespace LiteTube
             // Handle reset requests for clearing the backstack
             RootFrame.Navigated += CheckForResetNavigation;
 
+            // Monitor deep link launching 
+            RootFrame.Navigating += RootFrame_Navigating;
+
             // Handle contract activation such as a file open or save picker
             PhoneApplicationService.Current.ContractActivated += Application_ContractActivated;
 
@@ -233,6 +258,74 @@ namespace LiteTube
             while (RootFrame.RemoveBackEntry() != null)
             {
                 ; // do nothing
+            }
+        }
+
+        // Event handler for the Navigating event of the root frame. Use this handler to modify
+        // the default navigation behavior.
+        void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+
+            // If the session type is None or New, check the navigation Uri to determine if the
+            // navigation is a deep link or if it points to the app's main page.
+            if (_sessionType == SessionType.None && e.NavigationMode == NavigationMode.New)
+            {
+                // This block will run if the current navigation is part of the app's intial launch
+
+
+                // Keep track of Session Type 
+                if (e.Uri.ToString().Contains("DeepLink=true"))
+                {
+                    _sessionType = SessionType.DeepLink;
+                }
+                else if (e.Uri.ToString().Contains("/MainPage.xaml"))
+                {
+                    _sessionType = SessionType.Home;
+                }
+            }
+
+
+            if (e.NavigationMode == NavigationMode.Reset)
+            {
+                // This block will execute if the current navigation is a relaunch.
+                // If so, another navigation will be coming, so this records that a relaunch just happened
+                // so that the next navigation can use this info.
+                _wasRelaunched = true;
+            }
+            else if (e.NavigationMode == NavigationMode.New && _wasRelaunched)
+            {
+                // This block will run if the previous navigation was a relaunch
+                _wasRelaunched = false;
+
+                if (e.Uri.ToString().Contains("DeepLink=true"))
+                {
+                    // This block will run if the launch Uri contains "DeepLink=true" which
+                    // was specified when the secondary tile was created in MainPage.xaml.cs
+
+                    _sessionType = SessionType.DeepLink;
+                    // The app was relaunched via a Deep Link.
+                    // The page stack will be cleared.
+                }
+                else if (e.Uri.ToString().Contains("/MainPage.xaml"))
+                {
+                    // This block will run if the navigation Uri is the main page
+                    if (_sessionType == SessionType.DeepLink)
+                    {
+                        // When the app was previously launched via Deep Link and relaunched via Main Tile, we need to clear the page stack. 
+                        _sessionType = SessionType.Home;
+                    }
+                    else
+                    {
+                        if (!_mustClearPagestack)
+                        {
+                            //The app was previously launched via Main Tile and relaunched via Main Tile. Cancel the navigation to resume.
+                            e.Cancel = true;
+                            RootFrame.Navigated -= ClearBackStackAfterReset;
+                        }
+                    }
+                }
+
+                _mustClearPagestack = false;
             }
         }
 
@@ -310,6 +403,36 @@ namespace LiteTube
             appBar.Buttons.Clear();
             appBar.MenuItems.Clear();
             appBar.Buttons.Add(homeButton);
+        }
+
+        // Called when the app is launched or closed. Removes all deactivation settings from
+        // isolated storage
+        private void RemoveCurrentDeactivationSettings()
+        {
+            SettingsHelper.ClearDeactivationSettings();
+        }
+
+        // Helper method to determine if the interval since the app was deactivated is
+        // greater than 30 seconds
+        private bool CheckDeactivationTimeStamp()
+        {
+            var lastDeactivated = SettingsHelper.GetDeactivateTime();
+            var currentDuration = DateTimeOffset.Now.Subtract(lastDeactivated);
+            return TimeSpan.FromSeconds(currentDuration.TotalSeconds) > TimeSpan.FromSeconds(30);
+        }
+
+        // Helper method to restore the session type from isolated storage.
+        private void RestoreSessionType()
+        {
+            _sessionType = SettingsHelper.GetSessionType();
+        }
+
+        // Called when the app is deactivating. Saves the time of the deactivation and the 
+        // session type of the app instance to isolated storage.
+        private void SaveCurrentDeactivationSettings()
+        {
+            SettingsHelper.SaveDeactivateTime(DateTimeOffset.Now);
+            SettingsHelper.SaveSessionType(_sessionType);
         }
     }
 }

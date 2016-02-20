@@ -129,8 +129,8 @@ namespace LiteTube
             }
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
-            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
-            PhoneApplicationService.Current.Activated += Current_Activated;
+            //PhoneApplicationService.Current.Deactivated += Current_Deactivated;
+            //PhoneApplicationService.Current.Activated += Current_Activated;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

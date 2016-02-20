@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Text;
 using Windows.Storage;
 
@@ -138,6 +139,94 @@ namespace LiteTube.Common
         internal static void SaveCurrentVideoId(string videoId)
         {
             ApplicationData.Current.RoamingSettings.Values["VideoId"] = videoId;
+        }
+
+        public static void ClearDeactivationSettings()
+        {
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            RemoveValue("DeactivateTime");
+            RemoveValue("SessionType");
+            settings.Save();
+        }
+
+        public static void SaveDeactivateTime(DateTimeOffset dateTimeOffset)
+        {
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            if (AddOrUpdateValue("DeactivateTime", dateTimeOffset))
+            {
+                settings.Save();
+            }
+        }
+
+        public static void SaveSessionType(SessionType sessionType)
+        {
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            if (AddOrUpdateValue("SessionType", sessionType))
+            {
+                settings.Save();
+            }
+        }
+
+        public static DateTimeOffset GetDeactivateTime()
+        {
+            var deactivationTime = DateTimeOffset.Now; 
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            if (settings.Contains("DeactivateTime"))
+            {
+                deactivationTime = (DateTimeOffset)settings["DeactivateTime"];
+            }
+
+            return deactivationTime;
+        }
+
+        public static SessionType GetSessionType()
+        {
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            var sessionType = SessionType.None;
+            if (settings.Contains("SessionType"))
+            {
+                sessionType = (SessionType)settings["SessionType"];
+            }
+
+            return sessionType;
+        }
+
+
+        // Helper method for removing a key/value pair from isolated storage
+        private static void RemoveValue(string Key)
+        {
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+            // If the key exists
+            if (settings.Contains(Key))
+            {
+                settings.Remove(Key);
+            }
+        }
+
+        // Helper method for adding or updating a key/value pair in isolated storage
+        private static bool AddOrUpdateValue(string Key, Object value)
+        {
+            bool valueChanged = false;
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+
+            // If the key exists
+            if (settings.Contains(Key))
+            {
+                // If the value has changed
+                if (settings[Key] != value)
+                {
+                    // Store the new value
+                    settings[Key] = value;
+                    valueChanged = true;
+                }
+            }
+            // Otherwise create the key.
+            else
+            {
+                settings.Add(Key, value);
+                valueChanged = true;
+            }
+            return valueChanged;
         }
     }
 }
