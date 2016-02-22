@@ -112,24 +112,6 @@ namespace LiteTube
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
             }
 
-            string pos;
-            if (NavigationContext.QueryString.TryGetValue("pos", out pos))
-            {
-                _resumed = true;
-
-                //pos exists therefore it's a reload, so delete the last entry
-                //from the navigation stack
-                var str = string.Format("/VideoPage.xaml?videoId={0}", viewModel.VideoId);
-                if (!NavigationHelper.Contains(str))
-                    return;
-                
-                if (NavigationService.CanGoBack)
-                    NavigationService.RemoveBackEntry();
-
-                _playerPosition = TimeSpan.Zero;
-                TimeSpan.TryParse(pos, out _playerPosition);
-            }
-
             _sensor.OrientationChanged += Sensor_OrientationChanged;
             PhoneApplicationService.Current.Deactivated += Current_Deactivated;
             PhoneApplicationService.Current.Activated += Current_Activated;
@@ -309,8 +291,8 @@ namespace LiteTube
             if (_playerState == null)
                 return;
 
-            PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
-            PhoneApplicationService.Current.Activated -= Current_Activated;
+            //PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
+            //PhoneApplicationService.Current.Activated -= Current_Activated;
 
             RestroePlayer();
 
