@@ -2,6 +2,7 @@
 using Microsoft.Phone.Shell;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace LiteTube.Common.Helpers
 {
@@ -9,14 +10,7 @@ namespace LiteTube.Common.Helpers
     {
         public static void GoHome()
         {
-            var list = App.RootFrame.BackStack.ToList();
-            for (int i = 0; i < list.Count - 1; i++)
-            {
-                App.RootFrame.RemoveBackEntry();
-            }
-
-            if (App.RootFrame.CanGoBack)
-                App.RootFrame.GoBack();
+            App.NavigateTo("/MainPage.xaml");
         }
 
         public static void Navigate(string uri, object viewModel)

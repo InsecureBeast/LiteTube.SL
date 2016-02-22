@@ -330,6 +330,10 @@ namespace LiteTube.ViewModels
         {
             if (navObject == null)
                 return;
+
+            if (navObject.ViewModel == null)
+                return;
+
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
             NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getGeDataSource, _connectionListener));

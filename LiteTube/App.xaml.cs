@@ -127,7 +127,6 @@ namespace LiteTube
             // then remember to clear the back stack of pages
             _mustClearPagestack = CheckDeactivationTimeStamp();
 
-
             // If IsApplicationInstancePreserved is not true, then set the session type to the value
             // saved in isolated storage. This will make sure the session type is correct for an
             // app that is being resumed after being tombstoned.
@@ -265,14 +264,11 @@ namespace LiteTube
         // the default navigation behavior.
         void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-
             // If the session type is None or New, check the navigation Uri to determine if the
             // navigation is a deep link or if it points to the app's main page.
             if (_sessionType == SessionType.None && e.NavigationMode == NavigationMode.New)
             {
                 // This block will run if the current navigation is part of the app's intial launch
-
-
                 // Keep track of Session Type 
                 if (e.Uri.ToString().Contains("DeepLink=true"))
                 {
