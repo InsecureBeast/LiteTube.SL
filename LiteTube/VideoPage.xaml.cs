@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -25,7 +24,6 @@ namespace LiteTube
         private readonly IApplicationBar _sendApplicationBar;
         private readonly ApplicationBarIconButton _sendApplicationBarButton;
         private readonly ApplicationBarIconButton _favoritesApplicationBarButton;
-        private MediaState _deactivatedState;
         private MediaState _playerState;
         private bool _resumed;
         private TimeSpan _playerPosition;
@@ -62,7 +60,13 @@ namespace LiteTube
 
         private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (!_resumed) 
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            SettingsHelper.SaveCurrentVideoId(viewModel.VideoUri.AbsolutePath);
+
+            if (!_resumed)
                 return;
 
             LayoutHelper.InvokeFromUIThread(() =>
@@ -101,8 +105,6 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            SettingsHelper.SaveCurrentVideoId(viewModel.VideoId);
-
             if (viewModel.NavigationPanelViewModel.IsAuthorized)
             {
                 if (_currentApplicationBar.Buttons.Contains(_favoritesApplicationBarButton))
@@ -129,8 +131,8 @@ namespace LiteTube
             }
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
-            //PhoneApplicationService.Current.Deactivated += Current_Deactivated;
-            //PhoneApplicationService.Current.Activated += Current_Activated;
+            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
+            PhoneApplicationService.Current.Activated += Current_Activated;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -234,8 +236,6 @@ namespace LiteTube
             player.IsFullScreen = false;
             player.Width = _normalWidth;
             player.Height = _normalWidth / 1.778;
-            playerCanvas.Width = player.Width;
-            playerCanvas.Height = player.Height;
             PlayerMover.Y = 0;
             PaidTextBlock.Width = player.Width;
             PaidTextBlock.Height = player.Height;
@@ -246,8 +246,6 @@ namespace LiteTube
             player.IsFullScreen = true;
             player.Width = _normalHeight;
             player.Height = _normalWidth;
-            playerCanvas.Width = player.Width;
-            playerCanvas.Height = player.Height;
             PlayerMover.Y = 0;
             PaidTextBlock.Width = player.Width;
             PaidTextBlock.Height = player.Height;
@@ -308,17 +306,17 @@ namespace LiteTube
 
         private void Current_Activated(object sender, ActivatedEventArgs e)
         {
-            if (_deactivatedState == null) 
+            if (_playerState == null)
                 return;
-            
+
             PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
             PhoneApplicationService.Current.Activated -= Current_Activated;
 
-            player.RestoreMediaState(_deactivatedState);
-            if (_resumed) 
+            RestroePlayer();
+
+            if (_resumed)
                 return;
-                    
-            Reload();
+
             _resumed = true;
         }
 
@@ -329,11 +327,29 @@ namespace LiteTube
             NavigationHelper.Navigate(view, new VideoPageViewModel(videoId, App.ViewModel.GetDataSource, App.ViewModel.ConnectionListener));
         }
 
+        private void RestroePlayer()
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            player = new MediaPlayer();
+            player.IsFullScreenVisible = true;
+            player.IsFullScreenEnabled = true;
+            player.VerticalAlignment = VerticalAlignment.Center;
+            player.IsSkipAheadVisible = false;
+            player.IsSkipBackVisible = false;
+            player.AllowMediaStartingDeferrals = false;
+            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            player.MediaOpened += PlayerOnMediaOpened;
+
+            player.RestoreMediaState(_playerState);
+            playerBg.Children.Add(player);
+        }
+
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            _deactivatedState = _playerState;
             _playerPosition = player.VirtualPosition;
-
             player.Close(); // shut things like ads down.
             player.Dispose();
         }

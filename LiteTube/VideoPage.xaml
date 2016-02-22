@@ -273,22 +273,22 @@
         </phone:Pivot>
 
         <Grid Grid.Row="1"
-              VerticalAlignment="Top">
-            <Canvas x:Name="playerCanvas" 
-                    Background="Black">
+              VerticalAlignment="Top"
+              Background="Black"
+              Name="playerBg">
                 <mmppf:MediaPlayer x:Name="player"
-                               Source="{Binding VideoUri}"
-                               PosterSource="{Binding ImagePath}"
-                               IsFullScreenVisible="True"
-                               IsFullScreenEnabled="True"
-                               VerticalAlignment="Center"
-                               IsSkipAheadVisible="False"
-                               IsSkipBackVisible="False">
+                                   Source="{Binding VideoUri}"
+                                   PosterSource="{Binding ImagePath}"
+                                   IsFullScreenVisible="True"
+                                   IsFullScreenEnabled="True"
+                                   VerticalAlignment="Center"
+                                   IsSkipAheadVisible="False"
+                                   IsSkipBackVisible="False"
+                                   AllowMediaStartingDeferrals="False">
                 <mmppf:MediaPlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </mmppf:MediaPlayer.RenderTransform>
             </mmppf:MediaPlayer>
-            </Canvas>
 
             <Border Background="#BF000000"
                     Name="PaidTextBlock"
