@@ -48,7 +48,7 @@ namespace LiteTube
             _currentApplicationBar = new ApplicationBar();
             _currentApplicationBar.Mode = ApplicationBarMode.Minimized;
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click));
-            _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Refresh.png", AppResources.Refresh, Refresh_Click));
+            //_currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Refresh.png", AppResources.Refresh, Refresh_Click));
             _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem(AppResources.CopyVideoLink, CopyVideoUrl_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", AppResources.AddToFavorites, AddToFavorites_Click);
@@ -281,10 +281,10 @@ namespace LiteTube
             viewModel.CommentsViewModel.AddCommentCommand.Execute(null);
         }
 
-        private void Refresh_Click(object sender, EventArgs e)
-        {
-            Reload();
-        }
+        //private void Refresh_Click(object sender, EventArgs e)
+        //{
+        //    Reload();
+        //}
 
         private void AddToFavorites_Click(object sender, EventArgs e)
         {
@@ -320,12 +320,12 @@ namespace LiteTube
             _resumed = true;
         }
 
-        private void Reload()
-        {
-            var videoId = SettingsHelper.GetCurrentVideoId();
-            var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", videoId, _playerPosition, Guid.NewGuid());
-            NavigationHelper.Navigate(view, new VideoPageViewModel(videoId, App.ViewModel.GetDataSource, App.ViewModel.ConnectionListener));
-        }
+        //private void Reload()
+        //{
+        //    var videoId = SettingsHelper.GetCurrentVideoId();
+        //    var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", videoId, _playerPosition, Guid.NewGuid());
+        //    NavigationHelper.Navigate(view, new VideoPageViewModel(videoId, App.ViewModel.GetDataSource, App.ViewModel.ConnectionListener));
+        //}
 
         private void RestroePlayer()
         {
