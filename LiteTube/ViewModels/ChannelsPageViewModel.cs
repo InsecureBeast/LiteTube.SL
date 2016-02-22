@@ -8,6 +8,7 @@ using System.Linq;
 using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
 using Microsoft.Phone.Shell;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -81,9 +82,21 @@ namespace LiteTube.ViewModels
 
         internal override void NavigateTo(NavigationObject navObject)
         {
-            var id = ((ChannelNodeViewModel)navObject.ViewModel).Channel.Id;
-            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(id, _getGeDataSource, _connectionListener);
-            App.NavigateTo("/ChannelPage.xaml");
+            if (navObject == null)
+                return;
+
+            if (navObject.ViewModel == null)
+                return;
+
+            var viewModel = navObject.ViewModel as ChannelNodeViewModel;
+            if (viewModel == null)
+                return;
+
+            var channel = viewModel.Channel;
+            if (channel == null)
+                return;
+
+            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channel.Id, _getGeDataSource, _connectionListener));
         }
     }
 }

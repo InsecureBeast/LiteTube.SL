@@ -27,7 +27,7 @@ namespace LiteTube.ViewModels.Nodes
             _videoId = item.ContentDetails.VideoId;
             Title = item.Snippet.Title;
             Description = item.Snippet.Description;
-            ImagePath = item.Snippet.Thumbnails.Medium.Url;
+            ImagePath = item.Snippet.Thumbnails.GetThumbnailUrl();
             if (item.Snippet.PublishedAt != null)
                 PublishedAt = item.Snippet.PublishedAt.Value.ToString("d", CultureInfo.CurrentCulture);
 

@@ -34,8 +34,12 @@ namespace LiteTube.ViewModels
             var itemsList = Items.ToList();
             foreach (var item in items)
             {
+                if (item == null)
+                    continue;
+
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
+
                 Items.Add(new PlayListItemNodeViewModel(item));
             }
 
