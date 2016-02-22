@@ -77,7 +77,7 @@
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="LikedList"
                                   Content="{Binding LikedViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListViewContextMenu}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item five-->
