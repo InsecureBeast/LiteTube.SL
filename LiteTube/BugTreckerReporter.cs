@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using LiteTube.Common;
+using System.Reflection;
 
 namespace LiteTube
 {
@@ -21,7 +21,7 @@ namespace LiteTube
             try
             {
                 var builder = new StringBuilder();
-                builder.AppendFormat("Version - {0}{1}", System.Reflection.Assembly.GetExecutingAssembly().ImageRuntimeVersion, Environment.NewLine);
+                builder.AppendFormat("Version - {0}{1}", Assembly.GetExecutingAssembly().GetName().Version, Environment.NewLine);
                 builder.AppendFormat("Region - {0}{1}", SettingsHelper.GetRegion(), Environment.NewLine);
                 builder.AppendFormat("Quality - {0}{1}", SettingsHelper.GetQuality(), Environment.NewLine);
                 builder.AppendFormat("Is Authorized - {0}{1}", SettingsHelper.IsContainsAuthorizationData(), Environment.NewLine);
@@ -35,7 +35,7 @@ namespace LiteTube
 
         private static async Task Send(Exception exception, string addInfo)
         {
-            const string url = "https://bitbucket.org/api/1.0/repositories/insecureBeast/litetube/issues/";
+            const string url = "https://bitbucket.org/api/1.0/repositories/insecureBeast/litetubesl/issues/";
             var request = WebRequest.Create(url) as HttpWebRequest;
 
             string credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes("insecureBeast" + ":" + "GM9d3Lqw"));
