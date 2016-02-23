@@ -141,6 +141,18 @@ namespace LiteTube
                 await ViewModel.LoadData();
             }
 
+            LayoutHelper.InvokeFromUIThread(async () => 
+            {
+                if (_mustClearPagestack)
+                {
+                    if (App.ViewModel.IsAuthorized)
+                       await App.ViewModel.GetDataSource().LoginSilently(string.Empty);
+
+                    NavigationHelper.GoHome();
+
+                }
+            });
+
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
             BuildLocalizedApplicationBar();
@@ -414,7 +426,7 @@ namespace LiteTube
         {
             var lastDeactivated = SettingsHelper.GetDeactivateTime();
             var currentDuration = DateTimeOffset.Now.Subtract(lastDeactivated);
-            return TimeSpan.FromSeconds(currentDuration.TotalSeconds) > TimeSpan.FromSeconds(30);
+            return TimeSpan.FromSeconds(currentDuration.TotalSeconds) > TimeSpan.FromHours(2);
         }
 
         // Helper method to restore the session type from isolated storage.
