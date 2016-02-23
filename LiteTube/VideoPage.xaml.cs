@@ -100,7 +100,11 @@ namespace LiteTube
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
-            
+
+            _sensor.OrientationChanged += Sensor_OrientationChanged;
+            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
+            PhoneApplicationService.Current.Activated += Current_Activated;
+
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
@@ -111,10 +115,6 @@ namespace LiteTube
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
             }
-
-            _sensor.OrientationChanged += Sensor_OrientationChanged;
-            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
-            PhoneApplicationService.Current.Activated += Current_Activated;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
