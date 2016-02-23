@@ -426,7 +426,7 @@ namespace LiteTube
         {
             var lastDeactivated = SettingsHelper.GetDeactivateTime();
             var currentDuration = DateTimeOffset.Now.Subtract(lastDeactivated);
-            return TimeSpan.FromSeconds(currentDuration.TotalSeconds) > TimeSpan.FromHours(2);
+            return TimeSpan.FromSeconds(currentDuration.TotalSeconds) > TimeSpan.FromHours(1);
         }
 
         // Helper method to restore the session type from isolated storage.
