@@ -38,6 +38,8 @@ namespace LiteTube
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
+            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
+            PhoneApplicationService.Current.Activated += Current_Activated;
             
             _sensor = SimpleOrientationSensor.GetDefault();
 
@@ -102,9 +104,7 @@ namespace LiteTube
             NavigationHelper.OnNavigatedTo(this);
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
-            PhoneApplicationService.Current.Deactivated += Current_Deactivated;
-            PhoneApplicationService.Current.Activated += Current_Activated;
-
+            
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
@@ -288,18 +288,25 @@ namespace LiteTube
 
         private void Current_Activated(object sender, ActivatedEventArgs e)
         {
-            if (_playerState == null)
-                return;
+            try
+            {
+                if (_playerState == null)
+                    return;
 
-            //PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
-            //PhoneApplicationService.Current.Activated -= Current_Activated;
+                //PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
+                //PhoneApplicationService.Current.Activated -= Current_Activated;
 
-            RestroePlayer();
+                RestorePlayer();
 
-            if (_resumed)
-                return;
+                if (_resumed)
+                    return;
 
-            _resumed = true;
+                _resumed = true;
+            }
+            catch (Exception)
+            {
+                ;
+            }
         }
 
         //private void Reload()
@@ -309,7 +316,7 @@ namespace LiteTube
         //    NavigationHelper.Navigate(view, new VideoPageViewModel(videoId, App.ViewModel.GetDataSource, App.ViewModel.ConnectionListener));
         //}
 
-        private void RestroePlayer()
+        private void RestorePlayer()
         {
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
