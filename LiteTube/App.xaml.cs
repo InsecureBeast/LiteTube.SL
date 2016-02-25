@@ -123,7 +123,7 @@ namespace LiteTube
         // This code will not execute when the application is first launched
         private async void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            // If some interval has passed since the app was deactivated (30 seconds in this example),
+            // If some interval has passed since the app was deactivated (30 min),
             // then remember to clear the back stack of pages
             _mustClearPagestack = CheckDeactivationTimeStamp();
 
@@ -133,6 +133,20 @@ namespace LiteTube
             if (!e.IsApplicationInstancePreserved)
             {
                 RestoreSessionType();
+                LayoutHelper.InvokeFromUIThread(async () =>
+                {
+                    if (!_mustClearPagestack)
+                        return;
+                    
+                    if (ViewModel.IsAuthorized)
+                        await ViewModel.GetDataSource().LoginSilently(string.Empty);
+
+                    NavigationHelper.GoHome();
+                });
+
+                //TODO get from settings))
+                ThemeManager.GoToLightTheme();
+                BuildLocalizedApplicationBar();
             }
 
             // Ensure that application state is restored appropriately
@@ -140,22 +154,6 @@ namespace LiteTube
             {
                 await ViewModel.LoadData();
             }
-
-            LayoutHelper.InvokeFromUIThread(async () => 
-            {
-                if (_mustClearPagestack)
-                {
-                    if (App.ViewModel.IsAuthorized)
-                       await App.ViewModel.GetDataSource().LoginSilently(string.Empty);
-
-                    NavigationHelper.GoHome();
-
-                }
-            });
-
-            //TODO get from settings))
-            ThemeManager.GoToLightTheme();
-            BuildLocalizedApplicationBar();
         }
 
         // Code to execute when the application is deactivated (sent to background)
@@ -164,6 +162,7 @@ namespace LiteTube
         {
             // When the applicaiton is deactivated, save the current deactivation settings to isolated storage
             SaveCurrentDeactivationSettings();
+            PhoneApplicationService.Current.State["model"] = null;
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
@@ -183,6 +182,8 @@ namespace LiteTube
                 // A navigation has failed; break into the debugger
                 Debugger.Break();
             }
+
+            e.Handled = true;
         }
 
         // Code to execute on Unhandled Exceptions
