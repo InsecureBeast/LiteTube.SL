@@ -27,6 +27,7 @@ namespace LiteTube
         private MediaState _playerState;
         private bool _resumed;
         private TimeSpan _playerPosition;
+        private bool _isFullScreen = false;
 
         public VideoPage()
         {
@@ -221,6 +222,8 @@ namespace LiteTube
             PlayerMover.Y = 0;
             PaidTextBlock.Width = player.Width;
             PaidTextBlock.Height = player.Height;
+            playerBg.Width = player.Width;
+            playerBg.Height = player.Height;
         }
 
         private void SetPlayerFullScreenState()
@@ -231,6 +234,8 @@ namespace LiteTube
             PlayerMover.Y = 0;
             PaidTextBlock.Width = player.Width;
             PaidTextBlock.Height = player.Height;
+            playerBg.Width = player.Width;
+            playerBg.Height = player.Height;
         }
 
         private void SetVisibilityControls(Visibility visibility)
@@ -243,6 +248,7 @@ namespace LiteTube
 
         private void PlayerIsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
+            _isFullScreen = player.IsFullScreen;
             if (player.IsFullScreen)
             {
                 SupportedOrientations = SupportedPageOrientation.Landscape; 
@@ -334,6 +340,11 @@ namespace LiteTube
 
             player.RestoreMediaState(_playerState);
             playerBg.Children.Add(player);
+
+            if (_isFullScreen)
+                SetPlayerFullScreenState();
+            else
+                SetPlayerNormalState();
         }
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
