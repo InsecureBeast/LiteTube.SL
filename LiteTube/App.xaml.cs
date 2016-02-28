@@ -133,21 +133,22 @@ namespace LiteTube
             if (!e.IsApplicationInstancePreserved)
             {
                 RestoreSessionType();
-                LayoutHelper.InvokeFromUIThread(async () =>
-                {
-                    if (!_mustClearPagestack)
-                        return;
-                    
-                    if (ViewModel.IsAuthorized)
-                        await ViewModel.GetDataSource().LoginSilently(string.Empty);
-
-                    NavigationHelper.GoHome();
-                });
-
-                //TODO get from settings))
-                ThemeManager.GoToLightTheme();
-                BuildLocalizedApplicationBar();
             }
+
+            LayoutHelper.InvokeFromUIThread(async () =>
+            {
+                if (!_mustClearPagestack)
+                    return;
+
+                if (ViewModel.IsAuthorized)
+                    await ViewModel.GetDataSource().LoginSilently(string.Empty);
+
+                NavigationHelper.GoHome();
+            });
+
+            //TODO get from settings))
+            ThemeManager.GoToLightTheme();
+            BuildLocalizedApplicationBar();
 
             // Ensure that application state is restored appropriately
             if (!ViewModel.IsDataLoaded)
@@ -201,6 +202,12 @@ namespace LiteTube
             {
                 _container.DialogService.ShowError(e.ExceptionObject);
                 return;
+            }
+
+            if (e.ExceptionObject.InnerException != null)
+            {
+                if (e.ExceptionObject.InnerException is System.Net.WebException)
+                    return;
             }
 
             _container.DialogService.ShowException(e.ExceptionObject);
@@ -427,7 +434,7 @@ namespace LiteTube
         {
             var lastDeactivated = SettingsHelper.GetDeactivateTime();
             var currentDuration = DateTimeOffset.Now.Subtract(lastDeactivated);
-            return TimeSpan.FromSeconds(currentDuration.TotalSeconds) > TimeSpan.FromHours(1);
+            return TimeSpan.FromSeconds(currentDuration.TotalSeconds) > TimeSpan.FromMinutes(20);
         }
 
         // Helper method to restore the session type from isolated storage.

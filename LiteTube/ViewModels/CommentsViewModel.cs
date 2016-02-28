@@ -3,7 +3,6 @@ using System.Windows.Input;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.Common;
@@ -16,7 +15,6 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
         private IProfile _profile;
-        private readonly ObservableCollection<CommentNodeViewModel> _comments;
         private readonly RelayCommand _addCommentCommand;
         private string _commentText;
         private bool _isAddingComment;
@@ -28,14 +26,8 @@ namespace LiteTube.ViewModels
                 return;
 
             _videoId = videoId;
-            _comments = new ObservableCollection<CommentNodeViewModel>();
             _addCommentCommand = new RelayCommand(AddComment);
             LoadProfile();
-        }
-
-        public ObservableCollection<CommentNodeViewModel> Comments
-        {
-            get { return _comments; }
         }
 
         public bool IsAuthorized
@@ -81,7 +73,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            if (_comments.Count > 0)
+            if (Items.Count > 0)
                 IsLoading = false;
 
             return await _getGeDataSource().GetComments(_videoId, nextPageToken);
@@ -96,20 +88,16 @@ namespace LiteTube.ViewModels
             AddItems(list.Items);
         }
 
-        internal void AddItems(IEnumerable<IComment> items)
+        private void AddItems(IEnumerable<IComment> items)
         {
             foreach (var item in items)
             {
-                _comments.Add(new CommentNodeViewModel(item, _getGeDataSource, _connectionListener));
+                Items.Add(new CommentNodeViewModel(item, _getGeDataSource, _connectionListener));
                 foreach (var replayItem in item.ReplayComments.OrderBy(c => c.PublishedAt))
                 {
-                    _comments.Add(new CommentNodeViewModel(replayItem, _getGeDataSource, _connectionListener));
+                    Items.Add(new CommentNodeViewModel(replayItem, _getGeDataSource, _connectionListener));
                 }
             }
-
-            IsLoading = false;
-            if (!_comments.Any())
-                IsEmpty = true;
         }
 
         private void LoadProfile()
@@ -131,7 +119,7 @@ namespace LiteTube.ViewModels
                     CommentText = string.Empty;
                     return;
                 }
-                _comments.Insert(0, new CommentNodeViewModel(myComment, _getGeDataSource, _connectionListener));
+                Items.Insert(0, new CommentNodeViewModel(myComment, _getGeDataSource, _connectionListener));
                 CommentText = string.Empty;
                 IsAddingComment = false;
                 IsEmpty = false;

@@ -217,8 +217,7 @@ namespace LiteTube.ViewModels
                 if (responseList == null || responseList.PageInfo == null)
                 {
                     IsLoading = false;
-                    if (!Items.Any())
-                        IsEmpty = true;
+                    IsEmpty = !Items.Any();
                     HideProgressIndicator();
                     return;
                 }
@@ -227,16 +226,16 @@ namespace LiteTube.ViewModels
                 _pageToken = responseList.NextPageToken;
                 _hasItems = !string.IsNullOrEmpty(_pageToken);
 
+                IsLoading = false;
+                IsEmpty = !Items.Any();
                 HideProgressIndicator();
             }
             catch (Exception)
             {
-                IsLoading = false;
-                IsEmpty = true;
                 IsConnected = true;
-
+                IsLoading = false;
+                IsEmpty = !Items.Any();
                 HideProgressIndicator();
-
                 throw;
             }
         }
@@ -276,12 +275,6 @@ namespace LiteTube.ViewModels
                     continue;
                 Items.Add(new VideoItemViewModel(item));
             }
-
-            IsLoading = false;
-            if (!Items.Any())
-                IsEmpty = true;
-
-            HideProgressIndicator();
         }
 
         private async void LoadMore()

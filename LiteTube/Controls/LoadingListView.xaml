@@ -166,7 +166,7 @@
 
     <DataTemplate x:Key="CommentsLoadingListView" >
         <Grid x:Name="ContentRoot">
-            <ListBox ItemsSource="{Binding Comments}"
+            <ListBox ItemsSource="{Binding Items}"
                      common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
                      ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
                 <ListBox.ItemTemplate>

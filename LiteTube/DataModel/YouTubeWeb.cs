@@ -72,14 +72,15 @@ namespace LiteTube.DataModel
 
         public static async Task<IEnumerable<string>> HttpGetAutoCompleteAsync(string query)
         {
+            var list = new List<string>();
             var uri = string.Format("http://suggestqueries.google.com/complete/search?client=youtube&ds=yt&q={0}", query);
             var response = await HttpGetAsync(uri, string.Empty);
             
             if (string.IsNullOrEmpty(response))
-                return null;
+                return list;
 
             var regex = new Regex(@"\[(.*?),0\]");
-            var list = new List<string>();
+            
             response = response.Remove(0, 21);
             var colm = regex.Matches(response);
             foreach (Match match in colm)

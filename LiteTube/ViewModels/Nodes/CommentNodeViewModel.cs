@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace LiteTube.ViewModels.Nodes
 {
-    public class CommentNodeViewModel 
+    public class CommentNodeViewModel : NodeViewModelBase
     {
         private readonly RelayCommand<string> _channelCommand;
         private readonly Func<IDataSource> _getDatasource;
@@ -45,6 +45,19 @@ namespace LiteTube.ViewModels.Nodes
         public ICommand ChannelCommand
         {
             get { return _channelCommand; }
+        }
+
+        public override string Id
+        {
+            get { return AuthorChannelId; }
+        }
+
+        public override string VideoId
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private void LoadChannel(string channelId)
