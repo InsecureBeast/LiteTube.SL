@@ -55,6 +55,11 @@
         <Setter Property="Margin" Value="24,0,15,0"/>
     </Style>
 
+    <Style x:Key="PhoneTextExtraSmallStyle" TargetType="TextBlock" BasedOn="{StaticResource PhoneTextBlockBase}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}" />
+    </Style>
+
     <Style x:Key="LoadingTextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeLarge}"/>
         <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyLight}"/>

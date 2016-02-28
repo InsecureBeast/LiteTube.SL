@@ -34,7 +34,8 @@
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
             <converters:LowerCaseConverter x:Key="LowerCaseConverter"/>
             <converters:LoginStatusTextConverter x:Key="LoginStatusTextConverter"/>
-            
+            <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
+
             <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
 
             <local:LocalizedStrings xmlns:local="clr-namespace:LiteTube" x:Key="LocalizedStrings"/>

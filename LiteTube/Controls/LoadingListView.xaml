@@ -188,7 +188,7 @@
                                         Margin="0,-2,0,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <HyperlinkButton Content="{Binding AuthorDisplayName}"
@@ -200,11 +200,11 @@
                                                      HorizontalContentAlignment="Left"/>
                                     <TextBlock TextWrapping="NoWrap"
                                                Grid.Column="1"
-                                               Text="{Binding PublishedAtRaw}"
-                                               HorizontalAlignment="Right"
-                                               Style="{StaticResource PhoneTextNormalStyle}"
+                                               Text="{Binding PublishedAt, Converter={StaticResource DateTimeToStringConverter}}"
+                                               HorizontalAlignment="Left"
+                                               Style="{StaticResource PhoneTextExtraSmallStyle}"
                                                Foreground="{StaticResource PhoneSecondaryForegroundBrush}"
-                                               Margin="0"/>
+                                               Margin="0,7,0,0"/>
                                 </Grid>
 
                                 <TextBlock Text="{Binding TextDisplay}" 
