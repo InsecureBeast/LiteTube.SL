@@ -140,10 +140,10 @@ namespace LiteTube
                 if (!_mustClearPagestack)
                     return;
 
+                NavigationHelper.GoHome();
+
                 if (ViewModel.IsAuthorized)
                     await ViewModel.GetDataSource().LoginSilently(string.Empty);
-
-                NavigationHelper.GoHome();
             });
 
             //TODO get from settings))
