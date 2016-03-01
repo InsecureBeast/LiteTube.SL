@@ -150,7 +150,7 @@
 
     <DataTemplate x:Key="CategoryLoadingListView" >
         <Grid>
-            <ListBox ItemsSource="{Binding CategoryItems}"
+            <ListBox ItemsSource="{Binding Items}"
                      ItemTemplate="{StaticResource CategoryItemTemplate}"
                      toolkit:TiltEffect.IsTiltEnabled="True"
                      common:ItemClickCommand.Command="{Binding ItemClickCommand}"

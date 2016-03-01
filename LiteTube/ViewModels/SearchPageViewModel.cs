@@ -50,6 +50,8 @@ namespace LiteTube.ViewModels
             }
             _pageToken = responseList.NextPageToken;
             LoadItems(responseList);
+
+            IsLoading = false;
             HideProgressIndicator();
         }
     }

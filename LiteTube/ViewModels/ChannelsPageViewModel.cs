@@ -15,7 +15,6 @@ namespace LiteTube.ViewModels
     class ChannelListPageViewModel : SectionBaseViewModel
     {
         private readonly string _categoryId;
-        private readonly ObservableCollection<ChannelNodeViewModel> _channels;
 
         public ChannelListPageViewModel(string categoryId, string title, Func<IDataSource> getGeDataSource, IConnectionListener connectionListener)
             : base(getGeDataSource, connectionListener)
@@ -23,18 +22,12 @@ namespace LiteTube.ViewModels
             _uniqueId = categoryId;
             _categoryId = categoryId;
             Title = title;
-            _channels = new ObservableCollection<ChannelNodeViewModel>();
             LayoutHelper.InvokeFromUIThread(async() => await FirstLoad());
         }
 
         public override string ToString()
         {
             return Title;
-        }
-
-        public ObservableCollection<ChannelNodeViewModel> CategoryItems
-        {
-            get { return _channels; }
         }
 
         public override void Notify(ConnectionEventArgs e)
@@ -65,19 +58,13 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<IChannel> items)
         {
-            var itemsList = _channels.ToList();
+            var itemsList = Items.ToList();
             foreach (var item in items)
             {
                 if (itemsList.Exists(i => i.Id == item.Id))
                     continue;
-                _channels.Add(new ChannelNodeViewModel(item));
+                Items.Add(new ChannelNodeViewModel(item));
             }
-
-            IsLoading = false;
-            if (!_channels.Any())
-                IsEmpty = true;
-
-            HideProgressIndicator();
         }
 
         internal override void NavigateTo(NavigationObject navObject)

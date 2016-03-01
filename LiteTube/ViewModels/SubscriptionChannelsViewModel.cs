@@ -3,7 +3,6 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using LiteTube.ViewModels.Nodes;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.Common;
@@ -13,17 +12,9 @@ namespace LiteTube.ViewModels
 {
     class SubscriptionChannelsViewModel : SectionBaseViewModel
     {
-        private readonly ObservableCollection<SubscriptionNodeViewModel> _channels;
-
         public SubscriptionChannelsViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)
         {
-            _channels = new ObservableCollection<SubscriptionNodeViewModel>();
-        }
-
-        public ObservableCollection<SubscriptionNodeViewModel> CategoryItems
-        {
-            get { return _channels; }
         }
 
         public override void Notify(ConnectionEventArgs e)
@@ -39,7 +30,7 @@ namespace LiteTube.ViewModels
                     return;
                 }
 
-                if (CategoryItems.Count > 0)
+                if (Items.Count > 0)
                     IsConnected = true;
             });
         }
@@ -72,19 +63,13 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<ISubscription> items)
         {
-            var itemsList = _channels.ToList();
+            var itemsList = Items.ToList();
             foreach (var item in items)
             {
                 if (itemsList.Exists(i => i.Id == item.ChannelId))
                     continue;
-                _channels.Add(new SubscriptionNodeViewModel(item));
+                Items.Add(new SubscriptionNodeViewModel(item));
             }
-
-            IsLoading = false;
-            if (!_channels.Any())
-                IsEmpty = true;
-
-            HideProgressIndicator();
         }
     }
 }

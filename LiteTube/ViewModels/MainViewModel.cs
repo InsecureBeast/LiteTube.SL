@@ -15,7 +15,6 @@ namespace LiteTube.ViewModels
     public class MainViewModel : SectionBaseViewModel, IListener<UpdateContextEventArgs>, IListener<UpdateSettingsEventArgs>
     {
         private readonly MostPopularViewModel _mostPopularViewModel;
-        private readonly ObservableCollection<VideoCategoryNodeViewModel> _categoryItems;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
         private readonly ActivitySectionViewModel _activitySectionViewModel;
         private readonly ProgressIndicatorHolder _indicatorHolder;
@@ -26,7 +25,6 @@ namespace LiteTube.ViewModels
             _indicatorHolder = new ProgressIndicatorHolder();
             _mostPopularViewModel = new MostPopularViewModel(_getGeDataSource, _connectionListener);
             _profileSectionViewModel = new ProfileSectionViewModel(_getGeDataSource, connectionListener);
-            _categoryItems = new ObservableCollection<VideoCategoryNodeViewModel>();
             _activitySectionViewModel = new ActivitySectionViewModel(_getGeDataSource, _connectionListener);
 
             geDataSource().Subscribe((IListener<UpdateSettingsEventArgs>)this);
@@ -55,11 +53,6 @@ namespace LiteTube.ViewModels
         public MostPopularViewModel MostPopularViewModel
         {
             get { return _mostPopularViewModel; }
-        }
-
-        public ObservableCollection<VideoCategoryNodeViewModel> CategoryItems
-        {
-            get { return _categoryItems; }
         }
 
         public ProfileSectionViewModel ProfileSectionViewModel
@@ -114,7 +107,7 @@ namespace LiteTube.ViewModels
 
             IsDataLoaded = true;
             IsLoading = false;
-            IsEmpty = !CategoryItems.Any();
+            IsEmpty = !Items.Any();
         }
 
         public async Task ReloadData()
@@ -129,10 +122,10 @@ namespace LiteTube.ViewModels
             if (sections == null)
                 return;
 
-            _categoryItems.Clear();
+            Items.Clear();
             foreach (var section in sections)
             {
-                _categoryItems.Add(new VideoCategoryNodeViewModel(section));
+                Items.Add(new VideoCategoryNodeViewModel(section));
             }
         }
 
@@ -177,11 +170,11 @@ namespace LiteTube.ViewModels
                     }
                     IsDataLoaded = true;
                     IsLoading = false;
-                    IsEmpty = !CategoryItems.Any();
+                    IsEmpty = !Items.Any();
                     return;
                 }
 
-                if (CategoryItems.Count > 0)
+                if (Items.Count > 0)
                     IsConnected = true;
             });
         }

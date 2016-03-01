@@ -110,6 +110,9 @@ namespace LiteTube.DataClasses
                 return;
 
             var authorSnippet = comment.Snippet;
+            if (authorSnippet == null)
+                return;
+
             AuthorChannelId = authorSnippet.AuthorChannelId.Value;
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
@@ -128,6 +131,9 @@ namespace LiteTube.DataClasses
                 return;
 
             var authorSnippet = comment.Snippet.TopLevelComment.Snippet;
+            if (authorSnippet == null)
+                return;
+
             AuthorChannelId = authorSnippet.AuthorChannelId.Value;
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
@@ -139,7 +145,7 @@ namespace LiteTube.DataClasses
             IsReplay = false;
 
             ReplayComments = new List<IComment>();
-            if (comment.Replies!= null)
+            if (comment.Replies != null)
                 ReplayComments = comment.Replies.Comments.Select(c => new MComment(c));
         }
 
