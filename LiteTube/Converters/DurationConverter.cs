@@ -12,7 +12,7 @@ namespace LiteTube.Common
                 var timespan = XmlConvert.ToTimeSpan(duration);
                 return timespan;
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 return TimeSpan.FromSeconds(0);
             }
