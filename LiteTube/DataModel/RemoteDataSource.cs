@@ -28,7 +28,7 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetChannelVideoList(string channelId, string culture, int maxPageResult, string pageToken);
         Task<IEnumerable<IGuideCategory>> GetGuideCategories(string culture);
         Task<IChannelList> GetChannels(string categoryId, string culture, int maxPageResult, string nextPageToken);
-        Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType);
+        Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType);
         Task<ICommentList> GetComments(string videoId, int maxResult, string nextPageToken);
         Task<ISubscriptionList> GetSubscribtions(int maxResult, string nextPageToken);
         Task<IVideoList> GetHistory(int maxResult, string nextPageToken);
@@ -317,7 +317,7 @@ namespace LiteTube.DataModel
             return new MChannelList(channelListResponse);
         }
 
-        public async Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken, SearchType searchType)
+        public async Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType searchType)
         {
             var request = _youTubeService.Search.List("snippet,id");
             request.Key = _youTubeServiceControl.ApiKey;
@@ -327,14 +327,25 @@ namespace LiteTube.DataModel
             request.Q = searchString;
 
             var response = await request.ExecuteAsync();
-            var ids = new StringBuilder();
-            foreach (var item in response.Items)
+            
+            if (searchType == SearchType.Video)
             {
-                ids.AppendLine(item.Id.VideoId);
-                ids.AppendLine(",");
+                var ids = new StringBuilder();
+                foreach (var item in response.Items)
+                {
+                    ids.AppendLine(item.Id.VideoId);
+                    ids.AppendLine(",");
+                }
+                var videoDetails = await GetVideoDetails(ids.ToString());
+                return new MVideoList(response, videoDetails);
             }
-            var videoDetails = await GetVideoDetails(ids.ToString());
-            return new MVideoList(response, videoDetails);
+
+            if (searchType == SearchType.Channel)
+            {
+                return new MChannelList(response);
+            }
+
+            return MVideoList.Empty;
         }
 
         public async Task<ICommentList> GetComments(string videoId, int maxResult, string nextPageToken)

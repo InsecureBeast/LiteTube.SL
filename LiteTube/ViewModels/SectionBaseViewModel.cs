@@ -8,11 +8,9 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Windows.Input;
 using LiteTube.ViewModels.Nodes;
-using Microsoft.Phone.Shell;
 using MyToolkit.Command;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
-using LiteTube.Resources;
 
 namespace LiteTube.ViewModels
 {
@@ -20,7 +18,7 @@ namespace LiteTube.ViewModels
     /// Модель для отображения определенной секции. 
     /// Например видео канала или самого популярного
     /// </summary>
-    public class SectionBaseViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
+    public class SectionBaseViewModel : ProgressIndicatorViewModel, IListener<ConnectionEventArgs>
     {
         protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
         protected string _uniqueId;
@@ -41,9 +39,9 @@ namespace LiteTube.ViewModels
         //private ListViewSelectionMode _selectionMode;
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
         private bool _isConnected = true;
-        private ProgressIndicator _progressIndicator;
-
-        public SectionBaseViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener)
+        
+        public SectionBaseViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null)
+            :base(changeProgressIndicator)
         {
             if (getGeDataSource == null)
                 throw new ArgumentNullException("getGeDataSource");
@@ -162,19 +160,6 @@ namespace LiteTube.ViewModels
             }
         }
 
-        public ProgressIndicator ProgressIndicator
-        {
-            get { return _progressIndicator; }
-            set
-            {
-                if (value == _progressIndicator)
-                    return;
-
-                _progressIndicator = value;
-                NotifyOfPropertyChanged(() => ProgressIndicator);
-            }
-        }
-
         public ICommand LoadMoreCommand
         {
             get { return _loadMoreCommand; }
@@ -271,8 +256,15 @@ namespace LiteTube.ViewModels
             var itemsList = Items.ToList();
             foreach (var item in items)
             {
+                if (item.Details == null)
+                    continue;
+
+                if (item.Details.Video == null)
+                    continue;
+
                 if (itemsList.Exists(i => i.Id == item.Details.Video.Id))
                     continue;
+
                 Items.Add(new VideoItemViewModel(item));
             }
         }
@@ -330,27 +322,6 @@ namespace LiteTube.ViewModels
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
             NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getGeDataSource, _connectionListener));
-        }
-
-        protected void ShowProgressIndicator()
-        {
-            var indicator = new ProgressIndicator();
-            indicator.Text = AppResources.Loading;
-            indicator.IsVisible = true;
-            indicator.IsIndeterminate = true;
-
-            ProgressIndicator = indicator;
-            //App.ViewModel.ProgressIndicator = indicator;
-            App.ViewModel.IndicatorHolder.ProgressIndicator = indicator;
-            //ProgressIndicatorHolder.Instance.ProgressIndicator = indicator;
-        }
-
-        protected void HideProgressIndicator()
-        {
-            ProgressIndicator = null;
-            //App.ViewModel.ProgressIndicator = null;
-            App.ViewModel.IndicatorHolder.ProgressIndicator = null;
-            //ProgressIndicatorHolder.Instance.ProgressIndicator = null;
         }
 
         protected virtual void DeleteItems()

@@ -1,25 +1,33 @@
-﻿using LiteTube.DataClasses;
-using LiteTube.DataModel;
+﻿using LiteTube.DataModel;
+using LiteTube.ViewModels.Search;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LiteTube.ViewModels
 {
-    class SearchPageViewModel : SectionBaseViewModel
+    class SearchPageViewModel : ProgressIndicatorViewModel
     {
+        private readonly SearchVideoViewModel _searchVideoViewModel;
+        private readonly SearchChannelsViewModel _searchChannelsViewModel;
         private string _searchString;
+        private int _selectedIndex;
 
         public SearchPageViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+            : base(null)
         {
-            _uniqueId = Guid.NewGuid().ToString();
-            IsLoading = false;
-            IsEmpty = false;
+            _searchVideoViewModel = new SearchVideoViewModel(geDataSource, connectionListener, ChangeProgressIndicator);
+            _searchChannelsViewModel = new SearchChannelsViewModel(geDataSource, connectionListener, ChangeProgressIndicator);
         }
 
-        public override string ToString()
+        public SearchVideoViewModel SearchVideoViewModel
         {
-            return _searchString;
+            get { return _searchVideoViewModel; }
+        }
+
+        public SearchChannelsViewModel SearchChannelsViewModel
+        {
+            get { return _searchChannelsViewModel; }
         }
 
         public string SearchString
@@ -28,30 +36,43 @@ namespace LiteTube.ViewModels
             set { _searchString = value; }
         }
 
-        internal override async Task<IResponceList> GetItems(string nextPageToken)
+        internal async Task Search(int selectedIndex)
         {
             if (string.IsNullOrEmpty(_searchString))
-                return null;
+                return;
 
-            return await _getGeDataSource().Search(_searchString, nextPageToken, SearchType.Video);
+            if (_selectedIndex == selectedIndex)
+                Clear();
+
+            _selectedIndex = selectedIndex;
+            switch (selectedIndex)
+            {
+                case 0:
+                    if (!_searchVideoViewModel.Items.Any())
+                        await _searchVideoViewModel.Search(_searchString);
+                    break;
+                case 1:
+                    if (!_searchChannelsViewModel.Items.Any())
+                        await _searchChannelsViewModel.Search(_searchString);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        internal async Task Search()
+        private void Clear()
         {
-            Items.Clear();
-            IsLoading = true;
-            ShowProgressIndicator();
-            var responseList = await GetItems(string.Empty);
-            if (responseList == null)
+            _searchVideoViewModel.Items.Clear();
+            _searchChannelsViewModel.Items.Clear();
+        }
+
+        private void ChangeProgressIndicator(bool isVisible)
+        {
+            if (isVisible)
             {
-                IsEmpty = true;
-                IsLoading = false;
+                ShowProgressIndicator();
                 return;
             }
-            _pageToken = responseList.NextPageToken;
-            LoadItems(responseList);
-
-            IsLoading = false;
             HideProgressIndicator();
         }
     }

@@ -3,10 +3,10 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using LiteTube.Common;
 using Microsoft.Phone.Controls;
 using LiteTube.ViewModels;
 using LiteTube.Common.Helpers;
+using System.Linq;
 
 namespace LiteTube
 {
@@ -20,7 +20,21 @@ namespace LiteTube
             InitializeComponent();
             Loaded += SearchPage_Loaded;
             SearchBox.ItemsSource = _autoCompleteItems;
+            Pivot.SelectionChanged += Pivot_SelectionChanged;
         }
+
+        private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var pivot = sender as Pivot;
+            if (pivot == null)
+                return;
+
+            var viewModel = DataContext as SearchPageViewModel;
+            if (viewModel == null)
+                return;
+
+            await viewModel.Search(pivot.SelectedIndex);
+        }   
 
         private void SearchPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -42,7 +56,7 @@ namespace LiteTube
             if (model == null)
                 return;
 
-            if (model.Items.Count > 0)
+            if (model.SearchVideoViewModel.Items.Any())
                 _firstLoad = false;
         }
 
@@ -57,7 +71,7 @@ namespace LiteTube
                 Focus();
 
                 viewModel.SearchString = SearchBox.Text;
-                await viewModel.Search();
+                await viewModel.Search(Pivot.SelectedIndex);
             }
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiteTube.DataModel
+namespace LiteTube.DataClasses
 {
     public enum SearchType
     {

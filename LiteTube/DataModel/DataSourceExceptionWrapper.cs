@@ -208,7 +208,7 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType)
+        public Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType)
         {
             try
             {

@@ -11,6 +11,21 @@ namespace LiteTube.DataClasses
 
     class MChannelList : IChannelList
     {
+        public MChannelList(SearchListResponse response)
+        {
+            if (response == null)
+                return;
+
+            ETag = response.ETag;
+            EventId = response.EventId;
+            NextPageToken = response.NextPageToken;
+            PageInfo = new MPageInfo(response.PageInfo);
+            PrevPageToken = response.PrevPageToken;
+            //TokenPagination = new MTokenPagination(response.TokenPagination);
+            VisitorId = response.VisitorId;
+            Items = response.Items.Select(channel => new MChannel(channel)).Cast<IChannel>().ToList();
+        }
+
         public MChannelList(ChannelListResponse channelListResponse)
         {
             if (channelListResponse == null)
@@ -28,7 +43,7 @@ namespace LiteTube.DataClasses
 
         public static IChannelList EmptyList
         {
-            get { return new MChannelList(null);}
+            get { return new MChannelList((ChannelListResponse)null);}
         }
 
         public string ETag

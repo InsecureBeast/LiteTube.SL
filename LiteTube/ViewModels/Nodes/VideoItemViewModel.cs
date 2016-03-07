@@ -23,7 +23,6 @@ namespace LiteTube.ViewModels.Nodes
             ViewCount = videoItem.Details.Video.Statistics.ViewCount;
             if (videoItem.PublishedAt != null)
                 PublishedAt = videoItem.PublishedAt.Value.ToString("d", CultureInfo.CurrentCulture);
-            //_channelId = videoItem.ChannelId;
         }
 
         public IVideoItem VideoItem { get; private set; }

@@ -44,14 +44,41 @@
                                      Margin="13,0,15,2"/>
         </Border>
 
-        <ContentPresenter Grid.Row="2"
-                          Name="SearchList"
-                          Content="{Binding}"
-                          ContentTemplate="{StaticResource LoadingListView}"
-                          Margin="{StaticResource DefaultContentMargin}"/>
+        <!--Pivot Control-->
+        <phone:Pivot Name="Pivot"
+                     Grid.Row="2"
+                     Margin="0,-10,0,0">
+            <!--Pivot item one-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                
+                <ContentPresenter Grid.Row="2"
+                                  Name="SearchList"
+                                  Content="{Binding SearchVideoViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  />
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Channels, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+
+                <ContentPresenter Grid.Row="2"
+                                  Name="SearchChannelsList"
+                                  Content="{Binding SearchChannelsViewModel}"
+                                  ContentTemplate="{StaticResource CategoryLoadingListView}"/>
+            </phone:PivotItem>
+        </phone:Pivot>
+        
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
             <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

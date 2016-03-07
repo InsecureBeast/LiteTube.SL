@@ -40,9 +40,20 @@ namespace LiteTube.DataClasses
             Statistics = new MChannelStatistics(channel.Statistics);
         }
 
+        public MChannel(SearchResult channel)
+        {
+            if (channel == null)
+                return;
+
+            Id = channel.Id.ChannelId;
+            Title = channel.Snippet.Title;
+            Description = channel.Snippet.Description;
+            Thumbnails = new MThumbnailDetails(channel.Snippet.Thumbnails);
+        }
+
         public static IChannel Empty
         {
-            get { return new MChannel(null);}
+            get { return new MChannel((Channel)null);}
         }
 
         public string Id

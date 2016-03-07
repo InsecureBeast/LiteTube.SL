@@ -103,7 +103,7 @@
     <Compile Include="Common\SessionType.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\LoginStatusTextConverter.cs" />
-    <Compile Include="DataModel\SearchTypes.cs" />
+    <Compile Include="DataClasses\SearchTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BugTreckerReporter.cs" />
     <Compile Include="ChannelListPage.xaml.cs">
@@ -236,9 +236,13 @@
     <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
+    <Compile Include="ViewModels\ProgressIndicatorViewModel.cs" />
     <Compile Include="ViewModels\RecommendedSectionViewModel.cs" />
     <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchChannelsViewModel.cs" />
     <Compile Include="ViewModels\SearchPageViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchVideoViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchBaseViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SubscriptionChannelsViewModel.cs" />
     <Compile Include="ViewModels\VideoCategorySectionViewModel.cs" />

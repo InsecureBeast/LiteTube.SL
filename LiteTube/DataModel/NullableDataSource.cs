@@ -80,9 +80,9 @@ namespace LiteTube.DataModel
             return new Task<IChannelList>(() => MChannelList.EmptyList);
         }
 
-        public Task<IVideoList> Search(string searchString, string nextPageToken, SearchType serachType)
+        public Task<IResponceList> Search(string searchString, string nextPageToken, SearchType serachType)
         {
-            return new Task<IVideoList>(() => MVideoList.Empty);
+            return new Task<IResponceList>(() => MVideoList.Empty);
         }
 
         public Task<ICommentList> GetComments(string videoId, string nextPageToken)
