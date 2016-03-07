@@ -28,7 +28,7 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetChannelVideoList(string channelId, string culture, int maxPageResult, string pageToken);
         Task<IEnumerable<IGuideCategory>> GetGuideCategories(string culture);
         Task<IChannelList> GetChannels(string categoryId, string culture, int maxPageResult, string nextPageToken);
-        Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken);
+        Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType);
         Task<ICommentList> GetComments(string videoId, int maxResult, string nextPageToken);
         Task<ISubscriptionList> GetSubscribtions(int maxResult, string nextPageToken);
         Task<IVideoList> GetHistory(int maxResult, string nextPageToken);
@@ -317,13 +317,13 @@ namespace LiteTube.DataModel
             return new MChannelList(channelListResponse);
         }
 
-        public async Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken)
+        public async Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken, SearchType searchType)
         {
             var request = _youTubeService.Search.List("snippet,id");
             request.Key = _youTubeServiceControl.ApiKey;
             request.PageToken = nextPageToken;
             request.MaxResults = SEARCH_PAGE_MAX_RESULT;
-            request.Type = "video";
+            request.Type = searchType.ToTypeString();
             request.Q = searchString;
 
             var response = await request.ExecuteAsync();

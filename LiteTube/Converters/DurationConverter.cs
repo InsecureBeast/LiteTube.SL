@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace LiteTube.Common
@@ -9,8 +7,15 @@ namespace LiteTube.Common
     {
         public static TimeSpan Convert (string duration)
         {
-            var timespan = XmlConvert.ToTimeSpan(duration);
-            return timespan;
+            try
+            {
+                var timespan = XmlConvert.ToTimeSpan(duration);
+                return timespan;
+            }
+            catch (FormatException)
+            {
+                return TimeSpan.FromSeconds(0);
+            }
         }
     }
 }

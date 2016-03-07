@@ -25,7 +25,7 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken);
         Task<IVideoList> GetChannelVideoList(string channelId, string pageToken);
         Task<IChannelList> GetChannels(string categoryId, string nextPageToken);
-        Task<IVideoList> Search(string searchString, string nextPageToken);
+        Task<IVideoList> Search(string searchString, string nextPageToken, SearchType serachType);
         Task<ICommentList> GetComments(string videoId, string nextPageToken);
         Task<ISubscriptionList> GetSubscribtions(string nextPageToken);
         Task<IVideoList> GetHistory(string nextPageToken);
@@ -210,9 +210,9 @@ namespace LiteTube.DataModel
             return _remoteDataSource.GetChannels(categoryId, _region, _maxPageResult, nextPageToken);
         }
 
-        public async Task<IVideoList> Search(string searchString, string nextPageToken)
+        public async Task<IVideoList> Search(string searchString, string nextPageToken, SearchType serachType)
         {
-            return await _remoteDataSource.Search(searchString, _maxPageResult, nextPageToken);
+            return await _remoteDataSource.Search(searchString, _maxPageResult, nextPageToken, serachType);
         }
 
         public async Task<ICommentList> GetComments(string videoId, string nextPageToken)

@@ -208,12 +208,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken)
+        public Task<IVideoList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType)
         {
             try
             {
                 Debug.WriteLine("Search method called");
-                return _remoteDataSource.Search(searchString, maxResult, nextPageToken);
+                return _remoteDataSource.Search(searchString, maxResult, nextPageToken, serachType);
             }
             catch (Exception e)
             {
