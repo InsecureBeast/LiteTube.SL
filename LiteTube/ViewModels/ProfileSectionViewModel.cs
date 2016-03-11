@@ -178,33 +178,33 @@ namespace LiteTube.ViewModels
 
         private void Recommended(FrameworkElement control)
         {
-            NavigateTo(0);
+            NavigateTo(1);
         }
 
         private void Subscriptions(FrameworkElement control)
         {
-            NavigateTo(1);
+            NavigateTo(2);
         }
 
         private void GetHistory(FrameworkElement control)
         {
-            NavigateTo(4);
+            NavigateTo(5);
         }
 
         private void VideoCategories(FrameworkElement control)
         {
-            var index = IsAuthorized ? 5 : 0;
-            NavigateTo(index);
+            //var index = IsAuthorized ? 5 : 0;
+            NavigateTo(0);
         }
 
         private void Favorites(FrameworkElement control)
         {
-            NavigateTo(2);
+            NavigateTo(3);
         }
 
         private void Liked(FrameworkElement control)
         {
-            NavigateTo(3);
+            NavigateTo(4);
         }
 
         private void NavigateTo(int index)

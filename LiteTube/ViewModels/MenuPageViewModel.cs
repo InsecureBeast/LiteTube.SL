@@ -10,6 +10,7 @@ using LiteTube.Common.Helpers;
 using LiteTube.DataModel;
 using MyToolkit.Command;
 using LiteTube.Common;
+using System.Threading.Tasks;
 
 namespace LiteTube.ViewModels
 {
@@ -33,6 +34,7 @@ namespace LiteTube.ViewModels
         private bool _isConnected = true;
         private ProgressIndicator _progressIndicator;
         //private PreventNavigationHelper _navigationHelper;
+        private bool _isRequestSend = false;
 
         public MenuPageViewModel(int index, Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
@@ -186,6 +188,11 @@ namespace LiteTube.ViewModels
             switch (index)
             {
                 case 0:
+                    Debug.WriteLine("Video categories");
+                    await LoadCategories();
+                    break;
+
+                case 1:
                     Debug.WriteLine("recommended");
                     if (RecommendedSectionViewModel.Items.Count > 0)
                         return;
@@ -193,42 +200,37 @@ namespace LiteTube.ViewModels
                     await RecommendedSectionViewModel.FirstLoad();
                     break;
 
-                case 1:
+                case 2:
                     Debug.WriteLine("subscriptions");
                     await SubscriptionChannelsViewModel.FirstLoad();
                     break;
 
-                case 2:
+                case 3:
                     Debug.WriteLine("favorites");
                     await FavoritesViewModel.FirstLoad();
                     break;
 
-                case 3:
+                case 4:
                     Debug.WriteLine("liked");
                     await LikedViewModel.FirstLoad();
                     break;
 
-                case 4:
+                case 5:
                     Debug.WriteLine("history");
                     await HistoryPageViewModel.FirstLoad();
-                    break;
-
-                case 5:
-                    Debug.WriteLine("Video categories");
-                    LoadCategories();
                     break;
             }
 
             NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
         }
 
-        private void SetSelection(int index)
+        private async void SetSelection(int index)
         {
             switch (index)
             {
                 case 0:
                     Debug.WriteLine("Video categories");
-                    LoadCategories();
+                    await LoadCategories();
                     break;
                 //case 1:
                 //    Debug.WriteLine("subscriptions");
@@ -242,23 +244,25 @@ namespace LiteTube.ViewModels
             }
         }
 
-        private void LoadCategories()
+        private async Task LoadCategories()
         {
+            if (_isRequestSend)
+                return;
+
             if (_categories.Count > 0)
                 return;
 
-            LayoutHelper.InvokeFromUiThread(async () =>
-            {
-                var sections = await _getDataSource().GetGuideCategories();
-                if (sections == null)
-                    return;
+            _isRequestSend = true;
+            var sections = await _getDataSource().GetGuideCategories();
+            if (sections == null)
+                return;
                 
-                _categories.Clear();
-                foreach (var section in sections)
-                {
-                    _categories.Add(new GuideCategoryNodeViewModel(section));
-                }
-            });
+            _categories.Clear();
+            foreach (var section in sections)
+            {
+                _categories.Add(new GuideCategoryNodeViewModel(section));
+            }
+            _isRequestSend = false;
         }
 
         private async void DeleteItems()
@@ -319,13 +323,13 @@ namespace LiteTube.ViewModels
 
         public void Notify(ConnectionEventArgs e)
         {
-            LayoutHelper.InvokeFromUiThread(() =>
+            LayoutHelper.InvokeFromUiThread(async() =>
             {
                 IsConnected = e.IsConnected;
 
                 if (e.IsConnected)
                 {
-                    LoadCategories();
+                    await LoadCategories();
                     return;
                 }
 

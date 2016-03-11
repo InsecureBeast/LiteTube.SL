@@ -176,7 +176,8 @@ namespace LiteTube.DataModel
             categoriesListRequest.Hl = I18nLanguages.GetHl(culture);
 
             var categoriesListResponse = await categoriesListRequest.ExecuteAsync();
-            return categoriesListResponse.Items.Select(category => new MVideoCategory(category)).Cast<IVideoCategory>().ToList();
+            var items = categoriesListResponse.Items.Where(c => c.Snippet != null && c.Snippet.Assignable == true);
+            return items.Select(category => new MVideoCategory(category)).Cast<IVideoCategory>().ToList();
         }
 
         public bool IsAuthorized

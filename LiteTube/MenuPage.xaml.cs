@@ -18,7 +18,6 @@ namespace LiteTube
         public MenuPage()
         {
             InitializeComponent();
-            Loaded += MenuPage_Loaded;
             Pivot.SelectionChanged += Pivot_SelectionChanged;
         }
 
@@ -34,9 +33,10 @@ namespace LiteTube
             {
                 _selectedIndex = int.Parse(index);
             }
+            Load();
         }
 
-        private void MenuPage_Loaded(object sender, RoutedEventArgs e)
+        private void Load()
         {
             var viewModel = DataContext as MenuPageViewModel;
             if (viewModel == null)

@@ -44,6 +44,18 @@
                 </DataTemplate>
             </phone:Pivot.HeaderTemplate>
             
+            <!--Pivot item six-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}"
+                             Header="{Binding Path=LocalizedResources.Channels, Source={StaticResource LocalizedStrings}}">
+                <ListBox ItemsSource="{Binding Categories}"
+                         Name="VideoCategoriesList"
+                         toolkit:TiltEffect.IsTiltEnabled="True"
+                         common:ItemClickCommand.Command="{Binding CategoryCommand}"
+                         common:ItemClickCommand.CommandParameter="{Binding}"
+                         ItemTemplate="{StaticResource CategoryItemTemplate}"
+                         ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"/>
+            </phone:PivotItem>
+
             <!--Pivot item one-->
             <phone:PivotItem Name="RecommendedItem"
                              Header="{Binding Path=LocalizedResources.RecommendedForYou, Source={StaticResource LocalizedStrings}}"
@@ -87,18 +99,6 @@
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
-            </phone:PivotItem>
-
-            <!--Pivot item six-->
-            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}"
-                             Header="{Binding Path=LocalizedResources.Channels, Source={StaticResource LocalizedStrings}}">
-                <ListBox ItemsSource="{Binding Categories}"
-                         Name="VideoCategoriesList"
-                         toolkit:TiltEffect.IsTiltEnabled="True"
-                         common:ItemClickCommand.Command="{Binding CategoryCommand}"
-                         common:ItemClickCommand.CommandParameter="{Binding}"
-                         ItemTemplate="{StaticResource CategoryItemTemplate}"
-                         ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"/>
             </phone:PivotItem>
         </phone:Pivot>
 

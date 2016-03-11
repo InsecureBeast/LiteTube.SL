@@ -30,20 +30,7 @@ namespace LiteTube.ViewModels.Search
         {
             _searchString = searchString;
             Items.Clear();
-            IsLoading = true;
-            ShowProgressIndicator();
-            var responseList = await GetItems(string.Empty);
-            if (responseList == null)
-            {
-                IsEmpty = true;
-                IsLoading = false;
-                return;
-            }
-            _pageToken = responseList.NextPageToken;
-            LoadItems(responseList);
-
-            IsLoading = false;
-            HideProgressIndicator();
+            await FirstLoad();
         }
     }
 }
