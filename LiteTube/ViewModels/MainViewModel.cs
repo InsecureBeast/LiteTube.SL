@@ -131,7 +131,13 @@ namespace LiteTube.ViewModels
 
         internal override void NavigateTo(NavigationObject navObject)
         {
-            var viewModel = (VideoCategoryNodeViewModel)navObject.ViewModel;
+            if (navObject == null)
+                return;
+
+            var viewModel = navObject.ViewModel as VideoCategoryNodeViewModel;
+            if (viewModel == null)
+                return;
+
             var categoryId = viewModel.CategoryId;
             var title = viewModel.Title;
             PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _getGeDataSource, _connectionListener);

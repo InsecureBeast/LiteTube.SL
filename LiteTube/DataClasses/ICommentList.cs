@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Google.Apis.YouTube.v3.Data;
 using System.Linq;
 
@@ -113,7 +112,9 @@ namespace LiteTube.DataClasses
             if (authorSnippet == null)
                 return;
 
-            AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
+            if (authorSnippet.AuthorChannelId != null) 
+                AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
+            
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
             LikeCount = authorSnippet.LikeCount;
@@ -130,11 +131,18 @@ namespace LiteTube.DataClasses
             if (comment == null)
                 return;
 
+            if (comment.Snippet == null)
+                return;
+
+            if (comment.Snippet.TopLevelComment == null)
+                return;
+            
             var authorSnippet = comment.Snippet.TopLevelComment.Snippet;
             if (authorSnippet == null)
                 return;
 
-            AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
+            if (authorSnippet.AuthorChannelId != null)
+                AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
             LikeCount = authorSnippet.LikeCount;
@@ -142,10 +150,14 @@ namespace LiteTube.DataClasses
             if (PublishedAt != null)
                 PublishedAtRaw = PublishedAt.Value.ToString("g");
             TextDisplay = authorSnippet.TextDisplay;
+
             IsReplay = false;
 
             ReplayComments = new List<IComment>();
-            if (comment.Replies != null)
+            if (comment.Replies == null) 
+                return;
+            
+            if (comment.Replies.Comments != null)
                 ReplayComments = comment.Replies.Comments.Select(c => new MComment(c));
         }
 
