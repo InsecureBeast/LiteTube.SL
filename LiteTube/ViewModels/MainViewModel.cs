@@ -9,6 +9,7 @@ using LiteTube.Common;
 using Microsoft.Phone.Shell;
 using Windows.ApplicationModel.Activation;
 using Windows.Security.Authentication.Web;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -158,7 +159,7 @@ namespace LiteTube.ViewModels
         public override void Notify(ConnectionEventArgs e)
         {
             base.Notify(e);
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 IsConnected = e.IsConnected;
                 NotifyOfPropertyChanged(() => IsAuthorized);

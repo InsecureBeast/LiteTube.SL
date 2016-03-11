@@ -3,6 +3,7 @@ using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -15,7 +16,7 @@ namespace LiteTube.ViewModels
         {
             _categoryId = categoryId;
             Title = title;
-            LayoutHelper.InvokeFromUIThread(async() => await FirstLoad());
+            LayoutHelper.InvokeFromUiThread(async() => await FirstLoad());
         }
 
         public override string ToString()
@@ -33,7 +34,7 @@ namespace LiteTube.ViewModels
             base.Notify(e);
             if (e.IsConnected)
             {
-                LayoutHelper.InvokeFromUIThread(async () =>
+                LayoutHelper.InvokeFromUiThread(async () =>
                 {
                     await FirstLoad();
                 });

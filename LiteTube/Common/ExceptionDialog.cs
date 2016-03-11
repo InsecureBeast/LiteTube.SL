@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Windows;
+using LiteTube.Common.Helpers;
 using Microsoft.Phone.Controls;
 using LiteTube.Resources;
 

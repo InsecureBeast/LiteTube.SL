@@ -1,12 +1,11 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
-using System.Text;
 using Windows.Storage;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-namespace LiteTube.Common
+namespace LiteTube.Common.Helpers
 {
     static class SettingsHelper
     {

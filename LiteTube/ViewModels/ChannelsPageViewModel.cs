@@ -22,7 +22,7 @@ namespace LiteTube.ViewModels
             _uniqueId = categoryId;
             _categoryId = categoryId;
             Title = title;
-            LayoutHelper.InvokeFromUIThread(async() => await FirstLoad());
+            LayoutHelper.InvokeFromUiThread(async() => await FirstLoad());
         }
 
         public override string ToString()
@@ -35,7 +35,7 @@ namespace LiteTube.ViewModels
             base.Notify(e);
             if (e.IsConnected)
             {
-                LayoutHelper.InvokeFromUIThread(async () =>
+                LayoutHelper.InvokeFromUiThread(async () =>
                 {
                     await FirstLoad();
                 });

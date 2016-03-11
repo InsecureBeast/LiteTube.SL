@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Interactivity;
 using LiteTube.Common;
 using System;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.Interactivity
 {

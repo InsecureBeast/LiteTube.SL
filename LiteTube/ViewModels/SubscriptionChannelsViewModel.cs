@@ -20,7 +20,7 @@ namespace LiteTube.ViewModels
         public override void Notify(ConnectionEventArgs e)
         {
             base.Notify(e);
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 IsConnected = e.IsConnected;
 

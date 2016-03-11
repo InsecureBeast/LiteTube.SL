@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using LiteTube.Common;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.Interactivity
 {

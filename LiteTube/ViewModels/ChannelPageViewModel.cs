@@ -4,6 +4,7 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 using LiteTube.Common;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -25,7 +26,7 @@ namespace LiteTube.ViewModels
             _channelId = channelId;
             InitializeCommands();
             
-            LayoutHelper.InvokeFromUIThread(async() => 
+            LayoutHelper.InvokeFromUiThread(async() => 
             {
                 await LoadChannel(channelId);
                 await FirstLoad();

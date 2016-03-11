@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
-namespace LiteTube.Common
+namespace LiteTube.Common.Helpers
 {
     public static class LayoutHelper
     {
-        public static void InvokeFromUIThread(Action action)
+        public static void InvokeFromUiThread(Action action)
         {
             Task.Run(async () =>
             {

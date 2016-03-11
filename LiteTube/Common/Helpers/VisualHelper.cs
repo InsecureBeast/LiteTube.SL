@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace LiteTube.Common
+namespace LiteTube.Common.Helpers
 {
     internal class VisualHelper
     {

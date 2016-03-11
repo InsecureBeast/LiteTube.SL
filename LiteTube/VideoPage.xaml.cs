@@ -72,7 +72,7 @@ namespace LiteTube
             if (!_resumed)
                 return;
 
-            LayoutHelper.InvokeFromUIThread(() =>
+            LayoutHelper.InvokeFromUiThread(() =>
             {
                 _resumed = false;
                 player.Position = _playerPosition;
@@ -127,7 +127,7 @@ namespace LiteTube
 
         private void Sensor_OrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
         {
-            LayoutHelper.InvokeFromUIThread(() => 
+            LayoutHelper.InvokeFromUiThread(() => 
             {
                 if (args.Orientation == SimpleOrientation.Rotated90DegreesCounterclockwise)
                 {

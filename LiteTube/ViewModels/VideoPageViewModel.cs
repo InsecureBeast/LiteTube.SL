@@ -6,6 +6,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -376,7 +377,7 @@ namespace LiteTube.ViewModels
 
         private void SetVideoUri(string videoId)
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 try
                 {
@@ -408,7 +409,7 @@ namespace LiteTube.ViewModels
 
         private void SetChannelInfo(string channelId)
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 var channelInfo = await _getDataSource().GetChannel(channelId);
                 ChannelImage = channelInfo.Thumbnails.Medium.Url;
@@ -424,7 +425,7 @@ namespace LiteTube.ViewModels
             if (!_getDataSource().IsAuthorized)
                 return;
 
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 var rating = await _getDataSource().GetRating(videoId);
                 if (rating == RatingEnum.Dislike)
@@ -473,7 +474,7 @@ namespace LiteTube.ViewModels
             RelatedVideosViewModel = new RelatedVideosViewModel(VideoId, _getDataSource, _connectionListener);
             CommentsViewModel = new CommentsViewModel(VideoId, _getDataSource, _connectionListener);
 
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 if (!_connectionListener.CheckNetworkAvailability())
                     return;

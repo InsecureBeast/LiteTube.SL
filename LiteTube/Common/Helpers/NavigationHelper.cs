@@ -2,7 +2,6 @@
 using Microsoft.Phone.Shell;
 using System.Linq;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace LiteTube.Common.Helpers
 {

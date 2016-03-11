@@ -3,6 +3,7 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System;
 using System.Threading.Tasks;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -21,7 +22,7 @@ namespace LiteTube.ViewModels
         public override void Notify(ConnectionEventArgs e)
         {
             base.Notify(e);
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 if (!e.IsConnected)
                     return;

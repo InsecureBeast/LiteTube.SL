@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using LiteTube.Common.Helpers;
 using LiteTube.DataModel;
 
 namespace LiteTube.Common
@@ -27,7 +28,7 @@ namespace LiteTube.Common
 
         public void Execute(object parameter)
         {
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 InvalidateCommands(true);
                 await _getDataSource().Subscribe(_getChannelId());

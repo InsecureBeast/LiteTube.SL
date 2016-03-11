@@ -4,6 +4,7 @@ using Microsoft.Phone.Shell;
 using System;
 using System.Windows.Controls;
 using System.Windows.Data;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.Common
 {

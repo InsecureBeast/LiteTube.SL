@@ -135,7 +135,7 @@ namespace LiteTube
                 RestoreSessionType();
             }
 
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 if (!_mustClearPagestack)
                     return;

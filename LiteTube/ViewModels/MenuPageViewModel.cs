@@ -247,7 +247,7 @@ namespace LiteTube.ViewModels
             if (_categories.Count > 0)
                 return;
 
-            LayoutHelper.InvokeFromUIThread(async () =>
+            LayoutHelper.InvokeFromUiThread(async () =>
             {
                 var sections = await _getDataSource().GetGuideCategories();
                 if (sections == null)
@@ -319,7 +319,7 @@ namespace LiteTube.ViewModels
 
         public void Notify(ConnectionEventArgs e)
         {
-            LayoutHelper.InvokeFromUIThread(() =>
+            LayoutHelper.InvokeFromUiThread(() =>
             {
                 IsConnected = e.IsConnected;
 
