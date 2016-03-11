@@ -113,7 +113,7 @@ namespace LiteTube.DataClasses
             if (authorSnippet == null)
                 return;
 
-            AuthorChannelId = authorSnippet.AuthorChannelId.Value;
+            AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
             LikeCount = authorSnippet.LikeCount;
@@ -134,7 +134,7 @@ namespace LiteTube.DataClasses
             if (authorSnippet == null)
                 return;
 
-            AuthorChannelId = authorSnippet.AuthorChannelId.Value;
+            AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
             LikeCount = authorSnippet.LikeCount;

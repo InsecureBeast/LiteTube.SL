@@ -450,8 +450,8 @@
       <HintPath>packages\Google.Apis.1.10.0\lib\wp8\Google.Apis.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.YouTube.v3, Version=1.10.0.159, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Apis.YouTube.v3.1.10.0.1590\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.YouTube.v3.dll</HintPath>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.10.0.163, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Apis.YouTube.v3.1.10.0.1630\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.YouTube.v3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
@@ -471,12 +471,12 @@
       <HintPath>packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MyToolkit, Version=2.5.10.0, Culture=neutral, PublicKeyToken=3e349a1360994d26, processorArchitecture=MSIL">
-      <HintPath>packages\MyToolkit.2.5.10.0\lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll</HintPath>
+    <Reference Include="MyToolkit, Version=2.5.11.0, Culture=neutral, PublicKeyToken=3e349a1360994d26, processorArchitecture=MSIL">
+      <HintPath>packages\MyToolkit.2.5.11.0\lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MyToolkit.Extended, Version=2.5.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\MyToolkit.Extended.2.5.10.0\lib\wp80\MyToolkit.Extended.dll</HintPath>
+    <Reference Include="MyToolkit.Extended, Version=2.5.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MyToolkit.Extended.2.5.11.0\lib\wp80\MyToolkit.Extended.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
