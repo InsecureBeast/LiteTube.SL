@@ -4,7 +4,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using LiteTube.Common;
 using System.Reflection;
 using LiteTube.Common.Helpers;
 
@@ -17,7 +16,7 @@ namespace LiteTube
             await Send(exception, string.Empty);
         }
 
-        internal static async Task SendException(Exception exception, IEnumerable<string> region)
+        internal static async Task SendException(Exception exception, IEnumerable<string> param)
         {
             try
             {
@@ -26,6 +25,10 @@ namespace LiteTube
                 builder.AppendFormat("Region - {0}{1}", SettingsHelper.GetRegion(), Environment.NewLine);
                 builder.AppendFormat("Quality - {0}{1}", SettingsHelper.GetQuality(), Environment.NewLine);
                 builder.AppendFormat("Is Authorized - {0}{1}", SettingsHelper.IsContainsAuthorizationData(), Environment.NewLine);
+                foreach (var p in param)
+                {
+                    builder.AppendFormat("param = {0}{1}", p, Environment.NewLine);
+                }
                 await Send(exception, builder.ToString());
             }
             catch (Exception)

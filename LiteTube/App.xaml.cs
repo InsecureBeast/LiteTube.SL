@@ -11,6 +11,7 @@ using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
+using Google;
 
 namespace LiteTube
 {
@@ -188,7 +189,7 @@ namespace LiteTube
         }
 
         // Code to execute on Unhandled Exceptions
-        private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
+        private async void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             if (Debugger.IsAttached)
             {
@@ -204,11 +205,17 @@ namespace LiteTube
                 return;
             }
 
-            if (e.ExceptionObject.InnerException != null)
+            if (e.ExceptionObject.InnerException is System.Net.WebException)
+                return;
+
+#if DEBUG
+#else
+            if (e.ExceptionObject is GoogleApiException)
             {
-                if (e.ExceptionObject.InnerException is System.Net.WebException)
-                    return;
+                await BugTreckerReporter.SendException(e.ExceptionObject, new [] { "Hidden send"});
+                return;
             }
+#endif
 
             _container.DialogService.ShowException(e.ExceptionObject);
         }
