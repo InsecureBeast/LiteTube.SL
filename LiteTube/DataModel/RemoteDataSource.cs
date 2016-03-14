@@ -58,7 +58,6 @@ namespace LiteTube.DataModel
         private string _watchLaterPlayList;
         private string _likedPlayList;
         private string _favorites;
-        private PlaylistCahce _playlistCache;
         private readonly SubscriptionsHolder _subscriptionsHolder;
         private readonly YouTubeWeb _youTubeWeb;
         private const long SEARCH_PAGE_MAX_RESULT = 45;
@@ -68,7 +67,6 @@ namespace LiteTube.DataModel
         {
             _youTubeServiceControl = youTubeServiceControl;
             _youTubeService = _youTubeServiceControl.GetService();
-            _playlistCache = new PlaylistCahce();
             _subscriptionsHolder = new SubscriptionsHolder(_youTubeServiceControl);
             _youTubeWeb = new YouTubeWeb();
         }
@@ -199,9 +197,6 @@ namespace LiteTube.DataModel
 
         public async Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken)
         {
-            //var playlistItemList = _playlistCache.GetPlaylistItemList(nextPageToken);
-            //if (playlistItemList != null)
-            //    return playlistItemList;
             if (string.IsNullOrEmpty(playlistId))
                 return MPlaylistItemList.Empty;
 
@@ -212,9 +207,7 @@ namespace LiteTube.DataModel
             listRequest.PageToken = nextPageToken;
 
             PlaylistItemListResponse playlistResponse = await listRequest.ExecuteAsync();
-            var playlistItemList = new MPlaylistItemList(playlistResponse);
-            //_playlistCache.AddPlaylistItemList(nextPageToken, playlistItemList);
-            return playlistItemList;
+            return new MPlaylistItemList(playlistResponse);
         }
 
         public async Task<IChannel> GetChannel(string channelId)
@@ -360,9 +353,7 @@ namespace LiteTube.DataModel
                 request.MaxResults = maxResult;
                 request.VideoId = videoId;
                 request.TextFormat = CommentThreadsResource.ListRequest.TextFormatEnum.PlainText;
-                //request.Order = CommentThreadsResource.ListRequest.OrderEnum.Time;
-                //request.PrettyPrint = true;
-
+                
                 var response = await request.ExecuteAsync();
                 return new MCommentList(response);
             }
@@ -371,7 +362,8 @@ namespace LiteTube.DataModel
                 if (e.HttpStatusCode == HttpStatusCode.Forbidden)
                     return MCommentList.EmptyList;
 
-                throw e;
+                return MCommentList.EmptyList;
+                //throw e;
             }
         }
 
@@ -500,7 +492,6 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return;
 
-            //await SetRelatedPlaylists();
             if (string.IsNullOrEmpty(_favorites))
                 return;
 

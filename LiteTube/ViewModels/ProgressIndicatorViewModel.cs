@@ -7,7 +7,7 @@ namespace LiteTube.ViewModels
     public class ProgressIndicatorViewModel : PropertyChangedBase
     {
         private ProgressIndicator _progressIndicator;
-        private Action<bool> _changeProgressIndicator;
+        private readonly Action<bool> _changeProgressIndicator;
 
         public ProgressIndicatorViewModel(Action<bool> changeProgressIndicator)
         {
@@ -29,10 +29,12 @@ namespace LiteTube.ViewModels
 
         protected void ShowProgressIndicator()
         {
-            var indicator = new ProgressIndicator();
-            indicator.Text = AppResources.Loading;
-            indicator.IsVisible = true;
-            indicator.IsIndeterminate = true;
+            var indicator = new ProgressIndicator
+            {
+                Text = AppResources.Loading,
+                IsVisible = true,
+                IsIndeterminate = true
+            };
 
             ProgressIndicator = indicator;
             App.ViewModel.IndicatorHolder.ProgressIndicator = indicator;

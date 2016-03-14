@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiteTube.DataClasses;
 using System.Diagnostics;
+using Google;
+using LiteTube.Common;
 using MyToolkit.Multimedia;
 
 namespace LiteTube.DataModel
@@ -299,10 +301,14 @@ namespace LiteTube.DataModel
                 Debug.WriteLine("Subscribe method called");
                 return _remoteDataSource.Subscribe(channelId);
             }
+            catch (GoogleApiException e)
+            {
+                throw new LiteTubeException(e);
+            }
             catch (Exception e)
             {
                 Debug.WriteLine("Subscribe method called with exception " + e.Message);
-                throw e;
+                throw;
             }
         }
 
@@ -313,10 +319,14 @@ namespace LiteTube.DataModel
                 Debug.WriteLine("Unsubscribe method called");
                 return _remoteDataSource.Unsubscribe(subscriptionId);
             }
+            catch (GoogleApiException e)
+            {
+                throw new LiteTubeException(e);
+            }
             catch (Exception e)
             {
                 Debug.WriteLine("Unsubscribe method called with exception " + e.Message);
-                throw e;
+                throw;
             }
         }
 
@@ -327,10 +337,14 @@ namespace LiteTube.DataModel
                 Debug.WriteLine("SetRating method called");
                 return _remoteDataSource.SetRating(videoId, rating);
             }
+            catch (GoogleApiException e)
+            {
+                throw new LiteTubeException(e);
+            }
             catch (Exception e)
             {
                 Debug.WriteLine("SetRating method called with exception " + e.Message);
-                throw e;
+                throw;
             }
         }
 
@@ -372,7 +386,7 @@ namespace LiteTube.DataModel
             catch (Exception e)
             {
                 Debug.WriteLine("AddToFavorites method called with exception " + e.Message);
-                throw e;
+                throw new LiteTubeException(e);
             }
         }
 
@@ -386,7 +400,7 @@ namespace LiteTube.DataModel
             catch (Exception e)
             {
                 Debug.WriteLine("RemoveFromFavorites method called with exception " + e.Message);
-                throw e;
+                throw new LiteTubeException(e);
             }
         }
 
@@ -456,7 +470,7 @@ namespace LiteTube.DataModel
             catch (Exception e)
             {
                 Debug.WriteLine("AddComment method called with exception " + e.Message);
-                throw e;
+                throw new LiteTubeException(e);
             }
         }
 
