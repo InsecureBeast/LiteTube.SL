@@ -23,6 +23,7 @@ namespace LiteTube.ViewModels
         protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
         protected string _uniqueId;
         protected string _title;
+        private string _description;
         protected readonly Func<IDataSource> _getGeDataSource;
         protected readonly IConnectionListener _connectionListener;
         protected Frame _frame;
@@ -88,7 +89,16 @@ namespace LiteTube.ViewModels
         }
 
         public string Subtitle { get; private set; }
-        public string Description { get; set; }
+
+        public string Description
+        {
+            get { return _description; }
+            protected set
+            {
+                _description = value;
+                NotifyOfPropertyChanged(() => Description);
+            }
+        }
         public string ImagePath { get; private set; }
         public ObservableCollection<NodeViewModelBase> Items { get; private set; }
 
