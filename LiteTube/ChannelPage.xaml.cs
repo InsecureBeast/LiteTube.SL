@@ -11,6 +11,7 @@ using LiteTube.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.Common.Helpers;
+using LiteTube.Resources;
 
 namespace LiteTube
 {
@@ -23,8 +24,8 @@ namespace LiteTube
         {
             InitializeComponent();
 
-            _subscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Subscribe.png", "Subscribe", Subscribe_Click);
-            _unsubscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Unsubscribe.png", "Unsubscribe", Unsubscribe_Click);
+            _subscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Subscribe.png", AppResources.Subscribe, Subscribe_Click);
+            _unsubscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Unsubscribe.png", AppResources.Unsubscribe, Unsubscribe_Click);
         }
 
         private ChannelPageViewModel ViewModel
