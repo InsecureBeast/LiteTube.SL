@@ -278,4 +278,7 @@
   <data name="LikedVideos" xml:space="preserve">
     <value>понравившиеся</value>
   </data>
+  <data name="FeedbackMessage" xml:space="preserve">
+    <value>Напишите свои комментарии, пожелания или предложения здесь</value>
+  </data>
 </root>

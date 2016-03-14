@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using Microsoft.Phone.Tasks;
 using LiteTube.Resources;
@@ -25,15 +24,16 @@ namespace LiteTube.Controls
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var page = VisualHelper.FindParent<Page>(this);
+            if (page == null)
+            {
+                BackgroundGridPopup.Height = 1920;
+                return;
+            }
+            
             BackgroundGridPopup.Height = page.ActualHeight;
         }
 
         private void Popup_Closed(object sender, EventArgs eventArgs)
-        {
-            MainMenuButton.IsChecked = false;
-        }
-
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             MainMenuButton.IsChecked = false;
         }
@@ -48,7 +48,7 @@ namespace LiteTube.Controls
             var emailComposeTask = new EmailComposeTask
             {
                 Subject = string.Format("{0} feedback", AppResources.ApplicationTitle),
-                Body = "[Your feedback here]",
+                Body = string.Format("<{0}>", AppResources.FeedbackMessage),
                 To = "pe.dmitriev@gmail.com"
             };
             emailComposeTask.Show();

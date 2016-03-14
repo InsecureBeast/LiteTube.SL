@@ -259,6 +259,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type your feedback here.
+        /// </summary>
+        public static string FeedbackMessage {
+            get {
+                return ResourceManager.GetString("FeedbackMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
