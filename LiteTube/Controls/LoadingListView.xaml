@@ -37,6 +37,7 @@
                        FontWeight="Light"
                        VerticalAlignment="Center"
                        Margin="20,0,0,0"
+                       MaxHeight="80"
                        Foreground="{StaticResource PhoneSubtleBrush}"/>
             
             <Border Grid.Column="1"

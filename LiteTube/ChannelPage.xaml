@@ -83,7 +83,7 @@
                                 <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
                         <TextBlock Text="{Binding Description}"
-                                   Margin="{StaticResource DefaultControlMargin}"
+                                   Margin="{StaticResource DefaultTextBlockMargin}"
                                    Style="{StaticResource PhoneTextSmallStyle}"
                                    TextWrapping="Wrap" />
                     </StackPanel>
