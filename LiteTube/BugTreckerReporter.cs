@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using LiteTube.Common.Helpers;
+using Google;
+using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube
 {
@@ -28,6 +30,21 @@ namespace LiteTube
                 foreach (var p in param)
                 {
                     builder.AppendFormat("param = {0}{1}", p, Environment.NewLine);
+                }
+
+                if (exception is GoogleApiException)
+                {
+                    builder.AppendLine();
+                    builder.AppendLine("Categories:");
+                    builder.AppendLine();
+                    foreach (var item in App.ViewModel.Items)
+                    {
+                        var catItem = item as VideoCategoryNodeViewModel;
+                        if (catItem == null)
+                            continue;
+
+                        builder.AppendLine(catItem.Title);
+                    }
                 }
                 await Send(exception, builder.ToString());
             }
