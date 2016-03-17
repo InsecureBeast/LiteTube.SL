@@ -35,20 +35,6 @@ namespace LiteTube
                     builder.AppendFormat("param = {0}{1}", p, Environment.NewLine);
                 }
 
-                if (exception is GoogleApiException)
-                {
-                    builder.AppendLine();
-                    builder.AppendLine("Categories:");
-                    builder.AppendLine();
-                    foreach (var item in App.ViewModel.Items)
-                    {
-                        var catItem = item as VideoCategoryNodeViewModel;
-                        if (catItem == null)
-                            continue;
-
-                        builder.AppendLine(catItem.Title);
-                    }
-                }
                 await Send(exception, builder.ToString());
             }
             catch (Exception)
