@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using LiteTube.Common.Helpers;
-using Google;
-using LiteTube.ViewModels.Nodes;
 using Microsoft.Phone.Info;
 
 namespace LiteTube
