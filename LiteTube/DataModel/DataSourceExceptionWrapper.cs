@@ -385,6 +385,11 @@ namespace LiteTube.DataModel
                 Debug.WriteLine("GetRating method called");
                 return _remoteDataSource.GetRating(videoId);
             }
+            catch (GoogleApiException e)
+            {
+                Debug.WriteLine("GetRating method called with exception " + e.Message);
+                return _remoteDataSource.GetRating(videoId);
+            }
             catch (Exception e)
             {
                 Debug.WriteLine("GetRating method called with exception " + e.Message);
