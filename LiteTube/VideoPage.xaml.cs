@@ -9,7 +9,6 @@ using LiteTube.Common.Helpers;
 using LiteTube.ViewModels;
 using System.Diagnostics;
 using Windows.Devices.Sensors;
-using LiteTube.Common;
 using Microsoft.PlayerFramework;
 using LiteTube.Resources;
 
@@ -41,6 +40,7 @@ namespace LiteTube
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
             PhoneApplicationService.Current.Deactivated += Current_Deactivated;
             PhoneApplicationService.Current.Activated += Current_Activated;
+            LayoutRoot.SizeChanged += LayoutRoot_SizeChanged;
             
             _sensor = SimpleOrientationSensor.GetDefault();
 
@@ -179,6 +179,17 @@ namespace LiteTube
             SetPlayerNormalState();
         }
 
+        private void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double gridWidth = e.NewSize.Width > e.NewSize.Height ? e.NewSize.Width : e.NewSize.Height;
+            double gridHeight = e.NewSize.Width > e.NewSize.Height ? e.NewSize.Height : e.NewSize.Width;
+
+            _normalHeight = gridWidth;
+            _normalWidth = gridHeight;
+
+            OnOrientationChanged(new OrientationChangedEventArgs(Orientation));
+        }
+
         private async void PivotOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var pivot = sender as Pivot;
@@ -232,6 +243,7 @@ namespace LiteTube
             player.Width = _normalHeight;
             player.Height = _normalWidth;
             PlayerMover.Y = 0;
+            PlayerMover.X = 0;
             PaidTextBlock.Width = player.Width;
             PaidTextBlock.Height = player.Height;
             playerBg.Width = player.Width;
