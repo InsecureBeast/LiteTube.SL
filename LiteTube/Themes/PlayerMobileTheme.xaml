@@ -468,31 +468,47 @@
             </VisualStateManager.VisualStateGroups>
 
             <Grid x:Name="HorizontalTemplate">
-                <ContentPresenter x:Name="HorizontalBackgroundContentPresenter" Margin="{TemplateBinding Padding}" Content="{TemplateBinding HorizontalBackgroundContent}"/>
-                <Rectangle x:Name="HorizontalTrack" Margin="{TemplateBinding Padding}" Fill="{TemplateBinding Background}" IsHitTestVisible="False" />
-                <Rectangle x:Name="HorizontalFill" Margin="{TemplateBinding Padding}" Fill="{TemplateBinding Foreground}" IsHitTestVisible="False">
+                <ContentPresenter x:Name="HorizontalBackgroundContentPresenter" 
+                                  Margin="{TemplateBinding Padding}" 
+                                  Content="{TemplateBinding HorizontalBackgroundContent}"/>
+                <Rectangle x:Name="HorizontalTrack" Margin="{TemplateBinding Padding}" 
+                           Fill="{TemplateBinding Background}" 
+                           IsHitTestVisible="False" />
+                <Rectangle x:Name="HorizontalFill" 
+                           Margin="{TemplateBinding Padding}" 
+                           Fill="{TemplateBinding Foreground}" 
+                           IsHitTestVisible="False">
                     <Rectangle.Clip>
                         <RectangleGeometry Rect="0, 0, 6, 12"/>
                     </Rectangle.Clip>
                 </Rectangle>
-                <Border x:Name="HorizontalAvailableBar" HorizontalAlignment="Left" IsHitTestVisible="True" Background="#00000000" />
-                <ContentPresenter x:Name="HorizontalForegroundContentPresenter" Margin="{TemplateBinding Padding}" Content="{TemplateBinding HorizontalForegroundContent}"/>
-                <Canvas  x:Name="HorizontalCenterElement"  
-                         HorizontalAlignment="Left" 
-                         DataContext="{TemplateBinding Value}" 
-                         VerticalAlignment="Top" 
-                         Margin="-18,-32,0,0">
+                <Border x:Name="HorizontalAvailableBar" 
+                        HorizontalAlignment="Left" 
+                        IsHitTestVisible="True"
+                        Background="#00000000" />
+                <ContentPresenter x:Name="HorizontalForegroundContentPresenter" 
+                                  Margin="{TemplateBinding Padding}" 
+                                  Content="{TemplateBinding HorizontalForegroundContent}"/>
+                <Canvas x:Name="HorizontalCenterElement"  
+                        HorizontalAlignment="Left" 
+                        DataContext="{TemplateBinding Value}" 
+                        VerticalAlignment="Top" 
+                        Margin="-20,-17,0,0">
                     <Grid>
                         <Ellipse Stroke="{TemplateBinding SliderThumbBackground}" 
                                  Fill="Transparent" 
                                  StrokeThickness="2" 
-                                 Width="35" 
-                                 Height="35"/>
-                        <Path Fill="{TemplateBinding SliderThumbBackground}" 
+                                 Width="40" 
+                                 Height="40"/>
+                        <Ellipse Stroke="{StaticResource PhoneAccentBrush}"
+                                 Fill="{StaticResource PhoneAccentBrush}"
+                                 Width="10"
+                                 Height="10"/>
+                        <!--<Path Fill="{TemplateBinding SliderThumbBackground}" 
                               Margin="0,0,0,-7" 
                               VerticalAlignment="Bottom" 
                               HorizontalAlignment="Center" 
-                              Data="M 0,0 8,0 4,8Z"/>
+                              Data="M 0,0 8,0 4,8Z"/>-->
                     </Grid>
                     <Canvas.RenderTransform>
                         <TranslateTransform/>
@@ -510,7 +526,12 @@
                 </Rectangle>
                 <Border x:Name="VerticalAvailableBar" VerticalAlignment="Bottom" IsHitTestVisible="True" Background="#00000000" />
                 <ContentPresenter x:Name="VerticalForegroundContentPresenter" Margin="{TemplateBinding Padding}" Content="{TemplateBinding VerticalForegroundContent}"/>
-                <Rectangle x:Name="VerticalCenterElement" Fill="{TemplateBinding SliderThumbBackground}" DataContext="{TemplateBinding Value}" VerticalAlignment="Top" Height="{StaticResource SliderTrackThemeHeight}" IsHitTestVisible="False">
+                <Rectangle x:Name="VerticalCenterElement" 
+                           Fill="{TemplateBinding SliderThumbBackground}" 
+                           DataContext="{TemplateBinding Value}" 
+                           VerticalAlignment="Top" 
+                           Height="{StaticResource SliderTrackThemeHeight}" 
+                           IsHitTestVisible="False">
                     <Rectangle.RenderTransform>
                         <TranslateTransform/>
                     </Rectangle.RenderTransform>
@@ -541,25 +562,25 @@
                 <ControlTemplate TargetType="local:Timeline">
                     <Grid>
                         <local:SeekableSlider x:Name="ProgressSlider"
-                                Template="{TemplateBinding SliderTemplate}"
-                                SmallChange="10"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Padding="{TemplateBinding Padding}"
-                                VerticalAlignment="Stretch"
-                                Orientation="Horizontal"
-                                Height="{TemplateBinding Height}"
-                                DataContext="{TemplateBinding ViewModel}">
+                                              Template="{TemplateBinding SliderTemplate}"
+                                              SmallChange="10"
+                                              BorderBrush="{TemplateBinding BorderBrush}"
+                                              BorderThickness="{TemplateBinding BorderThickness}"
+                                              Padding="{TemplateBinding Padding}"
+                                              VerticalAlignment="Stretch"
+                                              Orientation="Horizontal"
+                                              Height="{TemplateBinding Height}"
+                                              DataContext="{TemplateBinding ViewModel}">
                             <local:SeekableSlider.HorizontalForegroundContent>
                                 <local:PositionedItemsControl x:Name="PositionedItemsControl"
-                                    ItemsSource="{Binding VisualMarkers}"
-                                    Minimum="{Binding StartTime.TotalSeconds}"
-                                    Maximum="{Binding EndTime.TotalSeconds}">
+                                                              ItemsSource="{Binding VisualMarkers}"
+                                                              Minimum="{Binding StartTime.TotalSeconds}"
+                                                              Maximum="{Binding EndTime.TotalSeconds}">
                                     <local:PositionedItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Button IsEnabled="{Binding IsSeekable}"
-                                            local:PositionedItemsPanel.Position="{Binding Time.TotalSeconds}"
-                                            Content="{Binding Text}">
+                                                    local:PositionedItemsPanel.Position="{Binding Time.TotalSeconds}"
+                                                    Content="{Binding Text}">
                                                 <Button.Style>
                                                     <Binding Path="Style" ConverterParameter="{StaticResource VisualMarkerStyle}">
                                                         <Binding.Converter>
@@ -574,15 +595,15 @@
                             </local:SeekableSlider.HorizontalForegroundContent>
                             <local:SeekableSlider.HorizontalBackgroundContent>
                                 <ProgressBar x:Name="DownloadProgressBar"
-                                     VerticalAlignment="Stretch"
-                                     Foreground="{StaticResource PhoneProgressBarBackgroundBrush}"
-                                     Background="Transparent"
-                                     BorderThickness="0"
-                                     Maximum="1"
-                                     IsTabStop="False"
-                                     BorderBrush="Transparent"
-                                     IsIndeterminate="False"
-                                     Value="{Binding DownloadProgress}">
+                                             VerticalAlignment="Stretch"
+                                             Foreground="{StaticResource PhoneProgressBarBackgroundBrush}"
+                                             Background="Transparent"
+                                             BorderThickness="0"
+                                             Maximum="1"
+                                             IsTabStop="False"
+                                             BorderBrush="Transparent"
+                                             IsIndeterminate="False"
+                                             Value="{Binding DownloadProgress}">
                                     <ProgressBar.Template>
                                         <ControlTemplate TargetType="ProgressBar">
                                             <Grid>
@@ -751,42 +772,62 @@
 
                     </StackPanel>
 
-                    <local:Timeline x:Name="Timeline" 
-                                    Grid.Row="2" 
-                                    ViewModel="{TemplateBinding ViewModel}" 
-                                    Visibility="{Binding IsTimelineVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" 
-                                    Height="25" 
-                                    Padding="0,10,0,10" 
-                                    Margin="30,40,30,0"/>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left" Margin="30,5,30,5">
+                    <Grid Grid.Row="2" Margin="30,30,25,-10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        
                         <TextBlock x:Name="TimeElapsed" 
+                                   Grid.Column="0"
+                                   Margin="0,0,0,20"
                                    Visibility="{Binding IsTimeElapsedButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
                                    Foreground="{StaticResource PlayerButtonsBrush}">
                             <local:MediaControls.Behavior>
                                 <local:TimeElapsedBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </local:MediaControls.Behavior>
                         </TextBlock>
-                        <TextBlock Text=" / " 
+                        
+                        <local:Timeline x:Name="Timeline" 
+                                        Grid.Column="1"
+                                        ViewModel="{TemplateBinding ViewModel}" 
+                                        Visibility="{Binding IsTimelineVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" 
+                                        Height="25" 
+                                        Padding="0,0,0,20" 
+                                        Margin="10,0,0,0"/>
+
+                    <!--<StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left" Margin="30,5,30,5">-->
+                        <!--<TextBlock x:Name="TimeElapsed" 
+                                   Visibility="{Binding IsTimeElapsedButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
+                                   Foreground="{StaticResource PlayerButtonsBrush}">
+                            <local:MediaControls.Behavior>
+                                <local:TimeElapsedBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </local:MediaControls.Behavior>
+                        </TextBlock>-->
+                        <!--<TextBlock Text=" / " 
                                    VerticalAlignment="Center" 
                                    FontSize="{StaticResource PhoneFontSizeNormal}" 
                                    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                   Foreground="{StaticResource PlayerButtonsBrush}"/>
-                        <TextBlock x:Name="TimeRemaining" 
+                                   Foreground="{StaticResource PlayerButtonsBrush}"/>-->
+                        <!--<TextBlock x:Name="TimeRemaining" 
                                    Visibility="{Binding IsTimeRemainingButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
                                    Foreground="{StaticResource PlayerButtonsBrush}">
                             <local:MediaControls.Behavior>
                                 <local:TimeRemainingBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </local:MediaControls.Behavior>
-                        </TextBlock>
+                        </TextBlock>-->
                         <TextBlock x:Name="TotalDuration" 
+                                   Grid.Column="2"
+                                   Margin="30,0,0,20"
+                                   HorizontalAlignment="Right"
                                    Visibility="{Binding IsDurationButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
                                    Foreground="{StaticResource PlayerButtonsBrush}">
                             <local:MediaControls.Behavior>
                                 <local:TotalDurationBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </local:MediaControls.Behavior>
                         </TextBlock>
-                    </StackPanel>
+                    </Grid>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="30,0,30,10">
                         <local:SignalStrength x:Name="SignalStrength" Value="{Binding SignalStrength}" Margin="10,0,0,0" VerticalAlignment="Center" Visibility="{Binding IsSignalStrengthVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>
