@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Windows.Devices.Sensors;
 using Microsoft.PlayerFramework;
 using LiteTube.Resources;
+using LiteTube.Controls;
 
 namespace LiteTube
 {
@@ -340,7 +341,7 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            player = new MediaPlayer();
+            player = new LiteTubePlayer();
             player.IsFullScreenVisible = true;
             player.IsFullScreenEnabled = true;
             player.VerticalAlignment = VerticalAlignment.Center;

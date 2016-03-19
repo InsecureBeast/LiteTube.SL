@@ -6,7 +6,6 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mmppf="clr-namespace:Microsoft.PlayerFramework;assembly=Microsoft.PlayerFramework"
     xmlns:controls="clr-namespace:LiteTube.Controls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -276,19 +275,20 @@
               VerticalAlignment="Top"
               Background="Black"
               Name="playerBg">
-                <mmppf:MediaPlayer x:Name="player"
-                                   Source="{Binding VideoUri}"
-                                   PosterSource="{Binding ImagePath}"
-                                   IsFullScreenVisible="True"
-                                   IsFullScreenEnabled="True"
-                                   VerticalAlignment="Center"
-                                   IsSkipAheadVisible="False"
-                                   IsSkipBackVisible="False"
-                                   AllowMediaStartingDeferrals="False">
-                <mmppf:MediaPlayer.RenderTransform>
+                <controls:LiteTubePlayer x:Name="player"
+                                         Source="{Binding VideoUri}"
+                                         VideoTitle="{Binding Title}"
+                                         PosterSource="{Binding ImagePath}"
+                                         IsFullScreenVisible="True"
+                                         IsFullScreenEnabled="True"
+                                         VerticalAlignment="Center"
+                                         IsSkipAheadVisible="False"
+                                         IsSkipBackVisible="False"
+                                         AllowMediaStartingDeferrals="False">
+                <controls:LiteTubePlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
-                </mmppf:MediaPlayer.RenderTransform>
-            </mmppf:MediaPlayer>
+                </controls:LiteTubePlayer.RenderTransform>
+            </controls:LiteTubePlayer>
 
             <Border Background="#BF000000"
                     Name="PaidTextBlock"
