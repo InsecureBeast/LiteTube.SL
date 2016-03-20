@@ -348,6 +348,7 @@ namespace LiteTube
             player.IsSkipAheadVisible = false;
             player.IsSkipBackVisible = false;
             player.AllowMediaStartingDeferrals = false;
+            player.VideoTitle = viewModel.Title;
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
 
