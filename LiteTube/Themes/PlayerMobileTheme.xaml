@@ -715,12 +715,13 @@
                 <TextBlock Text="{Binding VideoTitle}"
                            VerticalAlignment="Center"
                            Margin="30,0,0,0"
+                           TextWrapping="Wrap"
                            Foreground="{StaticResource PlayerButtonsBrush}"/>
                 <TextBlock Text="{Binding ChannelTitle}"
                            VerticalAlignment="Center"
                            Margin="30,0,0,0"
                            FontSize="16"
-                           Foreground="#FFF1F0EE"/>
+                           Foreground="#FFD1D1D1"/>
             </StackPanel>
 
             <Border x:Name="RelatedBorder" 
@@ -733,6 +734,7 @@
                 <ListBox ItemsSource="{Binding RelatedItems}"
                          ItemTemplate="{StaticResource RelatedVideoItem}"
                          common:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                          toolkit:TiltEffect.IsTiltEnabled="True" >
                 </ListBox>
             </Border>

@@ -1,5 +1,6 @@
 ﻿using LiteTube.ViewModels.Nodes;
 using Microsoft.PlayerFramework;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -48,7 +49,6 @@ namespace LiteTube.Controls
     {
         public PlayerInteractiveViewModel(MediaPlayer mediaPlayer) : base(mediaPlayer)
         {
-            
         }
 
         public string VideoTitle

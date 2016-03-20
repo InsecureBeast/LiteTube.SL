@@ -29,6 +29,7 @@ namespace LiteTube
         private bool _resumed;
         private TimeSpan _playerPosition;
         private bool _isFullScreen = false;
+        private bool _isRelatedLoading = false;
 
         public VideoPage()
         {
@@ -60,8 +61,6 @@ namespace LiteTube
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", AppResources.AddToFavorites, AddToFavorites_Click);
 
             ApplicationBar = _currentApplicationBar;
-
-            OnOrientationChanged(new OrientationChangedEventArgs(Orientation));
         }
 
         private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
@@ -179,7 +178,8 @@ namespace LiteTube
             _normalHeight = minSize;
             _normalWidth = maxSize;
 
-            SetPlayerNormalState();
+            //SetPlayerNormalState();
+            OnOrientationChanged(new OrientationChangedEventArgs(Orientation));
         }
 
         private void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -211,8 +211,7 @@ namespace LiteTube
 
                 case 1:
                     Debug.WriteLine("related");
-                    if (!viewModel.RelatedVideosViewModel.IsEmpty)
-                        await viewModel.RelatedVideosViewModel.FirstLoad();
+                    await LoadRelatedItems();
                     break;
 
                 case 2:
@@ -233,12 +232,18 @@ namespace LiteTube
 
         private async Task LoadRelatedItems()
         {
+            if (_isRelatedLoading)
+                return;
+
+            _isRelatedLoading = true;
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
 
             if (!viewModel.RelatedVideosViewModel.IsEmpty)
                 await viewModel.RelatedVideosViewModel.FirstLoad();
+
+            _isRelatedLoading = false;
         }
 
         private void Home_Click(object sender, EventArgs e)
@@ -251,6 +256,7 @@ namespace LiteTube
             player.IsFullScreen = false;
             player.Width = _normalWidth;
             player.Height = _normalWidth / 1.778;
+            player.AutoHideInterval = TimeSpan.FromSeconds(3);
             PlayerMover.Y = 0;
             PaidTextBlock.Width = player.Width;
             PaidTextBlock.Height = player.Height;
@@ -263,13 +269,14 @@ namespace LiteTube
             player.IsFullScreen = true;
             player.Width = _normalHeight;
             player.Height = _normalWidth;
+            player.AutoHideInterval = TimeSpan.FromSeconds(15);
             PlayerMover.Y = 0;
             PlayerMover.X = 0;
             PaidTextBlock.Width = player.Width;
             PaidTextBlock.Height = player.Height;
             playerBg.Width = player.Width;
             playerBg.Height = player.Height;
-
+            
             await LoadRelatedItems();
         }
 
