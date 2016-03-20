@@ -9,7 +9,7 @@
     
     <SolidColorBrush x:Key="TransportBackgroundBrush" Color="#80000000"/>
     <SolidColorBrush x:Key="TransportReversedBackgroundBrush" Color="#80000000"/>
-    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#33000000"/>
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#66000000"/>
     <SolidColorBrush x:Key="PlayerButtonsBrush" Color="White"/>
     <sys:Double x:Key="SliderTrackThemeHeight">5</sys:Double>
 
@@ -633,7 +633,7 @@
     </Style>
 
     <DataTemplate x:Key="RelatedVideoItem">
-        <Grid Margin="10,0,10,10">
+        <Grid Margin="5,5,5,5">
             <Grid Grid.Column="0" 
                   HorizontalAlignment="Center"
                   Background="LightGray"
@@ -735,7 +735,7 @@
                          ItemTemplate="{StaticResource RelatedVideoItem}"
                          common:ItemClickCommand.Command="{Binding ItemClickCommand}"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                         toolkit:TiltEffect.IsTiltEnabled="True" >
+                         toolkit:TiltEffect.IsTiltEnabled="True">
                 </ListBox>
             </Border>
 

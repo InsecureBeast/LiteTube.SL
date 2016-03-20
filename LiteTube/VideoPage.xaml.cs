@@ -44,7 +44,7 @@ namespace LiteTube
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
             PhoneApplicationService.Current.Deactivated += Current_Deactivated;
             PhoneApplicationService.Current.Activated += Current_Activated;
-            LayoutRoot.SizeChanged += LayoutRoot_SizeChanged;
+            LayoutRoot.SizeChanged += OnLayoutRootSizeChanged;
             
             _sensor = SimpleOrientationSensor.GetDefault();
 
@@ -178,11 +178,10 @@ namespace LiteTube
             _normalHeight = minSize;
             _normalWidth = maxSize;
 
-            //SetPlayerNormalState();
             OnOrientationChanged(new OrientationChangedEventArgs(Orientation));
         }
 
-        private void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnLayoutRootSizeChanged(object sender, SizeChangedEventArgs e)
         {
             double gridWidth = e.NewSize.Width > e.NewSize.Height ? e.NewSize.Width : e.NewSize.Height;
             double gridHeight = e.NewSize.Width > e.NewSize.Height ? e.NewSize.Height : e.NewSize.Width;
