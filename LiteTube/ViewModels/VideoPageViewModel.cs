@@ -65,7 +65,6 @@ namespace LiteTube.ViewModels
             _addFavoritesCommand = new RelayCommand(AddFavorites);
 
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
-
             LoadVideoItem(videoId);
         }
 

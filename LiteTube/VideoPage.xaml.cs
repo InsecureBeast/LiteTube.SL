@@ -12,6 +12,7 @@ using Windows.Devices.Sensors;
 using Microsoft.PlayerFramework;
 using LiteTube.Resources;
 using LiteTube.Controls;
+using System.Threading.Tasks;
 
 namespace LiteTube
 {
@@ -36,6 +37,7 @@ namespace LiteTube
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
+            player.IsInteractiveChanged += OnInteractiveChanged;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
@@ -221,6 +223,24 @@ namespace LiteTube
             }
         }
 
+        private async void OnInteractiveChanged(object sender, RoutedEventArgs e)
+        {
+            if (!player.IsFullScreen)
+                return;
+
+            await LoadRelatedItems();
+        }
+
+        private async Task LoadRelatedItems()
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            if (!viewModel.RelatedVideosViewModel.IsEmpty)
+                await viewModel.RelatedVideosViewModel.FirstLoad();
+        }
+
         private void Home_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoHome();
@@ -238,7 +258,7 @@ namespace LiteTube
             playerBg.Height = player.Height;
         }
 
-        private void SetPlayerFullScreenState()
+        private async void SetPlayerFullScreenState()
         {
             player.IsFullScreen = true;
             player.Width = _normalHeight;
@@ -249,6 +269,8 @@ namespace LiteTube
             PaidTextBlock.Height = player.Height;
             playerBg.Width = player.Width;
             playerBg.Height = player.Height;
+
+            await LoadRelatedItems();
         }
 
         private void SetVisibilityControls(Visibility visibility)
@@ -351,6 +373,7 @@ namespace LiteTube
             player.VideoTitle = viewModel.Title;
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
+            player.RelatedItems = viewModel.RelatedVideosViewModel.Items;
 
             player.RestoreMediaState(_playerState);
             playerBg.Children.Add(player);
