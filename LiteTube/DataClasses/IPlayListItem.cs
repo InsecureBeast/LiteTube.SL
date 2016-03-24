@@ -33,13 +33,8 @@ namespace LiteTube.DataClasses
 
     public interface IThumbnailDetails
     {
-        IThumbnail Default { get; }
         string ETag { get; }
-        IThumbnail High { get; }
-        IThumbnail Maxres { get; }
-        IThumbnail Medium { get; }
-        IThumbnail Standard { get; }
-        IThumbnail GetDefaultThumbnail();
+        string GetThumbnailUrl();
     }
 
     public interface IPlaylistItemSnippet
@@ -243,23 +238,24 @@ namespace LiteTube.DataClasses
 
     class MThumbnailDetails : IThumbnailDetails
     {
-        private readonly ThumbnailDetails _thumbnailDetails;
+        private readonly IThumbnail _default;
+        private readonly IThumbnail _high;
+        private readonly IThumbnail _maxres;
+        private readonly IThumbnail _medium;
+        private readonly IThumbnail _standard;
+
         public MThumbnailDetails(ThumbnailDetails thumbnailDetails)
         {
             if (thumbnailDetails == null)
                 return;
 
-            _thumbnailDetails = thumbnailDetails;
-            High = new MThumbnail(thumbnailDetails.High);
-            Maxres = new MThumbnail(thumbnailDetails.Maxres);
-            Medium = new MThumbnail(thumbnailDetails.Medium);
-            Standard = new MThumbnail(thumbnailDetails.Standard);
-        }
+            _high = new MThumbnail(thumbnailDetails.High);
+            _maxres = new MThumbnail(thumbnailDetails.Maxres);
+            _medium = new MThumbnail(thumbnailDetails.Medium);
+            _standard = new MThumbnail(thumbnailDetails.Standard);
+            _default = new MThumbnail(thumbnailDetails.Default__);
 
-        public IThumbnail Default
-        {
-            get;
-            private set;
+            ETag = thumbnailDetails.ETag;
         }
 
         public string ETag
@@ -268,45 +264,19 @@ namespace LiteTube.DataClasses
             private set;
         }
 
-        public IThumbnail High
+        public string GetThumbnailUrl()
         {
-            get;
-            private set;
-        }
-
-        public IThumbnail Maxres
-        {
-            get;
-            private set;
-        }
-
-        public IThumbnail Medium
-        {
-            get;
-            private set;
-        }
-
-        public IThumbnail Standard
-        {
-            get;
-            private set;
-        }
-
-        public IThumbnail GetDefaultThumbnail()
-        {
-            if (_thumbnailDetails == null)
-                return MThumbnail.Empty;
-
-            if (_thumbnailDetails.Medium != null)
-                return new MThumbnail(_thumbnailDetails.Medium);
-
-            if (_thumbnailDetails.Standard != null)
-                return new MThumbnail(_thumbnailDetails.Standard);
-
-            if (_thumbnailDetails.High != null)
-                return new MThumbnail(_thumbnailDetails.High);
-
-            return new MThumbnail(_thumbnailDetails.Maxres);
+            if (_default != null && !string.IsNullOrEmpty(_default.Url))
+                return _default.Url;
+            if (_medium != null && !string.IsNullOrEmpty(_medium.Url))
+                return _medium.Url;
+            if (_maxres != null && !string.IsNullOrEmpty(_maxres.Url))
+                return _maxres.Url;
+            if (_high != null && !string.IsNullOrEmpty(_high.Url))
+                return _high.Url;
+            if (_standard != null && !string.IsNullOrEmpty(_standard.Url))
+                return _standard.Url;
+            return null;
         }
     }
 

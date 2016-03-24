@@ -160,7 +160,6 @@
     <Compile Include="Converters\TimeSpanFormatConverter.cs" />
     <Compile Include="Converters\UppercaseConverter.cs" />
     <Compile Include="DataClasses\DataClasses.cs" />
-    <Compile Include="DataClasses\Extensions.cs" />
     <Compile Include="DataClasses\IActivity.cs" />
     <Compile Include="DataClasses\IChannel.cs" />
     <Compile Include="DataClasses\IChannelList.cs" />

@@ -18,7 +18,7 @@ namespace LiteTube.ViewModels.Nodes
             Title = videoItem.Details.Title;
             ChannelTitle = videoItem.ChannelTitle;
             Description = videoItem.Details.Description;
-            ImagePath = videoItem.Thumbnails.Medium.Url;
+            ImagePath = videoItem.Thumbnails.GetThumbnailUrl();
             Duration = videoItem.Details.Duration;
             ViewCount = videoItem.Details.Video.Statistics.ViewCount;
             if (videoItem.PublishedAt != null)

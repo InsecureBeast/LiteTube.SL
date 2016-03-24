@@ -131,7 +131,7 @@ namespace LiteTube.ViewModels
             Description = ch.Description;
             ChannelSubscribers = ch.Statistics.SubscriberCount;
             ChannelVideoCount = ch.Statistics.VideoCount;
-            ChannelImage = ch.Thumbnails.Medium.Url;
+            ChannelImage = ch.Thumbnails.GetThumbnailUrl();
             Image = ch.Image;
             _channel = ch;
             IsSubscribed = _getGeDataSource().IsSubscribed(channelId);
