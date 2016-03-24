@@ -51,7 +51,8 @@ namespace LiteTube.DataModel
             try
             {
                 Debug.WriteLine("LoginSilently method called");
-                await _remoteDataSource.LoginSilently(username);
+                if (_remoteDataSource != null) 
+                    await _remoteDataSource.LoginSilently(username);
                 Debug.WriteLine("LoginSilently method call ended");
             }
             catch (Exception e)
