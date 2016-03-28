@@ -381,7 +381,8 @@ namespace LiteTube
                 AllowMediaStartingDeferrals = false,
                 VideoTitle = viewModel.Title,
                 ChannelTitle = viewModel.ChannelTitle,
-                RelatedItems = viewModel.RelatedVideosViewModel.Items
+                RelatedItems = viewModel.RelatedVideosViewModel.Items,
+                ItemClickCommand = viewModel.RelatedVideosViewModel.ItemClickCommand
             };
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;

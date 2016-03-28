@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Common\SessionType.cs" />
     <Compile Include="Controls\LiteTubePlayer.cs" />
+    <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\LoginStatusTextConverter.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />

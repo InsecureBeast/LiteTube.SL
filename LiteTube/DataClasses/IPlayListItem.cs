@@ -266,8 +266,6 @@ namespace LiteTube.DataClasses
 
         public string GetThumbnailUrl()
         {
-            if (_default != null && !string.IsNullOrEmpty(_default.Url))
-                return _default.Url;
             if (_medium != null && !string.IsNullOrEmpty(_medium.Url))
                 return _medium.Url;
             if (_maxres != null && !string.IsNullOrEmpty(_maxres.Url))
@@ -276,6 +274,8 @@ namespace LiteTube.DataClasses
                 return _high.Url;
             if (_standard != null && !string.IsNullOrEmpty(_standard.Url))
                 return _standard.Url;
+            if (_default != null && !string.IsNullOrEmpty(_default.Url))
+                return _default.Url;
             return null;
         }
     }
