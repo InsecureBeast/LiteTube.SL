@@ -118,6 +118,8 @@ namespace LiteTube
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
             }
+
+            OnOrientationChanged(new OrientationChangedEventArgs(Orientation));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -369,18 +371,20 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            player = new LiteTubePlayer();
-            player.IsFullScreenVisible = true;
-            player.IsFullScreenEnabled = true;
-            player.VerticalAlignment = VerticalAlignment.Center;
-            player.IsSkipAheadVisible = false;
-            player.IsSkipBackVisible = false;
-            player.AllowMediaStartingDeferrals = false;
-            player.VideoTitle = viewModel.Title;
+            player = new LiteTubePlayer
+            {
+                IsFullScreenVisible = true,
+                IsFullScreenEnabled = true,
+                VerticalAlignment = VerticalAlignment.Center,
+                IsSkipAheadVisible = false,
+                IsSkipBackVisible = false,
+                AllowMediaStartingDeferrals = false,
+                VideoTitle = viewModel.Title,
+                ChannelTitle = viewModel.ChannelTitle,
+                RelatedItems = viewModel.RelatedVideosViewModel.Items
+            };
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
-            player.RelatedItems = viewModel.RelatedVideosViewModel.Items;
-
             player.RestoreMediaState(_playerState);
             playerBg.Children.Add(player);
 

@@ -40,7 +40,7 @@
 
             <local:LocalizedStrings xmlns:local="clr-namespace:LiteTube" x:Key="LocalizedStrings"/>
 
-            <shell:ApplicationBar x:Key="GlobalAppBar" IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBar x:Key="GlobalAppBar" IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
                 <!--<shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click" />-->
                 <!--<shell:ApplicationBar.MenuItems>
                     <shell:ApplicationBarMenuItem Text="MenuItem 1" Click="MenuItem1_Click" />
