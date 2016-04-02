@@ -165,10 +165,6 @@ namespace LiteTube
             _normalHeight = gridWidth;
             _normalWidth = gridHeight;
 
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
             ChangeOrientation(Orientation);
         }
 
@@ -400,7 +396,7 @@ namespace LiteTube
             switch (orienatation)
             {
                 case SimpleOrientation.NotRotated:
-                    return PageOrientation.Portrait;
+                    return PageOrientation.PortraitUp;
                 case SimpleOrientation.Rotated90DegreesCounterclockwise:
                     return PageOrientation.LandscapeLeft;
                 case SimpleOrientation.Rotated180DegreesCounterclockwise:

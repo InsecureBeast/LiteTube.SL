@@ -636,7 +636,7 @@
         <Grid Margin="5,5,5,5">
             <Grid Grid.Column="0" 
                   HorizontalAlignment="Center"
-                  Background="LightGray"
+                  Background="DarkGray"
                   Height="100"
                   Width="178">
 
@@ -901,11 +901,11 @@
                     </StackPanel>
 
                     <!-- Time line-->
-                    <Grid Grid.Row="2" Margin="30,30,25,-10">
+                    <Grid Grid.Row="2" Margin="10,30,10,-10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="90"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="90"/>
                         </Grid.ColumnDefinitions>
                         
                         <TextBlock x:Name="TimeElapsed" 
