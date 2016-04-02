@@ -165,8 +165,11 @@ namespace LiteTube
             _normalHeight = gridWidth;
             _normalWidth = gridHeight;
 
-            var curOrientation = _sensor.GetCurrentOrientation();
-            ChangeOrientation(ToPageOrientation(curOrientation));
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            ChangeOrientation(Orientation);
         }
 
         private async void PivotOnSelectionChanged(object sender, SelectionChangedEventArgs e)

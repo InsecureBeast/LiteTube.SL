@@ -729,7 +729,7 @@
             <!--Title portrait-->
             <StackPanel Orientation="Vertical" 
                         x:Name="TitlePanelPortrait"
-                        Height="55"
+                        Height="60"
                         Background="{StaticResource ControlBackgroundBrush}"
                         Grid.Row="0"
                         DataContext="{TemplateBinding ViewModel}" 
@@ -738,12 +738,12 @@
                         Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                 <TextBlock Text="{Binding VideoTitle}"
                            VerticalAlignment="Center"
-                           Margin="10,0,0,10"
-                           TextWrapping="Wrap"
+                           Margin="10,0,10,5"
+                           TextTrimming="WordEllipsis"
                            Foreground="{StaticResource PlayerButtonsBrush}"/>
                 <TextBlock Text="{Binding ChannelTitle}"
                            VerticalAlignment="Center"
-                           Margin="10,0,0,10"
+                           Margin="10,0,10,5"
                            FontSize="16"
                            Foreground="#FFD1D1D1"/>
             </StackPanel>
