@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteTube.Common.Helpers;
+using System;
 
 namespace LiteTube.Common
 {
@@ -19,12 +20,18 @@ namespace LiteTube.Common
 
         public void ShowError(Exception exception)
         {
-            ExceptionDialog.ShowDialog(exception);
+            LayoutHelper.InvokeFromUiThread(() =>
+            {
+                ExceptionDialog.ShowDialog(exception);
+            });
         }
 
         public void ShowException(Exception exception)
         {
-            ExceptionDialog.ShowError(exception);
+            LayoutHelper.InvokeFromUiThread(() =>
+            {
+                ExceptionDialog.ShowError(exception);
+            });
         }
     }
 }

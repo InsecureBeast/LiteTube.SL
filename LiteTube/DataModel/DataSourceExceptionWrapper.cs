@@ -520,7 +520,7 @@ namespace LiteTube.DataModel
             catch (Exception e)
             {
                 Debug.WriteLine("GetAutoCompleteSearchItems method called with exception " + e.Message);
-                throw;
+                return new Task<IEnumerable<string>>(() => new List<string>());
             }
         }
     }
