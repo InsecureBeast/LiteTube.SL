@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="TransportBackgroundBrush" Color="#80000000"/>
     <SolidColorBrush x:Key="TransportReversedBackgroundBrush" Color="#80000000"/>
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#66000000"/>
+    <SolidColorBrush x:Key="RelatedTiteItemBackgroundBrush" Color="#90000000"/>
     <SolidColorBrush x:Key="PlayerButtonsBrush" Color="White"/>
     <sys:Double x:Key="SliderTrackThemeHeight">5</sys:Double>
 
@@ -653,25 +654,30 @@
                                Foreground="White"
                                FontSize="14"/>
                 </Border>
-            </Grid>
 
-            <!--<StackPanel Grid.Column="1" 
-                        Margin="0,0,0,0">
-                <TextBlock Text="{Binding Title}" 
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           TextTrimming="WordEllipsis"
-                           TextWrapping="Wrap"
-                           MaxHeight="54"/>
-                <TextBlock Text="{Binding ChannelTitle}" 
-                           Style="{StaticResource PhoneTextSmallStyle}"
-                           TextWrapping="NoWrap"/>
-                <TextBlock TextWrapping="NoWrap"
-                           Text="{Binding PublishedAt}"
-                           Style="{StaticResource PhoneTextSmallStyle}">
-                    <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
-                    <Run Text="{Binding PublishedAt}" />
-                </TextBlock>
-            </StackPanel>-->
+                <Border VerticalAlignment="Top"
+                        Background="{StaticResource RelatedTiteItemBackgroundBrush}"
+                        MaxHeight="42"
+                        Padding="4,0,4,4">
+                    <TextBlock Text="{Binding Title}" 
+                               Foreground="White"
+                               FontSize="14"
+                               TextTrimming="WordEllipsis"
+                               TextWrapping="Wrap"/>
+                </Border>
+
+                <!--<Border VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        Background="{StaticResource RelatedTiteItemBackgroundBrush}"
+                        Padding="4,0,4,0"
+                        Margin="2"
+                        Width="120">
+                    <TextBlock Text="{Binding ChannelTitle}" 
+                               Foreground="#FFD1D1D1"
+                               FontSize="14"
+                               TextTrimming="WordEllipsis"/>
+                </Border>-->
+            </Grid>
         </Grid>
     </DataTemplate>
     
@@ -905,7 +911,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="95"/>
                         </Grid.ColumnDefinitions>
                         
                         <TextBlock x:Name="TimeElapsed" 
@@ -948,7 +954,7 @@
                         </TextBlock>-->
                         <TextBlock x:Name="TotalDuration" 
                                    Grid.Column="2"
-                                   Margin="30,0,0,20"
+                                   Margin="10,0,0,20"
                                    HorizontalAlignment="Right"
                                    Visibility="{Binding IsDurationButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
                                    Foreground="{StaticResource PlayerButtonsBrush}">
