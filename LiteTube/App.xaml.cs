@@ -114,6 +114,7 @@ namespace LiteTube
         {
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
+            //ThemeManager.GoToDarkTheme();
             BuildLocalizedApplicationBar();
 
             // When a new instance of the app is launched, clear all deactivation settings
@@ -149,6 +150,7 @@ namespace LiteTube
 
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
+            //ThemeManager.GoToDarkTheme();
             BuildLocalizedApplicationBar();
 
             // Ensure that application state is restored appropriately

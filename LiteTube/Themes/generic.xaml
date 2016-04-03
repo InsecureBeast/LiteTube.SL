@@ -13,7 +13,7 @@
     <SolidColorBrush x:Key="NavigationPanelBrush" Color="{StaticResource NavigationPanelColor}" />
     <SolidColorBrush x:Key="NavigationPanelForegroundBrush" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="NavigationPanelButtonPressedBackgroundBrush" Color="#FF404040" />
-    <SolidColorBrush x:Key="PhoneSecondaryForegroundBrush" Color="#99000000" />
+    <SolidColorBrush x:Key="PhoneSecondaryForegroundBrush" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="PhoneSecondaryBackgroundBrush" Color="#50000000" />
     <SolidColorBrush x:Key="PhoneTextBoxBackgroundBrush" Color="#FFFFFFFF" />
 
@@ -51,7 +51,7 @@
     <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}"/>
         <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
-        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneSecondaryForegroundBrush}"/>
         <Setter Property="Margin" Value="24,0,15,0"/>
     </Style>
 
