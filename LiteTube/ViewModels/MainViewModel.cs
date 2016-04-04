@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.DataModel;
@@ -7,8 +6,6 @@ using LiteTube.Resources;
 using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
 using Microsoft.Phone.Shell;
-using Windows.ApplicationModel.Activation;
-using Windows.Security.Authentication.Web;
 using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
