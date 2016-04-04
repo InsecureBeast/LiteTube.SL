@@ -13,6 +13,7 @@ using Microsoft.PlayerFramework;
 using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace LiteTube
 {
@@ -361,6 +362,11 @@ namespace LiteTube
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
             player.RestoreMediaState(_playerState);
+
+            var oldPlayer = playerBg.Children.FirstOrDefault(x => x is LiteTubePlayer);
+            if (oldPlayer != null)
+                playerBg.Children.Remove(oldPlayer);
+
             playerBg.Children.Add(player);
 
             if (_isFullScreen)
