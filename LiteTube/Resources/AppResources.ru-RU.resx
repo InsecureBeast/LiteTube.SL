@@ -281,4 +281,7 @@
   <data name="FeedbackMessage" xml:space="preserve">
     <value>Напишите свои комментарии, пожелания или предложения здесь</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Тема</value>
+  </data>
 </root>

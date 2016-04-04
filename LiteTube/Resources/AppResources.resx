@@ -281,4 +281,7 @@
   <data name="FeedbackMessage" xml:space="preserve">
     <value>Type your feedback here</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
 </root>

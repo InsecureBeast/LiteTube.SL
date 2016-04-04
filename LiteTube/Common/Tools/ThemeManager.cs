@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using LiteTube.Common.Helpers;
+using System.Windows;
 using System.Windows.Media;
 
 namespace LiteTube.Common.Tools
 {
     static class ThemeManager
     {
-        public static void GoToLightTheme()
+        private static void GoToLightTheme()
         {
             var accentBrush = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
             if (accentBrush != null)
@@ -52,7 +53,7 @@ namespace LiteTube.Common.Tools
                 phoneBorderBrush.Color = Color.FromArgb(178, 0, 0, 0); //75% of black
         }
 
-        public static void GoToDarkTheme()
+        private static void GoToDarkTheme()
         {
             var accentBrush = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
             if (accentBrush != null)
@@ -97,6 +98,14 @@ namespace LiteTube.Common.Tools
             var phoneSecondaryForegroundBrush = Application.Current.Resources["PhoneSecondaryForegroundBrush"] as SolidColorBrush;
             if (phoneSecondaryForegroundBrush != null)
                 phoneSecondaryForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
+        }
+
+        public static void SetApplicationTheme(ApplicationTheme theme)
+        {
+            if (theme == ApplicationTheme.Dark)
+                GoToDarkTheme();
+            else
+                GoToLightTheme();
         }
     }
 }
