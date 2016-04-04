@@ -206,14 +206,14 @@ namespace LiteTube
             if (e.ExceptionObject.InnerException is System.Net.WebException)
                 return;
 
-//#if DEBUG
-//#else
+#if DEBUG
+#else
             if (e.ExceptionObject is GoogleApiException)
-            {
-                await BugTreckerReporter.SendException(e.ExceptionObject, new [] { "Hidden send"});
                 return;
-            }
-//#endif
+
+            if (e.ExceptionObject.InnerException is GoogleApiException)
+                return;
+#endif
 
             _container.DialogService.ShowException(e.ExceptionObject);
         }
