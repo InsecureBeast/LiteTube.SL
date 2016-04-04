@@ -214,7 +214,6 @@ namespace LiteTube
             if (e.ExceptionObject.InnerException is GoogleApiException)
                 return;
 #endif
-
             _container.DialogService.ShowException(e.ExceptionObject);
         }
 
