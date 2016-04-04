@@ -60,7 +60,7 @@
 
             <Grid Grid.Column="0" 
                   HorizontalAlignment="Left"
-                  Background="DimGray"
+                  Background="{StaticResource PhoneSecondaryBackgroundBrush}"
                   Height="100"
                   Width="178">
 

@@ -4,6 +4,7 @@ using System.IO.IsolatedStorage;
 using Windows.Storage;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using LiteTube.Common.Tools;
 
 namespace LiteTube.Common.Helpers
 {
@@ -190,6 +191,21 @@ namespace LiteTube.Common.Helpers
             return sessionType;
         }
 
+        internal static void SaveTheme(ApplicationTheme theme)
+        {
+            ApplicationData.Current.RoamingSettings.Values["Theme"] = (int)theme;
+        }
+
+        internal static ApplicationTheme GetTheme()
+        {
+            var theme = ApplicationTheme.Light;
+            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("Theme"))
+            {
+                theme = (ApplicationTheme)(int)(ApplicationData.Current.RoamingSettings.Values["Theme"]);
+            }
+
+            return theme;
+        }
 
         // Helper method for removing a key/value pair from isolated storage
         private static void RemoveValue(string Key)

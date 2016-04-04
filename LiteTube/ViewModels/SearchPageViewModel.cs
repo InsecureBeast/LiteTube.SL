@@ -14,7 +14,7 @@ namespace LiteTube.ViewModels
         private int _selectedIndex;
 
         public SearchPageViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(null)
+            : base(geDataSource, connectionListener, null)
         {
             _searchVideoViewModel = new SearchVideoViewModel(geDataSource, connectionListener, ChangeProgressIndicator);
             _searchChannelsViewModel = new SearchChannelsViewModel(geDataSource, connectionListener, ChangeProgressIndicator);

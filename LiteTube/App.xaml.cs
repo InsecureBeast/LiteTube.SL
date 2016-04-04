@@ -112,9 +112,7 @@ namespace LiteTube
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            //TODO get from settings))
-            ThemeManager.GoToLightTheme();
-            //ThemeManager.GoToDarkTheme();
+            ThemeManager.SetApplicationTheme(SettingsHelper.GetTheme());
             BuildLocalizedApplicationBar();
 
             // When a new instance of the app is launched, clear all deactivation settings
@@ -148,9 +146,7 @@ namespace LiteTube
                     await ViewModel.GetDataSource().LoginSilently(string.Empty);
             });
 
-            //TODO get from settings))
-            ThemeManager.GoToLightTheme();
-            //ThemeManager.GoToDarkTheme();
+            ThemeManager.SetApplicationTheme(SettingsHelper.GetTheme());
             BuildLocalizedApplicationBar();
 
             // Ensure that application state is restored appropriately

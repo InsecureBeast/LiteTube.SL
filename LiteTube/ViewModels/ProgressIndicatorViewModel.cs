@@ -1,4 +1,5 @@
-﻿using LiteTube.Resources;
+﻿using LiteTube.DataModel;
+using LiteTube.Resources;
 using Microsoft.Phone.Shell;
 using System;
 
@@ -8,10 +9,17 @@ namespace LiteTube.ViewModels
     {
         private ProgressIndicator _progressIndicator;
         private readonly Action<bool> _changeProgressIndicator;
+        protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
 
-        public ProgressIndicatorViewModel(Action<bool> changeProgressIndicator)
+        public ProgressIndicatorViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator)
         {
             _changeProgressIndicator = changeProgressIndicator;
+            _navigatioPanelViewModel = new NavigationPanelViewModel(getGeDataSource, connectionListener);
+        }
+
+        public NavigationPanelViewModel NavigationPanelViewModel
+        {
+            get { return _navigatioPanelViewModel; }
         }
 
         public ProgressIndicator ProgressIndicator

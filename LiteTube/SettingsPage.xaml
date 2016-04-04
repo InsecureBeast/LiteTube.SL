@@ -50,6 +50,17 @@
                                 HorizontalAlignment="Left"
                                 MinWidth="250"
                                 Margin="0"/>
+
+            <TextBlock Name="ApplicationTheme"
+                       Text="{Binding Path=LocalizedResources.Theme, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource PhoneTextLargeStyle}"
+                       Margin="{StaticResource DefaultTextBlockMargin}"
+                       HorizontalAlignment="Left" />
+            <toolkit:ListPicker ItemsSource="{Binding ApplicationThemes}"
+                                SelectedItem ="{Binding SelectedApplicationTheme, Mode=TwoWay}"
+                                HorizontalAlignment="Left"
+                                MinWidth="250"
+                                Margin="0"/>
         </StackPanel>
     </Grid>
 

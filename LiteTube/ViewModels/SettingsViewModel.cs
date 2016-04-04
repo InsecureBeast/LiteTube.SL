@@ -3,6 +3,8 @@ using LiteTube.Common;
 using System.Collections.ObjectModel;
 using LiteTube.Common.Helpers;
 using LiteTube.DataModel;
+using LiteTube.Common.Tools;
+using System.Collections.Generic;
 
 namespace LiteTube.ViewModels
 {
@@ -10,10 +12,12 @@ namespace LiteTube.ViewModels
     {
         private readonly ObservableCollection<string> _languages;
         private readonly ObservableCollection<string> _videoQualities;
+        private readonly ObservableCollection<ApplicationTheme> _applicationThemes;
         private readonly Func<IDataSource> _getDataSource;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private string _selectedRegion;
         private string _selectedQuality;
+        private ApplicationTheme _selectedApplicationTheme;
 
         public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
@@ -21,10 +25,19 @@ namespace LiteTube.ViewModels
             _languages = new ObservableCollection<string>(I18nLanguages.Languages);
             var videoQuality = new VideoQuality();
             _videoQualities = new ObservableCollection<string>(videoQuality.GetQualityNames());
+
+            _applicationThemes = new ObservableCollection<ApplicationTheme>(
+                new List<ApplicationTheme>
+                {
+                    ApplicationTheme.Light,
+                    ApplicationTheme.Dark
+                });
+
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
             _navigatioPanelViewModel.IsSettingsSelected = true;
             _selectedRegion = SettingsHelper.GetRegionName();
             _selectedQuality = SettingsHelper.GetQuality();
+            _selectedApplicationTheme = SettingsHelper.GetTheme();
         }
 
         public NavigationPanelViewModel NavigationPanelViewModel
@@ -42,6 +55,11 @@ namespace LiteTube.ViewModels
             get { return _videoQualities; }
         }
 
+        public ObservableCollection<ApplicationTheme> ApplicationThemes
+        {
+            get { return _applicationThemes; }
+        }
+
         public string SelectedRegion
         {
             get { return _selectedRegion; }
@@ -54,10 +72,18 @@ namespace LiteTube.ViewModels
             set { _selectedQuality = value; }
         }
 
+        public ApplicationTheme SelectedApplicationTheme
+        {
+            get { return _selectedApplicationTheme; }
+            set { _selectedApplicationTheme = value; }
+        }
+
         public void Save()
         {
             SettingsHelper.SaveQuality(_selectedQuality);
             SettingsHelper.SaveRegion(_selectedRegion);
+            SettingsHelper.SaveTheme(_selectedApplicationTheme);
+            ThemeManager.SetApplicationTheme(_selectedApplicationTheme);
             _getDataSource().Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
         }
     }

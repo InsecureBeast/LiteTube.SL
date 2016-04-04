@@ -20,7 +20,6 @@ namespace LiteTube.ViewModels
     /// </summary>
     public class SectionBaseViewModel : ProgressIndicatorViewModel, IListener<ConnectionEventArgs>
     {
-        protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
         protected string _uniqueId;
         protected string _title;
         private string _description;
@@ -42,7 +41,7 @@ namespace LiteTube.ViewModels
         private bool _isConnected = true;
         
         public SectionBaseViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null)
-            :base(changeProgressIndicator)
+            :base(getGeDataSource, connectionListener, changeProgressIndicator)
         {
             if (getGeDataSource == null)
                 throw new ArgumentNullException("getGeDataSource");
@@ -54,7 +53,6 @@ namespace LiteTube.ViewModels
             _connectionListener.Subscribe(this);
 
             _hasItems = true;
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_getGeDataSource, connectionListener);
             Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
@@ -66,11 +64,6 @@ namespace LiteTube.ViewModels
             _selectedItems = new ObservableCollection<NodeViewModelBase>();
 
             _isConnected = connectionListener.CheckNetworkAvailability();
-        }
-
-        public NavigationPanelViewModel NavigationPanelViewModel
-        {
-            get { return _navigatioPanelViewModel; }
         }
 
         public string UniqueId 
