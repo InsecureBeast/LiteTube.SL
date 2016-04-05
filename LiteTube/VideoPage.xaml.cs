@@ -108,6 +108,11 @@ namespace LiteTube
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
             
+            if (IsLandscapeOrientation(Orientation))
+                SetVisibilityControls(Visibility.Collapsed);
+            else
+                SetVisibilityControls(Visibility.Visible);
+
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
@@ -384,9 +389,7 @@ namespace LiteTube
 
         private void ChangeOrientation(PageOrientation orientation)
         {
-            if (orientation == PageOrientation.LandscapeLeft ||
-                orientation == PageOrientation.LandscapeRight ||
-                orientation == PageOrientation.Landscape)
+            if (IsLandscapeOrientation(orientation))
             {
                 SetPlayerFullScreenState();
                 SetVisibilityControls(Visibility.Collapsed);
@@ -395,6 +398,13 @@ namespace LiteTube
 
             SetPlayerNormalState();
             SetVisibilityControls(Visibility.Visible);
+        }
+
+        private static bool IsLandscapeOrientation(PageOrientation orientation)
+        {
+            return orientation == PageOrientation.LandscapeLeft ||
+                   orientation == PageOrientation.LandscapeRight ||
+                   orientation == PageOrientation.Landscape;
         }
 
         private PageOrientation ToPageOrientation(SimpleOrientation orienatation)
