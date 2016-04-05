@@ -100,7 +100,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Commands\AppBarClickCommand.cs" />
+    <Compile Include="Common\Commands\ItemClickCommand.cs" />
+    <Compile Include="Common\Commands\RelayCommand.cs" />
+    <Compile Include="Common\Commands\SubscribeCommand.cs" />
+    <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
     <Compile Include="Common\SessionType.cs" />
+    <Compile Include="Common\Tools\Theme.cs" />
     <Compile Include="Controls\LiteTubePlayer.cs" />
     <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
@@ -123,17 +129,13 @@
     <Compile Include="Common\LiteTubeException.cs" />
     <Compile Include="Common\ProgressIndicatorHolder.cs" />
     <Compile Include="Common\ScrollViewerMonitor.cs" />
-    <Compile Include="Common\SubscribeCommand.cs" />
     <Compile Include="Common\Tools\ApplicationBarHelper.cs" />
     <Compile Include="Common\Tools\ThemeManager.cs" />
-    <Compile Include="Common\UnsubscribeCommand.cs" />
     <Compile Include="Controls\NavigationButton.cs" />
     <Compile Include="Converters\DurationConverter.cs" />
     <Compile Include="Common\Extensions\Extensions.cs" />
     <Compile Include="Common\I18nLanguages.cs" />
     <Compile Include="Common\IDialogService.cs" />
-    <Compile Include="Common\AppBarClickCommand.cs" />
-    <Compile Include="Common\ItemClickCommand.cs" />
     <Compile Include="Common\Extensions\ItemsControlExtensions.cs" />
     <Compile Include="Common\Helpers\LayoutHelper.cs" />
     <Compile Include="Common\MediaPlayerVisualStates.cs" />
@@ -142,7 +144,6 @@
     <Compile Include="Common\Notifier\UpdateSettingsEventArgs.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\Extensions\PropertyExtensions.cs" />
-    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\Helpers\SettingsHelper.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\VideoQuality.cs" />
