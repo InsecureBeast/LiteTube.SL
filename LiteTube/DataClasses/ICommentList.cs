@@ -112,9 +112,9 @@ namespace LiteTube.DataClasses
             if (authorSnippet == null)
                 return;
 
-            if (authorSnippet.AuthorChannelId != null) 
-                AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
-            
+            if (!string.IsNullOrEmpty(authorSnippet.AuthorChannelUrl))
+                AuthorChannelId = GetChannelId(authorSnippet.AuthorChannelUrl);
+
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
             LikeCount = authorSnippet.LikeCount;
@@ -141,8 +141,8 @@ namespace LiteTube.DataClasses
             if (authorSnippet == null)
                 return;
 
-            if (authorSnippet.AuthorChannelId != null)
-                AuthorChannelId = authorSnippet.AuthorChannelId.ToString();
+            if (!string.IsNullOrEmpty(authorSnippet.AuthorChannelUrl))
+                AuthorChannelId = GetChannelId(authorSnippet.AuthorChannelUrl);
             AuthorDisplayName = authorSnippet.AuthorDisplayName;
             AuthorProfileImageUrl = authorSnippet.AuthorProfileImageUrl;
             LikeCount = authorSnippet.LikeCount;
@@ -213,6 +213,22 @@ namespace LiteTube.DataClasses
         {
             get;
             private set;
+        }
+
+        private string GetChannelId(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return string.Empty;
+
+            if (!url.Contains("/"))
+                return string.Empty;
+
+            var startIndex = url.LastIndexOf("/") + 1;
+            if (url.Length <= startIndex)
+                return string.Empty;
+
+            var result = url.Substring(startIndex);
+            return result;
         }
     }
 }
