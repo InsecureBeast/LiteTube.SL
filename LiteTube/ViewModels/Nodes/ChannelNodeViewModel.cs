@@ -6,14 +6,14 @@ namespace LiteTube.ViewModels.Nodes
     public class ChannelNodeViewModel : NodeViewModelBase
     {
         private readonly IChannel _channel;
-        private string _id;
+        private readonly string _id;
 
         public ChannelNodeViewModel(IChannel channel)
         {
             _channel = channel;
             Title = channel.Title;
             _id = channel.Id;
-            Image = channel.Thumbnails.Medium.Url;
+            Image = channel.Thumbnails.GetThumbnailUrl();
         }
 
         public string Title

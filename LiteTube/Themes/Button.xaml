@@ -230,7 +230,7 @@
                                 <VisualState x:Name="Unchecked">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Text" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneSecondaryForegroundBrush}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneSubtleBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

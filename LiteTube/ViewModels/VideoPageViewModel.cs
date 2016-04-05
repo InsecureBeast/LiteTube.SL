@@ -65,7 +65,6 @@ namespace LiteTube.ViewModels
             _addFavoritesCommand = new RelayCommand(AddFavorites);
 
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
-
             LoadVideoItem(videoId);
         }
 
@@ -412,7 +411,7 @@ namespace LiteTube.ViewModels
             LayoutHelper.InvokeFromUiThread(async () =>
             {
                 var channelInfo = await _getDataSource().GetChannel(channelId);
-                ChannelImage = channelInfo.Thumbnails.Medium.Url;
+                ChannelImage = channelInfo.Thumbnails.GetThumbnailUrl();
                 ChannelSubscribers = channelInfo.Statistics.SubscriberCount;
                 ChannelVideoCount = channelInfo.Statistics.VideoCount;
                 _channel = channelInfo;
@@ -486,7 +485,7 @@ namespace LiteTube.ViewModels
                 Title = videoItem.Details.Title;
                 ChannelTitle = videoItem.ChannelTitle;
                 Description = videoItem.Details.Description;
-                ImagePath = videoItem.Thumbnails.Medium.Url;
+                ImagePath = videoItem.Thumbnails.GetThumbnailUrl();
                 Duration = videoItem.Details.Duration;
                 ViewCount = videoItem.Details.Video.Statistics.ViewCount;
                 if (videoItem.PublishedAt != null) 

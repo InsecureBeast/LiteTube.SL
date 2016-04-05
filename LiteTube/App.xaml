@@ -35,12 +35,13 @@
             <converters:LowerCaseConverter x:Key="LowerCaseConverter"/>
             <converters:LoginStatusTextConverter x:Key="LoginStatusTextConverter"/>
             <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
+            <converters:ColumnSpanConverter x:Key="ColumnSpanConverter"/>
 
             <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
 
             <local:LocalizedStrings xmlns:local="clr-namespace:LiteTube" x:Key="LocalizedStrings"/>
 
-            <shell:ApplicationBar x:Key="GlobalAppBar" IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBar x:Key="GlobalAppBar" IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
                 <!--<shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click" />-->
                 <!--<shell:ApplicationBar.MenuItems>
                     <shell:ApplicationBarMenuItem Text="MenuItem 1" Click="MenuItem1_Click" />

@@ -58,7 +58,7 @@
                             <TextBlock TextWrapping="Wrap"
                                        Margin="0,0,0,0"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                       Foreground="{StaticResource PhoneSecondaryForegroundBrush}">
+                                       Foreground="{StaticResource PhoneSubtleBrush}">
                                 <Run Text="{Binding Path=LocalizedResources.JoinedString, Source={StaticResource LocalizedStrings}}" />
                                 <Run Text="{Binding ProfileRegistered}"/>
                             </TextBlock>

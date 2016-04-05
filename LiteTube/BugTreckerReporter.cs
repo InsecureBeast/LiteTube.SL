@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using LiteTube.Common.Helpers;
-using Google;
-using LiteTube.ViewModels.Nodes;
+using Microsoft.Phone.Info;
 
 namespace LiteTube
 {
@@ -23,7 +22,9 @@ namespace LiteTube
             try
             {
                 var builder = new StringBuilder();
-                builder.AppendFormat("Version - {0}{1}", Assembly.GetExecutingAssembly().GetName().Version, Environment.NewLine);
+                builder.AppendFormat("OS version - {0}{1}", Environment.OSVersion, Environment.NewLine);
+                builder.AppendFormat("Device name - {0}{1}", DeviceStatus.DeviceManufacturer + " " + DeviceStatus.DeviceName, Environment.NewLine);
+                builder.AppendFormat("App version - {0}{1}", Assembly.GetExecutingAssembly().GetName().Version, Environment.NewLine);
                 builder.AppendFormat("Region - {0}{1}", SettingsHelper.GetRegion(), Environment.NewLine);
                 builder.AppendFormat("Quality - {0}{1}", SettingsHelper.GetQuality(), Environment.NewLine);
                 builder.AppendFormat("Is Authorized - {0}{1}", SettingsHelper.IsContainsAuthorizationData(), Environment.NewLine);
@@ -32,20 +33,6 @@ namespace LiteTube
                     builder.AppendFormat("param = {0}{1}", p, Environment.NewLine);
                 }
 
-                if (exception is GoogleApiException)
-                {
-                    builder.AppendLine();
-                    builder.AppendLine("Categories:");
-                    builder.AppendLine();
-                    foreach (var item in App.ViewModel.Items)
-                    {
-                        var catItem = item as VideoCategoryNodeViewModel;
-                        if (catItem == null)
-                            continue;
-
-                        builder.AppendLine(catItem.Title);
-                    }
-                }
                 await Send(exception, builder.ToString());
             }
             catch (Exception)

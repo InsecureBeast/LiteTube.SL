@@ -36,7 +36,7 @@
                 <TextBlock Text="{Binding Path=LocalizedResources.Copyright, Source={StaticResource LocalizedStrings}}"/>
 
                 <TextBlock Text="{Binding Path=LocalizedResources.AboutText, Source={StaticResource LocalizedStrings}}"
-                           Foreground="{StaticResource PhoneSecondaryForegroundBrush}"
+                           Foreground="{StaticResource PhoneSubtleBrush}"
                            Margin="{StaticResource DefaultTextBlockMargin}"
                            TextWrapping="Wrap"/>
                 

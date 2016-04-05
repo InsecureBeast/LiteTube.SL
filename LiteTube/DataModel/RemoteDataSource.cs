@@ -651,7 +651,11 @@ namespace LiteTube.DataModel
                 var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
                 var registered = item.Snippet.PublishedAt;
                 var channelId = item.Id;
-                _profileInfo = new MProfile(channelId, image, name, registered);
+                //Если канала нет, то имя будет пустым. Авторизуем, если только есть канал
+                if (!string.IsNullOrEmpty(name))
+                    _profileInfo = new MProfile(channelId, image, name, registered);
+                else
+                    Logout();
             }
         }
 

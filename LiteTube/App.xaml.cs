@@ -12,6 +12,8 @@ using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
 using Google;
+using System.Threading;
+using System.Globalization;
 
 namespace LiteTube
 {
@@ -35,6 +37,11 @@ namespace LiteTube
         /// </summary>
         public App()
         {
+            //TODO in settings
+            //var culture = new CultureInfo("en-US");
+            //Thread.CurrentThread.CurrentCulture = culture;
+            //Thread.CurrentThread.CurrentUICulture = culture;
+
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
@@ -114,6 +121,7 @@ namespace LiteTube
         {
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
+            //ThemeManager.GoToDarkTheme();
             BuildLocalizedApplicationBar();
 
             // When a new instance of the app is launched, clear all deactivation settings
@@ -149,6 +157,7 @@ namespace LiteTube
 
             //TODO get from settings))
             ThemeManager.GoToLightTheme();
+            //ThemeManager.GoToDarkTheme();
             BuildLocalizedApplicationBar();
 
             // Ensure that application state is restored appropriately
