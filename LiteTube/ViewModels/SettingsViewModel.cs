@@ -75,7 +75,11 @@ namespace LiteTube.ViewModels
         public ApplicationTheme SelectedApplicationTheme
         {
             get { return _selectedApplicationTheme; }
-            set { _selectedApplicationTheme = value; }
+            set
+            {
+                _selectedApplicationTheme = value;
+                ThemeManager.SetApplicationTheme(_selectedApplicationTheme);
+            }
         }
 
         public void Save()
@@ -83,7 +87,6 @@ namespace LiteTube.ViewModels
             SettingsHelper.SaveQuality(_selectedQuality);
             SettingsHelper.SaveRegion(_selectedRegion);
             SettingsHelper.SaveTheme(_selectedApplicationTheme);
-            ThemeManager.SetApplicationTheme(_selectedApplicationTheme);
             _getDataSource().Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
         }
     }

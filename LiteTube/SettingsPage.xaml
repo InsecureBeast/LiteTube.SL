@@ -15,10 +15,20 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
     Style="{StaticResource PageThemeStyle}">
-
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="FullModeTemplate">
+            <TextBlock Text="{Binding}"
+                        Style="{StaticResource PhoneTextLargeStyle}"
+                        Foreground="White"
+                        Margin="0,0,0,15"/>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
         <StackPanel Orientation="Vertical"
+                    Width="260"
+                    HorizontalAlignment="Left"
                     Margin="12">
 
             <TextBlock Name="Region"
@@ -27,17 +37,9 @@
                        Margin="{StaticResource DefaultTextBlockMargin}"/>
             <toolkit:ListPicker ItemsSource="{Binding Languages}"
                                 SelectedItem ="{Binding SelectedRegion, Mode=TwoWay}"
-                                HorizontalAlignment="Left"
-                                MinWidth="250"
-                                Margin="0">
-                <toolkit:ListPicker.FullModeItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   Foreground="White"
-                                   Margin="0,0,0,15"/>
-                    </DataTemplate>
-                </toolkit:ListPicker.FullModeItemTemplate>
+                                HorizontalAlignment="Stretch"
+                                Margin="0"
+                                FullModeItemTemplate="{StaticResource FullModeTemplate}">
             </toolkit:ListPicker>
 
             <TextBlock Name="VideoQuality"
@@ -47,9 +49,9 @@
                        HorizontalAlignment="Left" />
             <toolkit:ListPicker ItemsSource="{Binding VideoQualities}"
                                 SelectedItem ="{Binding SelectedQuality, Mode=TwoWay}"
-                                HorizontalAlignment="Left"
-                                MinWidth="250"
-                                Margin="0"/>
+                                HorizontalAlignment="Stretch"
+                                Margin="0"
+                                FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
 
             <TextBlock Name="ApplicationTheme"
                        Text="{Binding Path=LocalizedResources.Theme, Source={StaticResource LocalizedStrings}}"
@@ -58,9 +60,9 @@
                        HorizontalAlignment="Left" />
             <toolkit:ListPicker ItemsSource="{Binding ApplicationThemes}"
                                 SelectedItem ="{Binding SelectedApplicationTheme, Mode=TwoWay}"
-                                HorizontalAlignment="Left"
-                                MinWidth="250"
-                                Margin="0"/>
+                                HorizontalAlignment="Stretch"
+                                Margin="0"
+                                FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
         </StackPanel>
     </Grid>
 

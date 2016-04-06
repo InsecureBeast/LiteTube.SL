@@ -194,7 +194,7 @@ namespace LiteTube
         }
 
         // Code to execute on Unhandled Exceptions
-        private async void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
+        private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             if (Debugger.IsAttached)
             {
