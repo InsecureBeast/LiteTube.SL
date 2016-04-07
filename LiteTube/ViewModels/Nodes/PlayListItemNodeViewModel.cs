@@ -31,6 +31,7 @@ namespace LiteTube.ViewModels.Nodes
             if (item.Snippet.PublishedAt != null)
                 PublishedAt = item.Snippet.PublishedAt.Value.ToString("d", CultureInfo.CurrentCulture);
 
+            Duration = null;
             _deleteCommand = new RelayCommand(Delete);
         }
 
@@ -44,6 +45,7 @@ namespace LiteTube.ViewModels.Nodes
         public string Description { get; private set; }
         public string ImagePath { get; private set; }
         public string PublishedAt { get; private set; }
+        public TimeSpan? Duration { get; private set; }
 
         public override string Id
         {
