@@ -54,7 +54,7 @@ namespace LiteTube.DataClasses
 
     public interface IVideoList : IResponceList
     {
-        IList<IVideoItem> Items { get; }
+        List<IVideoItem> Items { get; }
     }
 
     class MVideoList : IVideoList
@@ -124,7 +124,7 @@ namespace LiteTube.DataClasses
             private set;
         }
 
-        public IList<IVideoItem> Items
+        public List<IVideoItem> Items
         {
             get;
             private set;

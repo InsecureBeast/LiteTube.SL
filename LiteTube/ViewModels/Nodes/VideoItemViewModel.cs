@@ -21,8 +21,7 @@ namespace LiteTube.ViewModels.Nodes
             ImagePath = videoItem.Thumbnails.GetThumbnailUrl();
             Duration = videoItem.Details.Duration;
             ViewCount = videoItem.Details.Video.Statistics.ViewCount;
-            if (videoItem.PublishedAt != null)
-                PublishedAt = videoItem.PublishedAt.Value.ToString("d", CultureInfo.CurrentCulture);
+            PublishedAt = videoItem.PublishedAt;
         }
 
         public IVideoItem VideoItem { get; private set; }
@@ -31,7 +30,7 @@ namespace LiteTube.ViewModels.Nodes
         public string ImagePath { get; private set; }
         public TimeSpan Duration { get; private set; }
         public string ChannelTitle { get; private set; }
-        public string PublishedAt { get; private set; }
+        public DateTime? PublishedAt { get; private set; }
         public UInt64? ViewCount { get; private set; }
 
         public override string Id

@@ -36,6 +36,7 @@
             <converters:LoginStatusTextConverter x:Key="LoginStatusTextConverter"/>
             <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
             <converters:ColumnSpanConverter x:Key="ColumnSpanConverter"/>
+            <converters:DateTimeToDisplayStringConverter x:Key="DateTimeToDisplayStringConverter"/>
 
             <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
 
