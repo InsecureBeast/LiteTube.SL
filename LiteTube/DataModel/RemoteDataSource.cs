@@ -9,6 +9,7 @@ using LiteTube.Common;
 using MyToolkit.Multimedia;
 using System.Net;
 using Google;
+using System;
 
 namespace LiteTube.DataModel
 {
@@ -100,12 +101,19 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return MActivityList.Empty;
 
+            //return await GetActivityApi(culture, maxResult, pageToken);
+            return await GetActivityWeb(culture, maxResult, pageToken);
+        }
+
+        private async Task<IVideoList> GetActivityApi(string culture, int maxResult, string pageToken)
+        {
             var activityRequest = _youTubeService.Activities.List("contentDetails");
             activityRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
-            activityRequest.MaxResults = maxResult;
+            activityRequest.MaxResults = SEARCH_PAGE_MAX_RESULT;
             activityRequest.PageToken = pageToken;
             activityRequest.Home = true;
             activityRequest.Key = _youTubeServiceControl.ApiKey;
+            activityRequest.PublishedAfter = DateTime.Today;
             //activityRequest.OauthToken = _youTubeServiceControl.OAuthToken;
 
             var activityResponse = await activityRequest.ExecuteAsync();
@@ -120,6 +128,23 @@ namespace LiteTube.DataModel
             return new MActivityList(activityResponse, videos);
         }
 
+        private async Task<IVideoList> GetActivityWeb(string culture, int maxResult, string pageToken)
+        {
+            var res = await _youTubeWeb.GetActivity(_youTubeServiceControl.OAuthToken, pageToken);
+            if (res == null)
+                return null;
+
+            var videoIds = new StringBuilder();
+            foreach (var id in res.Ids)
+            {
+                videoIds.AppendLine(id);
+                videoIds.AppendLine(",");
+            }
+
+            var videos = await GetVideo(videoIds.ToString());
+            videos.NextPageToken = res.NextPageToken;
+            return new MVideoList(videos);
+        }
 
         public async Task<IVideoList> GetRecommended(string pageToken)
         {

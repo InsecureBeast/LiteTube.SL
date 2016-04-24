@@ -116,7 +116,7 @@ namespace LiteTube.DataClasses
             private set;
         }
 
-        public IList<IVideoItem> Items
+        public List<IVideoItem> Items
         {
             get; 
             private set;

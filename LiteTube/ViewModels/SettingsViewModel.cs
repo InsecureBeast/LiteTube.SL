@@ -18,6 +18,7 @@ namespace LiteTube.ViewModels
         private string _selectedRegion;
         private string _selectedQuality;
         private ApplicationTheme _selectedApplicationTheme;
+        private ApplicationTheme _oldSelectedApplicationTheme;
 
         public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
@@ -38,6 +39,7 @@ namespace LiteTube.ViewModels
             _selectedRegion = SettingsHelper.GetRegionName();
             _selectedQuality = SettingsHelper.GetQuality();
             _selectedApplicationTheme = SettingsHelper.GetTheme();
+            _oldSelectedApplicationTheme = _selectedApplicationTheme;
         }
 
         public NavigationPanelViewModel NavigationPanelViewModel
@@ -88,6 +90,11 @@ namespace LiteTube.ViewModels
             SettingsHelper.SaveRegion(_selectedRegion);
             SettingsHelper.SaveTheme(_selectedApplicationTheme);
             _getDataSource().Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
+        }
+
+        public void Cancel()
+        {
+            ThemeManager.SetApplicationTheme(_oldSelectedApplicationTheme);
         }
     }
 }

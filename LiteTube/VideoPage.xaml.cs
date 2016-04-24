@@ -127,9 +127,15 @@ namespace LiteTube
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _playerState = player.GetMediaState();
-            _sensor.OrientationChanged -= Sensor_OrientationChanged;
-            base.OnNavigatedFrom(e);
+            try
+            {
+                _playerState = player.GetMediaState();
+                _sensor.OrientationChanged -= Sensor_OrientationChanged;
+                base.OnNavigatedFrom(e);
+            }
+            catch (Exception)
+	        {
+            }
         }
 
         private void Sensor_OrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)

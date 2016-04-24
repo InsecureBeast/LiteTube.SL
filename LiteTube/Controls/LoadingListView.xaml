@@ -62,7 +62,7 @@
                   HorizontalAlignment="Left"
                   Background="{StaticResource PhoneSecondaryBackgroundBrush}"
                   Height="100"
-                  Width="178">
+                  Width="173">
 
                 <Image Source="{Binding ImagePath}" 
                        Stretch="UniformToFill" />
@@ -81,7 +81,7 @@
             </Grid>
 
             <StackPanel Grid.Column="1" 
-                        Margin="0,0,0,0">
+                        Margin="0,0,-10,0">
                 <TextBlock Text="{Binding Title}" 
                            Style="{StaticResource PhoneTextNormalStyle}"
                            TextTrimming="WordEllipsis"
@@ -91,8 +91,10 @@
                            Style="{StaticResource PhoneTextSmallStyle}"
                            TextWrapping="NoWrap"/>
                 <TextBlock TextWrapping="NoWrap"
-                           Text="{Binding PublishedAt}"
-                           Style="{StaticResource PhoneTextSmallStyle}">
+                           Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
+                           Style="{StaticResource PhoneTextSmallStyle}" 
+                           FontSize="18">
+                           <!--Foreground="#FF67217A">-->
                     <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
                     <Run Text="{Binding PublishedAt}" />
                 </TextBlock>

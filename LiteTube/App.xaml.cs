@@ -220,6 +220,11 @@ namespace LiteTube
 
             if (e.ExceptionObject.InnerException is GoogleApiException)
                 return;
+
+            //убирем у пользователей, но оставим в дебаг
+            if (e.ExceptionObject is UnauthorizedAccessException)
+                return;
+            
 #endif
             _container.DialogService.ShowException(e.ExceptionObject);
         }

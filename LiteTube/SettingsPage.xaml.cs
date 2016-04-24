@@ -34,6 +34,11 @@ namespace LiteTube
 
         private void Cancel_Click(object sender, EventArgs e)
         {
+            var viewModel = DataContext as SettingsViewModel;
+            if (viewModel == null)
+                return;
+
+            viewModel.Cancel();
             NavigationService.GoBack();
         }
 

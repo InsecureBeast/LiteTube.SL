@@ -57,8 +57,11 @@ namespace LiteTube.DataModel
             }
             catch (Exception e)
             {
+                //где-то внутри google api происходит исключение. Пока так
                 Debug.WriteLine("LoginSilently method called with exception " + e.Message);
+#if DEBUG
                 throw;
+#endif
             }
         }
 

@@ -284,4 +284,40 @@
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>
+  <data name="Days5Ago" xml:space="preserve">
+    <value>{0} days ago</value>
+  </data>
+  <data name="DaysAgo" xml:space="preserve">
+    <value>{0} days ago</value>
+  </data>
+  <data name="MonthAgo" xml:space="preserve">
+    <value>a month ago</value>
+  </data>
+  <data name="Months4Ago" xml:space="preserve">
+    <value>{0} month ago</value>
+  </data>
+  <data name="MonthsAgo" xml:space="preserve">
+    <value>{0} month ago</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>today</value>
+  </data>
+  <data name="WeekAgo" xml:space="preserve">
+    <value>a week ago</value>
+  </data>
+  <data name="WeeksAgo" xml:space="preserve">
+    <value>{0} weeks ago</value>
+  </data>
+  <data name="YearAgo" xml:space="preserve">
+    <value>a year ago</value>
+  </data>
+  <data name="Years4Ago" xml:space="preserve">
+    <value>{0} years ago</value>
+  </data>
+  <data name="YearsAgo" xml:space="preserve">
+    <value>{0} years ago</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>yesterday</value>
+  </data>
 </root>

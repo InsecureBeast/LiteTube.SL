@@ -187,6 +187,24 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} days ago.
+        /// </summary>
+        public static string Days5Ago {
+            get {
+                return ResourceManager.GetString("Days5Ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} days ago.
+        /// </summary>
+        public static string DaysAgo {
+            get {
+                return ResourceManager.GetString("DaysAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -309,6 +327,33 @@ namespace LiteTube.Resources {
         public static string Menu {
             get {
                 return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a month ago.
+        /// </summary>
+        public static string MonthAgo {
+            get {
+                return ResourceManager.GetString("MonthAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} month ago.
+        /// </summary>
+        public static string Months4Ago {
+            get {
+                return ResourceManager.GetString("Months4Ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} month ago.
+        /// </summary>
+        public static string MonthsAgo {
+            get {
+                return ResourceManager.GetString("MonthsAgo", resourceCulture);
             }
         }
         
@@ -484,6 +529,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to today.
+        /// </summary>
+        public static string Today {
+            get {
+                return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unsubscribe.
         /// </summary>
         public static string Unsubscribe {
@@ -552,6 +606,60 @@ namespace LiteTube.Resources {
         public static string WatchHistory {
             get {
                 return ResourceManager.GetString("WatchHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a week ago.
+        /// </summary>
+        public static string WeekAgo {
+            get {
+                return ResourceManager.GetString("WeekAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} weeks ago.
+        /// </summary>
+        public static string WeeksAgo {
+            get {
+                return ResourceManager.GetString("WeeksAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a year ago.
+        /// </summary>
+        public static string YearAgo {
+            get {
+                return ResourceManager.GetString("YearAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} years ago.
+        /// </summary>
+        public static string Years4Ago {
+            get {
+                return ResourceManager.GetString("Years4Ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} years ago.
+        /// </summary>
+        public static string YearsAgo {
+            get {
+                return ResourceManager.GetString("YearsAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to yesterday.
+        /// </summary>
+        public static string Yesterday {
+            get {
+                return ResourceManager.GetString("Yesterday", resourceCulture);
             }
         }
     }
