@@ -118,7 +118,7 @@ namespace LiteTube.DataModel
 
             var activityResponse = await activityRequest.ExecuteAsync();
             var videoIds = new StringBuilder();
-            var filteredList = activityResponse.Items.Where(i => i.ContentDetails.Upload != null || i.ContentDetails.Recommendation != null);
+            var filteredList = activityResponse.Items.Where(i => i.ContentDetails.Upload != null);// || i.ContentDetails.Recommendation != null);
             foreach (var item in filteredList)
             {
                 videoIds.AppendLine(MVideoItem.GetVideoId(item.ContentDetails));
