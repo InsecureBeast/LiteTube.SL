@@ -179,12 +179,16 @@ namespace LiteTube.ViewModels
 
         private void Home()
         {
+#if SILVERLIGHT
             NavigationHelper.GoHome();
+#endif
         }
 
         private void Settings()
         {
+#if SILVERLIGHT
             NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_getDataSource, _connectionListener));
+#endif
         }
 
         private bool CanSettings()
@@ -194,12 +198,16 @@ namespace LiteTube.ViewModels
 
         private void Search()
         {
+#if SILVERLIGHT
             NavigationHelper.Navigate("/SearchPage.xaml", new SearchPageViewModel(_getDataSource, _connectionListener));
+#endif
         }
 
         private void LoadChannel(string channelId)
         {
+#if SILVERLIGHT
             NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _getDataSource, _connectionListener));
+#endif
         }
 
         public void Notify(UpdateContextEventArgs e)

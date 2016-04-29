@@ -1,12 +1,10 @@
 ﻿using Google.Apis.YouTube.v3.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LiteTube.DataClasses
 {
     /// <summary>
-    /// Интерфейс информации о видео. Не включает в себя самщ видео.
+    /// Интерфейс информации о видео. Не включает в себя само видео.
     /// так же выдается в поисковом запросе
     /// </summary>
     public interface ISnippet

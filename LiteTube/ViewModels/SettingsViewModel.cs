@@ -80,7 +80,9 @@ namespace LiteTube.ViewModels
             set
             {
                 _selectedApplicationTheme = value;
+#if SILVERLIGHT
                 ThemeManager.SetApplicationTheme(_selectedApplicationTheme);
+#endif
             }
         }
 
@@ -94,7 +96,9 @@ namespace LiteTube.ViewModels
 
         public void Cancel()
         {
+#if SILVERLIGHT
             ThemeManager.SetApplicationTheme(_oldSelectedApplicationTheme);
+#endif
         }
     }
 }

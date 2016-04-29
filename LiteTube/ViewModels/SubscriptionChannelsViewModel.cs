@@ -58,7 +58,9 @@ namespace LiteTube.ViewModels
             if (model == null)
                 return;
 
+#if SILVERLIGHT
             NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(model.Id, _getGeDataSource, _connectionListener));
+#endif
         }
 
         internal void AddItems(IEnumerable<ISubscription> items)

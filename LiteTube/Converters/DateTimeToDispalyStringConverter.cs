@@ -1,17 +1,22 @@
-﻿using LiteTube.Resources;
-using System;
+﻿using System;
 using System.Globalization;
+#if SILVERLIGHT
 using System.Windows.Data;
+using LiteTube.Resources;
+#else
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml;
+#endif
 
 namespace LiteTube.Converters
 {
     public class DateTimeToDisplayStringConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
                 return string.Empty;
-
+#if SILVERLIGHT
             if (value is DateTime)
             {
                 var date = (DateTime)value;
@@ -113,21 +118,23 @@ namespace LiteTube.Converters
                 return date.ToString("d", CultureInfo.CurrentCulture);
             }
             return string.Empty;
+#endif
+            throw new NotImplementedException();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Convert(value, targetType, parameter, culture.EnglishName);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return string.Empty;
         }
 
-        private bool OnThisWeek(DateTime date)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var now = DateTime.Today;
-            var today = (int)DateTime.Today.DayOfWeek;
-            if (date.Date < now - TimeSpan.FromDays(today) &&  date.Date >= now - TimeSpan.FromDays(6 - today))
-                return true;
-
-            return false;
+            return ConvertBack(value, targetType, parameter, culture.EnglishName);
         }
     }
 }

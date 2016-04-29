@@ -4,8 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+#if SILVERLIGHT
 using System.Windows.Controls;
 using System.Windows.Media;
+#else
+using Windows.Foundation;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+#endif
 
 namespace LiteTube.Common
 {
@@ -33,6 +40,8 @@ namespace LiteTube.Common
 
             return (T)parent;
         }
+
+#if SILVERLIGHT
 
         /// <summary>
         /// Gets the items that are currently in the view port
@@ -113,5 +122,6 @@ namespace LiteTube.Common
 
             return viewPortItems;
         }
+#endif
     }
 }

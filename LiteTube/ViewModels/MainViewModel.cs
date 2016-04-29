@@ -2,11 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.DataModel;
-using LiteTube.Resources;
 using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
-using Microsoft.Phone.Shell;
 using LiteTube.Common.Helpers;
+#if SILVERLIGHT
+using Microsoft.Phone.Shell;
+using LiteTube.Resources;
+#endif
 
 namespace LiteTube.ViewModels
 {
@@ -15,12 +17,16 @@ namespace LiteTube.ViewModels
         private readonly MostPopularViewModel _mostPopularViewModel;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
         private readonly ActivitySectionViewModel _activitySectionViewModel;
+#if SILVERLIGHT
         private readonly ProgressIndicatorHolder _indicatorHolder;
+#endif
 
         public MainViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)
         {
+#if SILVERLIGHT
             _indicatorHolder = new ProgressIndicatorHolder();
+#endif
             _mostPopularViewModel = new MostPopularViewModel(_getGeDataSource, _connectionListener);
             _profileSectionViewModel = new ProfileSectionViewModel(_getGeDataSource, connectionListener);
             _activitySectionViewModel = new ActivitySectionViewModel(_getGeDataSource, _connectionListener);
@@ -29,17 +35,6 @@ namespace LiteTube.ViewModels
             geDataSource().Subscribe((IListener<UpdateContextEventArgs>)this);
 
             _hasItems = false;
-        }
-
-        /// <summary>
-        /// Sample property that returns a localized string
-        /// </summary>
-        public string LocalizedSampleProperty
-        {
-            get
-            {
-                return AppResources.About;
-            }
         }
 
         public bool IsDataLoaded
@@ -77,10 +72,12 @@ namespace LiteTube.ViewModels
             get { return _connectionListener; }
         }
 
+#if SILVERLIGHT
         public ProgressIndicatorHolder IndicatorHolder
         {
             get { return _indicatorHolder; }
         }
+#endif
 
         /// <summary>
         /// Creates and adds a few VideoItemViewModel objects into the Items collection.
@@ -138,8 +135,10 @@ namespace LiteTube.ViewModels
 
             var categoryId = viewModel.CategoryId;
             var title = viewModel.Title;
+#if SILVERLIGHT
             PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _getGeDataSource, _connectionListener);
             App.NavigateTo("/SectionPage.xaml");
+#endif
         }
 
         public async void Notify(UpdateContextEventArgs e)

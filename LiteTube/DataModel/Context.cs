@@ -7,14 +7,12 @@ namespace LiteTube.DataModel
 {
     class Context : IListener<ConnectionEventArgs>, IDisposable
     {
-        private readonly IDeviceHistory _deviceHistory;
         private RemoteDataSource _remoteDataSource;
         private readonly BaseConnectionListener _baseConnectionListener;
         private IDataSource _dataSource;
 
-        public Context(IDeviceHistory deviceHistory)
+        public Context()
         {
-            _deviceHistory = deviceHistory;
             var connectionListener = new ConnectionListener();
             connectionListener.Subscribe(this);
             _baseConnectionListener = new BaseConnectionListener();
@@ -34,7 +32,7 @@ namespace LiteTube.DataModel
 
             _remoteDataSource = new RemoteDataSource(youTubeService);
             var remoteExceptionWrapper = new DataSourceExceptionWrapper(_remoteDataSource);
-            _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, _deviceHistory, quality);
+            _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, quality);
         }
 
         internal IDataSource DataSource

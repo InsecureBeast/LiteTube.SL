@@ -1,11 +1,13 @@
 ﻿using LiteTube.DataClasses;
 using LiteTube.DataModel;
-using Microsoft.Phone.Shell;
 using MyToolkit.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+#if SILVERLIGHT
+using Microsoft.Phone.Shell;
+#endif
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -62,8 +64,10 @@ namespace LiteTube.ViewModels.Nodes
 
         private void LoadChannel(string channelId)
         {
+#if SILVERLIGHT
             PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _getDatasource, _connectionListener);
             App.NavigateTo("/ChannelPage.xaml");
+#endif
         }
     }
 }

@@ -977,9 +977,17 @@
                         <local:ResolutionIndicator x:Name="ResolutionIndicator" 
                                                    MediaQuality="{Binding MediaQuality}" 
                                                    VerticalAlignment="Center" 
-                                                   Margin="10,0,10,0" 
-                                                   Visibility="{Binding IsResolutionIndicatorVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>
+                                                   Margin="10,0,10,0" />
+                        <!--Visibility="{Binding IsResolutionIndicatorVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>-->
                     </StackPanel>
+
+                    <ListBox Grid.Row="0">
+                        <ListBoxItem Content="SD"/>
+                        <ListBoxItem Content="HQ"/>
+                        <ListBoxItem Content="HD"/>
+                        <ListBoxItem Content="FULL HD"/>
+                    </ListBox>
+
 
                 </Grid>
             </Border>

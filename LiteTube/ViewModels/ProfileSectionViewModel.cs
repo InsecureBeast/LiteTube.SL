@@ -1,10 +1,14 @@
-﻿using LiteTube.DataModel;
-using MyToolkit.Command;
+﻿using MyToolkit.Command;
 using System.Windows.Input;
 using System;
-using System.Windows;
-using Microsoft.Phone.Shell;
 using LiteTube.Common;
+using LiteTube.DataModel;
+using System.Windows;
+#if SILVERLIGHT
+using Microsoft.Phone.Shell;
+#else
+using Windows.UI.Xaml;
+#endif
 
 namespace LiteTube.ViewModels
 {
@@ -209,8 +213,10 @@ namespace LiteTube.ViewModels
 
         private void NavigateTo(int index)
         {
+#if SILVERLIGHT
             PhoneApplicationService.Current.State["model"] = new MenuPageViewModel(index, _getDataSource, _connectionListener);
             App.NavigateTo(string.Format("/MenuPage.xaml?item={0}", index));
+#endif
         }
 
         private async void Login()

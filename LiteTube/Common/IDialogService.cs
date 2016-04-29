@@ -11,18 +11,14 @@ namespace LiteTube.Common
 
     class DialogService : IDialogService
     {
-        private readonly IDeviceHistory _deviceHistory;
-
-        public DialogService(IDeviceHistory deviceHistory)
-        {
-            _deviceHistory = deviceHistory;
-        }
-
         public void ShowError(Exception exception)
         {
             LayoutHelper.InvokeFromUiThread(() =>
             {
+#if SILVERLIGHT
                 ExceptionDialog.ShowDialog(exception);
+#endif
+                throw new NotImplementedException();
             });
         }
 
@@ -30,7 +26,10 @@ namespace LiteTube.Common
         {
             LayoutHelper.InvokeFromUiThread(() =>
             {
+#if SILVERLIGHT
                 ExceptionDialog.ShowError(exception);
+#endif
+                throw new NotImplementedException();
             });
         }
     }

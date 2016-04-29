@@ -1,7 +1,5 @@
 ﻿using LiteTube.DataClasses;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LiteTube.DataModel
 {

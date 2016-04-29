@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using Windows.Storage;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using LiteTube.Common.Tools;
 
 namespace LiteTube.Common.Helpers
@@ -32,28 +30,6 @@ namespace LiteTube.Common.Helpers
             var region = I18nLanguages.CheckRegionName(regionName);
             ApplicationData.Current.RoamingSettings.Values["Region"] = region;
             return region;
-        }
-
-        internal static void SaveHistory(Dictionary<string, DateTime> _history)
-        {
-            var dic = JsonConvert.SerializeObject(_history);
-            //ApplicationData.Current.LocalSettings.Values["History"] = dic;
-        }
-
-        internal static Dictionary<string, DateTime> LoadHistory()
-        {
-            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("History"))
-            {
-                var str = (string)(ApplicationData.Current.LocalSettings.Values["History"]);
-                if (!string.IsNullOrEmpty(str))
-                {
-                    var jObject = (JObject)JsonConvert.DeserializeObject(str);
-                    var history = jObject.ToObject(typeof(Dictionary<string, DateTime>));
-                    return history as Dictionary<string, DateTime>;
-                }
-            }
-
-            return new Dictionary<string, DateTime>();
         }
 
         internal static void SaveQuality(string qualityName)
@@ -143,32 +119,42 @@ namespace LiteTube.Common.Helpers
 
         public static void ClearDeactivationSettings()
         {
+#if SILVERLIGHT
             var settings = IsolatedStorageSettings.ApplicationSettings;
             RemoveValue("DeactivateTime");
             RemoveValue("SessionType");
             settings.Save();
+#endif
+            throw new NotImplementedException();
         }
 
         public static void SaveDeactivateTime(DateTimeOffset dateTimeOffset)
         {
+#if SILVERLIGHT
             var settings = IsolatedStorageSettings.ApplicationSettings;
             if (AddOrUpdateValue("DeactivateTime", dateTimeOffset))
             {
                 settings.Save();
             }
+#endif
+            throw new NotImplementedException();
         }
 
         public static void SaveSessionType(SessionType sessionType)
         {
+#if SILVERLIGHT
             var settings = IsolatedStorageSettings.ApplicationSettings;
             if (AddOrUpdateValue("SessionType", sessionType))
             {
                 settings.Save();
             }
+#endif
+            throw new NotImplementedException();
         }
 
         public static DateTimeOffset GetDeactivateTime()
         {
+#if SILVERLIGHT
             var deactivationTime = DateTimeOffset.Now; 
             var settings = IsolatedStorageSettings.ApplicationSettings;
             if (settings.Contains("DeactivateTime"))
@@ -177,10 +163,13 @@ namespace LiteTube.Common.Helpers
             }
 
             return deactivationTime;
+#endif
+            throw new NotImplementedException();
         }
 
         public static SessionType GetSessionType()
         {
+#if SILVERLIGHT
             var settings = IsolatedStorageSettings.ApplicationSettings;
             var sessionType = SessionType.None;
             if (settings.Contains("SessionType"))
@@ -189,6 +178,8 @@ namespace LiteTube.Common.Helpers
             }
 
             return sessionType;
+#endif
+            throw new NotImplementedException();
         }
 
         internal static void SaveTheme(ApplicationTheme theme)
@@ -210,17 +201,21 @@ namespace LiteTube.Common.Helpers
         // Helper method for removing a key/value pair from isolated storage
         private static void RemoveValue(string Key)
         {
+#if SILVERLIGHT
             var settings = IsolatedStorageSettings.ApplicationSettings;
             // If the key exists
             if (settings.Contains(Key))
             {
                 settings.Remove(Key);
             }
+#endif
+            throw new NotImplementedException();
         }
 
         // Helper method for adding or updating a key/value pair in isolated storage
         private static bool AddOrUpdateValue(string Key, Object value)
         {
+#if SILVERLIGHT
             bool valueChanged = false;
             var settings = IsolatedStorageSettings.ApplicationSettings;
 
@@ -242,6 +237,8 @@ namespace LiteTube.Common.Helpers
                 valueChanged = true;
             }
             return valueChanged;
+#endif
+            throw new NotImplementedException();
         }
     }
 }

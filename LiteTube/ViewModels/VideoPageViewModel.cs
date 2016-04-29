@@ -3,7 +3,6 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using MyToolkit.Multimedia;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LiteTube.Common.Helpers;

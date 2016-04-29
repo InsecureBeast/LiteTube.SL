@@ -1,6 +1,8 @@
 ﻿using System;
 using LiteTube.Common;
+#if SILVERLIGHT
 using Microsoft.Phone.Net.NetworkInformation;
+#endif
 
 namespace LiteTube.DataModel
 {
@@ -27,10 +29,11 @@ namespace LiteTube.DataModel
         public ConnectionListener()
         {
             // Subscribe to the NetworkAvailabilityChanged event
+#if SILVERLIGHT
             DeviceNetworkInformation.NetworkAvailabilityChanged += ChangeDetected;
-
+#endif
         }
-
+#if SILVERLIGHT
         private void ChangeDetected(object sender, NetworkNotificationEventArgs e)
         {
             ConnectionEventArgs connectionEventArgs;
@@ -48,6 +51,7 @@ namespace LiteTube.DataModel
                     break;
             }
         }
+#endif
     }
 
     //класс просто оповещение о подключении
@@ -70,10 +74,12 @@ namespace LiteTube.DataModel
             // this is coming true even when i disconnected my pc from internet.
             // i also make the dataconnection off of the emulator
             var fg = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-
+#if SILVERLIGHT
             var ni = NetworkInterface.NetworkInterfaceType;
             // this part is coming none  
             return ni != NetworkInterfaceType.None;
+#endif
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,11 +6,6 @@ using LiteTube.Common;
 
 namespace LiteTube.DataClasses
 {
-    public enum Definition
-    {
-        HD = 0
-    }
-    
     public interface IVideoDetails
     {
         TimeSpan Duration { get; }

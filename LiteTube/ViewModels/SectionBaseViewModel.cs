@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Windows.Input;
@@ -11,6 +10,11 @@ using LiteTube.ViewModels.Nodes;
 using MyToolkit.Command;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+#if SILVERLIGHT
+using System.Windows.Controls;
+#else
+using Windows.UI.Xaml.Controls;
+#endif
 
 namespace LiteTube.ViewModels
 {
@@ -324,7 +328,9 @@ namespace LiteTube.ViewModels
 
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
+#if SILVERLIGHT
             NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getGeDataSource, _connectionListener));
+#endif
         }
 
         protected virtual void DeleteItems()

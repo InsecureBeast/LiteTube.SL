@@ -3,12 +3,14 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
-using Microsoft.Phone.Shell;
 using LiteTube.Common.Helpers;
+#if SILVERLIGHT
+using Microsoft.Phone.Shell;
+#endif
+
 
 namespace LiteTube.ViewModels
 {
@@ -82,8 +84,9 @@ namespace LiteTube.ViewModels
             var channel = viewModel.Channel;
             if (channel == null)
                 return;
-
+#if SILVERLIGHT
             NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channel.Id, _getGeDataSource, _connectionListener));
+#endif
         }
     }
 }

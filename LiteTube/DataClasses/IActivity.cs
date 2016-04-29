@@ -8,22 +8,6 @@ using LiteTube.DataModel;
 
 namespace LiteTube.DataClasses
 {
-    public interface IActivityContentDetails
-    {
-        //IActivityContentDetailsBulletin Bulletin { get; }
-        //IActivityContentDetailsChannelItem ChannelItem { get; }
-        //IActivityContentDetailsComment Comment { get; }
-        //string ETag { get; }
-        //IActivityContentDetailsFavorite Favorite { get; }
-        //IActivityContentDetailsLike Like { get; }
-        //IActivityContentDetailsPlaylistItem PlaylistItem { get; }
-        //IActivityContentDetailsPromotedItem PromotedItem { get; }
-        //IActivityContentDetailsRecommendation Recommendation { get; }
-        //IActivityContentDetailsSocial Social { get; }
-        //IActivityContentDetailsSubscription Subscription { get; }
-        //IActivityContentDetailsUpload Upload { get; }
-    }
-
     public interface IActivitySnippet
     {
         string ChannelId { get; }
@@ -40,7 +24,6 @@ namespace LiteTube.DataClasses
 
     public interface IActivity
     {
-        IActivityContentDetails ContentDetails { get; }
         string ETag { get; }
         string Id { get; }
         string Kind { get; }
@@ -141,17 +124,10 @@ namespace LiteTube.DataClasses
             if (activity == null)
                 return;
 
-            ContentDetails = new MActivityContentDetails(activity.ContentDetails);
             ETag = activity.ETag;
             Id = activity.Id;
             Kind = activity.Kind;
             Snippet = new MActivitySnippet(activity.Snippet);
-        }
-
-        public IActivityContentDetails ContentDetails
-        {
-            get;
-            private set;
         }
 
         public string ETag
@@ -256,15 +232,6 @@ namespace LiteTube.DataClasses
         {
             get;
             private set;
-        }
-    }
-
-    class MActivityContentDetails : IActivityContentDetails
-    {
-        public MActivityContentDetails(ActivityContentDetails details)
-        {
-            if (details == null)
-                return;
         }
     }
 

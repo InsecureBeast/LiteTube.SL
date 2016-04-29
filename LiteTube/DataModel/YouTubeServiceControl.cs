@@ -4,12 +4,13 @@ using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
-using LiteTube.Common;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using LiteTube.Common.Helpers;
+#if SILVERLIGHT
 using LiteTube.Resources;
+#endif
 
 namespace LiteTube.DataModel
 {
@@ -17,7 +18,12 @@ namespace LiteTube.DataModel
     {
         private const string SECRET = "OWnSxF8rkgle-KhsKNCI8yNF";
         private const string API_KEY = "AIzaSyDWezZRg-dUvNumjTow51ShtIgLA642whM";
+#if SILVERLIGHT
         private string APP_NAME = AppResources.ApplicationTitle;
+#else
+        private string APP_NAME = "LightTube"; //TODO
+#endif
+
         private const string CLIENT_ID = "936038716924-oj9advoucgt9flrh07du3ovqsp6tlur1.apps.googleusercontent.com";
         private const string REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
         private YouTubeService _youTubeService;
@@ -93,6 +99,7 @@ namespace LiteTube.DataModel
 
         private async Task<UserCredential> GetUserCredential()
         {
+#if SILVERLIGHT
             var clientSecrets = new ClientSecrets
             {
                 ClientId = CLIENT_ID,
@@ -101,6 +108,8 @@ namespace LiteTube.DataModel
 
             var scope = new List<string>() { YouTubeService.Scope.YoutubeForceSsl, YouTubeService.Scope.Youtube, YouTubeService.Scope.YoutubeUpload };
             return await GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scope, Guid.NewGuid().ToString(), CancellationToken.None);
+#endif
+            throw new NotImplementedException();
         }
 
         private YouTubeService GetYTService(UserCredential credential = null)
@@ -137,7 +146,9 @@ namespace LiteTube.DataModel
 
             var flow = new GoogleAuthorizationCodeFlow(initializer);
             _credential = new UserCredential(flow, username, token);
+#if SILVERLIGHT
             Thread.Sleep(500);
+#endif
             var res = await _credential.RefreshTokenAsync(CancellationToken.None);
             _youTubeServiceAuth = GetYTService(_credential);
             SettingsHelper.SaveUserRefreshToken(_credential.Token.RefreshToken);

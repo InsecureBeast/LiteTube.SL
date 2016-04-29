@@ -1,13 +1,17 @@
 ﻿using LiteTube.DataModel;
+using System;
+#if SILVERLIGHT
 using LiteTube.Resources;
 using Microsoft.Phone.Shell;
-using System;
+#endif
 
 namespace LiteTube.ViewModels
 {
     public class ProgressIndicatorViewModel : PropertyChangedBase
     {
+#if SILVERLIGHT
         private ProgressIndicator _progressIndicator;
+#endif
         private readonly Action<bool> _changeProgressIndicator;
         protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
 
@@ -22,6 +26,7 @@ namespace LiteTube.ViewModels
             get { return _navigatioPanelViewModel; }
         }
 
+#if SILVERLIGHT
         public ProgressIndicator ProgressIndicator
         {
             get { return _progressIndicator; }
@@ -34,9 +39,10 @@ namespace LiteTube.ViewModels
                 NotifyOfPropertyChanged(() => ProgressIndicator);
             }
         }
-
+#endif
         protected void ShowProgressIndicator()
         {
+#if SILVERLIGHT
             var indicator = new ProgressIndicator
             {
                 Text = AppResources.Loading,
@@ -48,14 +54,18 @@ namespace LiteTube.ViewModels
             App.ViewModel.IndicatorHolder.ProgressIndicator = indicator;
             if (_changeProgressIndicator != null)
                 _changeProgressIndicator(true);
+#endif
         }
 
         protected void HideProgressIndicator()
         {
+#if SILVERLIGHT
             ProgressIndicator = null;
             App.ViewModel.IndicatorHolder.ProgressIndicator = null;
             if (_changeProgressIndicator != null)
                 _changeProgressIndicator(false);
+#endif
         }
+
     }
-}
+    }

@@ -59,14 +59,13 @@ namespace LiteTube.DataModel
         private readonly VideoQuality _qualityHelper;
         private IList<IGuideCategory> _guideCategories;
         private readonly List<IChannel> _channels;
-        private readonly IDeviceHistory _deviceHistory;
         private string _region;
         private readonly int _maxPageResult;
         private YouTubeQuality _quality;
         private readonly Notifier<UpdateContextEventArgs> _contextNotifier = new Notifier<UpdateContextEventArgs>();
         private readonly Notifier<UpdateSettingsEventArgs> _settingsNotifier = new Notifier<UpdateSettingsEventArgs>();
 
-        public DataSource(IRemoteDataSource remoteDataSource, string region, int maxPageResult, IDeviceHistory deviceHistory, string quality)
+        public DataSource(IRemoteDataSource remoteDataSource, string region, int maxPageResult, string quality)
         {
             _remoteDataSource = remoteDataSource;
             _categories = new List<IVideoCategory>();
@@ -74,7 +73,6 @@ namespace LiteTube.DataModel
             _channels = new List<IChannel>();
             _region = region.ToUpper();
             _maxPageResult = maxPageResult;
-            _deviceHistory = deviceHistory;
             _qualityHelper = new VideoQuality();
             _quality = _qualityHelper.GetQualityEnum(quality);
         }
@@ -265,13 +263,11 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            _deviceHistory.Add(videoId);
             return await _remoteDataSource.GetVideoUriAsync(videoId, quality);
         }
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId)
         {
-            _deviceHistory.Add(videoId);
             return await _remoteDataSource.GetVideoUriAsync(videoId, _quality);
         }
 

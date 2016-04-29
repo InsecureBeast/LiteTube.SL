@@ -6,15 +6,13 @@ namespace LiteTube
     class ContainerBootstrapper
     {
         private IDialogService _dialogService;
-        private IDeviceHistory _deviceHistory;
         private Context _context;
 
         public void Build()
         {
-            _deviceHistory = new DeviceHistory();
-            _context = new Context(_deviceHistory);
+            _context = new Context();
             _context.BuidContext();
-            _dialogService = new DialogService(_deviceHistory);
+            _dialogService = new DialogService();
         }
 
         internal IDataSource GetDataSource()

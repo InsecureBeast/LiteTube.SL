@@ -1,6 +1,12 @@
 ﻿using System.Windows;
+#if SILVERLIGHT
 using System.Windows.Controls;
 using System.Windows.Media;
+#else
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
+#endif
 
 namespace LiteTube.Common.Helpers
 {

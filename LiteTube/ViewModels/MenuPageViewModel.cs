@@ -4,13 +4,15 @@ using System.Windows.Input;
 using System;
 using System.Linq;
 using System.Collections.Specialized;
-using Microsoft.Phone.Shell;
-using Windows.Phone.UI.Input;
 using LiteTube.Common.Helpers;
 using LiteTube.DataModel;
 using MyToolkit.Command;
 using LiteTube.Common;
 using System.Threading.Tasks;
+#if SILVERLIGHT
+using Microsoft.Phone.Shell;
+using Windows.Phone.UI.Input;
+#endif
 
 namespace LiteTube.ViewModels
 {
@@ -32,8 +34,11 @@ namespace LiteTube.ViewModels
 
         private int _selectedIndex;
         private bool _isConnected = true;
+
+#if SILVERLIGHT
         private ProgressIndicator _progressIndicator;
         //private PreventNavigationHelper _navigationHelper;
+#endif
         private bool _isRequestSend = false;
 
         public MenuPageViewModel(int index, Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
@@ -158,6 +163,7 @@ namespace LiteTube.ViewModels
             get { return _favoritesViewModel.IsItemClickEnabled && _selectedIndex == 2; }
         }
 
+#if SILVERLIGHT
         public ProgressIndicator ProgressIndicator
         {
             get { return _progressIndicator; }
@@ -170,6 +176,7 @@ namespace LiteTube.ViewModels
                 NotifyOfPropertyChanged(() => ProgressIndicator);
             }
         }
+#endif
 
         private void OnSelectedIndexChanged(int index)
         {
@@ -288,9 +295,10 @@ namespace LiteTube.ViewModels
             _favoritesViewModel.SetSelected();
             NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
             //_navigationHelper.IsCanGoBack = false;
-            HardwareButtons.BackPressed += OnBackPressed;
+            //HardwareButtons.BackPressed += OnBackPressed;
         }
-
+        
+        /*
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
             if (!_favoritesViewModel.IsItemClickEnabled)
@@ -302,6 +310,7 @@ namespace LiteTube.ViewModels
                 //_navigationHelper.IsCanGoBack = true;
             }
         }
+        */
 
         private void SelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -318,7 +327,9 @@ namespace LiteTube.ViewModels
             var title = item.Title;
             var view = string.Format("/ChannelListPage.xaml?categoriId={0}", id);
             var viewModel = new ChannelListPageViewModel(id, title, _getDataSource, _connectionListener);
+#if SILVERLIGHT
             NavigationHelper.Navigate(view, viewModel);
+#endif
         }
 
         public void Notify(ConnectionEventArgs e)
