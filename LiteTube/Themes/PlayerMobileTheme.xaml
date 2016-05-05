@@ -977,8 +977,8 @@
                         <local:ResolutionIndicator x:Name="ResolutionIndicator" 
                                                    MediaQuality="{Binding MediaQuality}" 
                                                    VerticalAlignment="Center" 
-                                                   Margin="10,0,10,0" />
-                        <!--Visibility="{Binding IsResolutionIndicatorVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>-->
+                                                   Margin="10,0,10,0"
+                                                   Visibility="{Binding IsResolutionIndicatorVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>
                     </StackPanel>
 
                     <!--<StackPanel Orientation="Horizontal">
@@ -1005,16 +1005,31 @@
                 </Border.Resources>
             </Border>
 
-            <Button x:Name="FullScreenButton" 
-                    Style="{TemplateBinding TransportBarButtonStyle}" 
-                    Grid.Column="2"
-                    Grid.Row="2"
-                    Margin="10,10,10,10"
-                    VerticalAlignment="Top">
-                <local:MediaControls.Behavior>
-                    <local:FullScreenButtonBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
-                </local:MediaControls.Behavior>
-            </Button>
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="2"
+                        Grid.Row="2">
+                <Button x:Name="FullScreenButton" 
+                        Style="{TemplateBinding TransportBarButtonStyle}" 
+                        Margin="10,10,10,10"
+                        VerticalAlignment="Top">
+                    <local:MediaControls.Behavior>
+                        <local:FullScreenButtonBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    </local:MediaControls.Behavior>
+                </Button>
+
+                <ToggleButton x:Name="ShowRelatedVideoButton" 
+                              DataContext="{TemplateBinding ViewModel}" 
+                              Margin="10,10,10,10"
+                              Style="{StaticResource AppBarToggleButtonStyle}"
+                              VerticalAlignment="Bottom"
+                              Foreground="White"
+                              BorderBrush="White"
+                              BorderThickness="2"
+                              Padding="0,2,0,0"
+                              Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ContentPresenter ContentTemplate="{StaticResource PlayListIcon}"/>
+                </ToggleButton>
+            </StackPanel>
         </Grid>
     </ControlTemplate>
 
