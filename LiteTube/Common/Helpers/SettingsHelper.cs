@@ -124,8 +124,9 @@ namespace LiteTube.Common.Helpers
             RemoveValue("DeactivateTime");
             RemoveValue("SessionType");
             settings.Save();
-#endif
+#else
             throw new NotImplementedException();
+#endif
         }
 
         public static void SaveDeactivateTime(DateTimeOffset dateTimeOffset)
@@ -136,8 +137,9 @@ namespace LiteTube.Common.Helpers
             {
                 settings.Save();
             }
-#endif
+#else
             throw new NotImplementedException();
+#endif
         }
 
         public static void SaveSessionType(SessionType sessionType)
@@ -148,8 +150,9 @@ namespace LiteTube.Common.Helpers
             {
                 settings.Save();
             }
-#endif
+#else
             throw new NotImplementedException();
+#endif
         }
 
         public static DateTimeOffset GetDeactivateTime()
@@ -163,8 +166,9 @@ namespace LiteTube.Common.Helpers
             }
 
             return deactivationTime;
-#endif
+#else
             throw new NotImplementedException();
+#endif
         }
 
         public static SessionType GetSessionType()
@@ -178,8 +182,10 @@ namespace LiteTube.Common.Helpers
             }
 
             return sessionType;
-#endif
+#else
             throw new NotImplementedException();
+#endif
+
         }
 
         internal static void SaveTheme(ApplicationTheme theme)
@@ -208,8 +214,10 @@ namespace LiteTube.Common.Helpers
             {
                 settings.Remove(Key);
             }
-#endif
+#else
             throw new NotImplementedException();
+#endif
+
         }
 
         // Helper method for adding or updating a key/value pair in isolated storage
@@ -237,8 +245,9 @@ namespace LiteTube.Common.Helpers
                 valueChanged = true;
             }
             return valueChanged;
-#endif
+#else
             throw new NotImplementedException();
+#endif
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿using LiteTube.DataModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using MyToolkit.Multimedia;
+using LiteTube.Multimedia;
 
 namespace LiteTube.Common
 {
@@ -14,10 +13,12 @@ namespace LiteTube.Common
         {
             _quality = new Dictionary<string, YouTubeQuality>
             {
-                {"360p", YouTubeQuality.Quality360P},
-                {"480p", YouTubeQuality.Quality480P},
-                {"720p", YouTubeQuality.Quality720P},
-                {"1080p", YouTubeQuality.Quality1080P}
+                //{ "144p", YouTubeQuality.Quality144P },
+                //{ "240p", YouTubeQuality.Quality240P },
+                { "360p", YouTubeQuality.Quality360P },
+                { "480p", YouTubeQuality.Quality480P },
+                { "720p", YouTubeQuality.Quality720P },
+                { "1080p", YouTubeQuality.Quality1080P }
             };
         }
 

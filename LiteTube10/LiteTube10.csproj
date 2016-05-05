@@ -278,6 +278,9 @@
     <Compile Include="..\LiteTube\DataModel\VideoItemsCache.cs">
       <Link>DataModel\VideoItemsCache.cs</Link>
     </Compile>
+    <Compile Include="..\LiteTube\DataModel\YouTube.cs">
+      <Link>DataModel\YouTube.cs</Link>
+    </Compile>
     <Compile Include="..\LiteTube\DataModel\YouTubeServiceControl.cs">
       <Link>DataModel\YouTubeServiceControl.cs</Link>
     </Compile>

@@ -11,9 +11,6 @@ using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
-using Google;
-using System.Threading;
-using System.Globalization;
 
 namespace LiteTube
 {
@@ -199,7 +196,7 @@ namespace LiteTube
             if (Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
-                Debugger.Break();
+                    Debugger.Break();
             }
 
             e.Handled = true;

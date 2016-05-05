@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using LiteTube.Common;
 using LiteTube.DataClasses;
-using MyToolkit.Multimedia;
+using LiteTube.Multimedia;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Google;
@@ -506,8 +506,8 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            //await InsertHistory(videoId);
             YouTubeWeb.OpenVideo(videoId, _youTubeServiceControl.OAuthToken);
+            var r = await YouTube.GetUrisAsync(videoId);
             var url = await YouTube.GetVideoUriAsync(videoId, /*_youTubeServiceControl.OAuthToken, */quality);
             return url;
         }

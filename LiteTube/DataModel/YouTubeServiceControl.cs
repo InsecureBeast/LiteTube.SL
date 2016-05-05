@@ -108,8 +108,9 @@ namespace LiteTube.DataModel
 
             var scope = new List<string>() { YouTubeService.Scope.YoutubeForceSsl, YouTubeService.Scope.Youtube, YouTubeService.Scope.YoutubeUpload };
             return await GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scope, Guid.NewGuid().ToString(), CancellationToken.None);
-#endif
+#else
             throw new NotImplementedException();
+#endif
         }
 
         private YouTubeService GetYTService(UserCredential credential = null)

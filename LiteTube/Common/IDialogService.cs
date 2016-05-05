@@ -17,8 +17,9 @@ namespace LiteTube.Common
             {
 #if SILVERLIGHT
                 ExceptionDialog.ShowDialog(exception);
+#else
+            throw new NotImplementedException();
 #endif
-                throw new NotImplementedException();
             });
         }
 
@@ -28,8 +29,9 @@ namespace LiteTube.Common
             {
 #if SILVERLIGHT
                 ExceptionDialog.ShowError(exception);
+#else
+            throw new NotImplementedException();
 #endif
-                throw new NotImplementedException();
             });
         }
     }

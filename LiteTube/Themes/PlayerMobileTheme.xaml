@@ -981,12 +981,14 @@
                         <!--Visibility="{Binding IsResolutionIndicatorVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>-->
                     </StackPanel>
 
-                    <ListBox Grid.Row="0">
-                        <ListBoxItem Content="SD"/>
-                        <ListBoxItem Content="HQ"/>
-                        <ListBoxItem Content="HD"/>
-                        <ListBoxItem Content="FULL HD"/>
-                    </ListBox>
+                    <!--<StackPanel Orientation="Horizontal">
+                        <RadioButton Content="144p" GroupName="VideoQuality"/>
+                        <RadioButton Content="240p" GroupName="VideoQuality"/>
+                        <RadioButton Content="360p" GroupName="VideoQuality"/>
+                        <RadioButton Content="480p" GroupName="VideoQuality"/>
+                        <RadioButton Content="720p" GroupName="VideoQuality"/>
+                        <RadioButton Content="1080p" GroupName="VideoQuality"/>
+                    </StackPanel>-->
 
 
                 </Grid>
