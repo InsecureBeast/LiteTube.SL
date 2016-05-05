@@ -12,8 +12,8 @@ namespace LiteTube.Controls
         private static readonly DependencyProperty VideoTitleProperty = DependencyProperty.Register("VideoTitle", typeof(string), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty ChannelTitleProperty = DependencyProperty.Register("ChannelTitle", typeof(string), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty RelatedItemsProperty = DependencyProperty.Register("RelatedItems", typeof(ObservableCollection<NodeViewModelBase>), typeof(LiteTubePlayer), null);
+        private static readonly DependencyProperty RelatedItemsVisibleProperty = DependencyProperty.Register("IsRelatedItemsVisible", typeof(bool), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
-
 
         public LiteTubePlayer() : base()
         {
@@ -42,6 +42,12 @@ namespace LiteTube.Controls
         {
             get { return GetValue(ItemClickCommandProperty) as ICommand; }
             set { SetValue(ItemClickCommandProperty, value); }
+        }
+
+        public bool IsRelatedItemsVisible
+        {
+            get { return (bool)GetValue(RelatedItemsVisibleProperty); }
+            set { SetValue(RelatedItemsVisibleProperty, value); }
         }
     }
 

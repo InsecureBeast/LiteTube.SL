@@ -83,13 +83,13 @@
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TransportReversedBackgroundBrush}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneAccentBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneAccentBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TransportReversedBackgroundBrush}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -766,7 +766,7 @@
                     Grid.RowSpan="3"
                     DataContext="{TemplateBinding ViewModel}" 
                     Background="{TemplateBinding Background}"
-                    Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    Visibility="{Binding MediaPlayer.IsRelatedItemsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <ListBox ItemsSource="{Binding RelatedItems}"
                          ItemTemplate="{StaticResource RelatedVideoItem}"
                          common:ItemClickCommand.Command="{Binding ItemClickCommand}"
@@ -1005,9 +1005,8 @@
                 </Border.Resources>
             </Border>
 
-            <StackPanel Orientation="Vertical"
-                        Grid.Column="2"
-                        Grid.Row="2">
+            <Grid Grid.Column="2"
+                  Grid.Row="2">
                 <Button x:Name="FullScreenButton" 
                         Style="{TemplateBinding TransportBarButtonStyle}" 
                         Margin="10,10,10,10"
@@ -1026,10 +1025,11 @@
                               BorderBrush="White"
                               BorderThickness="2"
                               Padding="0,2,0,0"
+                              IsChecked="{Binding MediaPlayer.IsRelatedItemsVisible, Mode=TwoWay}"
                               Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <ContentPresenter ContentTemplate="{StaticResource PlayListIcon}"/>
                 </ToggleButton>
-            </StackPanel>
+            </Grid>
         </Grid>
     </ControlTemplate>
 
