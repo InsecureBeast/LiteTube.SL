@@ -1,6 +1,7 @@
 ﻿using LiteTube.DataClasses;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -114,6 +115,20 @@ namespace LiteTube.DataModel
 
                 var response = await client.GetAsync(new Uri(uri, UriKind.Absolute));
                 return await response.Content.ReadAsStringAsync();
+            }
+        }
+
+        public static async Task<Stream> HttpGetStreamAsync(string uri, string accessToken = null)
+        {
+            var handler = new HttpClientHandler { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip };
+            using (var client = new HttpClient(handler))
+            {
+                client.DefaultRequestHeaders.Add("User-Agent", BOT_USER_AGENT);
+                if (!string.IsNullOrEmpty(accessToken))
+                    client.DefaultRequestHeaders.Add("Authorization", accessToken);
+
+                return await client.GetStreamAsync(new Uri(uri, UriKind.Absolute));
+                //return await response..ReadAsStreamAsync();
             }
         }
 

@@ -421,7 +421,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.1">
+    <SDKReference Include="Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.2">
       <Name>Microsoft Player Framework</Name>
     </SDKReference>
   </ItemGroup>

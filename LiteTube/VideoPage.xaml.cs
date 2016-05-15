@@ -14,6 +14,10 @@ using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Net;
+using System.IO;
+using LiteTube.Common;
+using LiteTube.DataModel;
 
 namespace LiteTube
 {
@@ -31,14 +35,20 @@ namespace LiteTube
         private TimeSpan _playerPosition;
         private bool _isFullScreen = false;
         private bool _isRelatedLoading = false;
+        //private Microsoft.PlayerFramework.Adaptive.AdaptivePlugin adaptivePlugin;
 
         public VideoPage()
         {
             InitializeComponent();
             Pivot.SelectionChanged += PivotOnSelectionChanged;
+            // add adaptive plugin in order to play smooth streaming
+            //adaptivePlugin = new Microsoft.PlayerFramework.Adaptive.AdaptivePlugin();
+            //player.Plugins.Add(adaptivePlugin);
+
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
             player.IsInteractiveChanged += OnInteractiveChanged;
+            player.MediaFailed += Player_MediaFailed;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
@@ -61,6 +71,11 @@ namespace LiteTube
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", AppResources.AddToFavorites, AddToFavorites_Click);
 
             ApplicationBar = _currentApplicationBar;
+        }
+
+        private void Player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            
         }
 
         private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
@@ -102,7 +117,7 @@ namespace LiteTube
             _sendApplicationBarButton.IsEnabled = !string.IsNullOrEmpty(CommentTextBox.Text);
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
 
@@ -123,6 +138,22 @@ namespace LiteTube
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
             }
+
+            var audio = new Microsoft.PlayerFramework.AudioSelectionPlugin();
+            player.Plugins.Add(audio);
+
+            //var a_url = new Uri("https://r1---sn-jgxqvapo3-axqe.googlevideo.com/videoplayback?lmt=1462225019377039&sver=3&upn=jgT-rfwv9u8&requiressl=yes&keepalive=yes&ms=au&mt=1462293177&mv=m&dur=5027.561&clen=79850424&ip=178.162.123.135&initcwndbps=3320000&gir=yes&ipbits=0&mm=31&mn=sn-jgxqvapo3-axqe&itag=140&sparams=clen,dur,gir,id,initcwndbps,ip,ipbits,itag,keepalive,lmt,mime,mm,mn,ms,mv,pl,requiressl,source,upn,expire&id=o-APkTxXnHF3MIjsRmAO05Ulr8SbZFFJtD_SFuL5oxRJsS&expire=1462314867&signature=BB27B9C0DF22C231B932FE88B5DB9792DB6A001A.85C550BF86D390B353750468FA7D3084BBB8798C&source=youtube&mime=audio/mp4&pl=17&fexp=9408214,9416126,9416891,9419451,9422596,9425352,9428398,9428657,9431012,9431021,9431449,9433096,9433946,9434003,9434290,9434611,9434633,9435333,9435850&key=yt6");
+            //var v_url = new Uri("https://r1---sn-jgxqvapo3-axqe.googlevideo.com/videoplayback?fexp=9406983,9416126,9416891,9422596,9428398,9431012,9433096,9433946,9434290&keepalive=yes&requiressl=yes&sver=3&sparams=clen,dur,gir,id,initcwndbps,ip,ipbits,itag,keepalive,lmt,mime,mm,mn,ms,mv,pl,requiressl,source,upn,expire&gir=yes&clen=70208259&key=yt6&lmt=1462227549148746&ip=178.162.123.135&upn=pFXxN6YIzZ0&mt=1462290245&expire=1462311970&mm=31&ipbits=0&mn=sn-jgxqvapo3-axqe&itag=160&dur=5027.499&initcwndbps=3313750&id=o-AHWwij9ubhRCFpzNrMl_NMaKaLRFMhuKusg6S7OuGkIU&pl=17&source=youtube&mv=m&mime=video/mp4&ms=au&signature=D5B4D5836B7087CF5B24E30B1BE2EF155F7D3692.0BC4C51784DBCD9608418EABD99EF3417FE782AF");
+
+            var v_url = new Uri("https://r3---sn-jgxqvapo3-axqe.googlevideo.com/videoplayback?sparams=clen,dur,gir,id,initcwndbps,ip,ipbits,itag,keepalive,lmt,mime,mm,mn,ms,mv,pl,requiressl,source,upn,expire&clen=1354425&source=youtube&dur=96.899&initcwndbps=3223750&expire=1463338210&sver=3&mv=m&mime=video/mp4&id=o-AH_T86gy3XU984RyYBbcxTueApdO7uThnrmniQsWFjdU&pl=17&mm=31&mn=sn-jgxqvapo3-axqe&ipbits=0&fexp=9416126,9416891,9422596,9428398,9431012,9433096,9433946,9436446&ip=178.162.123.135&requiressl=yes&ms=au&mt=1463316355&gir=yes&signature=22F3B9CB44DA548F52D6FAE0818C3E739BFA5E61.011D465492F2BF50A88A0D2701232F3B3208F73B&upn=10Ti6DOh2U4&keepalive=yes&itag=160&key=yt6&lmt=1463265031055313");
+            var a_url = new Uri("https://r3---sn-jgxqvapo3-axqe.googlevideo.com/videoplayback?sparams=clen,dur,gir,id,initcwndbps,ip,ipbits,itag,keepalive,lmt,mime,mm,mn,ms,mv,pl,requiressl,source,upn,expire&clen=1546889&source=youtube&dur=97.338&initcwndbps=3223750&expire=1463338210&sver=3&mv=m&mime=audio/mp4&id=o-AH_T86gy3XU984RyYBbcxTueApdO7uThnrmniQsWFjdU&pl=17&mm=31&mn=sn-jgxqvapo3-axqe&ipbits=0&fexp=9416126,9416891,9422596,9428398,9431012,9433096,9433946,9436446&ip=178.162.123.135&requiressl=yes&ms=au&mt=1463316355&gir=yes&signature=05153BF65E6F15D5C3F137A436B322D00CA74DB6.9CD1CAEC3F53C8C9E061D96FD400E160D74B3B5A&upn=10Ti6DOh2U4&keepalive=yes&itag=140&key=yt6&lmt=1463264947925549");
+
+
+            Stream vstream = await YouTubeWeb.HttpGetStreamAsync(v_url.AbsoluteUri);
+            Stream astream = await YouTubeWeb.HttpGetStreamAsync(a_url.AbsoluteUri);
+            var mss = new VideoStreamSource(vstream, astream);// (int)_normalWidth, (int)_normalHeight);
+            //player.SetSource(mss);
+            //player.Source = v_url;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
