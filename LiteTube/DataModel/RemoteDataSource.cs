@@ -19,6 +19,8 @@ namespace LiteTube.DataModel
         void Logout();
         Task LoginSilently(string username);
         bool IsAuthorized { get; }
+        string FavoritesPlaylistId { get; }
+        string WatchLaterPlaylistId { get; }
         Task<IEnumerable<IVideoCategory>> GetCategories(string culture);
         Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken);
         Task<IVideoList> GetRecommended(string pageToken);
@@ -40,8 +42,8 @@ namespace LiteTube.DataModel
         Task SetRating(string videoId, RatingEnum rating);
         Task<RatingEnum> GetRating(string videoId);
         Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality);
-        Task AddToFavorites(string videoId);
-        Task RemoveFromFavorites(string playlistItemId);
+        Task AddToPlaylist(string videoId, string playlistId);
+        Task RemovePlaylistItem(string playlistItemId);
         Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
         Task<IResponceList> GetLiked(int maxResult, string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
@@ -63,6 +65,7 @@ namespace LiteTube.DataModel
         private readonly YouTubeWeb _youTubeWeb;
         private const long SEARCH_PAGE_MAX_RESULT = 45;
         private MProfile _profileInfo;
+        private readonly IEnumerable<IPlaylist> _playlists;
 
         public RemoteDataSource(IYouTubeService youTubeServiceControl)
         {
@@ -70,6 +73,7 @@ namespace LiteTube.DataModel
             _youTubeService = _youTubeServiceControl.GetService();
             _subscriptionsHolder = new SubscriptionsHolder(_youTubeServiceControl);
             _youTubeWeb = new YouTubeWeb();
+            _playlists = new List<IPlaylist>();
         }
 
         public async Task Login()
@@ -191,6 +195,11 @@ namespace LiteTube.DataModel
             return new MVideoList(videoResponse);
         }
 
+        public IEnumerable<IPlaylist> Playlists
+        {
+            get { return _playlists; }
+        }
+
         public async Task<IEnumerable<IVideoCategory>> GetCategories(string culture)
         {
             var categoriesListRequest = _youTubeService.VideoCategories.List("snippet");
@@ -206,6 +215,16 @@ namespace LiteTube.DataModel
         public bool IsAuthorized
         {
             get { return _youTubeServiceControl.IsAuthorized && _profileInfo != null; }
+        }
+
+        public string FavoritesPlaylistId
+        {
+            get { return _watchLaterPlayList; }
+        }
+
+        public string WatchLaterPlaylistId
+        {
+            get { return _watchLaterPlayList; }
         }
 
         public async Task<IEnumerable<IPlaylist>> GetPlayLists(string channelId, string culture, int maxResult)
@@ -388,7 +407,6 @@ namespace LiteTube.DataModel
                     return MCommentList.EmptyList;
 
                 return MCommentList.EmptyList;
-                //throw e;
             }
         }
 
@@ -412,7 +430,6 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return MVideoList.Empty;
 
-            //await SetRelatedPlaylists();
             if (string.IsNullOrEmpty(_historyPlayListId))
                 return MVideoList.Empty;
 
@@ -512,19 +529,19 @@ namespace LiteTube.DataModel
             return url;
         }
 
-        public async Task AddToFavorites(string videoId)
+        public async Task AddToPlaylist(string videoId, string playlistId)
         {
             if (!IsAuthorized)
                 return;
 
-            if (string.IsNullOrEmpty(_favorites))
+            if (string.IsNullOrEmpty(playlistId))
                 return;
 
             var newPlaylistItem = new PlaylistItem
             {
                 Snippet = new PlaylistItemSnippet
                 {
-                    PlaylistId = _favorites,
+                    PlaylistId = playlistId,
                     ResourceId = new ResourceId { Kind = "youtube#video", VideoId = videoId }
                 }
             };
@@ -533,10 +550,10 @@ namespace LiteTube.DataModel
             request.Key = _youTubeServiceControl.ApiKey;
             //request.OauthToken = _youTubeServiceControl.OAuthToken;
 
-            newPlaylistItem = await request.ExecuteAsync();
+            await request.ExecuteAsync();
         }
 
-        public async Task RemoveFromFavorites(string playlistItemId)
+        public async Task RemovePlaylistItem(string playlistItemId)
         {
             if (!IsAuthorized)
                 return;

@@ -37,10 +37,17 @@ namespace LiteTube.DataModel
         Task<RatingEnum> GetRating(string videoId);
         Task<YouTubeUri> GetVideoUriAsync(string videoId);
         Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality);
+#region playlists
+        string FavoritesPlaylistId { get; }
+        string WatchLaterPlaylistId { get; }
         Task AddToFavorites(string videoId);
         Task RemoveFromFavorites(string playlistItemId);
+        Task AddToPlaylist(string videoId, string playlistId);
+        Task RemovePlaylistItem(string playlistItemId);
         Task<IResponceList> GetFavorites(string nextPageToken);
         Task<IResponceList> GetLiked(string nextPageToken);
+        Task<IPlaylist> GetPlaylists();
+#endregion
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
@@ -128,26 +135,6 @@ namespace LiteTube.DataModel
             return await _remoteDataSource.GetMostPopular(_region, _maxPageResult, pageToken);
         }
 
-        public async Task<IGuideCategory> GetRecommendedForYouCategory()
-        {
-            var recommended = _guideCategories.FirstOrDefault();
-            if (recommended == null)
-            {
-                var list = await _remoteDataSource.GetGuideCategories(_region);
-                _guideCategories = list.ToList();
-                recommended = _guideCategories.FirstOrDefault();
-            }
-            return recommended;
-        }
-
-        //public async Task<IGuideCategory> GetBestOfCategory()
-        //{
-        //    await LoadCategories();
-        //    if (bestOf == null)
-        //        bestOf = categories.FirstOrDefault(c => c.Title.Equals(YouTubeConstants.BEST_OF, StringComparison.OrdinalIgnoreCase));
-        //    return bestOf;
-        //}
-        
         public async Task<IEnumerable<IVideoCategory>> GetCategories()
         {
             if (_categories.Any())
@@ -266,6 +253,16 @@ namespace LiteTube.DataModel
             return await _remoteDataSource.GetVideoUriAsync(videoId, quality);
         }
 
+        public string FavoritesPlaylistId
+        {
+            get { return _remoteDataSource.FavoritesPlaylistId; }
+        }
+
+        public string WatchLaterPlaylistId
+        {
+            get { return _remoteDataSource.WatchLaterPlaylistId; }
+        }
+
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId)
         {
             return await _remoteDataSource.GetVideoUriAsync(videoId, _quality);
@@ -278,12 +275,23 @@ namespace LiteTube.DataModel
 
         public async Task AddToFavorites(string videoId)
         {
-            await _remoteDataSource.AddToFavorites(videoId);
+            var playlistId = _remoteDataSource.FavoritesPlaylistId;
+            await _remoteDataSource.AddToPlaylist(videoId, playlistId);
         }
 
         public async Task RemoveFromFavorites(string playlistItemId)
         {
-            await _remoteDataSource.RemoveFromFavorites(playlistItemId);
+            await _remoteDataSource.RemovePlaylistItem(playlistItemId);
+        }
+
+        public async Task AddToPlaylist(string videoId, string playlistId)
+        {
+            await _remoteDataSource.AddToPlaylist(videoId, playlistId);
+        }
+
+        public async Task RemovePlaylistItem(string playlistItemId)
+        {
+            await _remoteDataSource.RemovePlaylistItem(playlistItemId);
         }
 
         public async Task<IResponceList> GetFavorites(string nextPageToken)
@@ -294,6 +302,11 @@ namespace LiteTube.DataModel
         public async Task<IResponceList> GetLiked(string nextPageToken)
         {
             return await _remoteDataSource.GetLiked(_maxPageResult, nextPageToken);
+        }
+
+        public Task<IPlaylist> GetPlaylists()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IVideoItem> GetVideoItem(string videoId)

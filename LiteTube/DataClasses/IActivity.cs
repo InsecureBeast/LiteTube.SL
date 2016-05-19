@@ -237,7 +237,7 @@ namespace LiteTube.DataClasses
 
     class MTokenPagination : ITokenPagination
     {
-        public MTokenPagination(TokenPagination tokenPagination)
+        public MTokenPagination(TokenPagination tokenPagination) : this()
         {
             if (tokenPagination == null)
                 return;
@@ -245,9 +245,14 @@ namespace LiteTube.DataClasses
             ETag = tokenPagination.ETag;
         }
 
+        public MTokenPagination()
+        {
+            ETag = string.Empty;
+        }
+
         public static ITokenPagination Empty
         {
-            get { return new MTokenPagination(null); }
+            get { return new MTokenPagination(); }
         }
 
         public string ETag
@@ -269,9 +274,14 @@ namespace LiteTube.DataClasses
             TotalResults = pageInfo.TotalResults;
         }
 
+        public MPageInfo()
+        {
+            ETag = string.Empty;
+        }
+
         public static IPageInfo Empty
         {
-            get { return new MPageInfo(null); }
+            get { return new MPageInfo(); }
         }
 
         public string ETag

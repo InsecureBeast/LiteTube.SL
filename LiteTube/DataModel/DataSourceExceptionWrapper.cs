@@ -74,6 +74,17 @@ namespace LiteTube.DataModel
                 return result;
             }
         }
+
+        public string FavoritesPlaylistId
+        {
+            get { return _remoteDataSource.FavoritesPlaylistId; }
+        }
+
+        public string WatchLaterPlaylistId
+        {
+            get { return _remoteDataSource.WatchLaterPlaylistId; }
+        }
+
         public Task<IEnumerable<IVideoCategory>> GetCategories(string culture)
         {
             try
@@ -380,31 +391,31 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task AddToFavorites(string videoId)
+        public Task AddToPlaylist(string videoId, string playlistId)
         {
             try
             {
-                Debug.WriteLine("AddToFavorites method called");
-                return _remoteDataSource.AddToFavorites(videoId);
+                Debug.WriteLine("AddToPlaylist method called");
+                return _remoteDataSource.AddToPlaylist(videoId, playlistId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("AddToFavorites method called with exception " + e.Message);
-                throw new LiteTubeException(e);
+                Debug.WriteLine("AddToPlaylist method called with exception " + e.Message);
+                throw;
             }
         }
 
-        public Task RemoveFromFavorites(string playlistItemId)
+        public Task RemovePlaylistItem(string playlistItemId)
         {
             try
             {
-                Debug.WriteLine("RemoveFromFavorites method called");
-                return _remoteDataSource.RemoveFromFavorites(playlistItemId);
+                Debug.WriteLine("RemovePlaylistItem method called");
+                return _remoteDataSource.RemovePlaylistItem(playlistItemId);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("RemoveFromFavorites method called with exception " + e.Message);
-                throw new LiteTubeException(e);
+                Debug.WriteLine("RemovePlaylistItem method called with exception " + e.Message);
+                throw;
             }
         }
 

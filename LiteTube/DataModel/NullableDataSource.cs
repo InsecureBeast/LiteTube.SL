@@ -140,12 +140,32 @@ namespace LiteTube.DataModel
             return Task.Run(() => { return new YouTubeUri(); });
         }
 
+        public string FavoritesPlaylistId
+        {
+            get { return string.Empty; }
+        }
+
+        public string WatchLaterPlaylistId
+        {
+            get { return string.Empty; }
+        }
+
         public Task AddToFavorites(string videoId)
         {
             return Task.Run(() => { });
         }
 
         public Task RemoveFromFavorites(string playlistItemId)
+        {
+            return Task.Run(() => { });
+        }
+
+        public Task AddToPlaylist(string videoId, string playlistId)
+        {
+            return Task.Run(() => { });
+        }
+
+        public Task RemovePlaylistItem(string playlistItemId)
         {
             return Task.Run(() => { });
         }
@@ -158,6 +178,11 @@ namespace LiteTube.DataModel
         public Task<IResponceList> GetLiked(string nextPageToken)
         {
             return new Task<IResponceList>(() => MVideoList.Empty);
+        }
+
+        public Task<IPlaylist> GetPlaylists()
+        {
+            return Task.Run(() => MPlaylist.Empty);
         }
 
         public Task<IVideoItem> GetVideoItem(string videoId)

@@ -258,6 +258,10 @@ namespace LiteTube.DataClasses
             ETag = thumbnailDetails.ETag;
         }
 
+        public MThumbnailDetails()
+        {
+        }
+
         public string ETag
         {
             get;

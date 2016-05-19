@@ -1,8 +1,6 @@
 ﻿using Google.Apis.YouTube.v3.Data;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LiteTube.DataClasses
 {
@@ -79,6 +77,18 @@ namespace LiteTube.DataClasses
             Status = new MPlaylistStatus(playlist.Status);
         }
 
+        private MPlaylist()
+        {
+            Localizations = new Dictionary<string, IPlaylistLocalization>();
+            ContentDetails = new MPlaylistContentDetails();
+            Player = new MPlaylistPlayer();
+            Snippet = new MPlaylistSnippet();
+            Status = new MPlaylistStatus();
+            ETag = string.Empty;
+            Id = string.Empty;
+            Kind = string.Empty;
+        }
+
         public IPlaylistContentDetails ContentDetails
         {
             get;
@@ -126,6 +136,11 @@ namespace LiteTube.DataClasses
             get;
             private set;
         }
+
+        public static IPlaylist Empty
+        {
+            get { return new MPlaylist();}
+        }
     }
 
     class MPlaylistContentDetails : IPlaylistContentDetails
@@ -134,6 +149,11 @@ namespace LiteTube.DataClasses
         {
             ETag = details.ETag;
             ItemCount = details.ItemCount;
+        }
+
+        public MPlaylistContentDetails()
+        {
+            ETag = string.Empty;
         }
 
         public string ETag
@@ -156,6 +176,13 @@ namespace LiteTube.DataClasses
             Description = playlistLocalization.Description;
             ETag = playlistLocalization.ETag;
             Title = playlistLocalization.Title;
+        }
+
+        public MPlaylistLocalization()
+        {
+            Description = string.Empty;
+            ETag = string.Empty;
+            Title = string.Empty;
         }
 
         public string Description
@@ -183,6 +210,12 @@ namespace LiteTube.DataClasses
         {
             EmbedHtml = player.EmbedHtml;
             ETag = player.ETag;
+        }
+
+        public MPlaylistPlayer()
+        {
+            EmbedHtml = string.Empty;
+            ETag = string.Empty;
         }
 
         public string EmbedHtml
@@ -213,6 +246,21 @@ namespace LiteTube.DataClasses
             Tags = snippet.Tags;
             Thumbnails = new MThumbnailDetails(snippet.Thumbnails);
             Title = snippet.Title;
+        }
+
+        public MPlaylistSnippet()
+        {
+            Thumbnails = new MThumbnailDetails();
+            Localized = new MPlaylistLocalization();
+            ChannelId = string.Empty;
+            ChannelTitle = string.Empty;
+            DefaultLanguage = string.Empty;
+            Description = string.Empty;
+            ETag = string.Empty;
+            PublishedAt = DateTime.MinValue;
+            PublishedAtRaw = string.Empty;
+            Tags = new List<string>();
+            Title = string.Empty;
         }
 
         public string ChannelId
@@ -291,6 +339,12 @@ namespace LiteTube.DataClasses
 
             ETag = status.ETag;
             PrivacyStatus = status.PrivacyStatus;
+        }
+
+        public MPlaylistStatus()
+        {
+            ETag = string.Empty;
+            PrivacyStatus = string.Empty;
         }
 
         public string ETag
