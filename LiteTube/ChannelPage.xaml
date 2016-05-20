@@ -55,7 +55,9 @@
             </StackPanel>
         </Grid>
 
-        <phone:Pivot Grid.Row="2">
+        <phone:Pivot Grid.Row="2"
+                     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=Default}">
+            
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"
@@ -65,7 +67,16 @@
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
-            <phone:PivotItem Margin="24,10,24,0">
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Playlists, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                <ContentPresenter Content="{Binding PlaylistListViewModel}"
+                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+            </phone:PivotItem>
+
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
                 <phone:PivotItem.Header>
                     <TextBlock Text="{Binding Path=LocalizedResources.ChannelInfo, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>

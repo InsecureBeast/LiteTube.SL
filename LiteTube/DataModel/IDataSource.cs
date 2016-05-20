@@ -46,7 +46,8 @@ namespace LiteTube.DataModel
         Task RemovePlaylistItem(string playlistItemId);
         Task<IResponceList> GetFavorites(string nextPageToken);
         Task<IResponceList> GetLiked(string nextPageToken);
-        Task<IPlaylist> GetPlaylists();
+        Task<IPlaylistList> GetPlaylists();
+        Task<IPlaylistList> GetChannelPlaylistList(string channelId, string nextPageToken);
 #endregion
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
@@ -304,7 +305,7 @@ namespace LiteTube.DataModel
             return await _remoteDataSource.GetLiked(_maxPageResult, nextPageToken);
         }
 
-        public Task<IPlaylist> GetPlaylists()
+        public Task<IPlaylistList> GetPlaylists()
         {
             throw new NotImplementedException();
         }
@@ -347,6 +348,11 @@ namespace LiteTube.DataModel
         public void Unsubscribe(IListener<UpdateContextEventArgs> listener)
         {
             _contextNotifier.Unsubscribe(listener);
+        }
+
+        public async Task<IPlaylistList> GetChannelPlaylistList(string channelId, string nextPageToken)
+        {
+            return await _remoteDataSource.GetChannelPlaylistList(channelId, _maxPageResult, nextPageToken);
         }
     }
 }

@@ -502,5 +502,19 @@ namespace LiteTube.DataModel
                 return new Task<IEnumerable<string>>(() => new List<string>());
             }
         }
+
+        public Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken)
+        {
+            try
+            {
+                Debug.WriteLine("GetChannelPlaylistList method called");
+                return _remoteDataSource.GetChannelPlaylistList(channelId, maxResult, nextPageToken);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetChannelPlaylistList method called with exception " + e.Message);
+                throw;
+            }
+        }
     }
 }

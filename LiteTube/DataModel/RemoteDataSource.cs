@@ -50,6 +50,7 @@ namespace LiteTube.DataModel
         IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
+        Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken);
     }
     
     class RemoteDataSource : IRemoteDataSource
@@ -65,7 +66,7 @@ namespace LiteTube.DataModel
         private readonly YouTubeWeb _youTubeWeb;
         private const long SEARCH_PAGE_MAX_RESULT = 45;
         private MProfile _profileInfo;
-        private readonly IEnumerable<IPlaylist> _playlists;
+        private readonly IEnumerable<IPlaylistList> _playlists;
 
         public RemoteDataSource(IYouTubeService youTubeServiceControl)
         {
@@ -73,7 +74,7 @@ namespace LiteTube.DataModel
             _youTubeService = _youTubeServiceControl.GetService();
             _subscriptionsHolder = new SubscriptionsHolder(_youTubeServiceControl);
             _youTubeWeb = new YouTubeWeb();
-            _playlists = new List<IPlaylist>();
+            _playlists = new List<IPlaylistList>();
         }
 
         public async Task Login()
@@ -195,7 +196,7 @@ namespace LiteTube.DataModel
             return new MVideoList(videoResponse);
         }
 
-        public IEnumerable<IPlaylist> Playlists
+        public IEnumerable<IPlaylistList> Playlists
         {
             get { return _playlists; }
         }
@@ -227,7 +228,7 @@ namespace LiteTube.DataModel
             get { return _watchLaterPlayList; }
         }
 
-        public async Task<IEnumerable<IPlaylist>> GetPlayLists(string channelId, string culture, int maxResult)
+        public async Task<IEnumerable<IPlaylistList>> GetPlayLists(string channelId, string culture, int maxResult)
         {
             var listRequest = _youTubeService.Playlists.List("snippet,contentDetails,player");
             listRequest.ChannelId = channelId;
@@ -236,7 +237,7 @@ namespace LiteTube.DataModel
             listRequest.MaxResults = maxResult;
 
             var playlistResponse = await listRequest.ExecuteAsync();
-            return playlistResponse.Items.Select(playlist => new MPlaylist(playlist)).Cast<IPlaylist>().ToList();
+            return playlistResponse.Items.Select(playlist => new MPlaylist(playlist)).Cast<IPlaylistList>().ToList();
         }
 
         public async Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken)
@@ -644,6 +645,18 @@ namespace LiteTube.DataModel
         public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
         {
             return await YouTubeWeb.HttpGetAutoCompleteAsync(query);
+        }
+
+        public async Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken)
+        {
+            var request = _youTubeService.Playlists.List("snippet,id,contentDetails");
+            request.Key = _youTubeServiceControl.ApiKey;
+            request.PageToken = nextPageToken;
+            request.MaxResults = SEARCH_PAGE_MAX_RESULT;
+            request.ChannelId = channelId;
+
+            var response = await request.ExecuteAsync();
+            return new MPlaylistList(response);
         }
 
         //private void CheckProfile()

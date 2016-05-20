@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LiteTube.DataModel;
+using LiteTube.DataClasses;
+using LiteTube.ViewModels.Nodes;
+
+namespace LiteTube.ViewModels
+{
+    class PlaylistListViewModel : SectionBaseViewModel
+    {
+        private readonly string _channelId;
+
+        public PlaylistListViewModel(string channelId, Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null) 
+            : base(getGeDataSource, connectionListener, changeProgressIndicator)
+        {
+            _channelId = channelId;
+        }
+
+        internal override async Task<IResponceList> GetItems(string nextPageToken)
+        {
+            return await _getGeDataSource().GetChannelPlaylistList(_channelId, nextPageToken);
+        }
+
+        internal override void LoadItems(IResponceList videoList)
+        {
+            var snippetList = videoList as IPlaylistList;
+            if (snippetList == null)
+                return;
+
+            AddPlaylistItems(snippetList.Items);
+        }
+
+        internal void AddPlaylistItems(IEnumerable<IPlaylist> items)
+        {
+            var itemsList = Items.ToList();
+            foreach (var item in items)
+            {
+                if (item.ContentDetails == null)
+                    continue;
+
+                if (itemsList.Exists(i => i.Id == item.Id))
+                    continue;
+
+                Items.Add(new PlaylistNodeViewModel(item));
+            }
+        }
+    }
+}

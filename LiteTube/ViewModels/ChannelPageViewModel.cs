@@ -5,6 +5,7 @@ using LiteTube.DataModel;
 using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+using System.Diagnostics;
 
 namespace LiteTube.ViewModels
 {
@@ -19,18 +20,32 @@ namespace LiteTube.ViewModels
         private SubscribeCommand _subscribeCommand;
         private UnsubscribeCommand _unsubscribeCommand;
         private bool _isSubscribed;
+        private PlaylistListViewModel _playlistListViewModel;
+        private int _selectedIndex;
 
-        public ChannelPageViewModel(string channelId, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+        public ChannelPageViewModel(string channelId, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
+            : base(getDataSource, connectionListener)
         {
             _channelId = channelId;
             InitializeCommands();
-            
+            _playlistListViewModel = new PlaylistListViewModel(channelId, getDataSource, connectionListener);
+
             LayoutHelper.InvokeFromUiThread(async() => 
             {
                 await LoadChannel(channelId);
                 await FirstLoad();
             });
+        }
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+            set
+            {
+                _selectedIndex = value;
+                OnSelectedIndexChanged(_selectedIndex);
+                NotifyOfPropertyChanged(() => SelectedIndex);
+            }
         }
 
         public override string ToString()
@@ -98,6 +113,11 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public PlaylistListViewModel PlaylistListViewModel
+        {
+            get { return _playlistListViewModel; }
+        }
+
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
             return await _getGeDataSource().GetChannelVideoList(_channelId, nextPageToken);
@@ -140,6 +160,26 @@ namespace LiteTube.ViewModels
         private void InvalidateCommands()
         {
             IsSubscribed = _getGeDataSource().IsSubscribed(_channelId);
+        }
+
+        private async void OnSelectedIndexChanged(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    Debug.WriteLine("playlist list");
+                    if (PlaylistListViewModel.Items.Count > 0)
+                        return;
+
+                    await PlaylistListViewModel.FirstLoad();
+                    break;
+
+                case 2:
+                    break;
+            }
         }
     }
 }

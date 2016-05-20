@@ -320,4 +320,7 @@
   <data name="Yesterday" xml:space="preserve">
     <value>yesterday</value>
   </data>
+  <data name="Playlists" xml:space="preserve">
+    <value>playlists</value>
+  </data>
 </root>

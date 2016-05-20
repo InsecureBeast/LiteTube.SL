@@ -221,6 +221,9 @@
     <Compile Include="..\LiteTube\DataClasses\IPlaylistItemList.cs">
       <Link>DataClasses\IPlaylistItemList.cs</Link>
     </Compile>
+    <Compile Include="..\LiteTube\DataClasses\IPlaylistList.cs">
+      <Link>DataClasses\IPlaylistList.cs</Link>
+    </Compile>
     <Compile Include="..\LiteTube\DataClasses\IProfile.cs">
       <Link>DataClasses\IProfile.cs</Link>
     </Compile>
@@ -335,6 +338,9 @@
     <Compile Include="..\LiteTube\ViewModels\Nodes\PlayListItemNodeViewModel.cs">
       <Link>ViewModels\Nodes\PlayListItemNodeViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\LiteTube\ViewModels\Nodes\PlaylistNodeViewModel.cs">
+      <Link>ViewModels\Nodes\PlaylistNodeViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\LiteTube\ViewModels\Nodes\SubscriptionNodeViewModel.cs">
       <Link>ViewModels\Nodes\SubscriptionNodeViewModel.cs</Link>
     </Compile>
@@ -343,6 +349,9 @@
     </Compile>
     <Compile Include="..\LiteTube\ViewModels\Nodes\VideoItemViewModel.cs">
       <Link>ViewModels\Nodes\VideoItemViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\LiteTube\ViewModels\PlaylistListViewModel.cs">
+      <Link>ViewModels\PlaylistListViewModel.cs</Link>
     </Compile>
     <Compile Include="..\LiteTube\ViewModels\ProfileSectionViewModel.cs">
       <Link>ViewModels\ProfileSectionViewModel.cs</Link>

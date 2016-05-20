@@ -64,17 +64,17 @@ namespace LiteTube.DataClasses
             ETag = playlist.ETag;
             Id = playlist.Id;
             Kind = playlist.Kind;
-            if (playlist.Localizations != null)
-            {
-                Localizations = new Dictionary<string, IPlaylistLocalization>();
-                foreach (var localization in playlist.Localizations)
-                {
-                    Localizations.Add(localization.Key, new MPlaylistLocalization(localization.Value));
-                }
-            }
-            Player = new MPlaylistPlayer(playlist.Player);
+            //if (playlist.Localizations != null)
+            //{
+            //    Localizations = new Dictionary<string, IPlaylistLocalization>();
+            //    foreach (var localization in playlist.Localizations)
+            //    {
+            //        Localizations.Add(localization.Key, new MPlaylistLocalization(localization.Value));
+            //    }
+            //}
+            //Player = new MPlaylistPlayer(playlist.Player);
             Snippet = new MPlaylistSnippet(playlist.Snippet);
-            Status = new MPlaylistStatus(playlist.Status);
+            //Status = new MPlaylistStatus(playlist.Status);
         }
 
         private MPlaylist()
@@ -233,8 +233,11 @@ namespace LiteTube.DataClasses
 
     class MPlaylistSnippet : IPlaylistSnippet
     {
-        public MPlaylistSnippet(PlaylistSnippet snippet)
+        public MPlaylistSnippet(PlaylistSnippet snippet) : this()
         {
+            if (snippet == null)
+                return;
+
             ChannelId = snippet.ChannelId;
             ChannelTitle = snippet.ChannelTitle;
             DefaultLanguage = snippet.DefaultLanguage;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.DataClasses;
@@ -180,9 +181,9 @@ namespace LiteTube.DataModel
             return new Task<IResponceList>(() => MVideoList.Empty);
         }
 
-        public Task<IPlaylist> GetPlaylists()
+        public Task<IPlaylistList> GetPlaylists()
         {
-            return Task.Run(() => MPlaylist.Empty);
+            return Task.Run(() => MPlaylistList.Empty);
         }
 
         public Task<IVideoItem> GetVideoItem(string videoId)
@@ -220,6 +221,11 @@ namespace LiteTube.DataModel
         public void Unsubscribe(IListener<UpdateContextEventArgs> listener)
         {
 
+        }
+
+        public Task<IPlaylistList> GetChannelPlaylistList(string channelId, string nextPageToken)
+        {
+            return new Task<IPlaylistList>(() => MPlaylistList.Empty);
         }
     }
 }
