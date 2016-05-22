@@ -7,6 +7,7 @@ using LiteTube.DataModel;
 using LiteTube.DataClasses;
 using LiteTube.Common.Helpers;
 using LiteTube.Common;
+using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube.ViewModels
 {
@@ -42,21 +43,47 @@ namespace LiteTube.ViewModels
             get { return _playlistVideosViewModel; }
         }
 
+        public void SkipNext()
+        {
+            var next = _playlistVideosViewModel.GetNextVideo();
+            if (next == null)
+                return;
+
+            _playlistVideosViewModel.SetPlayingVideo(next);
+            VideoViewModel = new VideoPageViewModel(next.VideoId, _getDataSource, _connectionListener);
+        }
+
+        public void SkipPrevious()
+        {
+            var previous = _playlistVideosViewModel.GetPreviousVideo();
+            if (previous == null)
+                return;
+
+            _playlistVideosViewModel.SetPlayingVideo(previous);
+            VideoViewModel = new VideoPageViewModel(previous.VideoId, _getDataSource, _connectionListener);
+        }
+
         private void LoadPlaylistVideos(string playlistId)
         {
             LayoutHelper.InvokeFromUiThread(async () =>
             {
                 await _playlistVideosViewModel.FirstLoad();
-                var firstVideoId = _playlistVideosViewModel.Items.FirstOrDefault();
-                if (firstVideoId == null)
+                var firstVideo = _playlistVideosViewModel.Items.FirstOrDefault();
+                if (firstVideo == null)
                     return;
 
-                VideoViewModel = new VideoPageViewModel(firstVideoId.VideoId, _getDataSource, _connectionListener);
+                VideoViewModel = new VideoPageViewModel(firstVideo.VideoId, _getDataSource, _connectionListener);
+                var videoNode = firstVideo as VideoItemViewModel;
+                if (videoNode == null)
+                    return;
+
+                videoNode.IsNowPlaying = true;
             });
         }
 
         private void PlaylistVideoItemClick(NavigationObject s)
         {
+            _playlistVideosViewModel.SetPlayingVideo(s.ViewModel);
             VideoViewModel = new VideoPageViewModel(s.ViewModel.VideoId, _getDataSource, _connectionListener);
         }
     }

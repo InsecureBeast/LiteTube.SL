@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Globalization;
 using LiteTube.DataClasses;
 
 namespace LiteTube.ViewModels.Nodes
@@ -9,6 +7,7 @@ namespace LiteTube.ViewModels.Nodes
     {
         private readonly string _videoId;
         private readonly string _id;
+        private bool _isNowPlaying;
 
         public VideoItemViewModel(IVideoItem videoItem)
         {
@@ -31,7 +30,17 @@ namespace LiteTube.ViewModels.Nodes
         public TimeSpan Duration { get; private set; }
         public string ChannelTitle { get; private set; }
         public DateTime? PublishedAt { get; private set; }
-        public UInt64? ViewCount { get; private set; }
+        public ulong? ViewCount { get; private set; }
+
+        public bool IsNowPlaying
+        {
+            get { return _isNowPlaying; }
+            set
+            {
+                _isNowPlaying = value;
+                NotifyOfPropertyChanged(() => IsNowPlaying);
+            }
+        }
 
         public override string Id
         {

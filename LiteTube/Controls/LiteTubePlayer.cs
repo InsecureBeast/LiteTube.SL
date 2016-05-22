@@ -1,6 +1,5 @@
 ﻿using LiteTube.ViewModels.Nodes;
 using Microsoft.PlayerFramework;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -14,8 +13,19 @@ namespace LiteTube.Controls
         private static readonly DependencyProperty RelatedItemsProperty = DependencyProperty.Register("RelatedItems", typeof(ObservableCollection<NodeViewModelBase>), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty RelatedItemsVisibleProperty = DependencyProperty.Register("IsRelatedItemsVisible", typeof(bool), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
-
         private bool _isRelatedVisible;
+
+        public event RoutedEventHandler IsSkipNextChanged
+        {
+            add { ((PlayerInteractiveViewModel)InteractiveViewModel).IsSkipNextChanged += value; }
+            remove { ((PlayerInteractiveViewModel)InteractiveViewModel).IsSkipNextChanged -= value; }
+        }
+        public event RoutedEventHandler IsSkipPreviousChanged
+        {
+            add { ((PlayerInteractiveViewModel)InteractiveViewModel).IsSkipPreviousChanged += value; }
+            remove { ((PlayerInteractiveViewModel)InteractiveViewModel).IsSkipPreviousChanged -= value; }
+        }
+
         public LiteTubePlayer() : base()
         {
             InteractiveViewModel = DefaultInteractiveViewModel = new PlayerInteractiveViewModel(this);
@@ -67,6 +77,9 @@ namespace LiteTube.Controls
 
     class PlayerInteractiveViewModel : InteractiveViewModel
     {
+        public event RoutedEventHandler IsSkipNextChanged;
+        public event RoutedEventHandler IsSkipPreviousChanged;
+
         public PlayerInteractiveViewModel(MediaPlayer mediaPlayer) : base(mediaPlayer)
         {
         }
@@ -117,6 +130,16 @@ namespace LiteTube.Controls
 
                 return ltPlayer.ItemClickCommand;
             }
+        }
+
+        protected override void OnSkipNext(VisualMarker marker)
+        {
+            IsSkipNextChanged?.Invoke(this, new RoutedEventArgs());
+        }
+
+        protected override void OnSkipPrevious(VisualMarker marker)
+        {
+            IsSkipPreviousChanged?.Invoke(this, new RoutedEventArgs());
         }
     }
 }
