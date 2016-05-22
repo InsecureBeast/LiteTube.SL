@@ -15,9 +15,11 @@ namespace LiteTube.Controls
         private static readonly DependencyProperty RelatedItemsVisibleProperty = DependencyProperty.Register("IsRelatedItemsVisible", typeof(bool), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
 
+        private bool _isRelatedVisible;
         public LiteTubePlayer() : base()
         {
             InteractiveViewModel = DefaultInteractiveViewModel = new PlayerInteractiveViewModel(this);
+            IsFullScreenChanged += LiteTubePlayer_IsFullScreenChanged;
         }
 
         public string VideoTitle
@@ -48,6 +50,18 @@ namespace LiteTube.Controls
         {
             get { return (bool)GetValue(RelatedItemsVisibleProperty); }
             set { SetValue(RelatedItemsVisibleProperty, value); }
+        }
+
+        private void LiteTubePlayer_IsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        {
+            if (!IsFullScreen)
+            {
+                _isRelatedVisible = IsRelatedItemsVisible;
+                IsRelatedItemsVisible = false;
+                return;
+            }
+
+            IsRelatedItemsVisible = _isRelatedVisible;
         }
     }
 
