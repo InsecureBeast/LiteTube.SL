@@ -108,7 +108,7 @@ namespace LiteTube
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
             
-            if (IsLandscapeOrientation(Orientation))
+            if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
                 SetVisibilityControls(Visibility.Collapsed);
             else
                 SetVisibilityControls(Visibility.Visible);
@@ -135,32 +135,13 @@ namespace LiteTube
             }
             catch (Exception)
 	        {
+                ;
             }
         }
 
         private void Sensor_OrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
         {
-            LayoutHelper.InvokeFromUiThread(() =>
-            {
-                if (args.Orientation == SimpleOrientation.Rotated90DegreesCounterclockwise)
-                {
-                    SupportedOrientations = SupportedPageOrientation.Landscape;
-                    Orientation = PageOrientation.LandscapeRight;
-                    return;
-                }
-                if (args.Orientation == SimpleOrientation.Rotated270DegreesCounterclockwise)
-                {
-                    SupportedOrientations = SupportedPageOrientation.Landscape;
-                    Orientation = PageOrientation.LandscapeLeft;
-                    return;
-                }
-
-                if (args.Orientation != SimpleOrientation.NotRotated)
-                    return;
-
-                SupportedOrientations = SupportedPageOrientation.Portrait;
-                Orientation = PageOrientation.Portrait;
-            });
+            VideoPageViewHelper.SensorOrientationChanged(this, args);
         }
 
         protected override void OnOrientationChanged(OrientationChangedEventArgs e)
@@ -278,47 +259,22 @@ namespace LiteTube
         private void PlayerIsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
             _isFullScreen = player.IsFullScreen;
-            if (player.IsFullScreen)
-            {
-                SupportedOrientations = SupportedPageOrientation.Landscape; 
-                Orientation = PageOrientation.LandscapeLeft;
-                return;
-            }
-
-            SupportedOrientations = SupportedPageOrientation.Portrait;
-            Orientation = PageOrientation.Portrait;
+            VideoPageViewHelper.PlayerIsFullScreenChanged(this, player);
         }
 
         private void Send_Click(object sender, EventArgs e)
         {
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            viewModel.CommentsViewModel.AddCommentCommand.Execute(null);
+            VideoPageViewHelper.SendComment(DataContext as VideoPageViewModel);
         }
-
-        //private void Refresh_Click(object sender, EventArgs e)
-        //{
-        //    Reload();
-        //}
 
         private void AddToFavorites_Click(object sender, EventArgs e)
         {
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            viewModel.AddFavoritesCommand.Execute(null);
+            VideoPageViewHelper.AddToFavorites(DataContext as VideoPageViewModel);
         }
 
         private void CopyVideoUrl_Click(object sender, EventArgs eventArgs)
         {
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            Clipboard.SetText(string.Format("https://www.youtube.com/watch?v={0}", viewModel.VideoId));
+            VideoPageViewHelper.CopyVideoUrl(DataContext as VideoPageViewModel);
         }
 
         private void Current_Activated(object sender, ActivatedEventArgs e)
@@ -328,14 +284,9 @@ namespace LiteTube
                 if (_playerState == null)
                     return;
 
-                //PhoneApplicationService.Current.Deactivated -= Current_Deactivated;
-                //PhoneApplicationService.Current.Activated -= Current_Activated;
-
                 RestorePlayer();
-
                 if (_resumed)
                     return;
-
                 _resumed = true;
             }
             catch (Exception)
@@ -343,13 +294,6 @@ namespace LiteTube
                 ;
             }
         }
-
-        //private void Reload()
-        //{
-        //    var videoId = SettingsHelper.GetCurrentVideoId();
-        //    var view = string.Format("/VideoPage.xaml?videoId={0}&pos={1}&random={2}", videoId, _playerPosition, Guid.NewGuid());
-        //    NavigationHelper.Navigate(view, new VideoPageViewModel(videoId, App.ViewModel.GetDataSource, App.ViewModel.ConnectionListener));
-        //}
 
         private void RestorePlayer()
         {
@@ -395,7 +339,7 @@ namespace LiteTube
 
         private void ChangeOrientation(PageOrientation orientation)
         {
-            if (IsLandscapeOrientation(orientation))
+            if (VideoPageViewHelper.IsLandscapeOrientation(orientation))
             {
                 SetPlayerFullScreenState();
                 SetVisibilityControls(Visibility.Collapsed);
@@ -404,36 +348,6 @@ namespace LiteTube
 
             SetPlayerNormalState();
             SetVisibilityControls(Visibility.Visible);
-        }
-
-        private static bool IsLandscapeOrientation(PageOrientation orientation)
-        {
-            return orientation == PageOrientation.LandscapeLeft ||
-                   orientation == PageOrientation.LandscapeRight ||
-                   orientation == PageOrientation.Landscape;
-        }
-
-        private PageOrientation ToPageOrientation(SimpleOrientation orienatation)
-        {
-            switch (orienatation)
-            {
-                case SimpleOrientation.NotRotated:
-                    return PageOrientation.PortraitUp;
-                case SimpleOrientation.Rotated90DegreesCounterclockwise:
-                    return PageOrientation.LandscapeLeft;
-                case SimpleOrientation.Rotated180DegreesCounterclockwise:
-                    return PageOrientation.Portrait;
-                case SimpleOrientation.Rotated270DegreesCounterclockwise:
-                    return PageOrientation.LandscapeRight;
-                case SimpleOrientation.Faceup:
-                    break; 
-                case SimpleOrientation.Facedown:
-                    break;
-                default:
-                    break;
-            }
-
-            return Orientation;
         }
     }
 }
