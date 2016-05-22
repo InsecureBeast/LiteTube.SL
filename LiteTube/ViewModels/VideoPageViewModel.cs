@@ -45,12 +45,12 @@ namespace LiteTube.ViewModels
         private ulong _likes;
         private ulong _dislikes;
 
-        public VideoPageViewModel(string videoId, Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
+        public VideoPageViewModel(string videoId, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
         {
             Likes = 0;
             Dislikes = 0;
             VideoId = videoId;
-            _getDataSource = getGetDataSource;
+            _getDataSource = getDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
             _channelSubscribers = 0;
@@ -65,6 +65,10 @@ namespace LiteTube.ViewModels
 
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
             LoadVideoItem(videoId);
+        }
+
+        public VideoPageViewModel()
+        {
         }
 
         public string VideoId

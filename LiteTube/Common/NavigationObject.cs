@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 #endif
 namespace LiteTube.Common
 {
-    class NavigationObject
+    public class NavigationObject
     {
         public NavigationObject(NodeViewModelBase nodeViewModel, Page page)
         {

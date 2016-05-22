@@ -51,6 +51,8 @@ namespace LiteTube.DataModel
         Task<IComment> AddComment(string channelId, string videoId, string text);
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken);
+        //Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken);
+        Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken);
     }
     
     class RemoteDataSource : IRemoteDataSource
@@ -494,32 +496,14 @@ namespace LiteTube.DataModel
             return item.Rating.GetRating();
         }
 
-        private async Task<IEnumerable<IVideoDetails>> GetVideoDetails(string ids)
+        public async Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken)
         {
-            var request = _youTubeService.Videos.List("snippet,contentDetails,statistics");
-            request.Key = _youTubeServiceControl.ApiKey;
-            request.Id = ids;
+            if (string.IsNullOrEmpty(playListId))
+                return MVideoList.Empty;
 
-            var response = await request.ExecuteAsync();
-            var result = new List<IVideoDetails>(response.Items.Select(v => new MVideoDetails(v)));
-            return result;
-        }
-
-        private async Task<IVideoList> GetVideoList(IPlaylistItemList playListItems)
-        {
-            var ids = new StringBuilder();
-            foreach (var item in playListItems.Items)
-            {
-                ids.AppendLine(item.Snippet.ResourceId.VideoId);
-                ids.AppendLine(",");
-            }
-
-            var request = _youTubeService.Videos.List("snippet,contentDetails,statistics");
-            request.Key = _youTubeServiceControl.ApiKey;
-            request.Id = ids.ToString();
-
-            var response = await request.ExecuteAsync();
-            return new MVideoList(response, playListItems);
+            var playListItems = await GetPlaylistItems(playListId, maxResult, nextPageToken);
+            var videoList = await GetVideoList(playListItems);
+            return videoList;
         }
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
@@ -674,6 +658,34 @@ namespace LiteTube.DataModel
         //        throw new LiteTubeException("YouTube channel not found");
         //    }
         //}
+
+        private async Task<IVideoList> GetVideoList(IPlaylistItemList playListItems)
+        {
+            var ids = new StringBuilder();
+            foreach (var item in playListItems.Items)
+            {
+                ids.AppendLine(item.Snippet.ResourceId.VideoId);
+                ids.AppendLine(",");
+            }
+
+            var request = _youTubeService.Videos.List("snippet,contentDetails,statistics");
+            request.Key = _youTubeServiceControl.ApiKey;
+            request.Id = ids.ToString();
+
+            var response = await request.ExecuteAsync();
+            return new MVideoList(response, playListItems);
+        }
+
+        private async Task<IEnumerable<IVideoDetails>> GetVideoDetails(string ids)
+        {
+            var request = _youTubeService.Videos.List("snippet,contentDetails,statistics");
+            request.Key = _youTubeServiceControl.ApiKey;
+            request.Id = ids;
+
+            var response = await request.ExecuteAsync();
+            var result = new List<IVideoDetails>(response.Items.Select(v => new MVideoDetails(v)));
+            return result;
+        }
 
         private async Task LoadProfileInfo()
         {

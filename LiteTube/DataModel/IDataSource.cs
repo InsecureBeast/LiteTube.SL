@@ -48,6 +48,7 @@ namespace LiteTube.DataModel
         Task<IResponceList> GetLiked(string nextPageToken);
         Task<IPlaylistList> GetPlaylists();
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, string nextPageToken);
+        Task<IVideoList> GetVideoPlaylist(string playListId, string nextPageToken);
 #endregion
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
@@ -353,6 +354,11 @@ namespace LiteTube.DataModel
         public async Task<IPlaylistList> GetChannelPlaylistList(string channelId, string nextPageToken)
         {
             return await _remoteDataSource.GetChannelPlaylistList(channelId, _maxPageResult, nextPageToken);
+        }
+
+        public async Task<IVideoList> GetVideoPlaylist(string playListId, string nextPageToken)
+        {
+            return await _remoteDataSource.GetVideoPlaylist(playListId, _maxPageResult, nextPageToken);
         }
     }
 }

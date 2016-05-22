@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using LiteTube.DataModel;
 using LiteTube.DataClasses;
 using LiteTube.ViewModels.Nodes;
+using LiteTube.Common;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
@@ -33,7 +35,22 @@ namespace LiteTube.ViewModels
             AddPlaylistItems(snippetList.Items);
         }
 
-        internal void AddPlaylistItems(IEnumerable<IPlaylist> items)
+        internal override void NavigateTo(NavigationObject navObject)
+        {
+            if (navObject == null)
+                return;
+
+            if (navObject.ViewModel == null)
+                return;
+
+            var id = navObject.ViewModel.Id;
+            var view = string.Format("/PlaylistVideoPage.xaml", id);
+#if SILVERLIGHT
+            NavigationHelper.Navigate(view, new PlaylistVideoPageViewModel(id, _getGeDataSource, _connectionListener));
+#endif
+        }
+
+        private void AddPlaylistItems(IEnumerable<IPlaylist> items)
         {
             var itemsList = Items.ToList();
             foreach (var item in items)

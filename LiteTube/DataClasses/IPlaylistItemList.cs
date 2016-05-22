@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LiteTube.DataClasses
 {
-    interface IPlaylistItemList : IResponceList
+    public interface IPlaylistItemList : IResponceList
     {
         IList<IPlayListItem> Items { get; }
     }

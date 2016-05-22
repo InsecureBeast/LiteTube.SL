@@ -105,6 +105,7 @@
     <Compile Include="Common\Commands\RelayCommand.cs" />
     <Compile Include="Common\Commands\SubscribeCommand.cs" />
     <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
+    <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
     <Compile Include="Common\SessionType.cs" />
     <Compile Include="Common\Tools\Theme.cs" />
     <Compile Include="Controls\LiteTubePlayer.cs" />
@@ -222,6 +223,9 @@
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlaylistVideoPage.xaml.cs">
+      <DependentUpon>PlaylistVideoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VideoPage.xaml.cs">
       <DependentUpon>VideoPage.xaml</DependentUpon>
     </Compile>
@@ -240,7 +244,9 @@
     <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PlaylistNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
-    <Compile Include="ViewModels\PlaylistListViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistListViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistVideosViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistVideoPageViewModel.cs" />
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
     <Compile Include="ViewModels\ProgressIndicatorViewModel.cs" />
     <Compile Include="ViewModels\RecommendedSectionViewModel.cs" />
@@ -351,6 +357,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\ToggleButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlaylistVideoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

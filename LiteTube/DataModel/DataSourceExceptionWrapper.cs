@@ -516,5 +516,19 @@ namespace LiteTube.DataModel
                 throw;
             }
         }
+
+        public Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken)
+        {
+            try
+            {
+                Debug.WriteLine("GetVideoPlaylist method called");
+                return _remoteDataSource.GetVideoPlaylist(playListId, maxResult, nextPageToken);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetVideoPlaylist method called with exception " + e.Message);
+                throw;
+            }
+        }
     }
 }
