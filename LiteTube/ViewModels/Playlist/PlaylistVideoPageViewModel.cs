@@ -81,10 +81,13 @@ namespace LiteTube.ViewModels
             });
         }
 
-        private void PlaylistVideoItemClick(NavigationObject s)
+        private void PlaylistVideoItemClick(NavigationObject navObject)
         {
-            _playlistVideosViewModel.SetPlayingVideo(s.ViewModel);
-            VideoViewModel = new VideoPageViewModel(s.ViewModel.VideoId, _getDataSource, _connectionListener);
+            if (navObject == null)
+                return;
+
+            _playlistVideosViewModel.SetPlayingVideo(navObject.ViewModel);
+            VideoViewModel = new VideoPageViewModel(navObject.ViewModel.VideoId, _getDataSource, _connectionListener);
         }
     }
 }

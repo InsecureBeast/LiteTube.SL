@@ -16,6 +16,7 @@
     <SolidColorBrush x:Key="PhoneSecondaryForegroundBrush" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="PhoneSecondaryBackgroundBrush" Color="#50000000" />
     <SolidColorBrush x:Key="PhoneTextBoxBackgroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="PlaylistSelectedBrush" Color="#50000000" />
 
     <Thickness x:Key="DefaultTextBlockMargin">0,12,0,5</Thickness>
     <Thickness x:Key="DefaultControlMargin">0,12,0,0</Thickness>

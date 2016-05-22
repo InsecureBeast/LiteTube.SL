@@ -51,6 +51,10 @@ namespace LiteTube.Common.Tools
             var phoneBorderBrush = Application.Current.Resources["PhoneBorderBrush"] as SolidColorBrush;
             if (phoneBorderBrush != null)
                 phoneBorderBrush.Color = Color.FromArgb(178, 0, 0, 0); //75% of black
+
+            var playlistSelectedBrush = Application.Current.Resources["PlaylistSelectedBrush"] as SolidColorBrush;
+            if (playlistSelectedBrush != null)
+                playlistSelectedBrush.Color = Color.FromArgb(255, 180, 180, 180); //75% of black
         }
 
         private static void GoToDarkTheme()
@@ -98,6 +102,10 @@ namespace LiteTube.Common.Tools
             var phoneSecondaryForegroundBrush = Application.Current.Resources["PhoneSecondaryForegroundBrush"] as SolidColorBrush;
             if (phoneSecondaryForegroundBrush != null)
                 phoneSecondaryForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
+
+            var playlistSelectedBrush = Application.Current.Resources["PlaylistSelectedBrush"] as SolidColorBrush;
+            if (playlistSelectedBrush != null)
+                playlistSelectedBrush.Color = Color.FromArgb(255, 58, 58, 58); //75% of black
         }
 
         public static void SetApplicationTheme(ApplicationTheme theme)

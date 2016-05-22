@@ -634,39 +634,42 @@
     </Style>
 
     <DataTemplate x:Key="RelatedVideoItem">
-        <Grid Margin="5,5,5,5">
-            <Grid Grid.Column="0" 
+        <Border Margin="4,4,4,4"
+                BorderThickness="3"
+                BorderBrush="{Binding IsNowPlaying, Converter={StaticResource BorderColorValueConverter}}">
+            <Grid >
+                <Grid Grid.Column="0" 
                   HorizontalAlignment="Center"
                   Background="#FF262626"
                   Height="100"
                   Width="178">
 
-                <Image Source="{Binding ImagePath}" 
+                    <Image Source="{Binding ImagePath}" 
                        Stretch="UniformToFill" />
 
-                <Border Margin="2"
+                    <Border Margin="2"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
                         Background="Black"
                         Padding="4,0,4,0">
-                    <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
+                        <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
                                TextWrapping="NoWrap" 
                                Foreground="White"
                                FontSize="14"/>
-                </Border>
+                    </Border>
 
-                <Border VerticalAlignment="Top"
+                    <Border VerticalAlignment="Top"
                         Background="{StaticResource RelatedTiteItemBackgroundBrush}"
                         MaxHeight="42"
                         Padding="4,0,4,4">
-                    <TextBlock Text="{Binding Title}" 
+                        <TextBlock Text="{Binding Title}" 
                                Foreground="White"
                                FontSize="14"
                                TextTrimming="WordEllipsis"
                                TextWrapping="Wrap"/>
-                </Border>
+                    </Border>
 
-                <!--<Border VerticalAlignment="Bottom"
+                    <!--<Border VerticalAlignment="Bottom"
                         HorizontalAlignment="Left"
                         Background="{StaticResource RelatedTiteItemBackgroundBrush}"
                         Padding="4,0,4,0"
@@ -677,8 +680,9 @@
                                FontSize="14"
                                TextTrimming="WordEllipsis"/>
                 </Border>-->
+                </Grid>
             </Grid>
-        </Grid>
+        </Border>
     </DataTemplate>
     
     <ControlTemplate x:Key="ControlPanelTemplate" TargetType="local:ControlPanel">

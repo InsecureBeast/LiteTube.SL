@@ -113,6 +113,7 @@
     <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\LoginStatusTextConverter.cs" />
+    <Compile Include="Converters\ColorValueConverter.cs" />
     <Compile Include="DataClasses\IPlaylistList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
     <Compile Include="DataModel\YouTube.cs" />
