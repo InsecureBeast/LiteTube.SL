@@ -41,6 +41,7 @@ namespace LiteTube
             player.IsInteractiveChanged += OnInteractiveChanged;
             player.IsSkipNextChanged += OnSkipNextChanged;
             player.IsSkipPreviousChanged += OnSkipPreviousChanged;
+            player.MediaEnded += OnMediaEnded;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
@@ -63,6 +64,15 @@ namespace LiteTube
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", AppResources.AddToFavorites, AddToFavorites_Click);
 
             ApplicationBar = _currentApplicationBar;
+        }
+
+        private void OnMediaEnded(object sender, MediaPlayerActionEventArgs e)
+        {
+            var viewModel = DataContext as PlaylistVideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            viewModel.SkipNext();
         }
 
         private void OnSkipPreviousChanged(object sender, RoutedEventArgs e)

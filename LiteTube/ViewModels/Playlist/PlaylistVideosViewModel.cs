@@ -3,7 +3,6 @@ using LiteTube.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.ViewModels.Nodes;

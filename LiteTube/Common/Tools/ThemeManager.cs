@@ -54,7 +54,7 @@ namespace LiteTube.Common.Tools
 
             var playlistSelectedBrush = Application.Current.Resources["PlaylistSelectedBrush"] as SolidColorBrush;
             if (playlistSelectedBrush != null)
-                playlistSelectedBrush.Color = Color.FromArgb(255, 180, 180, 180); //75% of black
+                playlistSelectedBrush.Color = Color.FromArgb(255, 200, 200, 200);
         }
 
         private static void GoToDarkTheme()
@@ -105,7 +105,7 @@ namespace LiteTube.Common.Tools
 
             var playlistSelectedBrush = Application.Current.Resources["PlaylistSelectedBrush"] as SolidColorBrush;
             if (playlistSelectedBrush != null)
-                playlistSelectedBrush.Color = Color.FromArgb(255, 58, 58, 58); //75% of black
+                playlistSelectedBrush.Color = Color.FromArgb(255, 58, 58, 58);
         }
 
         public static void SetApplicationTheme(ApplicationTheme theme)
