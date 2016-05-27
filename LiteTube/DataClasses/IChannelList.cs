@@ -82,12 +82,6 @@ namespace LiteTube.DataClasses
             private set;
         }
 
-        public ITokenPagination TokenPagination
-        {
-            get;
-            private set;
-        }
-
         public string VisitorId
         {
             get;

@@ -62,20 +62,16 @@ namespace LiteTube.DataClasses
                 return;
             }
 
-            ETag = response.ETag;
             NextPageToken = response.NextPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
             PrevPageToken = response.PrevPageToken;
             var items = response.Items.Where(i => i.Snippet.Title != "Deleted video");
             Items = items.Select(i => new MVideoItem(i)).ToList<IVideoItem>();
-            EventId = response.EventId;
-            TokenPagination = new MTokenPagination(response.TokenPagination);
             VisitorId = response.VisitorId;
         }
 
         public MVideoList(SearchListResponse response, IEnumerable<IVideoDetails> videoDetails): this()
         {
-            ETag = response.ETag;
             NextPageToken = response.NextPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
             PrevPageToken = response.PrevPageToken;
@@ -87,40 +83,26 @@ namespace LiteTube.DataClasses
                 if (item != null)
                     Items.Add(new MVideoItem(item, details));
             }
-            EventId = response.EventId;
-            TokenPagination = new MTokenPagination(response.TokenPagination);
             VisitorId = response.VisitorId;
         }
 
         public MVideoList(VideoListResponse response, IPlaylistItemList playListItems): this()
         {
-            ETag = playListItems.ETag;
             NextPageToken = playListItems.NextPageToken;
             PageInfo = playListItems.PageInfo;
             PrevPageToken = playListItems.PrevPageToken;
             var items = response.Items.Where(i => i.Snippet.Title != "Deleted video");
             Items = items.Select(i => new MVideoItem(i)).ToList<IVideoItem>();
-            EventId = playListItems.EventId;
-            TokenPagination = playListItems.TokenPagination;
             VisitorId = playListItems.VisitorId;
         }
 
         public MVideoList()
         {
             Items = new List<IVideoItem>();
-            ETag = string.Empty;
             NextPageToken = string.Empty;
             PageInfo = new MPageInfo();
             PrevPageToken = string.Empty;
-            EventId = string.Empty;
-            TokenPagination = new MTokenPagination();
             VisitorId = string.Empty;
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
         }
 
         public List<IVideoItem> Items
@@ -142,18 +124,6 @@ namespace LiteTube.DataClasses
         }
 
         public string PrevPageToken
-        {
-            get;
-            private set;
-        }
-
-        public string EventId
-        {
-            get;
-            private set;
-        }
-
-        public ITokenPagination TokenPagination
         {
             get;
             private set;

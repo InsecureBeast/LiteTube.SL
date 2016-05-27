@@ -1,8 +1,6 @@
 ﻿using Google.Apis.YouTube.v3.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LiteTube.DataClasses
 {
@@ -18,13 +16,9 @@ namespace LiteTube.DataClasses
             if (response == null)
                 return;
 
-            ETag = response.ETag;
-            EventId = response.EventId;
-            Kind = response.Kind;
             NextPageToken = response.NextPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
             PrevPageToken = response.PrevPageToken;
-            TokenPagination = new MTokenPagination(response.TokenPagination);
             VisitorId = response.VisitorId;
             var items = response.Items.Where(i => i.Snippet.Title != "Deleted video");
             Items = items.Select(i => new MPlayListItem(i)).ToList<IPlayListItem>();
@@ -35,25 +29,7 @@ namespace LiteTube.DataClasses
             get { return new MPlaylistItemList(null); }
         }
 
-        public string ETag
-        {
-            get;
-            private set;
-        }
-
-        public string EventId
-        {
-            get;
-            private set;
-        }
-
         public IList<IPlayListItem> Items
-        {
-            get;
-            private set;
-        }
-
-        public string Kind
         {
             get;
             private set;
@@ -72,12 +48,6 @@ namespace LiteTube.DataClasses
         }
 
         public string PrevPageToken
-        {
-            get;
-            private set;
-        }
-
-        public ITokenPagination TokenPagination
         {
             get;
             private set;

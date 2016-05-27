@@ -55,31 +55,16 @@ namespace LiteTube.DataClasses
             if (response == null)
                 return;
 
-            ETag = response.ETag;
-            EventId = response.EventId;
             Items = response.Items.Select(s => new MSubscription(s)).ToList<ISubscription>();
             NextPageToken = response.NextPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
             PrevPageToken = response.PrevPageToken;
-            TokenPagination = new MTokenPagination(response.TokenPagination);
             VisitorId = response.VisitorId;
         }
 
         public static ISubscriptionList EmptyList
         {
             get { return new MSubscriptionList(null);}
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
-        }
-
-        public string EventId
-        {
-            get;
-            private set;
         }
 
         public IList<ISubscription> Items
@@ -101,12 +86,6 @@ namespace LiteTube.DataClasses
         }
 
         public string PrevPageToken
-        {
-            get;
-            private set;
-        }
-
-        public ITokenPagination TokenPagination
         {
             get;
             private set;

@@ -27,11 +27,8 @@ namespace LiteTube.DataClasses
     {
         public MCommentList(CommentThreadListResponse response)
         {
-            ETag = response.ETag;
-            EventId = response.EventId;
             NextPageToken = response.NextPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
-            TokenPagination = new MTokenPagination(response.TokenPagination);
             VisitorId = response.VisitorId;
             Items = response.Items.Select(c => new MComment(c));
         }
@@ -44,18 +41,6 @@ namespace LiteTube.DataClasses
         private MCommentList()
         {
             Items = new List<IComment>();
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
-        }
-
-        public string EventId
-        {
-            get;
-            private set;
         }
 
         public IEnumerable<IComment> Items
@@ -77,12 +62,6 @@ namespace LiteTube.DataClasses
         }
 
         public string PrevPageToken
-        {
-            get;
-            private set;
-        }
-
-        public ITokenPagination TokenPagination
         {
             get;
             private set;

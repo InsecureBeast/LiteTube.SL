@@ -1,10 +1,7 @@
-﻿using Google.Apis;
-using Google.Apis.YouTube.v3.Data;
+﻿using Google.Apis.YouTube.v3.Data;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using LiteTube.DataModel;
 
 namespace LiteTube.DataClasses
 {
@@ -13,7 +10,6 @@ namespace LiteTube.DataClasses
         string ChannelId { get; }
         string ChannelTitle { get; }
         string Description { get; }
-        string ETag { get; }
         string GroupId { get; }
         DateTime? PublishedAt { get; }
         string PublishedAtRaw { get; }
@@ -24,7 +20,6 @@ namespace LiteTube.DataClasses
 
     public interface IActivity
     {
-        string ETag { get; }
         string Id { get; }
         string Kind { get; }
         IActivitySnippet Snippet { get; }
@@ -39,28 +34,13 @@ namespace LiteTube.DataClasses
 
         public MActivityList(ActivityListResponse response, VideoListResponse videoList)
         {
-            ETag = response.ETag;
-            EventId = response.EventId;
             Kind = response.Kind;
             NextPageToken = response.NextPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
             PrevPageToken = response.PrevPageToken;
-            TokenPagination = new MTokenPagination(response.TokenPagination);
             VisitorId = response.VisitorId;
             Items = videoList.Items.Select(i => new MVideoItem(i)).ToList<IVideoItem>();
             Id = Guid.NewGuid().ToString();
-        }
-
-        public string ETag
-        {
-            get; 
-            private set;
-        }
-
-        public string EventId
-        {
-            get;
-            private set;
         }
 
         public string Kind
@@ -82,12 +62,6 @@ namespace LiteTube.DataClasses
         }
 
         public string PrevPageToken
-        {
-            get;
-            private set;
-        }
-
-        public ITokenPagination TokenPagination
         {
             get;
             private set;
@@ -124,16 +98,9 @@ namespace LiteTube.DataClasses
             if (activity == null)
                 return;
 
-            ETag = activity.ETag;
             Id = activity.Id;
             Kind = activity.Kind;
             Snippet = new MActivitySnippet(activity.Snippet);
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
         }
 
         public string Id
@@ -165,7 +132,6 @@ namespace LiteTube.DataClasses
             ChannelId = snippet.ChannelId;
             ChannelTitle = snippet.ChannelTitle;
             Description = snippet.Description;
-            ETag = snippet.Description;
             GroupId = snippet.GroupId;
             PublishedAt = snippet.PublishedAt;
             PublishedAtRaw = snippet.PublishedAtRaw;
@@ -187,12 +153,6 @@ namespace LiteTube.DataClasses
         }
 
         public string Description
-        {
-            get;
-            private set;
-        }
-
-        public string ETag
         {
             get;
             private set;
@@ -231,33 +191,6 @@ namespace LiteTube.DataClasses
         public string Type
         {
             get;
-            private set;
-        }
-    }
-
-    class MTokenPagination : ITokenPagination
-    {
-        public MTokenPagination(TokenPagination tokenPagination) : this()
-        {
-            if (tokenPagination == null)
-                return;
-
-            ETag = tokenPagination.ETag;
-        }
-
-        public MTokenPagination()
-        {
-            ETag = string.Empty;
-        }
-
-        public static ITokenPagination Empty
-        {
-            get { return new MTokenPagination(); }
-        }
-
-        public string ETag
-        {
-            get; 
             private set;
         }
     }

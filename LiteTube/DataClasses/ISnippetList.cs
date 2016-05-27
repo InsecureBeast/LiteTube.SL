@@ -19,8 +19,6 @@ namespace LiteTube.DataClasses
     {
         public MSnippetList(SearchListResponse searchListResponse, IEnumerable<IVideoDetails> videoDetails)
         {
-            ETag = searchListResponse.ETag;
-            EventId = searchListResponse.EventId;
             Items = new List<ISnippet>();
             foreach (var details in videoDetails)
             {
@@ -32,20 +30,7 @@ namespace LiteTube.DataClasses
             NextPageToken = searchListResponse.NextPageToken;
             PageInfo = new MPageInfo(searchListResponse.PageInfo);
             PrevPageToken = searchListResponse.PrevPageToken;
-            TokenPagination = new MTokenPagination(searchListResponse.TokenPagination);
             VisitorId = searchListResponse.VisitorId;
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
-        }
-
-        public string EventId
-        {
-            get;
-            private set;
         }
 
         public IList<ISnippet> Items
@@ -73,12 +58,6 @@ namespace LiteTube.DataClasses
         }
 
         public string PrevPageToken
-        {
-            get;
-            private set;
-        }
-
-        public ITokenPagination TokenPagination
         {
             get;
             private set;
