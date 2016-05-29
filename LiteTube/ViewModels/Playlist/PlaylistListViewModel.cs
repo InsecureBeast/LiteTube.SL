@@ -43,7 +43,17 @@ namespace LiteTube.ViewModels
             if (navObject.ViewModel == null)
                 return;
 
-            var id = navObject.ViewModel.Id;
+            var playlistViewModel = navObject.ViewModel as PlaylistNodeViewModel;
+            if (playlistViewModel == null)
+                return;
+
+            if (playlistViewModel.ItemsCount == null)
+                return;
+
+            if (playlistViewModel.ItemsCount == 0)
+                return;
+
+            var id = playlistViewModel.Id;
             var view = string.Format("/PlaylistVideoPage.xaml", id);
 #if SILVERLIGHT
             NavigationHelper.Navigate(view, new PlaylistVideoPageViewModel(id, _getGeDataSource, _connectionListener));

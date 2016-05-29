@@ -10,14 +10,16 @@ namespace LiteTube.ViewModels
     {
         private readonly SearchVideoViewModel _searchVideoViewModel;
         private readonly SearchChannelsViewModel _searchChannelsViewModel;
+        private readonly SearchPlaylistsViewModel _searchPlaylistsViewModel;
         private string _searchString;
         private int _selectedIndex;
 
-        public SearchPageViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener, null)
+        public SearchPageViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener)
+            : base(getDataSource, connectionListener, null)
         {
-            _searchVideoViewModel = new SearchVideoViewModel(geDataSource, connectionListener, ChangeProgressIndicator);
-            _searchChannelsViewModel = new SearchChannelsViewModel(geDataSource, connectionListener, ChangeProgressIndicator);
+            _searchVideoViewModel = new SearchVideoViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
+            _searchChannelsViewModel = new SearchChannelsViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
+            _searchPlaylistsViewModel = new SearchPlaylistsViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
         }
 
         public SearchVideoViewModel SearchVideoViewModel
@@ -28,6 +30,11 @@ namespace LiteTube.ViewModels
         public SearchChannelsViewModel SearchChannelsViewModel
         {
             get { return _searchChannelsViewModel; }
+        }
+
+        public SearchPlaylistsViewModel SearchPlaylistsViewModel
+        {
+            get { return _searchPlaylistsViewModel; }
         }
 
         public string SearchString
@@ -55,6 +62,10 @@ namespace LiteTube.ViewModels
                     if (!_searchChannelsViewModel.Items.Any())
                         await _searchChannelsViewModel.Search(_searchString);
                     break;
+                case 2:
+                    if (!_searchPlaylistsViewModel.Items.Any())
+                        await _searchPlaylistsViewModel.Search(_searchString);
+                    break;
                 default:
                     break;
             }
@@ -64,6 +75,7 @@ namespace LiteTube.ViewModels
         {
             _searchVideoViewModel.Items.Clear();
             _searchChannelsViewModel.Items.Clear();
+            _searchPlaylistsViewModel.Items.Clear();
         }
 
         private void ChangeProgressIndicator(bool isVisible)

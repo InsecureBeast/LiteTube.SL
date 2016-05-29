@@ -74,6 +74,19 @@
                                   Content="{Binding SearchChannelsViewModel}"
                                   ContentTemplate="{StaticResource CategoryLoadingListView}"/>
             </phone:PivotItem>
+
+            <!--Pivot item three-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Playlists, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+
+                <ContentPresenter Grid.Row="2"
+                                  Name="SearchPlaylistsList"
+                                  Content="{Binding SearchPlaylistsViewModel}"
+                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+            </phone:PivotItem>
         </phone:Pivot>
         
     </Grid>

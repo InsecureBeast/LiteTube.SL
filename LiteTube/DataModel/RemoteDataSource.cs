@@ -230,18 +230,6 @@ namespace LiteTube.DataModel
             get { return _watchLaterPlayList; }
         }
 
-        public async Task<IEnumerable<IPlaylistList>> GetPlayLists(string channelId, string culture, int maxResult)
-        {
-            var listRequest = _youTubeService.Playlists.List("snippet,contentDetails,player");
-            listRequest.ChannelId = channelId;
-            listRequest.Hl = I18nLanguages.GetHl(culture); ;
-            listRequest.Key = _youTubeServiceControl.ApiKey;
-            listRequest.MaxResults = maxResult;
-
-            var playlistResponse = await listRequest.ExecuteAsync();
-            return playlistResponse.Items.Select(playlist => new MPlaylist(playlist)).Cast<IPlaylistList>().ToList();
-        }
-
         public async Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken)
         {
             if (string.IsNullOrEmpty(playlistId))
@@ -384,6 +372,18 @@ namespace LiteTube.DataModel
             if (searchType == SearchType.Channel)
             {
                 return new MChannelList(response);
+            }
+
+            if (searchType == SearchType.Playlist)
+            {
+                var ids = new StringBuilder();
+                foreach (var item in response.Items)
+                {
+                    ids.AppendLine(item.Id.PlaylistId);
+                    ids.AppendLine(",");
+                }
+                var list = await GetPlaylistList(ids.ToString(), response.NextPageToken);
+                return list;
             }
 
             return MVideoList.Empty;
@@ -791,6 +791,19 @@ namespace LiteTube.DataModel
             }
             var videoDetails = await GetVideoDetails(ids.ToString());
             return new MVideoList(response, videoDetails);
+        }
+
+        private async Task<IPlaylistList> GetPlaylistList(string playListIds, string nextPageToken)
+        {
+            var request = _youTubeService.Playlists.List("snippet,id,contentDetails");
+            request.Key = _youTubeServiceControl.ApiKey;
+            request.PageToken = string.Empty;
+            request.MaxResults = SEARCH_PAGE_MAX_RESULT;
+            request.Id = playListIds;
+
+            var response = await request.ExecuteAsync();
+            response.NextPageToken = nextPageToken;
+            return new MPlaylistList(response);
         }
     }
 }

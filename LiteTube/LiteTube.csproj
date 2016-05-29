@@ -253,7 +253,8 @@
     <Compile Include="ViewModels\RecommendedSectionViewModel.cs" />
     <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchChannelsViewModel.cs" />
-    <Compile Include="ViewModels\SearchPageViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchPageViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchPlaylistsViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchVideoViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchBaseViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

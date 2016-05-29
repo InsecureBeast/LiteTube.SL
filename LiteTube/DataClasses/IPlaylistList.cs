@@ -22,7 +22,7 @@ namespace LiteTube.DataClasses
             PrevPageToken = response.PrevPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
             VisitorId = response.VisitorId;
-            var items = response.Items;//.Where(i => i.Snippet.Title != "Deleted video");
+            var items = response.Items;
             Items = items.Select(i => new MPlaylist(i)).ToList<IPlaylist>();
         }
 
