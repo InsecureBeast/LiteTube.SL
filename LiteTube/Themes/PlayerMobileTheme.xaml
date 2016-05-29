@@ -668,18 +668,6 @@
                                TextTrimming="WordEllipsis"
                                TextWrapping="Wrap"/>
                     </Border>
-
-                    <!--<Border VerticalAlignment="Bottom"
-                        HorizontalAlignment="Left"
-                        Background="{StaticResource RelatedTiteItemBackgroundBrush}"
-                        Padding="4,0,4,0"
-                        Margin="2"
-                        Width="120">
-                    <TextBlock Text="{Binding ChannelTitle}" 
-                               Foreground="#FFD1D1D1"
-                               FontSize="14"
-                               TextTrimming="WordEllipsis"/>
-                </Border>-->
                 </Grid>
             </Grid>
         </Border>

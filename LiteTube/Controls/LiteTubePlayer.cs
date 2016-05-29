@@ -80,7 +80,6 @@ namespace LiteTube.Controls
             }
 
             IsRelatedItemsVisible = _isRelatedVisible;
-            ((LiteTubePlayer)sender).GetBindingExpression(LiteTubePlayer.LoadMoreCommandProperty).UpdateSource();
         }
     }
 
