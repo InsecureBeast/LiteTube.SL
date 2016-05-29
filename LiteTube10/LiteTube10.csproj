@@ -350,8 +350,14 @@
     <Compile Include="..\LiteTube\ViewModels\Nodes\VideoItemViewModel.cs">
       <Link>ViewModels\Nodes\VideoItemViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\LiteTube\ViewModels\PlaylistListViewModel.cs">
-      <Link>ViewModels\PlaylistListViewModel.cs</Link>
+    <Compile Include="..\LiteTube\ViewModels\Playlist\PlaylistListViewModel.cs">
+      <Link>ViewModels\Playlist\PlaylistListViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\LiteTube\ViewModels\Playlist\PlaylistVideoPageViewModel.cs">
+      <Link>ViewModels\Playlist\PlaylistVideoPageViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\LiteTube\ViewModels\Playlist\PlaylistVideosViewModel.cs">
+      <Link>ViewModels\Playlist\PlaylistVideosViewModel.cs</Link>
     </Compile>
     <Compile Include="..\LiteTube\ViewModels\ProfileSectionViewModel.cs">
       <Link>ViewModels\ProfileSectionViewModel.cs</Link>
@@ -430,7 +436,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.1">
+    <SDKReference Include="Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.2">
       <Name>Microsoft Player Framework</Name>
     </SDKReference>
   </ItemGroup>
