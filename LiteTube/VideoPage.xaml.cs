@@ -301,6 +301,10 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
+            //удалим старый плеер
+            player.Dispose();
+
+            //новый
             player = new LiteTubePlayer
             {
                 IsFullScreenVisible = true,
@@ -312,7 +316,8 @@ namespace LiteTube
                 VideoTitle = viewModel.Title,
                 ChannelTitle = viewModel.ChannelTitle,
                 RelatedItems = viewModel.RelatedVideosViewModel.Items,
-                ItemClickCommand = viewModel.RelatedVideosViewModel.ItemClickCommand
+                ItemClickCommand = viewModel.RelatedVideosViewModel.ItemClickCommand,
+                LoadMoreCommand = viewModel.RelatedVideosViewModel.LoadMoreCommand
             };
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;

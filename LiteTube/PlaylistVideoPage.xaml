@@ -282,6 +282,7 @@
                                          ItemClickCommand="{Binding PlaylistVideosViewModel.ItemClickCommand}"
                                          PosterSource="{Binding VideoViewModel.ImagePath}"
                                          RelatedItems="{Binding PlaylistVideosViewModel.Items}"
+                                         LoadMoreCommand="{Binding PlaylistVideosViewModel.LoadMoreCommand}"
                                          IsFullScreenVisible="True"
                                          IsFullScreenEnabled="True"
                                          VerticalAlignment="Center"

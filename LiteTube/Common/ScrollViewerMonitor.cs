@@ -25,23 +25,12 @@ namespace LiteTube.Common
             if (element == null) 
                 return;
             
-            element.Loaded += element_Loaded;
-        }
-
-        private static void element_Loaded(object sender, RoutedEventArgs e)
-        {
-            var element = (FrameworkElement)sender;
-            if (element == null)
-                return;
-
-            element.Loaded -= element_Loaded;
-
-            var viewer = VisualHelper.GetScrollViewer(element);
-            if (viewer == null)
-                return;
-
-            viewer.MouseMove += (o, args) =>
+            element.MouseMove += (o, args) => 
             {
+                var viewer = VisualHelper.GetScrollViewer(element);
+                if (viewer == null)
+                    return;
+
                 var command = GetLoadMoreCommand(element);
                 if (command == null)
                     return;
