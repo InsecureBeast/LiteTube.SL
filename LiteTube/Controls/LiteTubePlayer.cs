@@ -1,6 +1,7 @@
 ﻿using LiteTube.ViewModels.Nodes;
 using Microsoft.PlayerFramework;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -149,6 +150,32 @@ namespace LiteTube.Controls
                     return new DelegateCommand(() => { });
 
                 return ltPlayer.LoadMoreCommand;
+            }
+        }
+
+        public override bool IsSkipNextEnabled
+        {
+            get
+            {
+                var last = RelatedItems.LastOrDefault();
+                var lastNode = last as VideoItemViewModel;
+                if (lastNode == null)
+                    return base.IsSkipNextEnabled;
+
+                return !lastNode.IsNowPlaying && base.IsSkipNextEnabled;
+            }
+        }
+
+        public override bool IsSkipPreviousEnabled
+        {
+            get
+            {
+                var first = RelatedItems.FirstOrDefault();
+                var firstNode = first as VideoItemViewModel;
+                if (firstNode == null)
+                    return base.IsSkipPreviousEnabled;
+
+                return !firstNode.IsNowPlaying && base.IsSkipPreviousEnabled;
             }
         }
 
