@@ -13,6 +13,8 @@ namespace LiteTube.Controls
         private static readonly DependencyProperty RelatedItemsProperty = DependencyProperty.Register("RelatedItems", typeof(ObservableCollection<NodeViewModelBase>), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty RelatedItemsVisibleProperty = DependencyProperty.Register("IsRelatedItemsVisible", typeof(bool), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
+        private static readonly DependencyProperty LoadMoreCommandProperty = DependencyProperty.Register("LoadMoreCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
+
         private bool _isRelatedVisible;
 
         public event RoutedEventHandler IsSkipNextChanged
@@ -56,6 +58,12 @@ namespace LiteTube.Controls
             set { SetValue(ItemClickCommandProperty, value); }
         }
 
+        public ICommand LoadMoreCommand
+        {
+            get { return GetValue(LoadMoreCommandProperty) as ICommand; }
+            set { SetValue(LoadMoreCommandProperty, value); }
+        }
+
         public bool IsRelatedItemsVisible
         {
             get { return (bool)GetValue(RelatedItemsVisibleProperty); }
@@ -72,6 +80,7 @@ namespace LiteTube.Controls
             }
 
             IsRelatedItemsVisible = _isRelatedVisible;
+            ((LiteTubePlayer)sender).GetBindingExpression(LiteTubePlayer.LoadMoreCommandProperty).UpdateSource();
         }
     }
 
@@ -129,6 +138,18 @@ namespace LiteTube.Controls
                     return new DelegateCommand(() => { });
 
                 return ltPlayer.ItemClickCommand;
+            }
+        }
+
+        public ICommand LoadMoreCommand
+        {
+            get
+            {
+                var ltPlayer = MediaPlayer as LiteTubePlayer;
+                if (ltPlayer == null)
+                    return new DelegateCommand(() => { });
+
+                return ltPlayer.LoadMoreCommand;
             }
         }
 

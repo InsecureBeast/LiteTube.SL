@@ -282,6 +282,7 @@
                                          ItemClickCommand="{Binding RelatedVideosViewModel.ItemClickCommand}"
                                          PosterSource="{Binding ImagePath}"
                                          RelatedItems="{Binding RelatedVideosViewModel.Items}"
+                                         LoadMoreCommand="{Binding RelatedVideosViewModel.LoadMoreCommand}"
                                          IsFullScreenVisible="True"
                                          IsFullScreenEnabled="True"
                                          VerticalAlignment="Center"
