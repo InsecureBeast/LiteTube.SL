@@ -100,12 +100,11 @@ namespace LiteTube
                 return;
 
             SettingsHelper.SaveCurrentVideoId(viewModel.VideoViewModel.VideoUri.AbsolutePath);
-
-            if (!_resumed)
-                return;
-
             LayoutHelper.InvokeFromUiThread(() =>
             {
+                if (!_resumed)
+                    return;
+
                 _resumed = false;
                 player.Position = _playerPosition;
             });

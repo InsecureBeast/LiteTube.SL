@@ -712,12 +712,12 @@
                         DataContext="{TemplateBinding ViewModel}" 
                         Grid.Column="0"
                         Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TextBlock Text="{Binding VideoTitle}"
+                <TextBlock Text="{Binding MediaPlayer.VideoTitle}"
                            VerticalAlignment="Center"
                            Margin="10,0,0,5"
                            TextWrapping="Wrap"
                            Foreground="{StaticResource PlayerButtonsBrush}"/>
-                <TextBlock Text="{Binding ChannelTitle}"
+                <TextBlock Text="{Binding MediaPlayer.ChannelTitle}"
                            VerticalAlignment="Center"
                            Margin="10,0,5,5"
                            FontSize="16"
@@ -734,12 +734,12 @@
                         Grid.Column="0"
                         Grid.ColumnSpan="3"
                         Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                <TextBlock Text="{Binding VideoTitle}"
+                <TextBlock Text="{Binding MediaPlayer.VideoTitle}"
                            VerticalAlignment="Center"
                            Margin="10,0,10,5"
                            TextTrimming="WordEllipsis"
                            Foreground="{StaticResource PlayerButtonsBrush}"/>
-                <TextBlock Text="{Binding ChannelTitle}"
+                <TextBlock Text="{Binding MediaPlayer.ChannelTitle}"
                            VerticalAlignment="Center"
                            Margin="10,0,10,5"
                            FontSize="16"

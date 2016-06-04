@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LiteTube.DataModel;
-using LiteTube.DataClasses;
 using LiteTube.Common.Helpers;
 using LiteTube.Common;
 using LiteTube.ViewModels.Nodes;
