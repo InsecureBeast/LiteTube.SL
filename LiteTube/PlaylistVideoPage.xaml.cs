@@ -146,11 +146,10 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            //TODO
-            if (viewModel.VideoViewModel.NavigationPanelViewModel == null)
+            if (viewModel.NavigationPanelViewModel == null)
                 return;
 
-            if (viewModel.VideoViewModel.NavigationPanelViewModel.IsAuthorized)
+            if (viewModel.NavigationPanelViewModel.IsAuthorized)
             {
                 if (_currentApplicationBar.Buttons.Contains(_favoritesApplicationBarButton))
                     return;
