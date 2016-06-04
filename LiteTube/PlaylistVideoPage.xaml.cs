@@ -48,7 +48,7 @@ namespace LiteTube
             PhoneApplicationService.Current.Deactivated += Current_Deactivated;
             PhoneApplicationService.Current.Activated += Current_Activated;
             LayoutRoot.SizeChanged += OnLayoutRootSizeChanged;
-            
+
             _sensor = SimpleOrientationSensor.GetDefault();
 
             _sendApplicationBar = new ApplicationBar();
@@ -58,7 +58,6 @@ namespace LiteTube
             _currentApplicationBar = new ApplicationBar();
             _currentApplicationBar.Mode = ApplicationBarMode.Minimized;
             _currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click));
-            //_currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Refresh.png", AppResources.Refresh, Refresh_Click));
             _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem(AppResources.CopyVideoLink, CopyVideoUrl_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", AppResources.AddToFavorites, AddToFavorites_Click);
@@ -82,6 +81,7 @@ namespace LiteTube
                 return;
 
             viewModel.SkipPrevious();
+            ScrollIntoView(viewModel);
         }
 
         private void OnSkipNextChanged(object sender, RoutedEventArgs e)
@@ -91,6 +91,17 @@ namespace LiteTube
                 return;
 
             viewModel.SkipNext();
+            ScrollIntoView(viewModel);
+        }
+
+        private void ScrollIntoView(PlaylistVideoPageViewModel viewModel)
+        {
+            var item = viewModel.PlaylistVideosViewModel.GetNowPlayingVideo();
+            var listBox = VisualHelper.FindChild<ListBox>(playlistPresenter);
+            if (listBox == null)
+                return;
+
+            listBox.ScrollIntoView(item);
         }
 
         private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
@@ -242,7 +253,7 @@ namespace LiteTube
 
             if (!viewModel.PlaylistVideosViewModel.IsEmpty)
                 await viewModel.PlaylistVideosViewModel.FirstLoad();
-
+               
             _isRelatedLoading = false;
         }
 

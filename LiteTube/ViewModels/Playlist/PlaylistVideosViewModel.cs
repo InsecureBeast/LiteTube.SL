@@ -78,7 +78,7 @@ namespace LiteTube.ViewModels
             return null;
         }
 
-        private VideoItemViewModel GetNowPlayingVideo()
+        public VideoItemViewModel GetNowPlayingVideo()
         {
             var node = Items.FirstOrDefault(n => ((VideoItemViewModel)n).IsNowPlaying);
             return node as VideoItemViewModel;
