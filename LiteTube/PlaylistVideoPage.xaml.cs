@@ -13,8 +13,7 @@ using Microsoft.PlayerFramework;
 using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
-using System.Linq;
-using LiteTube.ViewModels.Nodes;
+using System.Windows.Data;
 
 namespace LiteTube
 {
@@ -38,13 +37,7 @@ namespace LiteTube
         {
             InitializeComponent();
             Pivot.SelectionChanged += PivotOnSelectionChanged;
-            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
-            player.MediaOpened += PlayerOnMediaOpened;
-            player.IsInteractiveChanged += OnInteractiveChanged;
-            player.IsSkipNextChanged += OnSkipNextChanged;
-            player.IsSkipPreviousChanged += OnSkipPreviousChanged;
-            player.MediaEnded += OnMediaEnded;
-            player.CurrentStateChanged += Player_CurrentStateChanged;
+            SubscribePlayerEvents(player);
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
@@ -68,7 +61,7 @@ namespace LiteTube
             ApplicationBar = _currentApplicationBar;
         }
 
-        private void Player_CurrentStateChanged(object sender, RoutedEventArgs e)
+        private void OnCurrentStateChanged(object sender, RoutedEventArgs e)
         {
             var media = e.OriginalSource as MediaElement;
             if (media == null)
@@ -159,7 +152,10 @@ namespace LiteTube
             LayoutHelper.InvokeFromUiThread(() =>
             {
                 if (!_resumed)
+                {
+                    player.Position = TimeSpan.FromSeconds(0);
                     return;
+                }
 
                 _resumed = false;
                 player.Position = _playerPosition;
@@ -204,6 +200,9 @@ namespace LiteTube
 
             if (viewModel.NavigationPanelViewModel == null)
                 return;
+
+            var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.VideoUri") };
+            player.SetBinding(LiteTubePlayer.SourceProperty, binding);
 
             if (viewModel.NavigationPanelViewModel.IsAuthorized)
             {
@@ -375,6 +374,7 @@ namespace LiteTube
                 RestorePlayer();
                 if (_resumed)
                     return;
+
                 _resumed = true;
             }
             catch (Exception)
@@ -389,45 +389,79 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            //удалим старый плеер
-            player.Dispose();
-
             //новый
             player = new LiteTubePlayer
             {
+                Name = "player",
                 IsFullScreenVisible = true,
                 IsFullScreenEnabled = true,
                 VerticalAlignment = VerticalAlignment.Center,
                 IsSkipAheadVisible = false,
                 IsSkipBackVisible = false,
+                IsSkipNextVisible = true,
+                IsSkipPreviousVisible = true,
                 AllowMediaStartingDeferrals = false,
-                VideoTitle = viewModel.VideoViewModel.Title,
-                ChannelTitle = viewModel.VideoViewModel.ChannelTitle,
-                RelatedItems = viewModel.PlaylistVideosViewModel.Items,
-                ItemClickCommand = viewModel.PlaylistVideosViewModel.ItemClickCommand,
-                LoadMoreCommand = viewModel.PlaylistVideosViewModel.LoadMoreCommand
+                Position = TimeSpan.FromSeconds(0)
             };
-            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
-            player.MediaOpened += PlayerOnMediaOpened;
-            player.RestoreMediaState(_playerState);
 
-            var oldPlayer = playerBg.Children.FirstOrDefault(x => x is LiteTubePlayer);
-            if (oldPlayer != null)
-                playerBg.Children.Remove(oldPlayer);
+            var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.VideoUri") };
+            player.SetBinding(LiteTubePlayer.SourceProperty, binding);
 
+            binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.Title") };
+            player.SetBinding(LiteTubePlayer.VideoTitleProperty, binding);
+
+            binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.ChannelTitle") };
+            player.SetBinding(LiteTubePlayer.ChannelTitleProperty, binding);
+
+            binding = new Binding { Source = viewModel, Path = new PropertyPath("PlaylistVideosViewModel.Items") };
+            player.SetBinding(LiteTubePlayer.RelatedItemsProperty, binding);
+
+            binding = new Binding { Source = viewModel, Path = new PropertyPath("PlaylistVideosViewModel.ItemClickCommand") };
+            player.SetBinding(LiteTubePlayer.ItemClickCommandProperty, binding);
+
+            binding = new Binding { Source = viewModel, Path = new PropertyPath("PlaylistVideosViewModel.LoadMoreCommand") };
+            player.SetBinding(LiteTubePlayer.LoadMoreCommandProperty, binding);
+
+            binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.ImagePath") };
+            player.SetBinding(LiteTubePlayer.PosterSourceProperty, binding);
+
+            playerBg.Children.Clear();
             playerBg.Children.Add(player);
+
+            SubscribePlayerEvents(player);
+            player.RestoreMediaState(_playerState);
 
             if (_isFullScreen)
                 SetPlayerFullScreenState();
             else
                 SetPlayerNormalState();
+        }
 
-            ScrollIntoView(player, RelatedListBoxName);
+        private void SubscribePlayerEvents(LiteTubePlayer player)
+        {
+            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            player.MediaOpened += PlayerOnMediaOpened;
+            player.IsInteractiveChanged += OnInteractiveChanged;
+            player.IsSkipNextChanged += OnSkipNextChanged;
+            player.IsSkipPreviousChanged += OnSkipPreviousChanged;
+            player.MediaEnded += OnMediaEnded;
+            player.CurrentStateChanged += OnCurrentStateChanged;
+        }
+
+        private void UnsubscribePlayerEvents(LiteTubePlayer player)
+        {
+            player.MediaOpened -= PlayerOnMediaOpened;
+            player.IsInteractiveChanged -= OnInteractiveChanged;
+            player.MediaEnded -= OnMediaEnded;
+            player.CurrentStateChanged -= OnCurrentStateChanged;
         }
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            _playerPosition = player.VirtualPosition;
+            _playerPosition = player.Position;
+
+            UnsubscribePlayerEvents(player);
+
             player.Close(); // shut things like ads down.
             player.Dispose();
         }

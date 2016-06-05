@@ -277,7 +277,6 @@
               Background="Black"
               Name="playerBg">
                 <controls:LiteTubePlayer x:Name="player"
-                                         Source="{Binding VideoViewModel.VideoUri}"
                                          VideoTitle="{Binding VideoViewModel.Title}"
                                          ChannelTitle="{Binding VideoViewModel.ChannelTitle}"
                                          ItemClickCommand="{Binding PlaylistVideosViewModel.ItemClickCommand}"

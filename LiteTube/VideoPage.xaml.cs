@@ -71,11 +71,11 @@ namespace LiteTube
 
             SettingsHelper.SaveCurrentVideoId(viewModel.VideoUri.AbsolutePath);
 
-            if (!_resumed)
-                return;
-
             LayoutHelper.InvokeFromUiThread(() =>
             {
+                if (!_resumed)
+                    return;
+
                 _resumed = false;
                 player.Position = _playerPosition;
             });
@@ -337,7 +337,7 @@ namespace LiteTube
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            _playerPosition = player.VirtualPosition;
+            _playerPosition = player.Position;
             player.Close(); // shut things like ads down.
             player.Dispose();
         }
