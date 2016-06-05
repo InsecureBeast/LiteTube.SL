@@ -157,7 +157,10 @@
                               ContentTemplate="{StaticResource LoadingListViewItem}"/>
             <toolkit:ContextMenuService.ContextMenu>
                 <toolkit:ContextMenu Name="ContextMenu">
-                    <toolkit:MenuItem Name="Delete"  Header="{Binding Path=LocalizedResources.Delete, Source={StaticResource LocalizedStrings}}" Command="{Binding DeleteCommand}"/>
+                    <toolkit:MenuItem Name="Delete"  
+                                      Header="{Binding Path=LocalizedResources.Delete, Source={StaticResource LocalizedStrings}}" 
+                                      Command="{Binding DeleteCommand}"
+                                      Foreground="Black"/>
                 </toolkit:ContextMenu>
             </toolkit:ContextMenuService.ContextMenu>
         </Grid>
