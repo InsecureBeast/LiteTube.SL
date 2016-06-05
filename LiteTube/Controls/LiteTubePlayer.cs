@@ -13,6 +13,7 @@ namespace LiteTube.Controls
         private static readonly DependencyProperty ChannelTitleProperty = DependencyProperty.Register("ChannelTitle", typeof(string), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty RelatedItemsProperty = DependencyProperty.Register("RelatedItems", typeof(ObservableCollection<NodeViewModelBase>), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty RelatedItemsVisibleProperty = DependencyProperty.Register("IsRelatedItemsVisible", typeof(bool), typeof(LiteTubePlayer), null);
+        private static readonly DependencyProperty RelatedItemsEnabledProperty = DependencyProperty.Register("IsRelatedItemsEnabled", typeof(bool), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
         private static readonly DependencyProperty LoadMoreCommandProperty = DependencyProperty.Register("LoadMoreCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
 
@@ -69,6 +70,12 @@ namespace LiteTube.Controls
         {
             get { return (bool)GetValue(RelatedItemsVisibleProperty); }
             set { SetValue(RelatedItemsVisibleProperty, value); }
+        }
+
+        public bool IsRelatedItemsEnabled
+        {
+            get { return (bool)GetValue(RelatedItemsEnabledProperty); }
+            set { SetValue(RelatedItemsEnabledProperty, value); }
         }
 
         private void LiteTubePlayer_IsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)

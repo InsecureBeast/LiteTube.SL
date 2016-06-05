@@ -14,6 +14,7 @@ using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Linq;
+using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube
 {
@@ -31,6 +32,7 @@ namespace LiteTube
         private TimeSpan _playerPosition;
         private bool _isFullScreen = false;
         private bool _isRelatedLoading = false;
+        private const string RelatedListBoxName = "RelatedListBox";
 
         public PlaylistVideoPage()
         {
@@ -42,6 +44,7 @@ namespace LiteTube
             player.IsSkipNextChanged += OnSkipNextChanged;
             player.IsSkipPreviousChanged += OnSkipPreviousChanged;
             player.MediaEnded += OnMediaEnded;
+            player.CurrentStateChanged += Player_CurrentStateChanged;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
@@ -65,6 +68,40 @@ namespace LiteTube
             ApplicationBar = _currentApplicationBar;
         }
 
+        private void Player_CurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            var media = e.OriginalSource as MediaElement;
+            if (media == null)
+                return;
+
+            switch (media.CurrentState)
+            {
+                case System.Windows.Media.MediaElementState.Closed:
+                    player.IsRelatedItemsEnabled = false;
+                    break;
+                case System.Windows.Media.MediaElementState.Opening:
+                    player.IsRelatedItemsEnabled = true;
+                    ScrollIntoView(player, RelatedListBoxName);
+                    ScrollIntoView(playlistPresenter);
+                    break;
+                case System.Windows.Media.MediaElementState.Individualizing:
+                    break;
+                case System.Windows.Media.MediaElementState.AcquiringLicense:
+                    break;
+                case System.Windows.Media.MediaElementState.Buffering:
+                    break;
+                case System.Windows.Media.MediaElementState.Playing:
+                    break;
+                case System.Windows.Media.MediaElementState.Paused:
+                    break;
+                case System.Windows.Media.MediaElementState.Stopped:
+                    break;
+                default:
+                    player.IsRelatedItemsEnabled = true;
+                    break;
+            }
+        }
+
         private void OnMediaEnded(object sender, MediaPlayerActionEventArgs e)
         {
             var viewModel = DataContext as PlaylistVideoPageViewModel;
@@ -81,7 +118,6 @@ namespace LiteTube
                 return;
 
             viewModel.SkipPrevious();
-            ScrollIntoView(viewModel);
         }
 
         private void OnSkipNextChanged(object sender, RoutedEventArgs e)
@@ -91,16 +127,25 @@ namespace LiteTube
                 return;
 
             viewModel.SkipNext();
-            ScrollIntoView(viewModel);
         }
 
-        private void ScrollIntoView(PlaylistVideoPageViewModel viewModel)
+        private void ScrollIntoView(FrameworkElement element, string name = null)
         {
-            var item = viewModel.PlaylistVideosViewModel.GetNowPlayingVideo();
-            var listBox = VisualHelper.FindChild<ListBox>(playlistPresenter);
+            var viewModel = DataContext as PlaylistVideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            var listBox = VisualHelper.FindChild<ListBox>(element);
             if (listBox == null)
                 return;
 
+            if (name != null)
+            {
+                if (listBox.Name != name)
+                    return;
+            }
+
+            var item = viewModel.PlaylistVideosViewModel.GetNowPlayingVideo();
             listBox.ScrollIntoView(item);
         }
 
@@ -346,7 +391,7 @@ namespace LiteTube
 
             //удалим старый плеер
             player.Dispose();
-            
+
             //новый
             player = new LiteTubePlayer
             {
@@ -376,6 +421,8 @@ namespace LiteTube
                 SetPlayerFullScreenState();
             else
                 SetPlayerNormalState();
+
+            ScrollIntoView(player, RelatedListBoxName);
         }
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)

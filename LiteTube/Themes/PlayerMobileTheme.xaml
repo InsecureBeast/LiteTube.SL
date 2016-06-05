@@ -760,14 +760,16 @@
                     BorderThickness="0"
                     DataContext="{TemplateBinding ViewModel}" 
                     Background="{TemplateBinding Background}"
-                    Visibility="{Binding MediaPlayer.IsRelatedItemsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <ListBox ItemsSource="{Binding RelatedItems}"
+                    Visibility="{Binding MediaPlayer.IsRelatedItemsVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">
+                <ListBox ItemsSource="{Binding MediaPlayer.RelatedItems}"
                          ItemTemplate="{StaticResource RelatedVideoItem}"
                          common:ItemClickCommand.Command="{Binding ItemClickCommand}"
                          common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
                          toolkit:TiltEffect.IsTiltEnabled="True"
-                         Margin="0,0,0,0">
+                         Margin="0,0,0,0"
+                         IsEnabled="{Binding MediaPlayer.IsRelatedItemsEnabled}"
+                         Name="RelatedListBox">
                 </ListBox>
             </Border>
 

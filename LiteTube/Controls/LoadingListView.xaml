@@ -190,6 +190,7 @@
         <Grid x:Name="ContentRoot">
             <Grid>
                 <ListBox Margin="0" 
+                         Name="PLaylistLisBox"
                          ItemsSource="{Binding Items}"
                          toolkit:TiltEffect.IsTiltEnabled="True" 
                          common:ItemClickCommand.Command="{Binding ItemClickCommand}"
