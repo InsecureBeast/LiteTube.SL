@@ -34,6 +34,7 @@ namespace LiteTube.Controls
         {
             InteractiveViewModel = DefaultInteractiveViewModel = new PlayerInteractiveViewModel(this);
             IsFullScreenChanged += LiteTubePlayer_IsFullScreenChanged;
+            IsRelatedItemsEnabled = true;
         }
 
         public string VideoTitle
