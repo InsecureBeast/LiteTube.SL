@@ -5,14 +5,16 @@
     xmlns:local="clr-namespace:Microsoft.PlayerFramework;assembly=Microsoft.PlayerFramework"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:controls="clr-namespace:LiteTube.Controls"
-    xmlns:common="clr-namespace:LiteTube.Common">
-    
+    xmlns:common="clr-namespace:LiteTube.Common"
+    xmlns:converters="clr-namespace:LiteTube.Converters">
+
     <SolidColorBrush x:Key="TransportBackgroundBrush" Color="#80000000"/>
     <SolidColorBrush x:Key="TransportReversedBackgroundBrush" Color="#80000000"/>
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#66000000"/>
     <SolidColorBrush x:Key="RelatedTiteItemBackgroundBrush" Color="#90000000"/>
     <SolidColorBrush x:Key="PlayerButtonsBrush" Color="White"/>
     <sys:Double x:Key="SliderTrackThemeHeight">5</sys:Double>
+    <converters:RelatedVideoMarginConverter x:Key="RelatedVideoMarginConverter"/>
 
     <Style x:Key="PrimaryButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource PlayerButtonsBrush}"/>
@@ -709,7 +711,7 @@
                     <VisualState x:Name="Portrait"/>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            
+
             <!--Title-->
             <StackPanel Orientation="Vertical" 
                         x:Name="TitlePanel"
@@ -764,19 +766,10 @@
                     Grid.Row="0"
                     Grid.RowSpan="3"
                     BorderThickness="0"
+                    Width="186"
                     DataContext="{TemplateBinding ViewModel}" 
-                    Background="{TemplateBinding Background}"
-                    Visibility="{Binding MediaPlayer.IsRelatedItemsVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">
-                <ListBox ItemsSource="{Binding MediaPlayer.RelatedItems}"
-                         ItemTemplate="{StaticResource RelatedVideoItem}"
-                         common:ItemClickCommand.Command="{Binding ItemClickCommand}"
-                         common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
-                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                         toolkit:TiltEffect.IsTiltEnabled="True"
-                         Margin="0,0,0,0"
-                         IsEnabled="{Binding MediaPlayer.IsRelatedItemsEnabled}"
-                         Name="RelatedListBox">
-                </ListBox>
+                    Background="{TemplateBinding Background}"              
+                    Visibility="{Binding MediaPlayer.IsRelatedItemsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             </Border>
 
             <!--Controls-->
@@ -796,7 +789,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    
+
                     <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="0,10,10,-20">
                         <Button x:Name="ReplayButton" Style="{TemplateBinding TransportBarButtonStyle}" Visibility="{Binding IsReplayButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" Margin="10,0,10,0">
                             <local:MediaControls.Behavior>
@@ -924,7 +917,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="95"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <TextBlock x:Name="TimeElapsed" 
                                    Grid.Column="0"
                                    Margin="0,0,0,20"
@@ -934,7 +927,7 @@
                                 <local:TimeElapsedBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </local:MediaControls.Behavior>
                         </TextBlock>
-                        
+
                         <local:Timeline x:Name="Timeline" 
                                         Grid.Column="1"
                                         ViewModel="{TemplateBinding ViewModel}" 
@@ -943,7 +936,7 @@
                                         Padding="0,0,0,20" 
                                         Margin="10,0,0,0"/>
 
-                    <!--<StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left" Margin="30,5,30,5">-->
+                        <!--<StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left" Margin="30,5,30,5">-->
                         <!--<TextBlock x:Name="TimeElapsed" 
                                    Visibility="{Binding IsTimeElapsedButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
                                    Foreground="{StaticResource PlayerButtonsBrush}">
@@ -1051,6 +1044,29 @@
                     <ContentPresenter ContentTemplate="{StaticResource PlayListIcon}"/>
                 </ToggleButton>
             </Grid>
+
+            <!--Related listbox-->
+            <Border Grid.Column="0"
+                     Grid.Row="0"
+                     Grid.RowSpan="3"
+                     HorizontalAlignment="Right"
+                    DataContext="{TemplateBinding ViewModel}">
+                <Border.RenderTransform>
+                    <TranslateTransform x:Name="RelatedVideosMover" 
+                                        X="{Binding MediaPlayer.IsRelatedItemsVisible, Converter={StaticResource RelatedVideoMarginConverter}}"/>
+                </Border.RenderTransform>
+                
+                <ListBox ItemsSource="{Binding MediaPlayer.RelatedItems}"
+                         ItemTemplate="{StaticResource RelatedVideoItem}"
+                         common:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                         common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
+                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                         toolkit:TiltEffect.IsTiltEnabled="True"
+                         Margin="0,0,0,0"
+                         IsEnabled="{Binding MediaPlayer.IsRelatedItemsEnabled}"
+                         Name="RelatedListBox">
+                </ListBox>
+            </Border>
         </Grid>
     </ControlTemplate>
 

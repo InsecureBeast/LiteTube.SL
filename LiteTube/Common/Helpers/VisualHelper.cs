@@ -63,5 +63,34 @@ namespace LiteTube.Common.Helpers
             }
             return null;
         }
+
+        public static ListBox FindListBox(FrameworkElement element, string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                name = string.Empty;
+
+            int childNumber = VisualTreeHelper.GetChildrenCount(element);
+            for (int i = 0; i < childNumber; i++)
+            {
+                var child = VisualTreeHelper.GetChild(element, i);
+                if (child != null && child is ListBox)
+                {
+                    var listbox = child as ListBox;
+                    if (listbox.Name == name)
+                        return listbox;
+                }
+                else
+                {
+                    child = FindListBox(child as FrameworkElement, name);
+                    if (child != null && child is ListBox)
+                    {
+                        var listbox = child as ListBox;
+                        if (listbox.Name == name)
+                            return listbox;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

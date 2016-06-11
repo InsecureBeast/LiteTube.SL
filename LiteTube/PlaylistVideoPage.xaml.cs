@@ -75,8 +75,6 @@ namespace LiteTube
                     break;
                 case System.Windows.Media.MediaElementState.Opening:
                     player.IsRelatedItemsEnabled = true;
-                    ScrollIntoView(player, RelatedListBoxName);
-                    ScrollIntoView(playlistPresenter);
                     break;
                 case System.Windows.Media.MediaElementState.Individualizing:
                     break;
@@ -103,6 +101,8 @@ namespace LiteTube
                 return;
 
             viewModel.SkipNext();
+            ScrollIntoView(player, RelatedListBoxName);
+            ScrollIntoView(playlistPresenter);
         }
 
         private void OnSkipPreviousChanged(object sender, RoutedEventArgs e)
@@ -112,6 +112,8 @@ namespace LiteTube
                 return;
 
             viewModel.SkipPrevious();
+            ScrollIntoView(player, RelatedListBoxName);
+            ScrollIntoView(playlistPresenter);
         }
 
         private void OnSkipNextChanged(object sender, RoutedEventArgs e)
@@ -121,6 +123,8 @@ namespace LiteTube
                 return;
 
             viewModel.SkipNext();
+            ScrollIntoView(player, RelatedListBoxName);
+            ScrollIntoView(playlistPresenter);
         }
 
         private void ScrollIntoView(FrameworkElement element, string name = null)
@@ -129,7 +133,7 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            var listBox = VisualHelper.FindChild<ListBox>(element);
+            var listBox = VisualHelper.FindListBox(element, name);
             if (listBox == null)
                 return;
 
@@ -376,6 +380,9 @@ namespace LiteTube
                 RestorePlayer();
                 if (_resumed)
                     return;
+
+                ScrollIntoView(player, RelatedListBoxName);
+                ScrollIntoView(playlistPresenter);
 
                 _resumed = true;
             }

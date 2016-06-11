@@ -116,6 +116,7 @@
     <Compile Include="Common\Tools\HyperlinkTextBlockConverter.cs" />
     <Compile Include="Converters\LoginStatusTextConverter.cs" />
     <Compile Include="Converters\ColorValueConverter.cs" />
+    <Compile Include="Converters\RelatedVideoMarginConverter.cs" />
     <Compile Include="DataClasses\IPlaylistList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
     <Compile Include="DataModel\YouTube.cs" />
