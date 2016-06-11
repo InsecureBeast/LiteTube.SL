@@ -376,6 +376,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Playlist not found..
+        /// </summary>
+        public static string PlaylistNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("PlaylistNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to playlists.
         /// </summary>
         public static string Playlists {

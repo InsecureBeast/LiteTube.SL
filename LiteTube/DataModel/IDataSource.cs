@@ -22,6 +22,7 @@ namespace LiteTube.DataModel
         Task<IEnumerable<IVideoCategory>> GetCategories();
         Task<IEnumerable<IGuideCategory>> GetGuideCategories();
         Task<IChannel> GetChannel(string channelId);
+        Task<IChannel> GetChannelByUsername(string username);
         Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken);
         Task<IVideoList> GetChannelVideoList(string channelId, string pageToken);
         Task<IChannelList> GetChannels(string categoryId, string nextPageToken);
@@ -153,14 +154,12 @@ namespace LiteTube.DataModel
 
         public async Task<IChannel> GetChannel(string channelId)
         {
-            var ch = _channels.FirstOrDefault(c => c.Id == channelId);
-            if (ch != null)
-                return ch;
+            return await _remoteDataSource.GetChannel(channelId);
+        }
 
-            ch = await _remoteDataSource.GetChannel(channelId);
-            if (ch != null)
-                _channels.Add(ch);
-            return ch;
+        public async Task<IChannel> GetChannelByUsername(string username)
+        {
+            return await _remoteDataSource.GetChannelByUsername(username);
         }
 
         public async Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken)

@@ -14,6 +14,8 @@ using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Linq;
+using LiteTube.Tools;
+using System.Windows.Documents;
 
 namespace LiteTube
 {
@@ -63,6 +65,24 @@ namespace LiteTube
             ApplicationBar = _currentApplicationBar;
         }
 
+        private void SubscribeDescrtption()
+        {
+            var viewModel = DataContext as VideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            viewModel.PropertyChanged += (s, a) =>
+            {
+                if (a.PropertyName != "Description")
+                    return;
+
+                if (string.IsNullOrEmpty(viewModel.Description))
+                    return;
+
+                HyperlinkTextBlockConverter.HighlightUrls(viewModel.Description, descriptionTextBlock);
+            };
+        }
+
         private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
         {
             var viewModel = DataContext as VideoPageViewModel;
@@ -105,6 +125,8 @@ namespace LiteTube
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
+
+            SubscribeDescrtption();
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
             

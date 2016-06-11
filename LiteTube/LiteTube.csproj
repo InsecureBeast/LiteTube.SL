@@ -105,6 +105,7 @@
     <Compile Include="Common\Commands\RelayCommand.cs" />
     <Compile Include="Common\Commands\SubscribeCommand.cs" />
     <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
+    <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
     <Compile Include="Common\SessionType.cs" />
     <Compile Include="Common\Tools\Theme.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
+    <Compile Include="Common\Tools\HyperlinkTextBlockConverter.cs" />
     <Compile Include="Converters\LoginStatusTextConverter.cs" />
     <Compile Include="Converters\ColorValueConverter.cs" />
     <Compile Include="DataClasses\IPlaylistList.cs" />
@@ -130,7 +132,7 @@
     <Compile Include="Common\ExceptionDialog.cs" />
     <Compile Include="Common\Extensions\ControlExtensions.cs" />
     <Compile Include="Common\Helpers\NavigationHelper.cs" />
-    <Compile Include="Common\LiteTubeException.cs" />
+    <Compile Include="Common\Exceptions\LiteTubeException.cs" />
     <Compile Include="Common\ProgressIndicatorHolder.cs" />
     <Compile Include="Common\ScrollViewerMonitor.cs" />
     <Compile Include="Common\Tools\ApplicationBarHelper.cs" />
@@ -389,6 +391,10 @@
   <ItemGroup>
     <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
+    <Page Include="Themes\RichTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />

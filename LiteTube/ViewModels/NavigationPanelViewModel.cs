@@ -206,7 +206,7 @@ namespace LiteTube.ViewModels
         private void LoadChannel(string channelId)
         {
 #if SILVERLIGHT
-            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(channelId, _getDataSource, _connectionListener));
+            NavigationHelper.GoToChannelPage(channelId, null);
 #endif
         }
 

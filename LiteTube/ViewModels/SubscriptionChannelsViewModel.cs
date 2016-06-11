@@ -59,7 +59,7 @@ namespace LiteTube.ViewModels
                 return;
 
 #if SILVERLIGHT
-            NavigationHelper.Navigate("/ChannelPage.xaml", new ChannelPageViewModel(model.Id, _getGeDataSource, _connectionListener));
+            NavigationHelper.GoToChannelPage(model.Id, null);
 #endif
         }
 

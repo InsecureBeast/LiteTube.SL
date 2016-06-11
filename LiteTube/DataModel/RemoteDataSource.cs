@@ -26,6 +26,7 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetRecommended(string pageToken);
         Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken);
         Task<IChannel> GetChannel(string channelId);
+        Task<IChannel> GetChannelByUsername(string username);
         Task<IVideoList> GetRelatedVideos(string videoId, int maxResult, string pageToken);
         Task<IVideoList> GetCategoryVideoList(string categoryId, string culture, int maxResult, string pageToken);
         Task<IVideoList> GetChannelVideoList(string channelId, string culture, int maxPageResult, string pageToken);
@@ -250,6 +251,17 @@ namespace LiteTube.DataModel
             var channelRequest = _youTubeService.Channels.List("snippet,statistics,brandingSettings");
             channelRequest.Key = _youTubeServiceControl.ApiKey;
             channelRequest.Id = channelId;
+
+            var response = await channelRequest.ExecuteAsync();
+            var channel = response.Items.FirstOrDefault();
+            return channel != null ? new MChannel(channel) : null;
+        }
+
+        public async Task<IChannel> GetChannelByUsername(string username)
+        {
+            var channelRequest = _youTubeService.Channels.List("snippet,id,statistics,brandingSettings");
+            channelRequest.Key = _youTubeServiceControl.ApiKey;
+            channelRequest.ForUsername = username;
 
             var response = await channelRequest.ExecuteAsync();
             var channel = response.Items.FirstOrDefault();

@@ -14,6 +14,7 @@ using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using LiteTube.Tools;
 
 namespace LiteTube
 {
@@ -187,6 +188,7 @@ namespace LiteTube
         {
             NavigationHelper.OnNavigatedTo(this);
 
+            SubscribeDescrtption();
             _sensor.OrientationChanged += Sensor_OrientationChanged;
             
             if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
@@ -477,6 +479,30 @@ namespace LiteTube
 
             SetPlayerNormalState();
             SetVisibilityControls(Visibility.Visible);
+        }
+
+        private void SubscribeDescrtption()
+        {
+            var viewModel = DataContext as PlaylistVideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            viewModel.PropertyChanged += (s, a) =>
+            {
+                if (a.PropertyName != "VideoViewModel")
+                    return;
+
+                viewModel.VideoViewModel.PropertyChanged += (ss, aa) =>
+                {
+                    if (aa.PropertyName != "Description")
+                        return;
+
+                    if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
+                        return;
+
+                    HyperlinkTextBlockConverter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
+                };
+            };
         }
     }
 }

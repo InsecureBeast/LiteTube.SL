@@ -14,7 +14,9 @@
     SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
     shell:SystemTray.ProgressIndicator="{Binding ProgressIndicator}"
-    Style="{StaticResource PageThemeStyle}">
+    Style="{StaticResource PageThemeStyle}"
+    UseLayoutRounding="True">
+    
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -211,11 +213,14 @@
                             <Run Text="{Binding PublishedAt}"/>
                         </TextBlock>
 
-                        <TextBlock Text="{Binding Description}"
-                                   Grid.Row="4"
-                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                   Margin="{StaticResource DefaultTextBlockMargin}"
-                                   TextWrapping="Wrap"/>
+                        <RichTextBox Grid.Row="4"
+                                     IsReadOnly="True"
+                                     TextWrapping="Wrap"
+                                     Name="descriptionTextBlock"
+                                     Foreground="{StaticResource PhoneSubtleBrush}"
+                                     Padding="0"
+                                     UseLayoutRounding="True"
+                                     Margin="-10,12,-10,10"/>
                     </Grid>
                 </ScrollViewer>
             </phone:PivotItem>

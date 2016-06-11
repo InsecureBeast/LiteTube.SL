@@ -672,7 +672,13 @@
             </Grid>
         </Border>
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="VideoQualityItem">
+        <TextBlock Text="{Binding}"
+                   Margin="5"
+                   Foreground="White"/>
+    </DataTemplate>
+
     <ControlTemplate x:Key="ControlPanelTemplate" TargetType="local:ControlPanel">
         <Grid VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -986,6 +992,16 @@
                                                    Visibility="{Binding IsResolutionIndicatorVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"/>
                     </StackPanel>
 
+                    <ListBox Margin="10" Foreground="White">
+                        <ListBoxItem Content="360p" ContentTemplate="{StaticResource VideoQualityItem}"/>
+                        <ListBoxItem Content="480p" ContentTemplate="{StaticResource VideoQualityItem}"/>
+                        <ListBoxItem Content="720p" ContentTemplate="{StaticResource VideoQualityItem}"/>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
                     <!--<StackPanel Orientation="Horizontal">
                         <RadioButton Content="144p" GroupName="VideoQuality"/>
                         <RadioButton Content="240p" GroupName="VideoQuality"/>

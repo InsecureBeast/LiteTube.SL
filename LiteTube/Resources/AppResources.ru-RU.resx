@@ -323,4 +323,7 @@
   <data name="Playlists" xml:space="preserve">
     <value>плэйлисты</value>
   </data>
+  <data name="PlaylistNotFoundErrorMessage" xml:space="preserve">
+    <value>Плейлист не существует.</value>
+  </data>
 </root>

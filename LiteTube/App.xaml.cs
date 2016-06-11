@@ -11,6 +11,8 @@ using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
+using Google;
+using LiteTube.Common.Exceptions;
 
 namespace LiteTube
 {
@@ -203,7 +205,13 @@ namespace LiteTube
 
             if (e.ExceptionObject is LiteTubeException)
             {
-                _container.DialogService.ShowError(e.ExceptionObject);
+                _container.DialogService.ShowError(AppResources.ErrorMessage);
+                return;
+            }
+
+            if (e.ExceptionObject is PlaylistNotFoundException)
+            {
+                _container.DialogService.ShowError(AppResources.PlaylistNotFoundErrorMessage);
                 return;
             }
 

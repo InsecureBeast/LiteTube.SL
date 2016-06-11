@@ -23,7 +23,7 @@ namespace LiteTube.ViewModels
         private PlaylistListViewModel _playlistListViewModel;
         private int _selectedIndex;
 
-        public ChannelPageViewModel(string channelId, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
+        public ChannelPageViewModel(string channelId, string username, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
             : base(getDataSource, connectionListener)
         {
             _channelId = channelId;
@@ -32,7 +32,7 @@ namespace LiteTube.ViewModels
 
             LayoutHelper.InvokeFromUiThread(async() => 
             {
-                await LoadChannel(channelId);
+                await LoadChannel(channelId, username);
                 await FirstLoad();
             });
         }
@@ -143,9 +143,14 @@ namespace LiteTube.ViewModels
             _unsubscribeCommand = new UnsubscribeCommand(_getGeDataSource, () => _channelId, InvalidateCommands);
         }
 
-        private async Task LoadChannel(string channelId)
+        private async Task LoadChannel(string channelId, string username)
         {
-            var ch = await _getGeDataSource().GetChannel(channelId);
+            IChannel ch;
+            if (string.IsNullOrEmpty(username))
+                ch = await _getGeDataSource().GetChannel(channelId);
+            else
+                ch = await _getGeDataSource().GetChannelByUsername(username);
+
             _uniqueId = ch.Id;
             Title = ch.Title;
             Description = ch.Description;

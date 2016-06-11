@@ -78,9 +78,9 @@ namespace LiteTube.Common
             return ex.Message; 
         }
 
-        public static void ShowDialog(Exception exception)
+        public static void ShowDialog(string message)
         {
-            MessageBox.Show(AppResources.ErrorMessage, AppResources.ErrorTitle, MessageBoxButton.OK);
+            MessageBox.Show(message, AppResources.ErrorTitle, MessageBoxButton.OK);
         }
     }
 }

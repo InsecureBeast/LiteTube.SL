@@ -66,6 +66,11 @@ namespace LiteTube.DataModel
             return new Task<IChannel>(() => MChannel.Empty);
         }
 
+        public Task<IChannel> GetChannelByUsername(string username)
+        {
+            return new Task<IChannel>(() => MChannel.Empty);
+        }
+
         public Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken)
         {
             return new Task<IVideoList>(() => MVideoList.Empty);

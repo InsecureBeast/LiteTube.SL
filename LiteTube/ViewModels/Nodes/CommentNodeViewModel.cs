@@ -65,8 +65,8 @@ namespace LiteTube.ViewModels.Nodes
         private void LoadChannel(string channelId)
         {
 #if SILVERLIGHT
-            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, _getDatasource, _connectionListener);
-            App.NavigateTo("/ChannelPage.xaml");
+            PhoneApplicationService.Current.State["model"] = new ChannelPageViewModel(channelId, null, _getDatasource, _connectionListener);
+            App.NavigateTo("/ChannelPage.xaml?channel=" + channelId);
 #endif
         }
     }

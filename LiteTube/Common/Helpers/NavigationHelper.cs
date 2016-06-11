@@ -40,5 +40,26 @@ namespace LiteTube.Common.Helpers
             var list = App.RootFrame.BackStack.ToList();
             return list.Any(journalEntry => journalEntry.Source.OriginalString.Contains(url));
         }
+
+        public static void GoToVideoPage(string videoId)
+        {
+            var datasource = App.ViewModel.GetDataSource;
+            var connectionListener = App.ViewModel.ConnectionListener;
+            NavigationHelper.Navigate("/VideoPage.xaml?videoId=" + videoId, new VideoPageViewModel(videoId, datasource, connectionListener));
+        }
+
+        public static void GoToPLaylistPage(string playlistId)
+        {
+            var datasource = App.ViewModel.GetDataSource;
+            var connectionListener = App.ViewModel.ConnectionListener;
+            NavigationHelper.Navigate("/PlaylistVideoPage.xaml?playlistId=" + playlistId, new PlaylistVideoPageViewModel(playlistId, datasource, connectionListener));
+        }
+
+        public static void GoToChannelPage(string channelId, string username)
+        {
+            var datasource = App.ViewModel.GetDataSource;
+            var connectionListener = App.ViewModel.ConnectionListener;
+            NavigationHelper.Navigate("/ChannelPage.xaml?channelId=" + channelId, new ChannelPageViewModel(channelId, username, datasource, connectionListener));
+        }
     }
 }

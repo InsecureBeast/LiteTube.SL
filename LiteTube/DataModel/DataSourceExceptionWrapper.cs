@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Google;
 using LiteTube.Common;
 using LiteTube.Multimedia;
+using LiteTube.Common.Exceptions;
 
 namespace LiteTube.DataModel
 {
@@ -85,12 +86,12 @@ namespace LiteTube.DataModel
             get { return _remoteDataSource.WatchLaterPlaylistId; }
         }
 
-        public Task<IEnumerable<IVideoCategory>> GetCategories(string culture)
+        public async Task<IEnumerable<IVideoCategory>> GetCategories(string culture)
         {
             try
             {
                 Debug.WriteLine("GetCategories method called");
-                return _remoteDataSource.GetCategories(culture);
+                return await _remoteDataSource.GetCategories(culture);
             }
             catch (Exception e)
             {
@@ -99,12 +100,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken)
+        public async Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken)
         {
             try
             {
                 Debug.WriteLine("GetActivity method called");
-                return _remoteDataSource.GetActivity(culture, maxResult, pageToken);
+                return await _remoteDataSource.GetActivity(culture, maxResult, pageToken);
             }
             catch (Exception e)
             {
@@ -113,12 +114,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetRecommended(string pageToken)
+        public async Task<IVideoList> GetRecommended(string pageToken)
         {
             try
             {
                 Debug.WriteLine("GetRecommended method called");
-                return _remoteDataSource.GetRecommended(pageToken);
+                return await _remoteDataSource.GetRecommended(pageToken);
             }
             catch (Exception e)
             {
@@ -127,12 +128,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken)
+        public async Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken)
         {
             try
             {
                 Debug.WriteLine("GetMostPopular method called");
-                return _remoteDataSource.GetMostPopular(culture, maxResult, pageToken);
+                return await _remoteDataSource.GetMostPopular(culture, maxResult, pageToken);
             }
             catch (Exception e)
             {
@@ -141,12 +142,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IChannel> GetChannel(string channelId)
+        public async Task<IChannel> GetChannel(string channelId)
         {
             try
             {
                 Debug.WriteLine("GetChannel method called");
-                return _remoteDataSource.GetChannel(channelId);
+                return await _remoteDataSource.GetChannel(channelId);
             }
             catch (Exception e)
             {
@@ -155,12 +156,26 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetRelatedVideos(string videoId, int maxResult, string pageToken)
+        public async Task<IChannel> GetChannelByUsername(string username)
+        {
+            try
+            {
+                Debug.WriteLine("GetChannelByUsername method called");
+                return await _remoteDataSource.GetChannelByUsername(username);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetChannelByUsername method called with exception " + e.Message);
+                throw;
+            }
+        }
+
+        public async Task<IVideoList> GetRelatedVideos(string videoId, int maxResult, string pageToken)
         {
             try
             {
                 Debug.WriteLine("GetRelatedVideos method called");
-                return _remoteDataSource.GetRelatedVideos(videoId, maxResult, pageToken);
+                return await _remoteDataSource.GetRelatedVideos(videoId, maxResult, pageToken);
             }
             catch (Exception e)
             {
@@ -169,12 +184,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetCategoryVideoList(string categoryId, string culture, int maxResult, string pageToken)
+        public async Task<IVideoList> GetCategoryVideoList(string categoryId, string culture, int maxResult, string pageToken)
         {
             try
             {
                 Debug.WriteLine("GetCategoryVideoList method called");
-                return _remoteDataSource.GetCategoryVideoList(categoryId, culture, maxResult, pageToken);
+                return await _remoteDataSource.GetCategoryVideoList(categoryId, culture, maxResult, pageToken);
             }
             catch (Exception e)
             {
@@ -183,12 +198,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetChannelVideoList(string channelId, string culture, int maxPageResult, string pageToken)
+        public async Task<IVideoList> GetChannelVideoList(string channelId, string culture, int maxPageResult, string pageToken)
         {
             try
             {
                 Debug.WriteLine("GetChannelVideoList method called");
-                return _remoteDataSource.GetChannelVideoList(channelId, culture, maxPageResult, pageToken);
+                return await _remoteDataSource.GetChannelVideoList(channelId, culture, maxPageResult, pageToken);
             }
             catch (Exception e)
             {
@@ -197,12 +212,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IEnumerable<IGuideCategory>> GetGuideCategories(string culture)
+        public async Task<IEnumerable<IGuideCategory>> GetGuideCategories(string culture)
         {
             try
             {
                 Debug.WriteLine("GetGuideCategories method called");
-                return _remoteDataSource.GetGuideCategories(culture);
+                return await _remoteDataSource.GetGuideCategories(culture);
             }
             catch (Exception e)
             {
@@ -211,12 +226,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IChannelList> GetChannels(string categoryId, string culture, int maxPageResult, string nextPageToken)
+        public async Task<IChannelList> GetChannels(string categoryId, string culture, int maxPageResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetChannels method called");
-                return _remoteDataSource.GetChannels(categoryId, culture, maxPageResult, nextPageToken);
+                return await _remoteDataSource.GetChannels(categoryId, culture, maxPageResult, nextPageToken);
             }
             catch (Exception e)
             {
@@ -225,12 +240,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType)
+        public async Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType)
         {
             try
             {
                 Debug.WriteLine("Search method called");
-                return _remoteDataSource.Search(searchString, maxResult, nextPageToken, serachType);
+                return await _remoteDataSource.Search(searchString, maxResult, nextPageToken, serachType);
             }
             catch (Exception e)
             {
@@ -239,12 +254,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<ICommentList> GetComments(string videoId, int maxResult, string nextPageToken)
+        public async Task<ICommentList> GetComments(string videoId, int maxResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetComments method called");
-                return _remoteDataSource.GetComments(videoId, maxResult, nextPageToken);
+                return await _remoteDataSource.GetComments(videoId, maxResult, nextPageToken);
             }
             catch (Exception e)
             {
@@ -253,12 +268,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<ISubscriptionList> GetSubscribtions(int maxResult, string nextPageToken)
+        public async Task<ISubscriptionList> GetSubscribtions(int maxResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetSubscribtions method called");
-                return _remoteDataSource.GetSubscribtions(maxResult, nextPageToken);
+                return await _remoteDataSource.GetSubscribtions(maxResult, nextPageToken);
             }
             catch (Exception e)
             {
@@ -267,12 +282,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetHistory(int maxResult, string nextPageToken)
+        public async Task<IVideoList> GetHistory(int maxResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetHistory method called");
-                return _remoteDataSource.GetHistory(maxResult, nextPageToken);
+                return await _remoteDataSource.GetHistory(maxResult, nextPageToken);
             }
             catch (Exception e)
             {
@@ -363,12 +378,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<RatingEnum> GetRating(string videoId)
+        public async Task<RatingEnum> GetRating(string videoId)
         {
             try
             {
                 Debug.WriteLine("GetRating method called");
-                return _remoteDataSource.GetRating(videoId);
+                return await _remoteDataSource.GetRating(videoId);
             }
             catch (Exception e)
             {
@@ -377,12 +392,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
+        public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
             try
             {
                 Debug.WriteLine("GetVideoUriAsync method called");
-                return _remoteDataSource.GetVideoUriAsync(videoId, quality);
+                return await _remoteDataSource.GetVideoUriAsync(videoId, quality);
             }
             catch (Exception e)
             {
@@ -419,12 +434,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IResponceList> GetFavorites(int maxResult, string nextPageToken)
+        public async Task<IResponceList> GetFavorites(int maxResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetFavorites method called");
-                return _remoteDataSource.GetFavorites(maxResult, nextPageToken);
+                return await _remoteDataSource.GetFavorites(maxResult, nextPageToken);
             }
             catch (Exception e)
             {
@@ -433,12 +448,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IResponceList> GetLiked(int maxResult, string nextPageToken)
+        public async Task<IResponceList> GetLiked(int maxResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetLiked method called");
-                return _remoteDataSource.GetLiked(maxResult, nextPageToken);
+                return await _remoteDataSource.GetLiked(maxResult, nextPageToken);
             }
             catch (Exception e)
             {
@@ -447,12 +462,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoItem> GetVideoItem(string videoId)
+        public async Task<IVideoItem> GetVideoItem(string videoId)
         {
             try
             {
                 Debug.WriteLine("GetVideoItem method called");
-                return _remoteDataSource.GetVideoItem(videoId);
+                return await _remoteDataSource.GetVideoItem(videoId);
             }
             catch (Exception e)
             {
@@ -475,12 +490,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IComment> AddComment(string channelId, string videoId, string text)
+        public async Task<IComment> AddComment(string channelId, string videoId, string text)
         {
             try
             {
                 Debug.WriteLine("AddComment method called");
-                return _remoteDataSource.AddComment(channelId, videoId, text);
+                return await _remoteDataSource.AddComment(channelId, videoId, text);
             }
             catch (Exception e)
             {
@@ -489,26 +504,26 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
+        public async Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query)
         {
             try
             {
                 Debug.WriteLine("GetAutoCompleteSearchItems method called");
-                return _remoteDataSource.GetAutoCompleteSearchItems(query);
+                return await _remoteDataSource.GetAutoCompleteSearchItems(query);
             }
             catch (Exception e)
             {
                 Debug.WriteLine("GetAutoCompleteSearchItems method called with exception " + e.Message);
-                return new Task<IEnumerable<string>>(() => new List<string>());
+                return await new Task<IEnumerable<string>>(() => new List<string>());
             }
         }
 
-        public Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken)
+        public async Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetChannelPlaylistList method called");
-                return _remoteDataSource.GetChannelPlaylistList(channelId, maxResult, nextPageToken);
+                return await _remoteDataSource.GetChannelPlaylistList(channelId, maxResult, nextPageToken);
             }
             catch (Exception e)
             {
@@ -517,17 +532,23 @@ namespace LiteTube.DataModel
             }
         }
 
-        public Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken)
+        public async Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken)
         {
             try
             {
                 Debug.WriteLine("GetVideoPlaylist method called");
-                return _remoteDataSource.GetVideoPlaylist(playListId, maxResult, nextPageToken);
+                return await _remoteDataSource.GetVideoPlaylist(playListId, maxResult, nextPageToken);
+            }
+            catch (GoogleApiException e)
+            {
+                if (e.HttpStatusCode == System.Net.HttpStatusCode.NotFound)
+                    throw new PlaylistNotFoundException(e);
+                throw e;
             }
             catch (Exception e)
             {
                 Debug.WriteLine("GetVideoPlaylist method called with exception " + e.Message);
-                throw;
+                throw e;
             }
         }
     }

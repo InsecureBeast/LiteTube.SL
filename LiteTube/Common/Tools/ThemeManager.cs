@@ -6,22 +6,26 @@ namespace LiteTube.Common.Tools
 {
     static class ThemeManager
     {
+        private static SolidColorBrush _accentSolidColorBrush;
+        private static SolidColorBrush _accentDarkSolidColorBrush;
+        private static SolidColorBrush _accentLightSolidColorBrush;
+
         private static void GoToLightTheme()
         {
-            var accentBrush = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-            if (accentBrush != null)
+            _accentSolidColorBrush = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
+            if (_accentSolidColorBrush != null)
             {
-                var accentColor = accentBrush.Color;
+                var accentColor = _accentSolidColorBrush.Color;
                 var accentLightColor = accentColor.Lerp(Colors.White, 0.25f);
                 var accentDarkColor = accentColor.Lerp(Colors.Black, 0.25f);
 
-                var accentDarkBrush = Application.Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
-                if (accentDarkBrush != null)
-                    accentDarkBrush.Color = accentDarkColor;
+                _accentDarkSolidColorBrush = Application.Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
+                if (_accentDarkSolidColorBrush != null)
+                    _accentDarkSolidColorBrush.Color = accentDarkColor;
 
-                var accentLightBrush = Application.Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
-                if (accentLightBrush != null)
-                    accentLightBrush.Color = accentLightColor;
+                _accentLightSolidColorBrush = Application.Current.Resources["PhoneLightAccentBrush"] as SolidColorBrush;
+                if (_accentLightSolidColorBrush != null)
+                    _accentLightSolidColorBrush.Color = accentLightColor;
             }
             
             var backgroundBrush = Application.Current.Resources["PhoneBackgroundBrush"] as SolidColorBrush;
@@ -57,22 +61,37 @@ namespace LiteTube.Common.Tools
                 playlistSelectedBrush.Color = Color.FromArgb(255, 200, 200, 200);
         }
 
+        public static SolidColorBrush AccentSolidColorBrush
+        {
+            get { return _accentSolidColorBrush; }
+        }
+
+        public static SolidColorBrush AccentDarkSolidColorBrush
+        {
+            get { return _accentDarkSolidColorBrush; }
+        }
+
+        public static SolidColorBrush AccentLightSolidColorBrush
+        {
+            get { return _accentLightSolidColorBrush; }
+        }
+
         private static void GoToDarkTheme()
         {
-            var accentBrush = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-            if (accentBrush != null)
+            _accentSolidColorBrush = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
+            if (_accentSolidColorBrush != null)
             {
-                var accentColor = accentBrush.Color;
+                var accentColor = _accentSolidColorBrush.Color;
                 var accentLightColor = accentColor.Lerp(Colors.White, 0.25f);
                 var accentDarkColor = accentColor.Lerp(Colors.Black, 0.25f);
 
-                var accentDarkBrush = Application.Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
-                if (accentDarkBrush != null)
-                    accentDarkBrush.Color = accentDarkColor;
+                _accentDarkSolidColorBrush = Application.Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
+                if (_accentDarkSolidColorBrush != null)
+                    _accentDarkSolidColorBrush.Color = accentDarkColor;
 
-                var accentLightBrush = Application.Current.Resources["PhoneDarkAccentBrush"] as SolidColorBrush;
-                if (accentLightBrush != null)
-                    accentLightBrush.Color = accentLightColor;
+                _accentLightSolidColorBrush = Application.Current.Resources["PhoneLightAccentBrush"] as SolidColorBrush;
+                if (_accentLightSolidColorBrush != null)
+                    _accentLightSolidColorBrush.Color = accentLightColor;
             }
             
             var backgroundBrush = Application.Current.Resources["PhoneBackgroundBrush"] as SolidColorBrush;

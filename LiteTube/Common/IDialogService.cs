@@ -5,18 +5,18 @@ namespace LiteTube.Common
 {
     interface IDialogService
     {
-        void ShowError(Exception exception);
+        void ShowError(string message);
         void ShowException(Exception exception);
     }
 
     class DialogService : IDialogService
     {
-        public void ShowError(Exception exception)
+        public void ShowError(string message)
         {
             LayoutHelper.InvokeFromUiThread(() =>
             {
 #if SILVERLIGHT
-                ExceptionDialog.ShowDialog(exception);
+                ExceptionDialog.ShowDialog(message);
 #else
             throw new NotImplementedException();
 #endif
