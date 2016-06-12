@@ -45,6 +45,12 @@ namespace LiteTube.Common.Helpers
                 quality = (string)(ApplicationData.Current.RoamingSettings.Values["Quality"]);
             }
 
+            if (quality == "1080p")
+            {
+                SaveQuality("720p");
+                return "720p";
+            }
+
             return quality;
         }
 

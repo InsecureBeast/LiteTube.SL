@@ -18,7 +18,7 @@ namespace LiteTube.Common
                 { "360p", YouTubeQuality.Quality360P },
                 { "480p", YouTubeQuality.Quality480P },
                 { "720p", YouTubeQuality.Quality720P },
-                { "1080p", YouTubeQuality.Quality1080P }
+                //{ "1080p", YouTubeQuality.Quality1080P }
             };
         }
 
