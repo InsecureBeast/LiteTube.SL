@@ -1,11 +1,14 @@
 ﻿using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
-using MyToolkit.Multimedia;
+using LiteTube.Multimedia;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LiteTube.Common.Helpers;
+using System.Collections.Generic;
+using LiteTube.Controls;
+using System.Linq;
 
 namespace LiteTube.ViewModels
 {
@@ -26,6 +29,9 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand _likeCommand;
         private readonly RelayCommand _dislikeCommand;
         private readonly RelayCommand _addFavoritesCommand;
+        private readonly RelayCommand _videoQualityCommand;
+        private readonly VideoQuality _qualityConverter;
+        private List<VideoQualityItem> _videoQualities;
         private string _channelId;
         private bool _isSubscribed;
         private bool _isLiked = false;
@@ -44,6 +50,7 @@ namespace LiteTube.ViewModels
         private ulong? _viewCount;
         private ulong _likes;
         private ulong _dislikes;
+        private VideoQualityItem _selectedVideoQualityItem;
 
         public VideoPageViewModel(string videoId, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
         {
@@ -55,6 +62,7 @@ namespace LiteTube.ViewModels
             _connectionListener.Subscribe(this);
             _channelSubscribers = 0;
             _channelVideoCount = 0;
+            _qualityConverter = new VideoQuality();
 
             _subscribeCommand = new SubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
             _unsubscribeCommand = new UnsubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
@@ -62,13 +70,16 @@ namespace LiteTube.ViewModels
             _likeCommand = new RelayCommand(Like, CanLike);
             _dislikeCommand = new RelayCommand(Dislike, CanLike);
             _addFavoritesCommand = new RelayCommand(AddFavorites);
+            _videoQualityCommand = new RelayCommand(ChangeVideoQuality);
 
+            LoadVideoQualities();
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
             LoadVideoItem(videoId);
         }
 
         public VideoPageViewModel()
         {
+            LoadVideoQualities();
         }
 
         public string VideoId
@@ -301,6 +312,11 @@ namespace LiteTube.ViewModels
             get { return _addFavoritesCommand; }
         }
 
+        public ICommand VideoQualityCommand
+        {
+            get { return _videoQualityCommand; }
+        }
+
         public RelatedVideosViewModel RelatedVideosViewModel
         {
             get { return _relatedViewModel; }
@@ -361,6 +377,22 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public List<VideoQualityItem> VideoQualities
+        {
+            get { return _videoQualities; }
+        }
+
+        public VideoQualityItem SelectedVideoQualityItem
+        {
+            get { return _selectedVideoQualityItem; }
+            set
+            {
+                _selectedVideoQualityItem = value;
+                ChangeVideoQuality();
+                NotifyOfPropertyChanged(() => SelectedVideoQualityItem);
+            }
+        }
+
         public void Notify(ConnectionEventArgs e)
         {
             if (e.IsConnected)
@@ -377,14 +409,15 @@ namespace LiteTube.ViewModels
             LoadVideoItem(_videoId);
         }
 
-        private void SetVideoUri(string videoId)
+        private void SetVideoUri(string videoId, YouTubeQuality quality)
         {
             LayoutHelper.InvokeFromUiThread(async () =>
             {
                 try
                 {
                     IsPaid = false;
-                    var url = await _getDataSource().GetVideoUriAsync(videoId);
+                    VideoUri = null;
+                    var url = await _getDataSource().GetVideoUriAsync(videoId, quality);
                     VideoUri = url.Uri;
                 }
                 //Todo разделить исключения по типу и добавить соответсвующий баннер
@@ -506,7 +539,9 @@ namespace LiteTube.ViewModels
                 SetLikesAndDislikes(videoItem.Details.Video);
                 SetChannelInfo(_channelId);
                 SetVideoRating(VideoId);
-                SetVideoUri(videoId);
+                var defaultQuality = SettingsHelper.GetQuality();
+                var quality = _qualityConverter.GetQualityEnum(defaultQuality);
+                SetVideoUri(videoId, quality);
             });
         }
 
@@ -518,6 +553,28 @@ namespace LiteTube.ViewModels
         private void InvalidateCommands()
         {
             IsSubscribed = _getDataSource().IsSubscribed(_channelId);
+        }
+
+        private void LoadVideoQualities()
+        {
+            _videoQualities = new List<VideoQualityItem>();
+            var currentQuality = SettingsHelper.GetQuality();
+            var qualities = new VideoQuality().GetQualityNames();
+            foreach (var item in qualities)
+            {
+                _videoQualities.Add(new VideoQualityItem(item, item == currentQuality));
+            }
+
+            SelectedVideoQualityItem = _videoQualities.FirstOrDefault(i => i.IsSelected);
+        }
+
+        private void ChangeVideoQuality()
+        {
+            if (SelectedVideoQualityItem == null)
+                return;
+
+            SetVideoUri(_videoId, SelectedVideoQualityItem.Quality);
+            SettingsHelper.SaveQuality(SelectedVideoQualityItem.QualityName);
         }
     }
 }

@@ -1,5 +1,10 @@
-﻿using LiteTube.ViewModels.Nodes;
+﻿using LiteTube.Common;
+using LiteTube.Common.Helpers;
+using LiteTube.Multimedia;
+using LiteTube.ViewModels;
+using LiteTube.ViewModels.Nodes;
 using Microsoft.PlayerFramework;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -16,6 +21,9 @@ namespace LiteTube.Controls
         public static readonly DependencyProperty RelatedItemsEnabledProperty = DependencyProperty.Register("IsRelatedItemsEnabled", typeof(bool), typeof(LiteTubePlayer), null);
         public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
         public static readonly DependencyProperty LoadMoreCommandProperty = DependencyProperty.Register("LoadMoreCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
+
+        public static readonly DependencyProperty VideoQualityItemsProperty = DependencyProperty.Register("VideoQualityItems", typeof(List<VideoQualityItem>), typeof(LiteTubePlayer), null);
+        public static readonly DependencyProperty SelectedVideoQualityItemProperty = DependencyProperty.Register("SelectedVideoQualityItem", typeof(VideoQualityItem), typeof(LiteTubePlayer), null);
 
         private bool _isRelatedVisible;
 
@@ -53,6 +61,19 @@ namespace LiteTube.Controls
         {
             get { return GetValue(RelatedItemsProperty) as ObservableCollection<NodeViewModelBase>; }
             set { SetValue(RelatedItemsProperty, value); }
+        }
+
+        public List<VideoQualityItem> VideoQualityItems
+        {
+            get { return GetValue(VideoQualityItemsProperty) as List<VideoQualityItem>; }
+            set { SetValue(VideoQualityItemsProperty, value); }
+
+        }
+
+        public VideoQualityItem SelectedVideoQualityItem
+        {
+            get { return (VideoQualityItem)GetValue(SelectedVideoQualityItemProperty); }
+            set { SetValue(SelectedVideoQualityItemProperty, value); }
         }
 
         public ICommand ItemClickCommand
@@ -195,6 +216,40 @@ namespace LiteTube.Controls
         protected override void OnSkipPrevious(VisualMarker marker)
         {
             IsSkipPreviousChanged?.Invoke(this, new RoutedEventArgs());
+        }
+    }
+
+    public class VideoQualityItem : PropertyChangedBase
+    {
+        private readonly string _qualityName;
+        private readonly VideoQuality _qualityConverter;
+        private bool _isSelected;
+
+        public VideoQualityItem(string qualityName, bool isSelected)
+        {
+            _qualityName = qualityName;
+            _isSelected = isSelected;
+            _qualityConverter = new VideoQuality();
+        }
+
+        public string QualityName
+        {
+            get { return _qualityName; }
+        }
+
+        public YouTubeQuality Quality
+        {
+            get { return _qualityConverter.GetQualityEnum(_qualityName); }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                NotifyOfPropertyChanged(() => IsSelected);
+            }
         }
     }
 }

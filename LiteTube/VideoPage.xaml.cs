@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using LiteTube.Tools;
 using System.Windows.Documents;
+using System.Windows.Data;
 
 namespace LiteTube
 {
@@ -129,7 +130,7 @@ namespace LiteTube
             SubscribeDescrtption();
 
             _sensor.OrientationChanged += Sensor_OrientationChanged;
-            
+
             if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
                 SetVisibilityControls(Visibility.Collapsed);
             else
@@ -138,6 +139,9 @@ namespace LiteTube
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
+
+            var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
+            player.SetBinding(LiteTubePlayer.SourceProperty, binding);
 
             if (viewModel.NavigationPanelViewModel.IsAuthorized)
             {
