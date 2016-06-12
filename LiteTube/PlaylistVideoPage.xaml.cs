@@ -507,7 +507,7 @@ namespace LiteTube
                     if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
                         return;
 
-                    HyperlinkTextBlockConverter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
+                    HyperlinkHighlighter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
                 };
             };
         }

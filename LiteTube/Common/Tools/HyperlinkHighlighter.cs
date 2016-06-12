@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using Microsoft.Phone.Tasks;
-using Microsoft.Phone.Controls;
-using LiteTube.Common;
 using MyToolkit.Command;
 using LiteTube.Common.Helpers;
-using LiteTube.ViewModels;
 using LiteTube.Common.Tools;
 
 namespace LiteTube.Tools
 {
-    public static class HyperlinkTextBlockConverter
+    public static class HyperlinkHighlighter
     {
         public static void HighlightUrls(string text, RichTextBox textBlock)
         {
@@ -75,8 +66,11 @@ namespace LiteTube.Tools
                 var run1 = new Run { Text = textBefore };
                 paragraph.Inlines.Add(run1);
 
-                if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute)) 
+                if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
+                {
+                    AddText(url, paragraph);
                     return;
+                }
 
                 var run2 = new Run { Text = url };
                 var hyperlink = new Hyperlink
@@ -84,22 +78,16 @@ namespace LiteTube.Tools
                     Inlines = { run2 }, 
                     Command = new RelayCommand<Hyperlink>(HyperlinkClick),
                     TextDecorations = null,
-                    Foreground = ThemeManager.AccentSolidColorBrush,
-                    MouseOverForeground = ThemeManager.AccentLightSolidColorBrush,
+                    Foreground = ThemeManager.AccentDarkSolidColorBrush,
+                    MouseOverForeground = ThemeManager.AccentSolidColorBrush,
                 };
                 hyperlink.CommandParameter = hyperlink;
-                hyperlink.Click += Hyperlink_Click;
                 paragraph.Inlines.Add(hyperlink);
             }
             catch (Exception)
             {
                 ;
             }
-        }
-
-        private static void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private static void HyperlinkClick(Hyperlink hyperlink)

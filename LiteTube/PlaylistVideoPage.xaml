@@ -231,7 +231,7 @@
                                      Foreground="{StaticResource PhoneSubtleBrush}"
                                      Padding="0"
                                      UseLayoutRounding="True"
-                                     Margin="-10,12,-10,10"/>
+                                     Margin="-12,12,-12,12"/>
                     </Grid>
                 </ScrollViewer>
             </phone:PivotItem>

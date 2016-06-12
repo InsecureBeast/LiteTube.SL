@@ -79,7 +79,7 @@ namespace LiteTube
                 if (string.IsNullOrEmpty(viewModel.Description))
                     return;
 
-                HyperlinkTextBlockConverter.HighlightUrls(viewModel.Description, descriptionTextBlock);
+                HyperlinkHighlighter.HighlightUrls(viewModel.Description, descriptionTextBlock);
             };
         }
 

@@ -113,7 +113,7 @@
     <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
-    <Compile Include="Common\Tools\HyperlinkTextBlockConverter.cs" />
+    <Compile Include="Common\Tools\HyperlinkHighlighter.cs" />
     <Compile Include="Converters\LoginStatusTextConverter.cs" />
     <Compile Include="Converters\ColorValueConverter.cs" />
     <Compile Include="Converters\RelatedVideoMarginConverter.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="Common\Exceptions\LiteTubeException.cs" />
     <Compile Include="Common\ProgressIndicatorHolder.cs" />
     <Compile Include="Common\ScrollViewerMonitor.cs" />
-    <Compile Include="Common\Tools\ApplicationBarHelper.cs" />
+    <Compile Include="Common\Helpers\ApplicationBarHelper.cs" />
     <Compile Include="Common\Tools\ThemeManager.cs" />
     <Compile Include="Controls\NavigationButton.cs" />
     <Compile Include="Converters\DurationConverter.cs" />
