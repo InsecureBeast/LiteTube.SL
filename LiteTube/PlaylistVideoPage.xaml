@@ -287,6 +287,8 @@
                                          PosterSource="{Binding VideoViewModel.ImagePath}"
                                          RelatedItems="{Binding PlaylistVideosViewModel.Items}"
                                          LoadMoreCommand="{Binding PlaylistVideosViewModel.LoadMoreCommand}"
+                                         VideoQualityItems="{Binding VideoViewModel.VideoQualities}"
+                                         SelectedVideoQualityItem="{Binding VideoViewModel.SelectedVideoQualityItem, Mode=TwoWay, UpdateSourceTrigger=Default}"
                                          IsFullScreenVisible="True"
                                          IsFullScreenEnabled="True"
                                          VerticalAlignment="Center"

@@ -387,8 +387,14 @@ namespace LiteTube.ViewModels
             get { return _selectedVideoQualityItem; }
             set
             {
+                var firstLoad = true;
+                if (_selectedVideoQualityItem != null)
+                    firstLoad = false;
+
                 _selectedVideoQualityItem = value;
-                ChangeVideoQuality();
+                if (!firstLoad)
+                    ChangeVideoQuality();
+
                 NotifyOfPropertyChanged(() => SelectedVideoQualityItem);
             }
         }
@@ -416,7 +422,6 @@ namespace LiteTube.ViewModels
                 try
                 {
                     IsPaid = false;
-                    VideoUri = null;
                     var url = await _getDataSource().GetVideoUriAsync(videoId, quality);
                     VideoUri = url.Uri;
                 }
@@ -573,6 +578,7 @@ namespace LiteTube.ViewModels
             if (SelectedVideoQualityItem == null)
                 return;
 
+            VideoUri = null;
             SetVideoUri(_videoId, SelectedVideoQualityItem.Quality);
             SettingsHelper.SaveQuality(SelectedVideoQualityItem.QualityName);
         }
