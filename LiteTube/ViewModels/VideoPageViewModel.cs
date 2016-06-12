@@ -448,11 +448,19 @@ namespace LiteTube.ViewModels
         private async void Dislike()
         {
             await SetRating();
+            if (_isDisliked)
+                Dislikes++;
+            else
+                Dislikes--;
         }
 
         private async void Like()
         {
             await SetRating();
+            if (_isLiked)
+                Likes++;
+            else
+                Likes--;
         }
 
         private bool CanLike()

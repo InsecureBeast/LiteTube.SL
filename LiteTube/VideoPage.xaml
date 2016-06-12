@@ -100,7 +100,7 @@
                             <StackPanel Orientation="Horizontal"
                                     Grid.Column="2"
                                     Grid.Row="1" >
-                                <ToggleButton Command="{Binding LikeCommand}"
+                                <ToggleButton Command="{Binding DislikeCommand}"
                                               IsChecked="{Binding IsDisliked, Mode=TwoWay}"
                                               Style="{StaticResource AppBarToggleButtonStyle}">
                                     <TextBlock Text="&#xe19e;"
