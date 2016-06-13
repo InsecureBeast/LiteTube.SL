@@ -9,6 +9,7 @@ namespace LiteTube.Common.Tools
         private static SolidColorBrush _accentSolidColorBrush;
         private static SolidColorBrush _accentDarkSolidColorBrush;
         private static SolidColorBrush _accentLightSolidColorBrush;
+        private static SolidColorBrush _inverseForegroundBrush;
 
         private static void GoToLightTheme()
         {
@@ -64,16 +65,16 @@ namespace LiteTube.Common.Tools
             if (darkBackgroundVisibility == Visibility.Visible)
             {
                 //Theme is Dark
-                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
-                if (inverseForegroundBrush != null)
-                    inverseForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
+                _inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (_inverseForegroundBrush != null)
+                    _inverseForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
             }
             else
             {
                 //Theme is Light
-                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
-                if (inverseForegroundBrush != null)
-                    inverseForegroundBrush.Color = Color.FromArgb(255, 0, 0, 0);
+                _inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (_inverseForegroundBrush != null)
+                    _inverseForegroundBrush.Color = Color.FromArgb(255, 0, 0, 0);
             }
         }
 
@@ -90,6 +91,11 @@ namespace LiteTube.Common.Tools
         public static SolidColorBrush AccentLightSolidColorBrush
         {
             get { return _accentLightSolidColorBrush; }
+        }
+
+        public static SolidColorBrush InverseForegroundBrush
+        {
+            get { return _inverseForegroundBrush; }
         }
 
         private static void GoToDarkTheme()
@@ -146,16 +152,16 @@ namespace LiteTube.Common.Tools
             if (darkBackgroundVisibility == Visibility.Visible)
             {
                 //Theme is Dark
-                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
-                if (inverseForegroundBrush != null)
-                    inverseForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
+                _inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (_inverseForegroundBrush != null)
+                    _inverseForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
             }
             else
             {
                 //Theme is Light
-                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
-                if (inverseForegroundBrush != null)
-                    inverseForegroundBrush.Color = Color.FromArgb(255, 0, 0, 0);
+                _inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (_inverseForegroundBrush != null)
+                    _inverseForegroundBrush.Color = Color.FromArgb(255, 0, 0, 0);
             }
         }
 

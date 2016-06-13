@@ -4,6 +4,7 @@ using System.Windows;
 using LiteTube.Common.Helpers;
 using Microsoft.Phone.Controls;
 using LiteTube.Resources;
+using LiteTube.Common.Tools;
 
 namespace LiteTube.Common
 {
@@ -21,7 +22,8 @@ namespace LiteTube.Common
                 Message = GetMessage(exception),
                 Caption = GetTitle(),
                 RightButtonContent = GetCloseCommandCaption(),
-                LeftButtonContent = GetSendCommandCaption()
+                LeftButtonContent = GetSendCommandCaption(),
+                Foreground = ThemeManager.InverseForegroundBrush
             };
 
             messageBox.Dismissed += MessageBoxOnDismissed;
