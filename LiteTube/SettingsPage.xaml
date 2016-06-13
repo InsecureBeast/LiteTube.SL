@@ -16,13 +16,9 @@
     shell:SystemTray.IsVisible="True"
     Style="{StaticResource PageThemeStyle}">
     <phone:PhoneApplicationPage.Resources>
-        <DataTemplate x:Key="FullModeTemplate" >
-            <TextBlock Text="{Binding}"
-                       FontSize="{StaticResource PhoneFontSizeLarge}"
-                       FontFamily="{StaticResource PhoneFontFamilyLight}"
-                       Foreground="{StaticResource InverseForegroundBrush}"
-                       Margin="0,0,0,15"
-                       x:Name="TextBlock">
+        
+        <DataTemplate x:Key="FullModeTemplate">
+            <Grid>
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="SelectionStates">
                         <VisualState x:Name="Unselected"/>
@@ -40,8 +36,16 @@
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
-            </TextBlock>
+                <TextBlock Text="{Binding}"
+                           FontSize="{StaticResource PhoneFontSizeLarge}"
+                           FontFamily="{StaticResource PhoneFontFamilyLight}"
+                           Foreground="{StaticResource InverseForegroundBrush}"
+                           Margin="0,0,0,15"
+                           Name="TextBlock">
+                </TextBlock>
+            </Grid>
         </DataTemplate>
+        
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
