@@ -16,11 +16,31 @@
     shell:SystemTray.IsVisible="True"
     Style="{StaticResource PageThemeStyle}">
     <phone:PhoneApplicationPage.Resources>
-        <DataTemplate x:Key="FullModeTemplate">
+        <DataTemplate x:Key="FullModeTemplate" >
             <TextBlock Text="{Binding}"
-                        Style="{StaticResource PhoneTextLargeStyle}"
-                        Foreground="White"
-                        Margin="0,0,0,15"/>
+                       FontSize="{StaticResource PhoneFontSizeLarge}"
+                       FontFamily="{StaticResource PhoneFontFamilyLight}"
+                       Foreground="{StaticResource InverseForegroundBrush}"
+                       Margin="0,0,0,15"
+                       x:Name="TextBlock">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="SelectionStates">
+                        <VisualState x:Name="Unselected"/>
+                        <VisualState x:Name="Selected">
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames
+                                    Storyboard.TargetName="TextBlock"
+                                    Storyboard.TargetProperty="Foreground"
+                                    Duration="0">
+                                    <DiscreteObjectKeyFrame
+                                        Value="{StaticResource PhoneAccentBrush}"
+                                        KeyTime="0"/>
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </TextBlock>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
     

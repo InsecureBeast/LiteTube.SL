@@ -15,7 +15,7 @@
                 <ResourceDictionary Source="Controls/LoadingListView.xaml"/>
                 <ResourceDictionary Source="Controls/NavigationButton.xaml"/>
                 <ResourceDictionary Source="Themes/Icons.xaml"/>
-                <ResourceDictionary Source="Themes/generic.xaml"/>
+                <ResourceDictionary Source="Themes/Generic.xaml"/>
                 <ResourceDictionary Source="Themes/Button.xaml"/>
                 <ResourceDictionary Source="Themes/ToggleButton.xaml"/>
                 <ResourceDictionary Source="Themes/TextBox.xaml"/>

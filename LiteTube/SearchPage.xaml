@@ -38,6 +38,7 @@
                                      MinimumPrefixLength="2"
                                      FilterMode="ContainsCaseSensitive"
                                      Populating="SearchBox_OnPopulating"
+                                     Style="{StaticResource AutoCompleteBoxStyle}"
                                      x:Uid="SearchBox"
                                      x:Name="SearchBox"
                                      KeyUp="TextBox_KeyUp"

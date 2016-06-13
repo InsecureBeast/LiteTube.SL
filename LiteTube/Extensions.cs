@@ -27,5 +27,15 @@ namespace LiteTube
             float adjusted = difference * amount;
             return start + adjusted;
         }
+
+        public static Color Invert(this Color originalColor)
+        {
+            Color invertedColor = new Color();
+            invertedColor.R = (byte)(255 - (float)originalColor.R);
+            invertedColor.G = (byte)(255 - (float)originalColor.G);
+            invertedColor.B = (byte)(255 - (float)originalColor.B);
+            invertedColor.A = originalColor.A;
+            return invertedColor;
+        }
     }
 }

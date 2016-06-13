@@ -59,6 +59,22 @@ namespace LiteTube.Common.Tools
             var playlistSelectedBrush = Application.Current.Resources["PlaylistSelectedBrush"] as SolidColorBrush;
             if (playlistSelectedBrush != null)
                 playlistSelectedBrush.Color = Color.FromArgb(255, 200, 200, 200);
+
+            Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
+            if (darkBackgroundVisibility == Visibility.Visible)
+            {
+                //Theme is Dark
+                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (inverseForegroundBrush != null)
+                    inverseForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
+            }
+            else
+            {
+                //Theme is Light
+                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (inverseForegroundBrush != null)
+                    inverseForegroundBrush.Color = Color.FromArgb(255, 0, 0, 0);
+            }
         }
 
         public static SolidColorBrush AccentSolidColorBrush
@@ -125,6 +141,22 @@ namespace LiteTube.Common.Tools
             var playlistSelectedBrush = Application.Current.Resources["PlaylistSelectedBrush"] as SolidColorBrush;
             if (playlistSelectedBrush != null)
                 playlistSelectedBrush.Color = Color.FromArgb(255, 58, 58, 58);
+
+            Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
+            if (darkBackgroundVisibility == Visibility.Visible)
+            {
+                //Theme is Dark
+                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (inverseForegroundBrush != null)
+                    inverseForegroundBrush.Color = Color.FromArgb(255, 255, 255, 255);
+            }
+            else
+            {
+                //Theme is Light
+                var inverseForegroundBrush = Application.Current.Resources["InverseForegroundBrush"] as SolidColorBrush;
+                if (inverseForegroundBrush != null)
+                    inverseForegroundBrush.Color = Color.FromArgb(255, 0, 0, 0);
+            }
         }
 
         public static void SetApplicationTheme(ApplicationTheme theme)
