@@ -387,15 +387,18 @@ namespace LiteTube.ViewModels
             get { return _selectedVideoQualityItem; }
             set
             {
+                if (value == null)
+                    return;
+
                 var firstLoad = true;
                 if (_selectedVideoQualityItem != null)
                     firstLoad = false;
 
                 _selectedVideoQualityItem = value;
+                NotifyOfPropertyChanged(() => SelectedVideoQualityItem);
+
                 if (!firstLoad)
                     ChangeVideoQuality();
-
-                NotifyOfPropertyChanged(() => SelectedVideoQualityItem);
             }
         }
 

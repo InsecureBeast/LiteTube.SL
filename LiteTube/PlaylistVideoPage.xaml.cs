@@ -149,18 +149,11 @@ namespace LiteTube
 
         private void PlayerOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
         {
-            var viewModel = DataContext as PlaylistVideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            SettingsHelper.SaveCurrentVideoId(viewModel.VideoViewModel.VideoUri.AbsolutePath);
             LayoutHelper.InvokeFromUiThread(() =>
             {
-                if (!_resumed)
-                {
-                    player.Position = TimeSpan.FromSeconds(0);
+                var viewModel = DataContext as PlaylistVideoPageViewModel;
+                if (viewModel == null)
                     return;
-                }
 
                 _resumed = false;
                 player.Position = _playerPosition;
@@ -192,7 +185,7 @@ namespace LiteTube
         {
             NavigationHelper.OnNavigatedTo(this);
 
-            SubscribeDescrtption();
+            SubscribeModelEvents();
             _sensor.OrientationChanged += Sensor_OrientationChanged;
             
             if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
@@ -434,6 +427,12 @@ namespace LiteTube
             binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.ImagePath") };
             player.SetBinding(LiteTubePlayer.PosterSourceProperty, binding);
 
+            binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.VideoQualities") };
+            player.SetBinding(LiteTubePlayer.VideoQualityItemsProperty, binding);
+
+            var binding1 = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.SelectedVideoQualityItem"), Mode = BindingMode.TwoWay };
+            player.SetBinding(LiteTubePlayer.SelectedVideoQualityItemProperty, binding1);
+
             playerBg.Children.Clear();
             playerBg.Children.Add(player);
 
@@ -488,7 +487,7 @@ namespace LiteTube
             SetVisibilityControls(Visibility.Visible);
         }
 
-        private void SubscribeDescrtption()
+        private void SubscribeModelEvents()
         {
             var viewModel = DataContext as PlaylistVideoPageViewModel;
             if (viewModel == null)
@@ -496,19 +495,25 @@ namespace LiteTube
 
             viewModel.PropertyChanged += (s, a) =>
             {
-                if (a.PropertyName != "VideoViewModel")
-                    return;
-
-                viewModel.VideoViewModel.PropertyChanged += (ss, aa) =>
+                if (a.PropertyName == "VideoViewModel")
                 {
-                    if (aa.PropertyName != "Description")
-                        return;
+                    viewModel.VideoViewModel.PropertyChanged += (ss, aa) =>
+                    {
+                        if (aa.PropertyName == "Description")
+                        {
 
-                    if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
-                        return;
+                            if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
+                                return;
 
-                    HyperlinkHighlighter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
-                };
+                            HyperlinkHighlighter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
+                        }
+
+                        if (aa.PropertyName == "SelectedVideoQualityItem")
+                        {
+                            _playerPosition = player.Position;
+                        }
+                    };
+                }
             };
         }
     }
