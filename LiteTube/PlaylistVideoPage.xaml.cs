@@ -181,7 +181,7 @@ namespace LiteTube
             _sendApplicationBarButton.IsEnabled = !string.IsNullOrEmpty(CommentTextBox.Text);
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
 
@@ -276,30 +276,6 @@ namespace LiteTube
             }
         }
 
-        private async void OnInteractiveChanged(object sender, RoutedEventArgs e)
-        {
-            if (!player.IsFullScreen)
-                return;
-
-            await LoadRelatedItems();
-        }
-
-        private async Task LoadRelatedItems()
-        {
-            if (_isRelatedLoading)
-                return;
-
-            _isRelatedLoading = true;
-            var viewModel = DataContext as PlaylistVideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            if (!viewModel.PlaylistVideosViewModel.IsEmpty)
-                await viewModel.PlaylistVideosViewModel.FirstLoad();
-               
-            _isRelatedLoading = false;
-        }
-
         private void Home_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoHome();
@@ -318,7 +294,7 @@ namespace LiteTube
             playerBg.Height = player.Height;
         }
 
-        private async void SetPlayerFullScreenState()
+        private void SetPlayerFullScreenState()
         {
             player.IsFullScreen = true;
             player.Width = _normalHeight;
@@ -330,8 +306,6 @@ namespace LiteTube
             PaidTextBlock.Height = player.Height;
             playerBg.Width = player.Width;
             playerBg.Height = player.Height;
-            
-            await LoadRelatedItems();
         }
 
         private void SetVisibilityControls(Visibility visibility)
@@ -449,7 +423,6 @@ namespace LiteTube
         {
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
-            player.IsInteractiveChanged += OnInteractiveChanged;
             player.IsSkipNextChanged += OnSkipNextChanged;
             player.IsSkipPreviousChanged += OnSkipPreviousChanged;
             player.MediaEnded += OnMediaEnded;
@@ -459,7 +432,6 @@ namespace LiteTube
         private void UnsubscribePlayerEvents(LiteTubePlayer player)
         {
             player.MediaOpened -= PlayerOnMediaOpened;
-            player.IsInteractiveChanged -= OnInteractiveChanged;
             player.MediaEnded -= OnMediaEnded;
             player.CurrentStateChanged -= OnCurrentStateChanged;
         }

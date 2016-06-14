@@ -707,7 +707,7 @@
                         <Border Name="BackgroundSquare">
                             <TextBlock Text="{Binding QualityName}"
                                        Name="text"
-                                       Margin="6,0,6,4"/>
+                                       Margin="6,1,6,4"/>
                         </Border>
                     </Border>
                 </ControlTemplate>
@@ -1022,7 +1022,7 @@
                     </StackPanel>
 
                     <!--Video quality listbox-->
-                    <ListBox Margin="10" 
+                    <ListBox Margin="10,10,0,0" 
                              Foreground="White"
                              ItemsSource="{Binding MediaPlayer.VideoQualityItems}"
                              ItemContainerStyle="{StaticResource VideoQualityItemStyle}"
