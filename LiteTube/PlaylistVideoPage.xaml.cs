@@ -101,6 +101,12 @@ namespace LiteTube
                 return;
 
             viewModel.SkipNext();
+            Skip();
+        }
+
+        private void Skip()
+        {
+            _playerPosition = TimeSpan.FromSeconds(0);
             ScrollIntoView(player, RelatedListBoxName);
             ScrollIntoView(playlistPresenter);
         }
@@ -112,8 +118,7 @@ namespace LiteTube
                 return;
 
             viewModel.SkipPrevious();
-            ScrollIntoView(player, RelatedListBoxName);
-            ScrollIntoView(playlistPresenter);
+            Skip();
         }
 
         private void OnSkipNextChanged(object sender, RoutedEventArgs e)
@@ -123,8 +128,7 @@ namespace LiteTube
                 return;
 
             viewModel.SkipNext();
-            ScrollIntoView(player, RelatedListBoxName);
-            ScrollIntoView(playlistPresenter);
+            Skip();
         }
 
         private void ScrollIntoView(FrameworkElement element, string name = null)

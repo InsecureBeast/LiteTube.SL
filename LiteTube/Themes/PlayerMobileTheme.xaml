@@ -1027,7 +1027,8 @@
                              ItemsSource="{Binding MediaPlayer.VideoQualityItems}"
                              ItemContainerStyle="{StaticResource VideoQualityItemStyle}"
                              SelectedItem="{Binding MediaPlayer.SelectedVideoQualityItem, Mode=TwoWay}"
-                             Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource BooleanToVisibilityConverter}}">
+                             Visibility="{Binding MediaPlayer.IsFullScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             IsEnabled="{Binding MediaPlayer.IsRelatedItemsEnabled}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal"/>
