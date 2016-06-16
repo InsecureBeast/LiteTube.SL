@@ -342,6 +342,7 @@ namespace LiteTube
                 IsSkipAheadVisible = false,
                 IsSkipBackVisible = false,
                 AllowMediaStartingDeferrals = false,
+                AutoPlay = true,
                 VideoTitle = viewModel.Title,
                 ChannelTitle = viewModel.ChannelTitle,
                 RelatedItems = viewModel.RelatedVideosViewModel.Items,

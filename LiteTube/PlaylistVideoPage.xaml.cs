@@ -381,6 +381,7 @@ namespace LiteTube
                 IsSkipNextVisible = true,
                 IsSkipPreviousVisible = true,
                 AllowMediaStartingDeferrals = false,
+                AutoPlay = true,
                 Position = TimeSpan.FromSeconds(0)
             };
 

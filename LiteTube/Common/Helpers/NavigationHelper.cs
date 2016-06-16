@@ -23,9 +23,12 @@ namespace LiteTube.Common.Helpers
             if (page.DataContext != null)
                 return;
 
-            var model = PhoneApplicationService.Current.State["model"];
-            page.DataContext = model;
-            PhoneApplicationService.Current.State["model"] = null;
+            object model;
+            if (PhoneApplicationService.Current.State.TryGetValue("model", out model))
+            {
+                page.DataContext = model;
+                PhoneApplicationService.Current.State["model"] = null;
+            }
         }
 
         public static void GoToFindPage()
