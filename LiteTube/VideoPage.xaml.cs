@@ -39,8 +39,7 @@ namespace LiteTube
         {
             InitializeComponent();
             Pivot.SelectionChanged += PivotOnSelectionChanged;
-            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
-            player.MediaOpened += PlayerOnMediaOpened;
+            SubscribePlayerEvents(player);
             player.IsInteractiveChanged += OnInteractiveChanged;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
@@ -358,8 +357,7 @@ namespace LiteTube
             var binding1 = new Binding { Source = viewModel, Path = new PropertyPath("SelectedVideoQualityItem"), Mode = BindingMode.TwoWay };
             player.SetBinding(LiteTubePlayer.SelectedVideoQualityItemProperty, binding1);
 
-            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
-            player.MediaOpened += PlayerOnMediaOpened;
+            SubscribePlayerEvents(player);
             player.RestoreMediaState(_playerState);
 
             var oldPlayer = playerBg.Children.FirstOrDefault(x => x is LiteTubePlayer);
@@ -377,6 +375,9 @@ namespace LiteTube
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
         {
             _playerPosition = player.Position;
+
+            UnsubscribePlayerEvents(player);
+
             player.Close(); // shut things like ads down.
             player.Dispose();
         }
@@ -392,6 +393,51 @@ namespace LiteTube
 
             SetPlayerNormalState();
             SetVisibilityControls(Visibility.Visible);
+        }
+
+        private void OnCurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            var media = e.OriginalSource as MediaElement;
+            if (media == null)
+                return;
+
+            switch (media.CurrentState)
+            {
+                case System.Windows.Media.MediaElementState.Closed:
+                    player.IsRelatedItemsEnabled = false;
+                    break;
+                case System.Windows.Media.MediaElementState.Opening:
+                    player.IsRelatedItemsEnabled = true;
+                    break;
+                case System.Windows.Media.MediaElementState.Individualizing:
+                    break;
+                case System.Windows.Media.MediaElementState.AcquiringLicense:
+                    break;
+                case System.Windows.Media.MediaElementState.Buffering:
+                    break;
+                case System.Windows.Media.MediaElementState.Playing:
+                    break;
+                case System.Windows.Media.MediaElementState.Paused:
+                    break;
+                case System.Windows.Media.MediaElementState.Stopped:
+                    break;
+                default:
+                    player.IsRelatedItemsEnabled = true;
+                    break;
+            }
+        }
+
+        private void SubscribePlayerEvents(LiteTubePlayer player)
+        {
+            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            player.MediaOpened += PlayerOnMediaOpened;
+            player.CurrentStateChanged += OnCurrentStateChanged;
+        }
+
+        private void UnsubscribePlayerEvents(LiteTubePlayer player)
+        {
+            player.MediaOpened -= PlayerOnMediaOpened;
+            player.CurrentStateChanged -= OnCurrentStateChanged;
         }
     }
 }
