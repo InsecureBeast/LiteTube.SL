@@ -338,7 +338,11 @@ namespace LiteTube
 
         private void CopyVideoUrl_Click(object sender, EventArgs eventArgs)
         {
-            VideoPageViewHelper.CopyVideoUrl(DataContext as VideoPageViewModel);
+            var viewModel = DataContext as PlaylistVideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            VideoPageViewHelper.CopyVideoUrl(viewModel.VideoViewModel);
         }
 
         private void Current_Activated(object sender, ActivatedEventArgs e)
