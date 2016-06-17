@@ -97,12 +97,12 @@ namespace LiteTube
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
-        public static PhoneApplicationFrame RootFrame { get; private set; }
+        public static TransitionFrame RootFrame { get; private set; }
 
         // prevents crash when trying to navigate to current page
         public static void NavigateTo(string url)
         {
-            var frame = Current.RootVisual as PhoneApplicationFrame;
+            var frame = Current.RootVisual as TransitionFrame;
             if ((frame == null) || (url == frame.CurrentSource.ToString()))
                 return;
             frame.Navigate(new Uri(url, UriKind.Relative));
