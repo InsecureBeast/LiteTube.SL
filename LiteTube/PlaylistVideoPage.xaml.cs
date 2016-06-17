@@ -185,7 +185,7 @@ namespace LiteTube
             _sendApplicationBarButton.IsEnabled = !string.IsNullOrEmpty(CommentTextBox.Text);
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
 
@@ -328,12 +328,20 @@ namespace LiteTube
 
         private void Send_Click(object sender, EventArgs e)
         {
-            VideoPageViewHelper.SendComment(DataContext as VideoPageViewModel);
+             var viewModel = DataContext as PlaylistVideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            VideoPageViewHelper.SendComment(viewModel.VideoViewModel);
         }
 
         private void AddToFavorites_Click(object sender, EventArgs e)
         {
-            VideoPageViewHelper.AddToFavorites(DataContext as VideoPageViewModel);
+            var viewModel = DataContext as PlaylistVideoPageViewModel;
+            if (viewModel == null)
+                return;
+
+            VideoPageViewHelper.AddToFavorites(viewModel.VideoViewModel);
         }
 
         private void CopyVideoUrl_Click(object sender, EventArgs eventArgs)

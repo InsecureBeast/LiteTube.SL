@@ -61,10 +61,10 @@ namespace LiteTube.DataModel
         private readonly IYouTubeService _youTubeServiceControl;
         private YouTubeService _youTubeService;
         private string _historyPlayListId;
-        private string _uploadPlayList;
-        private string _watchLaterPlayList;
-        private string _likedPlayList;
-        private string _favorites;
+        private string _uploadPlayListId;
+        private string _watchLaterPlayListId;
+        private string _likedPlayListId;
+        private string _favoritesPlaylistId;
         private readonly SubscriptionsHolder _subscriptionsHolder;
         private readonly YouTubeWeb _youTubeWeb;
         private const long SEARCH_PAGE_MAX_RESULT = 45;
@@ -223,12 +223,12 @@ namespace LiteTube.DataModel
 
         public string FavoritesPlaylistId
         {
-            get { return _watchLaterPlayList; }
+            get { return _favoritesPlaylistId; }
         }
 
         public string WatchLaterPlaylistId
         {
-            get { return _watchLaterPlayList; }
+            get { return _watchLaterPlayListId; }
         }
 
         public async Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken)
@@ -568,10 +568,10 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return MResponceList.Empty;
 
-            if (string.IsNullOrEmpty(_favorites))
+            if (string.IsNullOrEmpty(_favoritesPlaylistId))
                 return MResponceList.Empty;
 
-            var playListItems = await GetPlaylistItems(_favorites, maxResult, nextPageToken);
+            var playListItems = await GetPlaylistItems(_favoritesPlaylistId, maxResult, nextPageToken);
             return playListItems;
         }
 
@@ -580,10 +580,10 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return MResponceList.Empty;
 
-            if (string.IsNullOrEmpty(_likedPlayList))
+            if (string.IsNullOrEmpty(_likedPlayListId))
                 return MResponceList.Empty;
 
-            var playListItems = await GetPlaylistItems(_likedPlayList, maxResult, nextPageToken);
+            var playListItems = await GetPlaylistItems(_likedPlayListId, maxResult, nextPageToken);
             return playListItems;
         }
 
@@ -701,9 +701,9 @@ namespace LiteTube.DataModel
 
         private async Task LoadProfileInfo()
         {
-            if (_historyPlayListId == null || _uploadPlayList == null ||
-                _watchLaterPlayList == null || _likedPlayList == null ||
-                _favorites == null || _profileInfo == null)
+            if (_historyPlayListId == null || _uploadPlayListId == null ||
+                _watchLaterPlayListId == null || _likedPlayListId == null ||
+                _favoritesPlaylistId == null || _profileInfo == null)
             {
                 var youTubeService = _youTubeServiceControl.GetAuthorizedService();
                 var request = youTubeService.Channels.List("contentDetails,snippet");
@@ -721,10 +721,10 @@ namespace LiteTube.DataModel
                 }
 
                 _historyPlayListId = item.ContentDetails.RelatedPlaylists.WatchHistory;
-                _uploadPlayList = item.ContentDetails.RelatedPlaylists.Uploads;
-                _watchLaterPlayList = item.ContentDetails.RelatedPlaylists.WatchLater;
-                _likedPlayList = item.ContentDetails.RelatedPlaylists.Likes;
-                _favorites = item.ContentDetails.RelatedPlaylists.Favorites;
+                _uploadPlayListId = item.ContentDetails.RelatedPlaylists.Uploads;
+                _watchLaterPlayListId = item.ContentDetails.RelatedPlaylists.WatchLater;
+                _likedPlayListId = item.ContentDetails.RelatedPlaylists.Likes;
+                _favoritesPlaylistId = item.ContentDetails.RelatedPlaylists.Favorites;
 
                 var name = item.Snippet.Title;
                 var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
@@ -737,10 +737,10 @@ namespace LiteTube.DataModel
         private void ClearProfileInfo()
         {
             _historyPlayListId = null;
-            _uploadPlayList = null;
-            _watchLaterPlayList = null;
-            _likedPlayList = null;
-            _favorites = null;
+            _uploadPlayListId = null;
+            _watchLaterPlayListId = null;
+            _likedPlayListId = null;
+            _favoritesPlaylistId = null;
             _profileInfo = null;
         }
 
