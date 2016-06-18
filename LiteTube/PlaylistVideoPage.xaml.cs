@@ -106,7 +106,6 @@ namespace LiteTube
 
         private void Skip()
         {
-            _playerPosition = TimeSpan.FromSeconds(0);
             ScrollIntoView(player, RelatedListBoxName);
             ScrollIntoView(playlistPresenter);
         }
@@ -502,6 +501,8 @@ namespace LiteTube
                             _playerPosition = player.Position;
                         }
                     };
+
+                    _playerPosition = TimeSpan.FromSeconds(0);
                 }
             };
         }

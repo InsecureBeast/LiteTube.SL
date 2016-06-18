@@ -9,6 +9,8 @@ namespace LiteTube.ViewModels
 {
     public class PlaylistVideoPageViewModel : PropertyChangedBase
     {
+        public event EventHandler PlaylistItemChanged;
+
         private VideoPageViewModel _videoViewModel;
         private readonly IConnectionListener _connectionListener;
         private readonly Func<IDataSource> _getDataSource;
@@ -33,6 +35,7 @@ namespace LiteTube.ViewModels
             {
                 _videoViewModel = value;
                 NotifyOfPropertyChanged(() => VideoViewModel);
+                PlaylistItemChanged?.Invoke(this, new EventArgs());
             }
         }
 
