@@ -1038,6 +1038,8 @@
                     <!--Video quality listbox-->
                     <ListBox Margin="10,10,0,0" 
                              Foreground="White"
+                             HorizontalAlignment="Left"
+                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
                              ItemsSource="{Binding MediaPlayer.VideoQualityItems}"
                              ItemContainerStyle="{StaticResource VideoQualityItemStyle}"
                              SelectedItem="{Binding MediaPlayer.SelectedVideoQualityItem, Mode=TwoWay}"
