@@ -127,6 +127,12 @@ namespace LiteTube.DataClasses
     {
         public MPlaylistLocalization(PlaylistLocalization playlistLocalization)
         {
+            if (playlistLocalization == null)
+            {
+                Description = string.Empty;
+                Title = string.Empty;
+                return;
+            }
             Description = playlistLocalization.Description;
             Title = playlistLocalization.Title;
         }

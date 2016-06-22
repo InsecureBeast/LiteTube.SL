@@ -487,14 +487,14 @@ namespace LiteTube
                 {
                     viewModel.VideoViewModel.PropertyChanged += (ss, aa) =>
                     {
-                        if (aa.PropertyName == "Description")
-                        {
+                        //if (aa.PropertyName == "Description")
+                        //{
 
-                            if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
-                                return;
+                        //    if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
+                        //        return;
 
-                            HyperlinkHighlighter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
-                        }
+                        //    HyperlinkHighlighter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
+                        //}
 
                         if (aa.PropertyName == "SelectedVideoQualityItem")
                         {

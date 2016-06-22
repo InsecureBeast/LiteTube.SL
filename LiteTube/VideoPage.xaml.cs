@@ -70,16 +70,16 @@ namespace LiteTube
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
                 return;
-
+            
             viewModel.PropertyChanged += (s, a) =>
             {
-                if (a.PropertyName == "Description")
-                {
-                    if (string.IsNullOrEmpty(viewModel.Description))
-                        return;
+                //if (a.PropertyName == "Description")
+                //{
+                //    if (string.IsNullOrEmpty(viewModel.Description))
+                //        return;
 
-                    HyperlinkHighlighter.HighlightUrls(viewModel.Description, descriptionTextBlock);
-                }
+                //    HyperlinkHighlighter.HighlightUrls(viewModel.Description, descriptionTextBlock);
+                //}
                 
 
                 if (a.PropertyName == "SelectedVideoQualityItem")
