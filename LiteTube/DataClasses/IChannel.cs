@@ -1,17 +1,14 @@
 ﻿using Google.Apis.YouTube.v3.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LiteTube.DataClasses
 {
     public interface IChannelStatistics
     {
-        UInt64? ViewCount { get; }
-        UInt64? CommentCount { get; }
-        UInt64? SubscriberCount { get; }
+        ulong? ViewCount { get; }
+        ulong? CommentCount { get; }
+        ulong? SubscriberCount { get; }
         bool? HiddenSubscriberCount { get; }
-        UInt64? VideoCount { get; }
+        ulong? VideoCount { get; }
     }
     
     public interface IChannel
@@ -33,9 +30,14 @@ namespace LiteTube.DataClasses
             
             Id = channel.Id;
             if (channel.BrandingSettings != null)
+                if (channel.BrandingSettings.Image != null)
                 Image = channel.BrandingSettings.Image.BannerMobileImageUrl;
-            Title = channel.Snippet.Localized.Title;
-            Description = channel.Snippet.Localized.Description;
+            
+            if (channel.Snippet == null)
+                return;
+
+            Title = channel.Snippet.Title;
+            Description = channel.Snippet.Description;
             Thumbnails = new MThumbnailDetails(channel.Snippet.Thumbnails);
             Statistics = new MChannelStatistics(channel.Statistics);
         }
@@ -45,7 +47,12 @@ namespace LiteTube.DataClasses
             if (channel == null)
                 return;
 
-            Id = channel.Id.ChannelId;
+            if (channel.Id != null)
+                Id = channel.Id.ChannelId;
+            
+            if (channel.Snippet == null)
+                return;
+
             Title = channel.Snippet.Title;
             Description = channel.Snippet.Description;
             Thumbnails = new MThumbnailDetails(channel.Snippet.Thumbnails);
