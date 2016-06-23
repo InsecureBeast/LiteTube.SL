@@ -30,9 +30,14 @@ namespace LiteTube.DataClasses
             
             Id = channel.Id;
             if (channel.BrandingSettings != null)
+            {
                 if (channel.BrandingSettings.Image != null)
-                Image = channel.BrandingSettings.Image.BannerMobileImageUrl;
-            
+                    Image = channel.BrandingSettings.Image.BannerMobileImageUrl;
+            }
+
+            Thumbnails = new MThumbnailDetails();
+            Statistics = new MChannelStatistics();
+
             if (channel.Snippet == null)
                 return;
 
@@ -49,7 +54,10 @@ namespace LiteTube.DataClasses
 
             if (channel.Id != null)
                 Id = channel.Id.ChannelId;
-            
+
+            Thumbnails = new MThumbnailDetails();
+            Statistics = new MChannelStatistics();
+
             if (channel.Snippet == null)
                 return;
 
@@ -104,11 +112,15 @@ namespace LiteTube.DataClasses
     {
         public MChannelStatistics(ChannelStatistics channelStatistics)
         {
-            this.ViewCount = channelStatistics.ViewCount;
-            this.CommentCount = channelStatistics.CommentCount;
-            this.SubscriberCount = channelStatistics.SubscriberCount;
-            this.HiddenSubscriberCount = channelStatistics.HiddenSubscriberCount;
-            this.VideoCount = channelStatistics.VideoCount;
+            ViewCount = channelStatistics.ViewCount;
+            CommentCount = channelStatistics.CommentCount;
+            SubscriberCount = channelStatistics.SubscriberCount;
+            HiddenSubscriberCount = channelStatistics.HiddenSubscriberCount;
+            VideoCount = channelStatistics.VideoCount;
+        }
+
+        public MChannelStatistics()
+        {
         }
 
         public ulong? ViewCount

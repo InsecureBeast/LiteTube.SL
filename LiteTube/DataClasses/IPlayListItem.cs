@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Google.Apis.YouTube.v3.Data;
 
 namespace LiteTube.DataClasses
@@ -8,7 +6,6 @@ namespace LiteTube.DataClasses
     public interface IPlaylistItemContentDetails
     {
         string EndAt { get; }
-        string ETag { get; }
         string Note { get; }
         string StartAt { get; }
         string VideoId { get; }
@@ -17,7 +14,6 @@ namespace LiteTube.DataClasses
     public interface IResourceId
     {
         string ChannelId { get; }
-        string ETag { get; }
         string Kind { get; }
         string PlaylistId { get; }
         string VideoId { get; }
@@ -25,7 +21,6 @@ namespace LiteTube.DataClasses
 
     public interface IThumbnail
     {
-        string ETag { get; }
         long? Height { get; }
         string Url { get; }
         long? Width { get; }
@@ -33,7 +28,6 @@ namespace LiteTube.DataClasses
 
     public interface IThumbnailDetails
     {
-        string ETag { get; }
         string GetThumbnailUrl();
     }
 
@@ -42,7 +36,6 @@ namespace LiteTube.DataClasses
         string ChannelId { get; }
         string ChannelTitle { get; }
         string Description { get; }
-        string ETag { get; }
         string PlaylistId { get; }
         long? Position { get; }
         DateTime? PublishedAt { get; }
@@ -54,13 +47,11 @@ namespace LiteTube.DataClasses
 
     public interface IPlaylistItemStatus
     {
-        string ETag { get; }
         string PrivacyStatus { get; } //TODO enum
     }
 
     public interface IPlayListItem
     {
-        string ETag { get; }
         string Id { get; }
         IPlaylistItemContentDetails ContentDetails { get; }
         IPlaylistItemSnippet Snippet { get; }
@@ -74,7 +65,6 @@ namespace LiteTube.DataClasses
             ContentDetails = new MPlaylistItemContentDetails(playListItem.ContentDetails);
             Snippet = new MPlaylistItemSnippet(playListItem.Snippet);
             Status = new MPlaylistItemStatus(playListItem.Status);
-            ETag = playListItem.ETag;
             Id = playListItem.Id;
         }
 
@@ -96,12 +86,6 @@ namespace LiteTube.DataClasses
             private set;
         }
 
-        public string ETag
-        {
-            get;
-            private set;
-        }
-
         public string Id
         {
             get;
@@ -114,19 +98,12 @@ namespace LiteTube.DataClasses
         public MPlaylistItemContentDetails(PlaylistItemContentDetails contentDetails)
         {
             EndAt = contentDetails.EndAt;
-            ETag = contentDetails.ETag;
             Note = contentDetails.Note;
             StartAt = contentDetails.StartAt;
             VideoId = contentDetails.VideoId;
         }
 
         public string EndAt
-        {
-            get;
-            private set;
-        }
-
-        public string ETag
         {
             get;
             private set;
@@ -156,19 +133,12 @@ namespace LiteTube.DataClasses
         public MResourceId(ResourceId resourceId)
         {
             ChannelId = resourceId.ChannelId;
-            ETag = resourceId.ETag;
             Kind = resourceId.Kind;
             PlaylistId = resourceId.PlaylistId;
             VideoId = resourceId.VideoId;
         }
 
         public string ChannelId
-        {
-            get;
-            private set;
-        }
-
-        public string ETag
         {
             get;
             private set;
@@ -200,16 +170,9 @@ namespace LiteTube.DataClasses
             if (thumbnail == null)
                 return;
 
-            ETag = thumbnail.ETag;
             Height = thumbnail.Height;
             Url = thumbnail.Url;
             Width = thumbnail.Width;
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
         }
 
         public long? Height
@@ -254,18 +217,10 @@ namespace LiteTube.DataClasses
             _medium = new MThumbnail(thumbnailDetails.Medium);
             _standard = new MThumbnail(thumbnailDetails.Standard);
             _default = new MThumbnail(thumbnailDetails.Default__);
-
-            ETag = thumbnailDetails.ETag;
         }
 
         public MThumbnailDetails()
         {
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
         }
 
         public string GetThumbnailUrl()
@@ -291,7 +246,6 @@ namespace LiteTube.DataClasses
             ChannelId = playlistItemSnippet.ChannelId;
             ChannelTitle = playlistItemSnippet.ChannelTitle;
             Description = playlistItemSnippet.Description;
-            ETag = playlistItemSnippet.ETag;
             PlaylistId = playlistItemSnippet.PlaylistId;
             Position = playlistItemSnippet.Position;
             PublishedAt = playlistItemSnippet.PublishedAt;
@@ -314,12 +268,6 @@ namespace LiteTube.DataClasses
         }
 
         public string Description
-        {
-            get;
-            private set;
-        }
-
-        public string ETag
         {
             get;
             private set;
@@ -375,14 +323,7 @@ namespace LiteTube.DataClasses
             if (playlistStatus == null)
                 return;
 
-            ETag = playlistStatus.ETag;
             PrivacyStatus = playlistStatus.PrivacyStatus;
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
         }
 
         public string PrivacyStatus
