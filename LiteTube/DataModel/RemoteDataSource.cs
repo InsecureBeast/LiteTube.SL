@@ -272,7 +272,7 @@ namespace LiteTube.DataModel
         {
             var res = await _youTubeWeb.GetRelatedVideo(videoId, _youTubeServiceControl.OAuthToken, pageToken);
             if (res == null)
-                return null;
+                return MVideoList.Empty;
 
             var videoIds = new StringBuilder();
             foreach (var id in res.Ids)
@@ -282,6 +282,9 @@ namespace LiteTube.DataModel
             }
 
             var videos = await GetVideo(videoIds.ToString());
+            if (videoIds == null)
+                return MVideoList.Empty;
+
             videos.NextPageToken = res.NextPageToken;
             return new MVideoList(videos);
             //var request = _youTubeService.Search.List("snippet,id");

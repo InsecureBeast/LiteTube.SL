@@ -15,7 +15,6 @@ namespace LiteTube.ViewModels
     public class VideoPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
     {
         private Uri _videoUri;
-        private IChannel _channel;
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
@@ -455,10 +454,12 @@ namespace LiteTube.ViewModels
             LayoutHelper.InvokeFromUiThread(async () =>
             {
                 var channelInfo = await _getDataSource().GetChannel(channelId);
+                if (channelInfo == null)
+                    return;
+
                 ChannelImage = channelInfo.Thumbnails.GetThumbnailUrl();
                 ChannelSubscribers = channelInfo.Statistics.SubscriberCount;
                 ChannelVideoCount = channelInfo.Statistics.VideoCount;
-                _channel = channelInfo;
                 IsSubscribed = _getDataSource().IsSubscribed(_channelId);
             });
         }
@@ -522,8 +523,8 @@ namespace LiteTube.ViewModels
 
         private void LoadVideoItem(string videoId)
         {
-            RelatedVideosViewModel = new RelatedVideosViewModel(VideoId, _getDataSource, _connectionListener);
-            CommentsViewModel = new CommentsViewModel(VideoId, _getDataSource, _connectionListener);
+            RelatedVideosViewModel = new RelatedVideosViewModel(videoId, _getDataSource, _connectionListener);
+            CommentsViewModel = new CommentsViewModel(videoId, _getDataSource, _connectionListener);
 
             LayoutHelper.InvokeFromUiThread(async () =>
             {
@@ -534,19 +535,26 @@ namespace LiteTube.ViewModels
                 if (videoItem == null)
                     return;
 
-                Title = videoItem.Details.Title;
                 ChannelTitle = videoItem.ChannelTitle;
-                Description = videoItem.Details.Description;
-                ImagePath = videoItem.Thumbnails.GetThumbnailUrl();
-                Duration = videoItem.Details.Duration;
-                ViewCount = videoItem.Details.Video.Statistics.ViewCount;
+                ChannelId = videoItem.ChannelId;
+
+                if (videoItem.Details != null)
+                {
+                    Title = videoItem.Details.Title;
+                    Description = videoItem.Details.Description;
+                    Duration = videoItem.Details.Duration;
+                    ViewCount = videoItem.Details.Video.Statistics.ViewCount;
+                    SetLikesAndDislikes(videoItem.Details.Video);
+                }
+
+                if (videoItem.Thumbnails != null)
+                    ImagePath = videoItem.Thumbnails.GetThumbnailUrl();
+
                 if (videoItem.PublishedAt != null) 
                     PublishedAt = videoItem.PublishedAt.Value.ToString("D");
-                ChannelId = videoItem.ChannelId;
                 
-                SetLikesAndDislikes(videoItem.Details.Video);
                 SetChannelInfo(_channelId);
-                SetVideoRating(VideoId);
+                SetVideoRating(videoId);
                 var defaultQuality = SettingsHelper.GetQuality();
                 var quality = _qualityConverter.GetQualityEnum(defaultQuality);
                 SetVideoUri(videoId, quality);
