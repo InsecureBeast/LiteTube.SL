@@ -11,7 +11,6 @@ namespace LiteTube.ViewModels
             Title = category.Title;
             CategoryId = category.Id;
             ChannelId = category.ChannelId;
-            Image = category.Image;
         }
 
         public string Title
@@ -30,12 +29,6 @@ namespace LiteTube.ViewModels
         {
             get;
             private set;
-        }
-
-        public string Image
-        {
-            get; 
-            private set; 
         }
 
         public override string Id

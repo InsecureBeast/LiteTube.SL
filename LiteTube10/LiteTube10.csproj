@@ -230,12 +230,6 @@
     <Compile Include="..\LiteTube\DataClasses\IResponceList.cs">
       <Link>DataClasses\IResponceList.cs</Link>
     </Compile>
-    <Compile Include="..\LiteTube\DataClasses\ISnippet.cs">
-      <Link>DataClasses\ISnippet.cs</Link>
-    </Compile>
-    <Compile Include="..\LiteTube\DataClasses\ISnippetList.cs">
-      <Link>DataClasses\ISnippetList.cs</Link>
-    </Compile>
     <Compile Include="..\LiteTube\DataClasses\ISubscriptionList.cs">
       <Link>DataClasses\ISubscriptionList.cs</Link>
     </Compile>

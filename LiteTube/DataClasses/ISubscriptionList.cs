@@ -21,10 +21,16 @@ namespace LiteTube.DataClasses
     {
         public MSubscription(Subscription subscription)
         {
-            ChannelId = subscription.Snippet.ResourceId.ChannelId;
-            Title = subscription.Snippet.Title;
-            Description = subscription.Snippet.Description;
-            Thumbnails = new MThumbnailDetails(subscription.Snippet.Thumbnails);
+            var snippet = subscription.Snippet;
+            if (snippet == null)
+                return;
+
+            if (snippet.ResourceId != null)
+                ChannelId = snippet.ResourceId.ChannelId;
+
+            Title = snippet.Title;
+            Description = snippet.Description;
+            Thumbnails = new MThumbnailDetails(snippet.Thumbnails);
         }
 
         public string ChannelId

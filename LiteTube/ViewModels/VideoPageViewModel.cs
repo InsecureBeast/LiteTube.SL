@@ -439,10 +439,10 @@ namespace LiteTube.ViewModels
             });
         }
 
-        private void SetLikesAndDislikes(IVideo video)
+        private void SetLikesAndDislikes(IVideoStatistics statistics)
         {
-            var likes = video.Statistics.LikeCount;
-            var dislike = video.Statistics.DislikeCount;
+            var likes = statistics.LikeCount;
+            var dislike = statistics.DislikeCount;
             if (likes.HasValue)
                 Likes = likes.Value;
             if (dislike.HasValue)
@@ -543,8 +543,8 @@ namespace LiteTube.ViewModels
                     Title = videoItem.Details.Title;
                     Description = videoItem.Details.Description;
                     Duration = videoItem.Details.Duration;
-                    ViewCount = videoItem.Details.Video.Statistics.ViewCount;
-                    SetLikesAndDislikes(videoItem.Details.Video);
+                    ViewCount = videoItem.Details.Statistics.ViewCount;
+                    SetLikesAndDislikes(videoItem.Details.Statistics);
                 }
 
                 if (videoItem.Thumbnails != null)

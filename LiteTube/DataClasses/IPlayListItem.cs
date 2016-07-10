@@ -153,6 +153,10 @@ namespace LiteTube.DataClasses
 
     class MResourceId : IResourceId
     {
+        private MResourceId()
+        {
+        }
+
         public MResourceId(ResourceId resourceId)
         {
             ChannelId = resourceId.ChannelId;
@@ -160,6 +164,11 @@ namespace LiteTube.DataClasses
             Kind = resourceId.Kind;
             PlaylistId = resourceId.PlaylistId;
             VideoId = resourceId.VideoId;
+        }
+
+        public static IResourceId Empty
+        {
+            get { return new MResourceId(); }
         }
 
         public string ChannelId
@@ -267,6 +276,10 @@ namespace LiteTube.DataClasses
             get;
             private set;
         }
+        public static IThumbnailDetails Empty
+        {
+            get { return new MThumbnailDetails(); }
+        }
 
         public string GetThumbnailUrl()
         {
@@ -288,17 +301,23 @@ namespace LiteTube.DataClasses
     {
         public MPlaylistItemSnippet(PlaylistItemSnippet playlistItemSnippet)
         {
-            ChannelId = playlistItemSnippet.ChannelId;
-            ChannelTitle = playlistItemSnippet.ChannelTitle;
-            Description = playlistItemSnippet.Description;
-            ETag = playlistItemSnippet.ETag;
-            PlaylistId = playlistItemSnippet.PlaylistId;
-            Position = playlistItemSnippet.Position;
-            PublishedAt = playlistItemSnippet.PublishedAt;
-            PublishedAtRaw = playlistItemSnippet.PublishedAtRaw;
-            ResourceId = new MResourceId(playlistItemSnippet.ResourceId);
-            Thumbnails = new MThumbnailDetails(playlistItemSnippet.Thumbnails);
-            Title = playlistItemSnippet.Title;
+            if (playlistItemSnippet != null)
+            {
+                ChannelId = playlistItemSnippet.ChannelId;
+                ChannelTitle = playlistItemSnippet.ChannelTitle;
+                Description = playlistItemSnippet.Description;
+                ETag = playlistItemSnippet.ETag;
+                PlaylistId = playlistItemSnippet.PlaylistId;
+                Position = playlistItemSnippet.Position;
+                PublishedAt = playlistItemSnippet.PublishedAt;
+                PublishedAtRaw = playlistItemSnippet.PublishedAtRaw;
+                ResourceId = new MResourceId(playlistItemSnippet.ResourceId);
+                Thumbnails = new MThumbnailDetails(playlistItemSnippet.Thumbnails);
+                Title = playlistItemSnippet.Title;
+                return;
+            }
+            ResourceId = MResourceId.Empty;
+            Thumbnails = MThumbnailDetails.Empty;
         }
 
         public string ChannelId

@@ -266,10 +266,7 @@ namespace LiteTube.ViewModels
                 if (item.Details == null)
                     continue;
 
-                if (item.Details.Video == null)
-                    continue;
-
-                if (itemsList.Exists(i => i.Id == item.Details.Video.Id))
+                if (itemsList.Exists(i => i.Id == item.Details.VideoId))
                     continue;
 
                 Items.Add(new VideoItemViewModel(item));

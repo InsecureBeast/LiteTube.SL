@@ -179,8 +179,6 @@
     <Compile Include="DataClasses\IPlaylistItemList.cs" />
     <Compile Include="DataClasses\IProfile.cs" />
     <Compile Include="DataClasses\IResponceList.cs" />
-    <Compile Include="DataClasses\ISnippet.cs" />
-    <Compile Include="DataClasses\ISnippetList.cs" />
     <Compile Include="DataClasses\ISubscriptionList.cs" />
     <Compile Include="DataClasses\IVideoCategory.cs" />
     <Compile Include="DataClasses\IVideoItem.cs" />
