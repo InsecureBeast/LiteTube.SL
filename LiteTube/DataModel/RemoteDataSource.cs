@@ -187,7 +187,7 @@ namespace LiteTube.DataModel
 
         public async Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken)
         {
-            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics,player");
+            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics");
             videoRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
             videoRequest.Chart = VideosResource.ListRequest.ChartEnum.MostPopular;
             videoRequest.Hl = I18nLanguages.GetHl(culture); ;
