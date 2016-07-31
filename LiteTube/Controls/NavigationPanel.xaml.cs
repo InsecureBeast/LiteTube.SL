@@ -48,7 +48,7 @@ namespace LiteTube.Controls
             var emailComposeTask = new EmailComposeTask
             {
                 Subject = string.Format("{0} feedback", AppResources.ApplicationTitle),
-                Body = string.Format("<{0}>", AppResources.FeedbackMessage),
+                Body = string.Format("{0}", AppResources.FeedbackMessage),
                 To = "pe.dmitriev@gmail.com"
             };
             emailComposeTask.Show();

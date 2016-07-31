@@ -1,4 +1,5 @@
-﻿using LiteTube.ViewModels;
+﻿using LiteTube.Common.Tools;
+using LiteTube.ViewModels;
 using Microsoft.Phone.Shell;
 using System.Linq;
 using System.Windows.Controls;
@@ -46,6 +47,9 @@ namespace LiteTube.Common.Helpers
 
         public static void GoToVideoPage(string videoId)
         {
+            //Log
+            LastRequest.VideoId = videoId; 
+
             var datasource = App.ViewModel.GetDataSource;
             var connectionListener = App.ViewModel.ConnectionListener;
             NavigationHelper.Navigate("/VideoPage.xaml?videoId=" + videoId, new VideoPageViewModel(videoId, datasource, connectionListener));
@@ -53,6 +57,7 @@ namespace LiteTube.Common.Helpers
 
         public static void GoToPLaylistPage(string playlistId)
         {
+            LastRequest.PlaylistId = playlistId;
             var datasource = App.ViewModel.GetDataSource;
             var connectionListener = App.ViewModel.ConnectionListener;
             NavigationHelper.Navigate("/PlaylistVideoPage.xaml?playlistId=" + playlistId, new PlaylistVideoPageViewModel(playlistId, datasource, connectionListener));
@@ -60,6 +65,7 @@ namespace LiteTube.Common.Helpers
 
         public static void GoToChannelPage(string channelId, string username)
         {
+            LastRequest.ChannelId = channelId;
             var datasource = App.ViewModel.GetDataSource;
             var connectionListener = App.ViewModel.ConnectionListener;
             NavigationHelper.Navigate("/ChannelPage.xaml?channelId=" + channelId, new ChannelPageViewModel(channelId, username, datasource, connectionListener));
