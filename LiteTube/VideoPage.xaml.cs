@@ -14,9 +14,8 @@ using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Linq;
-using LiteTube.Tools;
-using System.Windows.Documents;
 using System.Windows.Data;
+using LiteTube.Tools;
 
 namespace LiteTube
 {
@@ -73,14 +72,14 @@ namespace LiteTube
             
             viewModel.PropertyChanged += (s, a) =>
             {
-                //if (a.PropertyName == "Description")
-                //{
-                //    if (string.IsNullOrEmpty(viewModel.Description))
-                //        return;
+                if (a.PropertyName == "Description")
+                {
+                    if (string.IsNullOrEmpty(viewModel.Description))
+                        return;
 
-                //    HyperlinkHighlighter.HighlightUrls(viewModel.Description, descriptionTextBlock);
-                //}
-                
+                    HyperlinkHighlighter.HighlightUrls(viewModel.Description, descriptionTextBlock);
+                }
+
 
                 if (a.PropertyName == "SelectedVideoQualityItem")
                 {
@@ -97,10 +96,6 @@ namespace LiteTube
                 if (viewModel == null)
                     return;
 
-                //if (!_resumed)
-                //    return;
-
-                //_resumed = false;
                 player.Position = _playerPosition;
             });
         }

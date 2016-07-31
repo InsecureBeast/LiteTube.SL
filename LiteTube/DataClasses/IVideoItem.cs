@@ -139,8 +139,8 @@ namespace LiteTube.DataClasses
             VideoId = video.Id;
             if (video.Snippet != null)
             {
-                Title = video.Snippet.Localized.Title;
-                Description = video.Snippet.Localized.Description;
+                Title = video.Snippet.Title;
+                Description = video.Snippet.Description;
             }
             Definition = video.ContentDetails.Definition;
             Statistics = new MVideoStatistics(video.Statistics);

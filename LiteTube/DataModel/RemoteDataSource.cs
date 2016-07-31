@@ -177,9 +177,10 @@ namespace LiteTube.DataModel
 
         private async Task<VideoListResponse> GetVideo(string videoId)
         {
-            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics,player");
+            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics");
             videoRequest.Id = videoId;
             videoRequest.Key = _youTubeServiceControl.ApiKey;
+            videoRequest.PrettyPrint = true;
 
             var videoResponse = await videoRequest.ExecuteAsync();
             return videoResponse;

@@ -75,13 +75,13 @@ namespace LiteTube.Tools
                 var run2 = new Run { Text = url };
                 var hyperlink = new Hyperlink
                 {
-                    Inlines = { run2 }, 
-                    Command = new RelayCommand<Hyperlink>(HyperlinkClick),
+                    Inlines = { run2 },
+                    Command = new RelayCommand<string>(HyperlinkClick),
                     TextDecorations = null,
                     Foreground = ThemeManager.AccentDarkSolidColorBrush,
                     MouseOverForeground = ThemeManager.AccentSolidColorBrush,
+                    CommandParameter = url
                 };
-                hyperlink.CommandParameter = hyperlink;
                 paragraph.Inlines.Add(hyperlink);
             }
             catch (Exception)
@@ -90,23 +90,23 @@ namespace LiteTube.Tools
             }
         }
 
-        private static void HyperlinkClick(Hyperlink hyperlink)
+        private static void HyperlinkClick(string hyperlink)
         {
             if (hyperlink == null)
                 return;
 
-            var inline = hyperlink.Inlines.FirstOrDefault();
-            if (inline == null)
-                return;
+            //var inline = hyperlink.Inlines.FirstOrDefault();
+            //if (inline == null)
+            //    return;
 
-            var run = inline as Run;
-            if (run == null)
-                return;
+            //var run = inline as Run;
+            //if (run == null)
+            //    return;
 
-            var videoId = GetVideoId(run.Text);
-            var channelId = GetChannelId(run.Text);
-            var playlistId = GetPlaylistId(run.Text);
-            //var username = GetChannelName(run.Text);
+            var videoId = GetVideoId(hyperlink);
+            var channelId = GetChannelId(hyperlink);
+            var playlistId = GetPlaylistId(hyperlink);
+            //var username = GetChannelName(hyperlink);
 
             if (!string.IsNullOrEmpty(videoId))
             {
@@ -142,7 +142,7 @@ namespace LiteTube.Tools
 
             var task = new WebBrowserTask
             {
-                Uri = new Uri(run.Text)
+                Uri = new Uri(hyperlink)
             };
             task.Show();
         }
