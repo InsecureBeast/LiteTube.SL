@@ -118,6 +118,7 @@
     <Compile Include="Converters\ColorValueConverter.cs" />
     <Compile Include="Converters\RelatedVideoMarginConverter.cs" />
     <Compile Include="DataClasses\IPlaylistList.cs" />
+    <Compile Include="DataClasses\MActivityList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
     <Compile Include="DataModel\YouTube.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,7 +170,6 @@
     <Compile Include="Converters\TimeSpanFormatConverter.cs" />
     <Compile Include="Converters\UppercaseConverter.cs" />
     <Compile Include="DataClasses\DataClasses.cs" />
-    <Compile Include="DataClasses\IActivity.cs" />
     <Compile Include="DataClasses\IChannel.cs" />
     <Compile Include="DataClasses\IChannelList.cs" />
     <Compile Include="DataClasses\ICommentList.cs" />

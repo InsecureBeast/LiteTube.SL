@@ -216,6 +216,11 @@ namespace LiteTube.DataClasses
         private readonly IThumbnail _medium;
         private readonly IThumbnail _standard;
 
+        public static IThumbnailDetails Empty
+        {
+            get { return new MThumbnailDetails(); }
+        }
+
         public MThumbnailDetails(ThumbnailDetails thumbnailDetails)
         {
             if (thumbnailDetails == null)
@@ -252,7 +257,7 @@ namespace LiteTube.DataClasses
     {
         public MPlaylistItemSnippet(PlaylistItemSnippet playlistItemSnippet)
         {
-<            if (playlistItemSnippet != null)
+            if (playlistItemSnippet != null)
             {
                 ChannelId = playlistItemSnippet.ChannelId;
                 ChannelTitle = playlistItemSnippet.ChannelTitle;
@@ -267,7 +272,7 @@ namespace LiteTube.DataClasses
             }
             ResourceId = MResourceId.Empty;
             Thumbnails = MThumbnailDetails.Empty;
-=           ChannelId = playlistItemSnippet.ChannelId;
+            ChannelId = playlistItemSnippet.ChannelId;
             ChannelTitle = playlistItemSnippet.ChannelTitle;
             Description = playlistItemSnippet.Description;
             PlaylistId = playlistItemSnippet.PlaylistId;
