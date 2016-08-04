@@ -12,6 +12,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using LiteTube.Common.Helpers;
 using LiteTube.Resources;
+using LiteTube.Tools;
 
 namespace LiteTube
 {
@@ -53,10 +54,19 @@ namespace LiteTube
 
         private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != "IsSubscribed")
+            if (ViewModel == null)
                 return;
 
-            if (ViewModel == null)
+            if (e.PropertyName == "Description")
+            {
+                if (string.IsNullOrEmpty(ViewModel.Description))
+                    return;
+
+                HyperlinkHighlighter.HighlightUrls(ViewModel.Description, DescriptionRcTbx);
+                return;
+            }
+
+            if (e.PropertyName != "IsSubscribed")
                 return;
 
             ClearAppBar();

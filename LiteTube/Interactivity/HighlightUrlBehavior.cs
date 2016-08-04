@@ -11,11 +11,42 @@ using Microsoft.Phone.Tasks;
 
 namespace LiteTube.Interactivity
 {
-    class HighlightUrlBehavior : DependencyObject, IAttachedObject
+    public class HighlightUrlBehavior : Behavior<RichTextBox>, IAttachedObject
     {
         protected RichTextBox _richTextBox;
 
-        public void Attach(DependencyObject dependencyObject)
+        public static DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(HighlightUrlBehavior), new PropertyMetadata(false));
+
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            _richTextBox = AssociatedObject as RichTextBox;
+            if (_richTextBox == null)
+                return;
+
+            _richTextBox.Loaded += OnLoaded;
+            _richTextBox.Tap += RichTextBoxOnTap;
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+            var fe = AssociatedObject as RichTextBox;
+            if (fe == null)
+                return;
+
+            //fe.RemoveHandler(UIElement.PointerPressedEvent, new PointerEventHandler(OnPointerPressed));
+            fe.Loaded -= OnLoaded;
+            fe.Tap -= RichTextBoxOnTap;
+        }
+        /*
+        protected override Attach(DependencyObject dependencyObject)
         {
             if (dependencyObject != AssociatedObject)
             {
@@ -31,7 +62,7 @@ namespace LiteTube.Interactivity
                 _richTextBox.Tap += RichTextBoxOnTap;
             }
         }
-
+        
         public void Detach()
         {
             var fe = AssociatedObject as RichTextBox;
@@ -43,8 +74,8 @@ namespace LiteTube.Interactivity
             fe.Tap -= RichTextBoxOnTap;
             AssociatedObject = null;
         }
-
-        public DependencyObject AssociatedObject { get; private set; }
+        */
+        //public DependencyObject AssociatedObject { get; private set; }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -52,6 +83,8 @@ namespace LiteTube.Interactivity
             if (textBox == null)
                 return;
 
+            if (textBox.Tag == null)
+                return;
             var paragraph = GetParagraph(textBox.Tag.ToString());
             textBox.Blocks.Clear();
             textBox.Blocks.Add(paragraph);
@@ -83,6 +116,9 @@ namespace LiteTube.Interactivity
                 return;
 
             var underline = element as Run;
+            if (underline == null)
+                return;
+            underline.Foreground = ThemeManager.AccentSolidColorBrush;
             HyperlinkClick(underline.Text);
         }
 

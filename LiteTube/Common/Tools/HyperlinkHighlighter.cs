@@ -13,6 +13,7 @@ using Microsoft.Phone.Tasks;
 using MyToolkit.Command;
 using LiteTube.Common.Helpers;
 using LiteTube.Common.Tools;
+using System.Windows.Media;
 
 namespace LiteTube.Tools
 {
@@ -52,6 +53,10 @@ namespace LiteTube.Tools
                 return;
 
             var underline = element as Run;
+            if (underline == null)
+                return;
+
+            underline.Foreground = ThemeManager.AccentDarkSolidColorBrush;
             HyperlinkClick(underline.Text);
         }
 
@@ -111,19 +116,8 @@ namespace LiteTube.Tools
                 var run2 = new Run
                 {
                     Text = url,
-                    Foreground = ThemeManager.AccentDarkSolidColorBrush
+                    Foreground = ThemeManager.AccentSolidColorBrush
                 };
-                /*
-                var hyperlink = new Hyperlink
-                {
-                    Inlines = { run2 },
-                    Command = new RelayCommand<string>(HyperlinkClick),
-                    TextDecorations = null,
-                    Foreground = ThemeManager.AccentDarkSolidColorBrush,
-                    MouseOverForeground = ThemeManager.AccentSolidColorBrush,
-                    CommandParameter = url
-                };
-                 */
                 paragraph.Inlines.Add(run2);
             }
             catch (Exception)
@@ -134,16 +128,11 @@ namespace LiteTube.Tools
 
         private static void HyperlinkClick(string hyperlink)
         {
-            if (hyperlink == null)
+            if (string.IsNullOrEmpty(hyperlink))
                 return;
 
-            //var inline = hyperlink.Inlines.FirstOrDefault();
-            //if (inline == null)
-            //    return;
-
-            //var run = inline as Run;
-            //if (run == null)
-            //    return;
+            if (!Uri.IsWellFormedUriString(hyperlink, UriKind.Absolute))
+                return;
 
             var videoId = GetVideoId(hyperlink);
             var channelId = GetChannelId(hyperlink);
