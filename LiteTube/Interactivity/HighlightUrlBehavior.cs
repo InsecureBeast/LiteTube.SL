@@ -1,32 +1,63 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Automation.Peers;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
-using Windows.Foundation;
-using Microsoft.Phone.Tasks;
-using MyToolkit.Command;
+using System.Windows.Interactivity;
 using LiteTube.Common.Helpers;
 using LiteTube.Common.Tools;
+using Microsoft.Phone.Tasks;
 
-namespace LiteTube.Tools
+namespace LiteTube.Interactivity
 {
-    public static class HyperlinkHighlighter
+    class HighlightUrlBehavior : DependencyObject, IAttachedObject
     {
-        public static void HighlightUrls(string text, RichTextBox textBlock)
+        protected RichTextBox _richTextBox;
+
+        public void Attach(DependencyObject dependencyObject)
         {
-            var paragraph = GetParagraph(text);
-            textBlock.Blocks.Clear();
-            textBlock.Blocks.Add(paragraph);
-            textBlock.Tap += TextBlockOnTap;
+            if (dependencyObject != AssociatedObject)
+            {
+                if (AssociatedObject != null)
+                    throw new InvalidOperationException("Cannot attach behavior multiple times.");
+
+                AssociatedObject = dependencyObject;
+                _richTextBox = AssociatedObject as RichTextBox;
+                if (_richTextBox == null)
+                    return;
+
+                _richTextBox.Loaded += OnLoaded;
+                _richTextBox.Tap += RichTextBoxOnTap;
+            }
         }
 
-        private static void TextBlockOnTap(object sender, GestureEventArgs e)
+        public void Detach()
+        {
+            var fe = AssociatedObject as RichTextBox;
+            if (fe == null)
+                return;
+
+            //fe.RemoveHandler(UIElement.PointerPressedEvent, new PointerEventHandler(OnPointerPressed));
+            fe.Loaded -= OnLoaded;
+            fe.Tap -= RichTextBoxOnTap;
+            AssociatedObject = null;
+        }
+
+        public DependencyObject AssociatedObject { get; private set; }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as RichTextBox;
+            if (textBox == null)
+                return;
+
+            var paragraph = GetParagraph(textBox.Tag.ToString());
+            textBox.Blocks.Clear();
+            textBox.Blocks.Add(paragraph);
+        }
+
+        private void RichTextBoxOnTap(object sender, GestureEventArgs e)
         {
             var richTb = sender as RichTextBox;
             if (richTb == null)
@@ -48,7 +79,7 @@ namespace LiteTube.Tools
                 }
             }
 
-            if (element == null) 
+            if (element == null)
                 return;
 
             var underline = element as Run;
@@ -132,6 +163,11 @@ namespace LiteTube.Tools
             }
         }
 
+        private static void AddText(string text, Paragraph paragraph)
+        {
+            paragraph.Inlines.Add(new Run { Text = text });
+        }
+
         private static void HyperlinkClick(string hyperlink)
         {
             if (hyperlink == null)
@@ -166,13 +202,13 @@ namespace LiteTube.Tools
                 return;
             }
 
-//            if (!string.IsNullOrEmpty(username))
-//            {
-//#if SILVERLIGHT
-//                NavigationHelper.GoToChannelPage(null, username);
-//#endif
-//                return;
-//            }
+            //            if (!string.IsNullOrEmpty(username))
+            //            {
+            //#if SILVERLIGHT
+            //                NavigationHelper.GoToChannelPage(null, username);
+            //#endif
+            //                return;
+            //            }
 
             if (!string.IsNullOrEmpty(playlistId))
             {
@@ -187,11 +223,6 @@ namespace LiteTube.Tools
                 Uri = new Uri(hyperlink)
             };
             task.Show();
-        }
-
-        private static void AddText(string text, Paragraph paragraph)
-        {
-            paragraph.Inlines.Add(new Run { Text = text});
         }
 
         private static string GetVideoId(string url)
@@ -238,7 +269,11 @@ namespace LiteTube.Tools
         private static string GetPlaylistId(string url)
         {
             var listIndex = url.LastIndexOf("list=", StringComparison.Ordinal);
-            return listIndex == -1 ? string.Empty : url.Substring(listIndex + 5);
+            if (listIndex == -1)
+                return string.Empty;
+
+            return url.Substring(listIndex + 5);
         }
+       
     }
 }
