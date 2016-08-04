@@ -191,7 +191,12 @@ namespace LiteTube.Tools
             foreach (Match match in colm)
             {
                 videoId = match.Value.Substring(8, match.Value.Length - 8);
-                return videoId;
+                var ampIndex = videoId.IndexOf("&");
+                if (ampIndex == -1)
+                    return videoId;
+
+                var v = videoId.Substring(0, ampIndex);
+                return v;
             }
             return videoId;
         }
