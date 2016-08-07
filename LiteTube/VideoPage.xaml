@@ -221,11 +221,6 @@
                                      Padding="0"
                                      UseLayoutRounding="True"
                                      Margin="-12,12,-12,12"/>
-                        <!--<TextBlock Text="{Binding Description}"
-                                   Grid.Row="4"
-                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                   Margin="{StaticResource DefaultTextBlockMargin}"
-                                   TextWrapping="Wrap"/>-->
                     </Grid>
                 </ScrollViewer>
             </phone:PivotItem>
@@ -299,7 +294,9 @@
                                          VerticalAlignment="Center"
                                          IsSkipAheadVisible="False"
                                          IsSkipBackVisible="False"
-                                         AllowMediaStartingDeferrals="False">
+                                         AllowMediaStartingDeferrals="False"
+                                         IsTimeRemainingVisible="True"
+                                         IsDurationVisible="False">
                 <controls:LiteTubePlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </controls:LiteTubePlayer.RenderTransform>

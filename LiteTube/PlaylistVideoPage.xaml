@@ -301,7 +301,9 @@
                                          IsSkipBackVisible="False"
                                          IsSkipNextVisible="True"
                                          IsSkipPreviousVisible="True"
-                                         AllowMediaStartingDeferrals="False">
+                                         AllowMediaStartingDeferrals="False"
+                                         IsTimeRemainingVisible="True"
+                                         IsDurationVisible="False">
                 <controls:LiteTubePlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </controls:LiteTubePlayer.RenderTransform>
