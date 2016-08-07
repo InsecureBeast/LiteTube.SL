@@ -75,6 +75,15 @@
             </phone:PivotItem>
 
             <!--Pivot item three-->
+            <phone:PivotItem Name="PlaylistsItem"
+                             Header="{Binding Path=LocalizedResources.Playlists, Source={StaticResource LocalizedStrings}}"
+                             Margin="{StaticResource DefaultListBoxMargin}">
+                <ContentPresenter x:Name="MyPlaylistList"
+                                  Content="{Binding MyPlaylistListViewModel}"
+                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+            </phone:PivotItem>
+
+            <!--Pivot item four-->
             <phone:PivotItem Name="FavoritesItem"
                              Header="{Binding Path=LocalizedResources.Favorites, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
@@ -83,7 +92,7 @@
                                   ContentTemplate="{StaticResource LoadingListViewContextMenu}"/>
             </phone:PivotItem>
 
-            <!--Pivot item four-->
+            <!--Pivot item five-->
             <phone:PivotItem Name="LikedItem"
                              Header="{Binding Path=LocalizedResources.LikedVideos, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
@@ -92,7 +101,7 @@
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
-            <!--Pivot item five-->
+            <!--Pivot item six-->
             <phone:PivotItem Name="UploadedItem"
                              Header="{Binding Path=LocalizedResources.Uploaded, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
@@ -102,7 +111,7 @@
 
             </phone:PivotItem>
             
-            <!--Pivot item six-->
+            <!--Pivot item seven-->
             <phone:PivotItem Name="HistoryItem"
                              Header="{Binding Path=LocalizedResources.WatchHistory, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">

@@ -155,6 +155,19 @@
                 </StackPanel>
             </ListBoxItem>-->
 
+            <ListBoxItem common:ItemClickCommand.Command="{Binding MyPlaylistsCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource PlayListsIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.Playlists, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>
+            
             <ListBoxItem common:ItemClickCommand.Command="{Binding FavoritesCommand}"
                           Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="0,0,0,10">

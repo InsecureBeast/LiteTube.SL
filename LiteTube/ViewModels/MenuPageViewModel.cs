@@ -27,6 +27,7 @@ namespace LiteTube.ViewModels
         private readonly FavoritesViewModel _favoritesViewModel;
         private readonly LikedViewModel _likedViewModel;
         private readonly UploadedPageViewModel _uploadedPageViewModel;
+        private readonly MyPlaylistListViewModel _myPlaylistListViewModel;
         private readonly ObservableCollection<GuideCategoryNodeViewModel> _categories;
 
         private readonly Common.RelayCommand _selectCommand;
@@ -59,6 +60,7 @@ namespace LiteTube.ViewModels
                 _favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
                 _likedViewModel = new LikedViewModel(_getDataSource, connectionListener);
                 _uploadedPageViewModel = new UploadedPageViewModel(_getDataSource, connectionListener);
+                _myPlaylistListViewModel = new MyPlaylistListViewModel(_getDataSource, connectionListener);
             }
             
             _selectCommand = new Common.RelayCommand(SelectItems);
@@ -112,6 +114,11 @@ namespace LiteTube.ViewModels
         public UploadedPageViewModel UploadedPageViewModel
         {
             get { return _uploadedPageViewModel; }
+        }
+
+        public MyPlaylistListViewModel MyPlaylistListViewModel
+        {
+            get { return _myPlaylistListViewModel; }
         }
 
         public ICommand SelectCommand
@@ -220,21 +227,26 @@ namespace LiteTube.ViewModels
                     break;
 
                 case 3:
+                    Debug.WriteLine("playlists");
+                    await MyPlaylistListViewModel.FirstLoad();
+                    break;
+
+                case 4:
                     Debug.WriteLine("favorites");
                     await FavoritesViewModel.FirstLoad();
                     break;
 
-                case 4:
+                case 5:
                     Debug.WriteLine("liked");
                     await LikedViewModel.FirstLoad();
                     break;
 
-                case 5:
+                case 6:
                     Debug.WriteLine("uploaded");
                     await UploadedPageViewModel.FirstLoad();
                     break;
 
-                case 6:
+                case 7:
                     Debug.WriteLine("history");
                     await HistoryPageViewModel.FirstLoad();
                     break;

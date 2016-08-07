@@ -242,5 +242,10 @@ namespace LiteTube.DataModel
         {
             return new Task<IVideoList>(() => MVideoList.Empty);
         }
+
+        public Task<IPlaylistList> GetMyPlaylistList(string nextPageToken)
+        {
+            return new Task<IPlaylistList>(() => MPlaylistList.Empty);
+        }
     }
 }

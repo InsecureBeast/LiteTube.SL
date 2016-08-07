@@ -556,5 +556,19 @@ namespace LiteTube.DataModel
                 throw e;
             }
         }
+
+        public async Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken)
+        {
+            try
+            {
+                Debug.WriteLine("GetMyPlaylistList method called");
+                return await _remoteDataSource.GetMyPlaylistList(maxResult, nextPageToken);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetMyPlaylistList method called with exception " + e.Message);
+                throw;
+            }
+        }
     }
 }

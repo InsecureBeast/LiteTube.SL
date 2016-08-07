@@ -248,6 +248,7 @@
     <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PlaylistNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\MyPlaylistListViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistListViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideosViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideoPageViewModel.cs" />

@@ -116,4 +116,17 @@
         </Border>
     </DataTemplate>
 
+    <DataTemplate x:Key="PlayListsIcon">
+        <Border Background="#FFAE2A26"
+                Width="70"
+                Height="70"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Path Width="40" 
+                  Height="35" 
+                  Stretch="Fill" 
+                  Fill="White" 
+                  Data="M19,9H2V11H19V9M19,5H2V7H19V5M2,15H15V13H2V15M17,13V19L22,16L17,13Z"/>
+        </Border>
+    </DataTemplate>
 </ResourceDictionary>

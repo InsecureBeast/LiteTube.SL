@@ -15,7 +15,8 @@ namespace LiteTube.ViewModels
     {
         private readonly string _channelId;
 
-        public PlaylistListViewModel(string channelId, Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null) 
+        public PlaylistListViewModel(string channelId, Func<IDataSource> getGeDataSource, 
+            IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null) 
             : base(getGeDataSource, connectionListener, changeProgressIndicator)
         {
             _channelId = channelId;
@@ -23,6 +24,9 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
+            if (string.IsNullOrEmpty(_channelId))
+                return MResponceList.Empty;
+
             return await _getGeDataSource().GetChannelPlaylistList(_channelId, nextPageToken);
         }
 
