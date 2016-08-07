@@ -156,6 +156,11 @@ namespace LiteTube.DataModel
             get { return string.Empty; }
         }
 
+        public string UploadedPlaylistId
+        {
+            get { return string.Empty; }
+        }
+
         public Task AddToFavorites(string videoId)
         {
             return Task.Run(() => { });

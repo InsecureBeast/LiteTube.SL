@@ -326,4 +326,7 @@
   <data name="PlaylistNotFoundErrorMessage" xml:space="preserve">
     <value>Плейлист не существует.</value>
   </data>
+  <data name="Uploaded" xml:space="preserve">
+    <value>загруженные видео</value>
+  </data>
 </root>

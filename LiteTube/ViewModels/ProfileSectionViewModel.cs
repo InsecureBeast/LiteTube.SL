@@ -20,6 +20,7 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _videoCategoryCommand;
         private readonly RelayCommand<FrameworkElement> _favoritesCommand;
         private readonly RelayCommand<FrameworkElement> _likedCommand;
+        private readonly RelayCommand<FrameworkElement> _uploadedCommand;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Func<IDataSource> _getDataSource;
@@ -44,6 +45,7 @@ namespace LiteTube.ViewModels
             _videoCategoryCommand = new RelayCommand<FrameworkElement>(VideoCategories);
             _favoritesCommand = new RelayCommand<FrameworkElement>(Favorites);
             _likedCommand = new RelayCommand<FrameworkElement>(Liked);
+            _uploadedCommand = new RelayCommand<FrameworkElement>(Uploaded);
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _getDataSource().Subscribe(this);
@@ -79,6 +81,11 @@ namespace LiteTube.ViewModels
         public ICommand LikedCommand
         {
             get { return _likedCommand; }
+        }
+
+        public ICommand UploadedCommand
+        {
+            get { return _uploadedCommand; }
         }
 
         public ICommand LoginCommand
@@ -192,12 +199,12 @@ namespace LiteTube.ViewModels
 
         private void GetHistory(FrameworkElement control)
         {
-            NavigateTo(5);
+            NavigateTo(6);
         }
 
         private void VideoCategories(FrameworkElement control)
         {
-            //var index = IsAuthorized ? 5 : 0;
+            //var index = IsAuthorized ? 6 : 0;
             NavigateTo(0);
         }
 
@@ -209,6 +216,11 @@ namespace LiteTube.ViewModels
         private void Liked(FrameworkElement control)
         {
             NavigateTo(4);
+        }
+
+        private void Uploaded(FrameworkElement control)
+        {
+            NavigateTo(5);
         }
 
         private void NavigateTo(int index)

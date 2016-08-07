@@ -262,6 +262,7 @@
     <Compile Include="ViewModels\Search\SearchBaseViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SubscriptionChannelsViewModel.cs" />
+    <Compile Include="ViewModels\UploadedPageViewModel.cs" />
     <Compile Include="ViewModels\VideoCategorySectionViewModel.cs" />
     <Compile Include="ViewModels\VideoPageViewModel.cs" />
     <Compile Include="ViewModels\MostPopularViewModel.cs" />

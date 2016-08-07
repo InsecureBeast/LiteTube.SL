@@ -93,6 +93,16 @@
             </phone:PivotItem>
 
             <!--Pivot item five-->
+            <phone:PivotItem Name="UploadedItem"
+                             Header="{Binding Path=LocalizedResources.Uploaded, Source={StaticResource LocalizedStrings}}"
+                             Margin="{StaticResource DefaultListBoxMargin}">
+                <ContentPresenter x:Name="UploadedList"
+                                  Content="{Binding UploadedPageViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
+
+            </phone:PivotItem>
+            
+            <!--Pivot item six-->
             <phone:PivotItem Name="HistoryItem"
                              Header="{Binding Path=LocalizedResources.WatchHistory, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">

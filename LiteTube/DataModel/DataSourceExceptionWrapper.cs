@@ -86,6 +86,11 @@ namespace LiteTube.DataModel
             get { return _remoteDataSource.WatchLaterPlaylistId; }
         }
 
+        public string UploadedPlaylistId
+        {
+            get { return _remoteDataSource.UploadedPlaylistId; }
+        }
+
         public async Task<IEnumerable<IVideoCategory>> GetCategories(string culture)
         {
             try

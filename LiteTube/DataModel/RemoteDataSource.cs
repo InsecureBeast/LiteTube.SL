@@ -21,6 +21,7 @@ namespace LiteTube.DataModel
         bool IsAuthorized { get; }
         string FavoritesPlaylistId { get; }
         string WatchLaterPlaylistId { get; }
+        string UploadedPlaylistId { get; }
         Task<IEnumerable<IVideoCategory>> GetCategories(string culture);
         Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken);
         Task<IVideoList> GetRecommended(string pageToken);
@@ -230,6 +231,11 @@ namespace LiteTube.DataModel
         public string WatchLaterPlaylistId
         {
             get { return _watchLaterPlayListId; }
+        }
+
+        public string UploadedPlaylistId
+        {
+            get { return _uploadPlayListId; }
         }
 
         public async Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken)

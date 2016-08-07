@@ -41,6 +41,7 @@ namespace LiteTube.DataModel
 #region playlists
         string FavoritesPlaylistId { get; }
         string WatchLaterPlaylistId { get; }
+        string UploadedPlaylistId { get; }
         Task AddToFavorites(string videoId);
         Task RemoveFromFavorites(string playlistItemId);
         Task AddToPlaylist(string videoId, string playlistId);
@@ -262,6 +263,11 @@ namespace LiteTube.DataModel
         public string WatchLaterPlaylistId
         {
             get { return _remoteDataSource.WatchLaterPlaylistId; }
+        }
+
+        public string UploadedPlaylistId
+        {
+            get { return _remoteDataSource.UploadedPlaylistId; }
         }
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId)
