@@ -15,7 +15,7 @@ namespace LiteTube.ViewModels
         {
             _videoList = videoList;
             _uniqueId = videoList.GetHashCode().ToString();
-            _showAdv = true;
+            _showAdv = SettingsHelper.IsAdvVisible;
         }
 
         public MostPopularViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)

@@ -329,4 +329,7 @@
   <data name="Uploaded" xml:space="preserve">
     <value>загруженные видео</value>
   </data>
+  <data name="AdvertisingPost" xml:space="preserve">
+    <value>Рекламная запись</value>
+  </data>
 </root>

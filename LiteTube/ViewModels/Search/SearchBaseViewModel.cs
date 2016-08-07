@@ -1,4 +1,5 @@
-﻿using LiteTube.Common.Tools;
+﻿using LiteTube.Common.Helpers;
+using LiteTube.Common.Tools;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System;
@@ -17,6 +18,7 @@ namespace LiteTube.ViewModels.Search
             _searchType = searchType;
             IsLoading = false;
             IsEmpty = false;
+            _showAdv = SettingsHelper.IsAdvVisible;
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
