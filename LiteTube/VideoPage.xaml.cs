@@ -33,13 +33,14 @@ namespace LiteTube
         private TimeSpan _playerPosition;
         private bool _isFullScreen = false;
         private bool _isRelatedLoading = false;
+        private bool _isPaused = false;
 
         public VideoPage()
         {
             InitializeComponent();
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             SubscribePlayerEvents(player);
-            player.IsInteractiveChanged += OnInteractiveChanged;
+            
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
@@ -97,6 +98,14 @@ namespace LiteTube
                     return;
 
                 player.Position = _playerPosition;
+
+                if (_isPaused)
+                {
+                    player.PlayResume();
+                    player.Position = _playerPosition;
+                    player.Pause();
+                    _isPaused = false;    
+                }
             });
         }
 
@@ -428,12 +437,22 @@ namespace LiteTube
             player.IsFullScreenChanged += PlayerIsFullScreenChanged;
             player.MediaOpened += PlayerOnMediaOpened;
             player.CurrentStateChanged += OnCurrentStateChanged;
+            player.IsInteractiveChanged += OnInteractiveChanged;
+            player.Paused += Player_Paused;
         }
 
         private void UnsubscribePlayerEvents(LiteTubePlayer player)
         {
             player.MediaOpened -= PlayerOnMediaOpened;
             player.CurrentStateChanged -= OnCurrentStateChanged;
+            player.IsFullScreenChanged -= PlayerIsFullScreenChanged;
+            player.IsInteractiveChanged -= OnInteractiveChanged;
+        }
+
+        private void Player_Paused(object sender, RoutedEventArgs e)
+        {
+            _isPaused = true;
+            _playerPosition = player.Position;
         }
     }
 }
