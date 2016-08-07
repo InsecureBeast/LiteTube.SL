@@ -110,6 +110,7 @@
     <Compile Include="Common\SessionType.cs" />
     <Compile Include="Common\Tools\LastRequest.cs" />
     <Compile Include="Common\Tools\Theme.cs" />
+    <Compile Include="Controls\ListBoxTemplateSelector.cs" />
     <Compile Include="Controls\LiteTubePlayer.cs" />
     <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="ViewModels\HistoryPageViewModel.cs" />
     <Compile Include="ViewModels\LikedViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\AddNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\ChannelNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
@@ -382,6 +384,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdMediator.config" />
     <None Include="app.config" />
     <None Include="Properties\AssemblyInfo.cs.tmpl" />
     <None Include="DataModel\client_secrets.json" />
@@ -481,7 +484,20 @@
       <HintPath>packages\Google.Apis.YouTube.v3.1.12.0.417\lib\portable-net45+netcore45+wpa81+wp8\Google.Apis.YouTube.v3.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile.Common, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile.UI, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Maps, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <HintPath>packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
       <Private>True</Private>
