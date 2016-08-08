@@ -18,7 +18,7 @@ namespace LiteTube.ViewModels.Search
             _searchType = searchType;
             IsLoading = false;
             IsEmpty = false;
-            _showAdv = SettingsHelper.IsAdvVisible;
+            ShowAdv = SettingsHelper.IsAdvVisible;
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)

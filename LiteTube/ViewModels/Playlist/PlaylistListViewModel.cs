@@ -67,16 +67,35 @@ namespace LiteTube.ViewModels
         private void AddPlaylistItems(IEnumerable<IPlaylist> items)
         {
             var itemsList = Items.ToList();
-            foreach (var item in items)
+            var itemsArray = items.ToArray();
+            for (int i = 0; i < itemsArray.Length; i++)
             {
+                var item = itemsArray[i];
                 if (item.ContentDetails == null)
                     continue;
 
-                if (itemsList.Exists(i => i.Id == item.Id))
+                if (itemsList.Exists(c => c.Id == item.Id))
                     continue;
+
+                if (i % 20 == 0 && i != 0 && ShowAdv)
+                {
+                    Items.Add(new AddNodeViewModel());
+                }
 
                 Items.Add(new PlaylistNodeViewModel(item));
             }
+
+            //var itemsList = Items.ToList();
+            //foreach (var item in items)
+            //{
+            //    if (item.ContentDetails == null)
+            //        continue;
+
+            //    if (itemsList.Exists(i => i.Id == item.Id))
+            //        continue;
+
+            //    Items.Add(new PlaylistNodeViewModel(item));
+            //}
         }
     }
 }

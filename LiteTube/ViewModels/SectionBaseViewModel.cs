@@ -31,7 +31,6 @@ namespace LiteTube.ViewModels
         protected readonly IConnectionListener _connectionListener;
         protected Frame _frame;
         protected bool _hasItems;
-        protected bool _showAdv = false;
         private readonly Common.RelayCommand _loadMoreCommand;
         private readonly RelayCommand<NavigationObject> _itemClickCommand;
         private readonly Common.RelayCommand _selectCommand;
@@ -188,6 +187,11 @@ namespace LiteTube.ViewModels
             get { return _deleteCommand; }
         }
 
+        public bool ShowAdv
+        {
+            get; set;
+        }
+
         public void SetNavigationFrame(Frame frame)
         {
             _frame = frame;
@@ -272,10 +276,9 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(c => c.Id == item.Details.VideoId))
                     continue;
 
-                if (i % 20 == 0 && i != 0 && _showAdv)
+                if (i % SettingsHelper.AdvCount == 0 && i != 0 && ShowAdv)
                 {
                     Items.Add(new AddNodeViewModel());
-                    continue;
                 }
 
                 Items.Add(new VideoItemViewModel(item));
