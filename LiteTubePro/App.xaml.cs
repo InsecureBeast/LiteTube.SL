@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
+using LiteTube.Core;
+using LiteTube.Core.Common;
+using LiteTube.Core.Common.Exceptions;
+using LiteTube.Core.Common.Helpers;
+using LiteTube.Core.Common.Tools;
+using LiteTube.Core.Resources;
+using LiteTube.Core.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using LiteTubePro.Resources;
 
 namespace LiteTubePro
 {
-    public partial class App : Application
+    public partial class App : LiteTubeApp
     {
-        /// <summary>
-        /// Provides easy access to the root frame of the Phone Application.
-        /// </summary>
-        /// <returns>The root frame of the Phone Application.</returns>
-        public static PhoneApplicationFrame RootFrame { get; private set; }
-
         /// <summary>
         /// Constructor for the Application object.
         /// </summary>
@@ -57,70 +56,20 @@ namespace LiteTubePro
 
         }
 
-        // Code to execute when a contract activation such as a file open or save picker returns 
-        // with the picked file or other return values
-        private void Application_ContractActivated(object sender, Windows.ApplicationModel.Activation.IActivatedEventArgs e)
-        {
-        }
-
-        // Code to execute when the application is launching (eg, from Start)
-        // This code will not execute when the application is reactivated
-        private void Application_Launching(object sender, LaunchingEventArgs e)
-        {
-        }
-
-        // Code to execute when the application is activated (brought to foreground)
-        // This code will not execute when the application is first launched
-        private void Application_Activated(object sender, ActivatedEventArgs e)
-        {
-        }
-
-        // Code to execute when the application is deactivated (sent to background)
-        // This code will not execute when the application is closing
-        private void Application_Deactivated(object sender, DeactivatedEventArgs e)
-        {
-        }
-
-        // Code to execute when the application is closing (eg, user hit Back)
-        // This code will not execute when the application is deactivated
-        private void Application_Closing(object sender, ClosingEventArgs e)
-        {
-        }
-
-        // Code to execute if a navigation fails
-        private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            if (Debugger.IsAttached)
-            {
-                // A navigation has failed; break into the debugger
-                Debugger.Break();
-            }
-        }
-
-        // Code to execute on Unhandled Exceptions
-        private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
-        {
-            if (Debugger.IsAttached)
-            {
-                // An unhandled exception has occurred; break into the debugger
-                Debugger.Break();
-            }
-        }
-
         #region Phone application initialization
 
         // Avoid double-initialization
-        private bool phoneApplicationInitialized = false;
+        private bool _phoneApplicationInitialized = false;
 
         // Do not add any additional code to this method
         private void InitializePhoneApplication()
         {
-            if (phoneApplicationInitialized)
+            if (_phoneApplicationInitialized)
                 return;
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures
@@ -133,7 +82,7 @@ namespace LiteTubePro
             PhoneApplicationService.Current.ContractActivated += Application_ContractActivated;
 
             // Ensure we don't initialize again
-            phoneApplicationInitialized = true;
+            _phoneApplicationInitialized = true;
         }
 
         // Do not add any additional code to this method
@@ -210,7 +159,8 @@ namespace LiteTubePro
                 //
                 // If a compiler error is hit then ResourceFlowDirection is missing from
                 // the resource file.
-                FlowDirection flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
+                FlowDirection flow =
+                    (FlowDirection) Enum.Parse(typeof (FlowDirection), AppResources.ResourceFlowDirection);
                 RootFrame.FlowDirection = flow;
             }
             catch

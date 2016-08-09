@@ -1,0 +1,327 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="LiteTube.Core.VideoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:LiteTube.Core.Controls"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.ProgressIndicator="{Binding ProgressIndicator}"
+    Style="{StaticResource PageThemeStyle}"
+    UseLayoutRounding="True">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </phone:PhoneApplicationPage.Resources>
+    
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:NavigationPanel Grid.Row="0" 
+                                  x:Name="NavControl"
+                                  DataContext="{Binding NavigationPanelViewModel}"/>
+
+        <!--Pivot Control-->
+        <phone:Pivot Name="Pivot"
+                     Grid.Row="2"
+                     Margin="0,-10,0,0">
+            <!--Pivot item one-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Details, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                <ScrollViewer>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
+                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                   FontWeight="SemiBold"
+                                   TextWrapping="Wrap"
+                                   Margin="0"/>
+
+                        <Grid Grid.Row="1"
+                              x:Name="videoInfo"
+                              Margin="{StaticResource DefaultControlMargin}">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="1" 
+                                        Grid.Column="0"
+                                        Orientation="Horizontal">
+                                <ToggleButton Command="{Binding LikeCommand}"
+                                              IsChecked="{Binding IsLiked, Mode=TwoWay}"
+                                              Style="{StaticResource AppBarToggleButtonStyle}">
+                                    <TextBlock Text="&#xe19f;"
+                                               FontFamily="Segoe UI Symbol"
+                                               Width="30"
+                                               Height="30"
+                                               FontSize="20"/>
+                                </ToggleButton>
+                                <TextBlock Text="{Binding Likes}"
+                                           Style ="{StaticResource PhoneTextSmallStyle}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal"
+                                    Grid.Column="2"
+                                    Grid.Row="1" >
+                                <ToggleButton Command="{Binding DislikeCommand}"
+                                              IsChecked="{Binding IsDisliked, Mode=TwoWay}"
+                                              Style="{StaticResource AppBarToggleButtonStyle}">
+                                    <TextBlock Text="&#xe19e;"
+                                               FontFamily="Segoe UI Symbol"
+                                               Width="30"
+                                               Height="30"
+                                               FontSize="20"/>
+                                </ToggleButton>
+                                <TextBlock Text="{Binding Dislikes}"
+                                           Style ="{StaticResource PhoneTextSmallStyle}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Column="4"
+                                       Grid.Row="1" 
+                                       Style ="{StaticResource PhoneTextSmallStyle}"
+                                       VerticalAlignment="Center">
+                                <Run Text="{Binding ViewCount}" />
+                                <Run Text="{Binding Path=LocalizedResources.Views, Source={StaticResource LocalizedStrings}}"/>
+                            </TextBlock>
+                        </Grid>
+
+                        <!--Info about publisher (channel)-->
+                        <Grid Grid.Row="2"
+                              Background="{StaticResource PhoneSecondaryBackgroundBrush}"
+                              x:Name="publisherInfo"
+                              Margin="{StaticResource DefaultControlMargin}">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button BorderThickness="0"
+                                    Margin="8,8,0,8"
+                                    Command="{Binding NavigationPanelViewModel.ChannelCommand}"
+                                    CommandParameter="{Binding ChannelId}"
+                                    Style="{StaticResource ImageButtonStyle}">
+                                <Image Source="{Binding ChannelImage}" 
+                                       Stretch="UniformToFill" 
+                                       Width="60"
+                                       Height="60"/>
+                            </Button>
+
+                            <StackPanel Grid.Column="1">
+                                <HyperlinkButton Content="{Binding ChannelTitle}"
+                                                 Command="{Binding NavigationPanelViewModel.ChannelCommand}"
+                                                 CommandParameter="{Binding ChannelId}"
+                                                 FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                 HorizontalAlignment="Left"
+                                                 HorizontalContentAlignment="Left"/>
+                                <TextBlock TextWrapping="NoWrap"
+                                           Style="{StaticResource PhoneTextSmallStyle}"
+                                           TextTrimming="WordEllipsis"
+                                           HorizontalAlignment="Left">
+                                    <Run Text="{Binding ChannelSubscribers}" />
+                                    <Run Text="{Binding Path=LocalizedResources.Subscribers, Source={StaticResource LocalizedStrings}}"/>
+                                </TextBlock>
+                                <TextBlock TextWrapping="NoWrap"
+                                           TextTrimming="WordEllipsis"
+                                           Style="{StaticResource PhoneTextSmallStyle}"
+                                           HorizontalAlignment="Left">
+                                <Run Text="{Binding ChannelVideoCount}" />
+                                <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <Button Grid.Column="2"
+                                    Margin="0,0,8,0"
+                                    Width="130"
+                                    Height="60"
+                                    Command="{Binding SubscribeCommand}"
+                                    Style="{StaticResource ContentButtonStyle}"
+                                    Padding="5"
+                                    Visibility="{Binding IsSubscribed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Path=LocalizedResources.Subscribe, Source={StaticResource LocalizedStrings}}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           FontWeight="Normal"
+                                           Margin="5"/>
+                            </Button>
+
+                            <Button Grid.Column="3"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource ContentButtonStyle}"
+                                    Padding="5"
+                                    Margin="0,0,8,0"
+                                    Width="130"
+                                    Height="60"
+                                    Command="{Binding UnsubscribeCommand}"
+                                    Visibility="{Binding IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="{Binding Path=LocalizedResources.Unsubscribe, Source={StaticResource LocalizedStrings}}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           FontWeight="Normal"
+                                           Margin="5"/>
+                            </Button>
+                        </Grid>
+
+                        <TextBlock Grid.Row="3"
+                                   TextWrapping="NoWrap"
+                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                   Margin="{StaticResource DefaultControlMargin}"
+                                   x:Name="publishedTextBlock">
+                            <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}" />
+                            <Run Text="{Binding PublishedAt}"/>
+                        </TextBlock>
+
+                        <RichTextBox Grid.Row="4"
+                                     IsReadOnly="True"
+                                     TextWrapping="Wrap"
+                                     Name="descriptionTextBlock" 
+                                     Foreground="{StaticResource PhoneSubtleBrush}"
+                                     Padding="0"
+                                     UseLayoutRounding="True"
+                                     Margin="-12,12,-12,12"/>
+                    </Grid>
+                </ScrollViewer>
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.RelatedVideos, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                
+                <ContentPresenter Content="{Binding RelatedVideosViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
+            </phone:PivotItem>
+
+            <!--Pivot item three-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Comments, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Visibility="{Binding CommentsViewModel.IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Image Source="{Binding CommentsViewModel.ProfileImage}"
+                               Width="45"
+                               Height="45"
+                               VerticalAlignment="Top"/>
+                        <TextBox AcceptsReturn="True"
+                                 Grid.Column="1"
+                                 MaxHeight="150"
+                                 MinHeight="45"
+                                 Margin="8,0,0,0"
+                                 Name="CommentTextBox"
+                                 Text="{Binding CommentsViewModel.CommentText, Mode=TwoWay}"
+                                 IsEnabled="{Binding CommentsViewModel.IsAddingComment, Converter={StaticResource InverseBooleanConverter}}"/>
+                    </Grid>
+                    
+                    <ContentPresenter Content="{Binding CommentsViewModel}"
+                                      ContentTemplate="{StaticResource CommentsLoadingListView}"
+                                      Margin="{StaticResource DefaultControlMargin}"
+                                      Grid.Row="1"/>
+                </Grid>
+            </phone:PivotItem>
+        </phone:Pivot>
+
+        <Grid Grid.Row="1"
+              VerticalAlignment="Top"
+              Background="Black"
+              Name="playerBg">
+                <controls:LiteTubePlayer x:Name="player"
+                                         VideoTitle="{Binding Title}"
+                                         ChannelTitle="{Binding ChannelTitle}"
+                                         ItemClickCommand="{Binding RelatedVideosViewModel.ItemClickCommand}"
+                                         PosterSource="{Binding ImagePath}"
+                                         RelatedItems="{Binding RelatedVideosViewModel.Items}"
+                                         LoadMoreCommand="{Binding RelatedVideosViewModel.LoadMoreCommand}"
+                                         VideoQualityItems="{Binding VideoQualities}"
+                                         SelectedVideoQualityItem="{Binding SelectedVideoQualityItem, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                                         IsFullScreenVisible="True"
+                                         IsFullScreenEnabled="True"
+                                         VerticalAlignment="Center"
+                                         IsSkipAheadVisible="False"
+                                         IsSkipBackVisible="False"
+                                         AllowMediaStartingDeferrals="False"
+                                         IsTimeRemainingVisible="True"
+                                         IsDurationVisible="False">
+                <controls:LiteTubePlayer.RenderTransform>
+                    <TranslateTransform x:Name="PlayerMover"/>
+                </controls:LiteTubePlayer.RenderTransform>
+            </controls:LiteTubePlayer>
+
+            <Border Background="#BF000000"
+                    Name="PaidTextBlock"
+                    Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Text="{Binding Path=LocalizedResources.NoMatchVideo, Source={StaticResource LocalizedStrings}}"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           Margin="25,0,25,0"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource PhoneTextNormalStyle}"/>
+            </Border>
+        </Grid>
+    </Grid>
+
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click"/>
+            --><!--<shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Copy video url" x:Uid="CopyVideoUrl"/>
+            </shell:ApplicationBar.MenuItems>--><!--
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+</phone:PhoneApplicationPage>

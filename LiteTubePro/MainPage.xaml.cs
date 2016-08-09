@@ -5,12 +5,58 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using LiteTube.Core;
+using LiteTube.Core.Common.Helpers;
+using LiteTube.Core.Resources;
+using LiteTube.Core.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using LiteTubePro.Resources;
 
 namespace LiteTubePro
 {
+    public partial class MainPage : PhoneApplicationPage
+    {
+        // Constructor
+        public MainPage()
+        {
+            InitializeComponent();
+
+            // Set the data context of the listbox control to the sample data
+            DataContext = LiteTubeApp.ViewModel;
+
+            var currentApplicationBar = new ApplicationBar();
+            currentApplicationBar.Mode = ApplicationBarMode.Minimized;
+            currentApplicationBar.Buttons.Add(ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Refresh.png", AppResources.Refresh, Refresh_Click));
+            ApplicationBar = currentApplicationBar;
+        }
+
+        // Load data for the ViewModel Items
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var viewModel = DataContext as MainViewModel;
+            if (viewModel == null)
+                return;
+
+            if (viewModel.IsDataLoaded)
+                return;
+
+            if (SettingsHelper.IsContainsAuthorizationData())
+                //загрузка произойдет когда прийдет нотификация об изменении состояния контекста
+                await viewModel.GetDataSource().LoginSilently(string.Empty);
+            else
+                await viewModel.LoadData();
+        }
+
+        private async void Refresh_Click(object sender, EventArgs e)
+        {
+            var viewModel = DataContext as MainViewModel;
+            if (viewModel == null)
+                return;
+
+            await viewModel.ReloadData();
+        }
+    }
+    /*
     public partial class MainPage : PhoneApplicationPage
     {
         // Constructor
@@ -38,4 +84,5 @@ namespace LiteTubePro
         //    ApplicationBar.MenuItems.Add(appBarMenuItem);
         //}
     }
+     */
 }

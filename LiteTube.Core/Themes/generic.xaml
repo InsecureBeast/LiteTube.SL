@@ -1,0 +1,307 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    >
+
+    <Color x:Key="NavigationPanelColor">#FF2B2B2B</Color>
+    <Color x:Key="PhoneBackgroundColor">#FFF1F0EE</Color>
+    
+    <!-- Foreground colors -->
+    <SolidColorBrush x:Key="PhoneDarkAccentBrush" Color="#FFA5A5A5" />
+    <SolidColorBrush x:Key="PhoneLightAccentBrush" Color="#FFA5A5A5" />
+    <SolidColorBrush x:Key="PhoneDisabledBackgroundBrush" Color="#FFA5A5A5" />
+    <SolidColorBrush x:Key="NavigationPanelBrush" Color="{StaticResource NavigationPanelColor}" />
+    <SolidColorBrush x:Key="NavigationPanelForegroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="NavigationPanelButtonPressedBackgroundBrush" Color="#FF404040" />
+    <SolidColorBrush x:Key="PhoneSecondaryForegroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="PhoneSecondaryBackgroundBrush" Color="#50000000" />
+    <SolidColorBrush x:Key="PhoneTextBoxBackgroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="PlaylistSelectedBrush" Color="#50000000" />
+    <SolidColorBrush x:Key="InverseForegroundBrush" Color="#50000000" />
+
+    <Thickness x:Key="DefaultTextBlockMargin">0,12,0,5</Thickness>
+    <Thickness x:Key="DefaultControlMargin">0,12,0,0</Thickness>
+    <Thickness x:Key="DefaultListBoxMargin">24,12,20,0</Thickness>
+    <Thickness x:Key="DefaultContentMargin">24,0,20,0</Thickness>
+    
+    <Style x:Key="PageThemeStyle" TargetType="phone:PhoneApplicationPage">
+        <Setter Property="shell:SystemTray.BackgroundColor" Value="{StaticResource NavigationPanelColor}" />
+        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
+        <!--<Setter Property="toolkit:TransitionService.NavigationInTransition">
+            <Setter.Value>
+                <toolkit:NavigationInTransition>
+                    <toolkit:NavigationInTransition.Backward>
+                        <toolkit:TurnstileTransition Mode="BackwardIn"/>
+                    </toolkit:NavigationInTransition.Backward>
+                    <toolkit:NavigationInTransition.Forward>
+                        <toolkit:TurnstileTransition Mode="ForwardIn"/>
+                    </toolkit:NavigationInTransition.Forward>
+                </toolkit:NavigationInTransition>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="toolkit:TransitionService.NavigationOutTransition">
+            <Setter.Value>
+                <toolkit:NavigationOutTransition>
+                    <toolkit:NavigationOutTransition.Backward>
+                        <toolkit:TurnstileTransition Mode="BackwardOut"/>
+                    </toolkit:NavigationOutTransition.Backward>
+                    <toolkit:NavigationOutTransition.Forward>
+                        <toolkit:TurnstileTransition Mode="ForwardOut"/>
+                    </toolkit:NavigationOutTransition.Forward>
+                </toolkit:NavigationOutTransition>
+            </Setter.Value>
+        </Setter>-->
+    </Style>
+
+    <Style x:Key="SectionTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeLarge}"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="Margin" Value="20,10,10,20"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="PivotItemHeaderTextStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}" />
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}" />
+        <Setter Property="CharacterSpacing" Value="{StaticResource PanoramaItemCharacterSpacing}" />
+    </Style>
+
+    <Style x:Key="PanoramaContentStyle" TargetType="ContentPresenter">
+        <Setter Property="Margin" Value="15,-24,0,0"/>
+    </Style>
+
+    <Style x:Key="PivotContentStyle" TargetType="ContentPresenter">
+        <Setter Property="Margin" Value="0,-15,0,0"/>
+    </Style>
+
+    <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneSecondaryForegroundBrush}"/>
+        <Setter Property="Margin" Value="24,0,15,0"/>
+    </Style>
+
+    <Style x:Key="PhoneTextExtraSmallStyle" TargetType="TextBlock" BasedOn="{StaticResource PhoneTextBlockBase}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}" />
+    </Style>
+
+    <Style x:Key="LoadingTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeLarge}"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyLight}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="StretchedListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+
+    <Style x:Key="AutoCompleteBoxStyle" TargetType="toolkit:AutoCompleteBox">
+        <Setter Property="Background" Value="#FFF1F0EE"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PhoneTextBoxBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" Margin="8,7"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="6,0,6,4"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="toolkit:AutoCompleteBox">
+                    <Grid>
+                        <TextBox
+                            x:Name="Text"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="White"
+                            BorderThickness="0"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding FontSize}"
+                            FontStyle="{TemplateBinding FontStyle}"
+                            FontWeight="{TemplateBinding FontWeight}"
+                            Foreground="{TemplateBinding Foreground}"
+                            InputScope="{TemplateBinding InputScope}"
+                            Opacity="{TemplateBinding Opacity}"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="10"/>
+                        <Popup x:Name="Popup">
+                            <ListBox
+                                x:Name="Selector"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Gray"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontStyle="{TemplateBinding FontStyle}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                IsTabStop="False"
+                                ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                ItemTemplate="{TemplateBinding ItemTemplate}"
+                                Opacity="{TemplateBinding Opacity}"
+                                Padding="0,8"/>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="toolkit:ListPicker">
+        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="{StaticResource PhoneTouchTargetOverhang}"/>
+        <Setter Property="PickerPageUri" Value="/Microsoft.Phone.Controls.Toolkit;component/ListPicker/ListPickerPage.xaml"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="toolkit:ListPicker">
+                    <StackPanel>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PickerStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Highlighted">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="UserControl"
+                                            Storyboard.TargetProperty="Foreground"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneTextBoxForegroundBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetProperty="Background"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneTextBoxEditBackgroundColor}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetProperty="BorderBrush"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneTextBoxEditBorderBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetProperty="Background"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource TransparentBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetProperty="BorderBrush"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneDisabledBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="UserControl"
+                                            Storyboard.TargetProperty="Foreground"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneDisabledBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Foreground="{StaticResource InverseForegroundBrush}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="0 0 0 8"/>
+                        <Grid>
+                            <Border x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <UserControl x:Name="UserControl" Foreground="{TemplateBinding Foreground}">
+                                    <StackPanel>
+                                        <TextBlock x:Name="MultipleSelectionModeSummary" Margin="8 8 0 8" />
+                                        <Canvas x:Name="ItemsPresenterHost" MinHeight="46" Background="{TemplateBinding Background}">
+                                            <ItemsPresenter x:Name="ItemsPresenter">
+                                                <ItemsPresenter.RenderTransform>
+                                                    <TranslateTransform x:Name="ItemsPresenterTranslateTransform"/>
+                                                </ItemsPresenter.RenderTransform>
+                                            </ItemsPresenter>
+                                        </Canvas>
+                                    </StackPanel>
+                                </UserControl>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="toolkit:ListPickerItem">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="8 10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="toolkit:ListPickerItem">
+                    <Grid Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected"/>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="ContentContainer"
+                                            Storyboard.TargetProperty="Foreground"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneAccentBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl
+                            x:Name="ContentContainer"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"/>
+                        <!--Foreground="{TemplateBinding Foreground}"/>-->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,238 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:commands="clr-namespace:LiteTube.Core.Common.Commands">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Themes/ProfileIcons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate x:Key="ProfileSectionsDataTemplate">
+        <ListBox toolkit:TiltEffect.IsTiltEnabled="True" 
+                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                 Margin="0"
+                 ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
+
+            <ListBoxItem toolkit:TiltEffect.SuppressTilt="True"
+                         Margin="0,5,0,10">
+                <Grid Background="{StaticResource PhoneBackgroundBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="110"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding LoginStatus, Converter={StaticResource LoginStatusTextConverter}}"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"
+                                   FontSize="{StaticResource PhoneFontSizeMedium}"
+                                   Foreground="{StaticResource PhoneSubtleBrush}" />
+                        
+                        <Image Grid.Column="0"
+                               Height="110"
+                               Width="110"
+                               Stretch="Fill"
+                               Source="{Binding ProfileImage}"
+                               Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                        <StackPanel Grid.Row="0" 
+                                    Grid.Column="1"
+                                    Margin="10,-10,0,0"
+                                    Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Orientation="Vertical">
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeLarge}"
+                                       Text="{Binding ProfileDisplayName}"
+                                       Foreground="{StaticResource PhoneForegroundBrush}"/>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                       Text="{Binding ProfileSecondDisplayName}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Margin="0,-6,0,0"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Margin="0,0,0,0"
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}">
+                                <Run Text="{Binding Path=LocalizedResources.JoinedString, Source={StaticResource LocalizedStrings}}" />
+                                <Run Text="{Binding ProfileRegistered}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{Binding LoginCommand}"
+                                Grid.Row="0" 
+                                Grid.Column="2"
+                                Width="100"
+                                Height="110"
+                                Visibility="{Binding IsAuthorized, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                Style="{StaticResource ContentButtonStyle}"
+                                x:Name="LoginButton">
+                            <StackPanel Orientation="Vertical" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <ContentPresenter ContentTemplate="{StaticResource SignInIcon}"
+                                                  HorizontalAlignment="Center" 
+                                                  Margin="15"/>
+                                <TextBlock Text="{Binding Path=LocalizedResources.SignIn, Source={StaticResource LocalizedStrings}}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Style="{StaticResource PhoneTextNormalStyle}"
+                                           Foreground="White"
+                                           Margin="0,0,0,10"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{Binding LogoutCommand}"
+                                Grid.Row="0" 
+                                Grid.Column="2"
+                                Width="100"
+                                Height="110"
+                                Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Style="{StaticResource ContentButtonStyle}"
+                                x:Name="LoginoutButton">
+                            <StackPanel Orientation="Vertical" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <ContentPresenter ContentTemplate="{StaticResource SignOutIcon}"
+                                                  HorizontalAlignment="Center" 
+                                                  Margin="15"/>
+                                <TextBlock Text="{Binding Path=LocalizedResources.SignOut, Source={StaticResource LocalizedStrings}}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Style="{StaticResource PhoneTextNormalStyle}"
+                                           Foreground="White"
+                                           Margin="0,0,0,10"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </ListBoxItem>
+            
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding RecommendedCommand}"
+                         Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource RecommendedIcon}"
+                                        HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.RecommendedForYou, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}"/>
+                </StackPanel>
+            </ListBoxItem>
+
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding SubsribtionsCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource SubscribtionsIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.Subscriptions, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}"/>
+                </StackPanel>
+            </ListBoxItem>
+
+            <!--<ListBoxItem common:ItemClickCommand.Command="{Binding VideoCategoryCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource WatchLaterIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="watch later"
+                               x:Uid=" WatchLater"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>-->
+
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding MyPlaylistsCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource PlayListsIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.Playlists, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>
+            
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding FavoritesCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource FavoriteIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.Favorites, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>
+
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding LikedCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource LikedIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.LikedVideos, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>
+
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding UploadedCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource UploadedIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock  Text="{Binding Path=LocalizedResources.Uploaded, Source={StaticResource LocalizedStrings}}"
+                               x:Uid=" Uploaded"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>
+            
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding HistoryCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource HistoryIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.WatchHistory, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>
+
+            <ListBoxItem commands:ItemClickCommand.Command="{Binding VideoCategoryCommand}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource VideoCategoryIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.Channels, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}"/>
+                </StackPanel>
+            </ListBoxItem>
+        </ListBox>
+    </DataTemplate>
+
+</ResourceDictionary>

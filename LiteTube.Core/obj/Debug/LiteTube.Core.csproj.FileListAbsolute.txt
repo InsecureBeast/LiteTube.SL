@@ -1,0 +1,14 @@
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\AboutPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\ChannelListPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\ChannelPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\Controls\NavigationPanel.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\MenuPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\PlaylistVideoPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\SearchPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\SectionPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\SettingsPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\VideoPage.g.cs
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\LiteTube.Core.g.resources
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\LiteTube.Core.Resources.AppResources.resources
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\LiteTube.Core.Resources.AppResources.ru-RU.resources
+D:\Programming\LiteTube\LiteTube.Core\obj\Debug\LiteTube.Core.csproj.GenerateResource.Cache

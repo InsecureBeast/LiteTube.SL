@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube", "LiteTube\LiteTu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTubePro", "LiteTubePro\LiteTubePro.csproj", "{1A92E82F-102A-4570-8126-B0DB6423D828}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube.Core", "LiteTube.Core\LiteTube.Core.csproj", "{32927860-9046-4325-BDF4-C38862AC606E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,18 @@ Global
 		{1A92E82F-102A-4570-8126-B0DB6423D828}.Release|x86.ActiveCfg = Release|x86
 		{1A92E82F-102A-4570-8126-B0DB6423D828}.Release|x86.Build.0 = Release|x86
 		{1A92E82F-102A-4570-8126-B0DB6423D828}.Release|x86.Deploy.0 = Release|x86
+		{32927860-9046-4325-BDF4-C38862AC606E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32927860-9046-4325-BDF4-C38862AC606E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32927860-9046-4325-BDF4-C38862AC606E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{32927860-9046-4325-BDF4-C38862AC606E}.Debug|ARM.Build.0 = Debug|ARM
+		{32927860-9046-4325-BDF4-C38862AC606E}.Debug|x86.ActiveCfg = Debug|x86
+		{32927860-9046-4325-BDF4-C38862AC606E}.Debug|x86.Build.0 = Debug|x86
+		{32927860-9046-4325-BDF4-C38862AC606E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32927860-9046-4325-BDF4-C38862AC606E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32927860-9046-4325-BDF4-C38862AC606E}.Release|ARM.ActiveCfg = Release|ARM
+		{32927860-9046-4325-BDF4-C38862AC606E}.Release|ARM.Build.0 = Release|ARM
+		{32927860-9046-4325-BDF4-C38862AC606E}.Release|x86.ActiveCfg = Release|x86
+		{32927860-9046-4325-BDF4-C38862AC606E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

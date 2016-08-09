@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ResourceFlowDirection" xml:space="preserve">
+    <value>LeftToRight</value>
+    <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
+  </data>
+  <data name="ResourceLanguage" xml:space="preserve">
+    <value>en-US</value>
+    <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
+  </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>LightTube</value>
+  </data>
+  <data name="Activity" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutText" xml:space="preserve">
+    <value>Easy-to-use application for Youtube with intuitive user interface.</value>
+  </data>
+  <data name="AddToFavorites" xml:space="preserve">
+    <value>Add to favorites</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChannelInfo" xml:space="preserve">
+    <value>channel info</value>
+  </data>
+  <data name="Channels" xml:space="preserve">
+    <value>channels</value>
+  </data>
+  <data name="CheckConnection" xml:space="preserve">
+    <value>Check internet connection</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>comments</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright © 2016. All right reserved.</value>
+  </data>
+  <data name="CopyVideoLink" xml:space="preserve">
+    <value>copy video link</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>details</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Items not found</value>
+  </data>
+  <data name="Favorites" xml:space="preserve">
+    <value>favorites</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>feedback</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="JoinedString" xml:space="preserve">
+    <value>joined</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MostPopular" xml:space="preserve">
+    <value>Most popular</value>
+  </data>
+  <data name="NoMatchVideo" xml:space="preserve">
+    <value>No matching YouTube video or audio stream URI could be found. The video may not be available in your country, is private or uses RTMPE (protected streaming).</value>
+  </data>
+  <data name="PublishedAt" xml:space="preserve">
+    <value>Published at</value>
+  </data>
+  <data name="RecommendedForYou" xml:space="preserve">
+    <value>recommended for you</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RelatedVideos" xml:space="preserve">
+    <value>related videos</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SelectRegion" xml:space="preserve">
+    <value>Select region</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="SignInTooltip" xml:space="preserve">
+    <value>Please sign in to use this features</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="Subscribers" xml:space="preserve">
+    <value>subscribers</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>subscriptions</value>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Unsubscribe</value>
+  </data>
+  <data name="UsingSoftware" xml:space="preserve">
+    <value>Third-party software</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="VideoCategories" xml:space="preserve">
+    <value>Video categories</value>
+  </data>
+  <data name="VideoQuality" xml:space="preserve">
+    <value>Video quality</value>
+  </data>
+  <data name="videos" xml:space="preserve">
+    <value>videos</value>
+  </data>
+  <data name="Views" xml:space="preserve">
+    <value>views</value>
+  </data>
+  <data name="WatchHistory" xml:space="preserve">
+    <value>watch history</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Unable to perform the operation. Please try again.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ExceptionTitle" xml:space="preserve">
+    <value>Whoops! Something went wrong!</value>
+  </data>
+  <data name="ChannelNotFoundTooltip" xml:space="preserve">
+    <value>Channel not found. Try to create channel on YouTube site.</value>
+  </data>
+  <data name="LikedVideos" xml:space="preserve">
+    <value>liked</value>
+  </data>
+  <data name="FeedbackMessage" xml:space="preserve">
+    <value>Type your feedback here</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Days5Ago" xml:space="preserve">
+    <value>{0} days ago</value>
+  </data>
+  <data name="DaysAgo" xml:space="preserve">
+    <value>{0} days ago</value>
+  </data>
+  <data name="MonthAgo" xml:space="preserve">
+    <value>a month ago</value>
+  </data>
+  <data name="Months4Ago" xml:space="preserve">
+    <value>{0} month ago</value>
+  </data>
+  <data name="MonthsAgo" xml:space="preserve">
+    <value>{0} month ago</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>today</value>
+  </data>
+  <data name="WeekAgo" xml:space="preserve">
+    <value>a week ago</value>
+  </data>
+  <data name="WeeksAgo" xml:space="preserve">
+    <value>{0} weeks ago</value>
+  </data>
+  <data name="YearAgo" xml:space="preserve">
+    <value>a year ago</value>
+  </data>
+  <data name="Years4Ago" xml:space="preserve">
+    <value>{0} years ago</value>
+  </data>
+  <data name="YearsAgo" xml:space="preserve">
+    <value>{0} years ago</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>yesterday</value>
+  </data>
+  <data name="Playlists" xml:space="preserve">
+    <value>playlists</value>
+  </data>
+  <data name="PlaylistNotFoundErrorMessage" xml:space="preserve">
+    <value>Playlist not found.</value>
+  </data>
+  <data name="Uploaded" xml:space="preserve">
+    <value>uploaded videos</value>
+  </data>
+  <data name="AdvertisingPost" xml:space="preserve">
+    <value>Advertising post</value>
+  </data>
+</root>

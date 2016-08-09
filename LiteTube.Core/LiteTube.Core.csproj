@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{32927860-9046-4325-BDF4-C38862AC606E}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LiteTube.Core</RootNamespace>
+    <AssemblyName>LiteTube.Core</AssemblyName>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <NuGetPackageImportStamp>094eb97d</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BugTreckerReporter.cs" />
+    <Compile Include="ChannelListPage.xaml.cs">
+      <DependentUpon>ChannelListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChannelPage.xaml.cs">
+      <DependentUpon>ChannelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Commands\AppBarClickCommand.cs" />
+    <Compile Include="Common\Commands\ItemClickCommand.cs" />
+    <Compile Include="Common\Commands\RelayCommand.cs" />
+    <Compile Include="Common\Commands\SubscribeCommand.cs" />
+    <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
+    <Compile Include="Common\ExceptionDialog.cs" />
+    <Compile Include="Common\Exceptions\LiteTubeException.cs" />
+    <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
+    <Compile Include="Common\Extensions\ControlExtensions.cs" />
+    <Compile Include="Common\Extensions\Extensions.cs" />
+    <Compile Include="Common\Extensions\ItemsControlExtensions.cs" />
+    <Compile Include="Common\Extensions\PropertyExtensions.cs" />
+    <Compile Include="Common\Helpers\ApplicationBarHelper.cs" />
+    <Compile Include="Common\Helpers\LayoutHelper.cs" />
+    <Compile Include="Common\Helpers\NavigationHelper.cs" />
+    <Compile Include="Common\Helpers\SettingsHelper.cs" />
+    <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
+    <Compile Include="Common\Helpers\VisualHelper.cs" />
+    <Compile Include="Common\I18nLanguages.cs" />
+    <Compile Include="Common\IDialogService.cs" />
+    <Compile Include="Common\MediaPlayerVisualStates.cs" />
+    <Compile Include="Common\NavigationObject.cs" />
+    <Compile Include="Common\Notifier\Notifier.cs" />
+    <Compile Include="Common\Notifier\UpdateSettingsEventArgs.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\ProgressIndicatorHolder.cs" />
+    <Compile Include="Common\ScrollViewerMonitor.cs" />
+    <Compile Include="Common\SessionType.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Common\Tools\HyperlinkHighlighter.cs" />
+    <Compile Include="Common\Tools\LastRequest.cs" />
+    <Compile Include="Common\Tools\Theme.cs" />
+    <Compile Include="Common\Tools\ThemeManager.cs" />
+    <Compile Include="Common\VideoQuality.cs" />
+    <Compile Include="ContainerBootstrapper.cs" />
+    <Compile Include="Controls\GenericListView.cs" />
+    <Compile Include="Controls\ListBoxTemplateSelector.cs" />
+    <Compile Include="Controls\LiteTubePlayer.cs" />
+    <Compile Include="Controls\NavigationButton.cs" />
+    <Compile Include="Controls\NavigationPanel.xaml.cs">
+      <DependentUpon>NavigationPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ColorValueConverter.cs" />
+    <Compile Include="Converters\ColumnSpanConverter.cs" />
+    <Compile Include="Converters\CommentMarginConverter.cs" />
+    <Compile Include="Converters\CountToVisibilityConverter.cs" />
+    <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
+    <Compile Include="Converters\DateTimeToStringConverter.cs" />
+    <Compile Include="Converters\DurationConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\LoginStatusTextConverter.cs" />
+    <Compile Include="Converters\LowerCaseConverter.cs" />
+    <Compile Include="Converters\ObjectToVisibilityConverter.cs" />
+    <Compile Include="Converters\RelatedVideoMarginConverter.cs" />
+    <Compile Include="Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Converters\TimeSpanFormatConverter.cs" />
+    <Compile Include="Converters\UppercaseConverter.cs" />
+    <Compile Include="DataClasses\DataClasses.cs" />
+    <Compile Include="DataClasses\IChannel.cs" />
+    <Compile Include="DataClasses\IChannelList.cs" />
+    <Compile Include="DataClasses\ICommentList.cs" />
+    <Compile Include="DataClasses\IGuideCategory.cs" />
+    <Compile Include="DataClasses\IPlayList.cs" />
+    <Compile Include="DataClasses\IPlayListItem.cs" />
+    <Compile Include="DataClasses\IPlaylistItemList.cs" />
+    <Compile Include="DataClasses\IPlaylistList.cs" />
+    <Compile Include="DataClasses\IProfile.cs" />
+    <Compile Include="DataClasses\IResponceList.cs" />
+    <Compile Include="DataClasses\ISubscriptionList.cs" />
+    <Compile Include="DataClasses\IVideoCategory.cs" />
+    <Compile Include="DataClasses\IVideoItem.cs" />
+    <Compile Include="DataClasses\MActivityList.cs" />
+    <Compile Include="DataClasses\RatingEnum.cs" />
+    <Compile Include="DataClasses\SearchTypes.cs" />
+    <Compile Include="DataModel\ConnectionListener.cs" />
+    <Compile Include="DataModel\Context.cs" />
+    <Compile Include="DataModel\DataSourceExceptionWrapper.cs" />
+    <Compile Include="DataModel\IDataSource.cs" />
+    <Compile Include="DataModel\IYouTubeService.cs" />
+    <Compile Include="DataModel\NullableDataSource.cs" />
+    <Compile Include="DataModel\PlaylistCahce.cs" />
+    <Compile Include="DataModel\RemoteDataSource.cs" />
+    <Compile Include="DataModel\SubscriptionsHolder.cs" />
+    <Compile Include="DataModel\VideoItemsCache.cs" />
+    <Compile Include="DataModel\YouTube.cs" />
+    <Compile Include="DataModel\YouTubeConstants.cs" />
+    <Compile Include="DataModel\YouTubeServiceControl.cs" />
+    <Compile Include="DataModel\YouTubeWeb.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Interactivity\ItemsNotFoundBehavior.cs" />
+    <Compile Include="Interactivity\ItemsSizeBehavior.cs" />
+    <Compile Include="Interactivity\ItemWidthBehavior.cs" />
+    <Compile Include="LiteTubeApp.cs" />
+    <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlaylistVideoPage.xaml.cs">
+      <DependentUpon>PlaylistVideoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AppResources.Designer.cs">
+      <DependentUpon>AppResources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AppResources.ru-RU.Designer.cs">
+      <DependentUpon>AppResources.ru-RU.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SectionPage.xaml.cs">
+      <DependentUpon>SectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VideoPage.xaml.cs">
+      <DependentUpon>VideoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ActivitySectionViewModel.cs" />
+    <Compile Include="ViewModels\ChannelPageViewModel.cs" />
+    <Compile Include="ViewModels\ChannelsPageViewModel.cs" />
+    <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\FavoritesViewModel.cs" />
+    <Compile Include="ViewModels\HistoryPageViewModel.cs" />
+    <Compile Include="ViewModels\LikedViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MenuPageViewModel.cs" />
+    <Compile Include="ViewModels\MostPopularViewModel.cs" />
+    <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\AddNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\ChannelNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\GuideCategoryNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\NodeViewModelBase.cs" />
+    <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\PlaylistNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\VideoCategoryNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\VideoItemViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\MyPlaylistListViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistListViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistVideoPageViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistVideosViewModel.cs" />
+    <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
+    <Compile Include="ViewModels\ProgressIndicatorViewModel.cs" />
+    <Compile Include="ViewModels\PropertyChangedBase.cs" />
+    <Compile Include="ViewModels\RecommendedSectionViewModel.cs" />
+    <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchBaseViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchChannelsViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchPageViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchPlaylistsViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchVideoViewModel.cs" />
+    <Compile Include="ViewModels\SectionBaseViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SubscriptionChannelsViewModel.cs" />
+    <Compile Include="ViewModels\UploadedPageViewModel.cs" />
+    <Compile Include="ViewModels\VideoCategorySectionViewModel.cs" />
+    <Compile Include="ViewModels\VideoPageViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChannelListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChannelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LoadingListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\NavigationButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\NavigationPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ProfileSections.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlaylistVideoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\CustomMessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\PlayerMobileTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ProfileIcons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\RadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\RichTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ToggleButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VideoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataModel\client_secrets.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AppResources.ru-RU.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.ru-RU.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Google.Apis, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.11.1\lib\wp8\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.11.1\lib\wp8\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.11.1\lib\wp8\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.11.1\lib\portable-net45+sl50+netcore45+wpa81+wp8\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.11.1\lib\wp8\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.12.0.417, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.12.0.417\lib\portable-net45+netcore45+wpa81+wp8\Google.Apis.YouTube.v3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile.Common, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile.UI, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Phone.Controls.Maps, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.PlayerFramework">
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v8.0\ExtensionSDKs\Microsoft.PlayerFramework.WP8.Core\2.0.0.0\References\CommonConfiguration\Neutral\Microsoft.PlayerFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MyToolkit, Version=2.5.11.0, Culture=neutral, PublicKeyToken=3e349a1360994d26, processorArchitecture=MSIL">
+      <HintPath>..\packages\MyToolkit.2.5.11.0\lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MyToolkit.Extended, Version=2.5.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MyToolkit.Extended.2.5.11.0\lib\wp80\MyToolkit.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <ProjectExtensions />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
