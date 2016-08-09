@@ -38,6 +38,12 @@ namespace LiteTube.Controls
             remove { ((PlayerInteractiveViewModel)InteractiveViewModel).IsSkipPreviousChanged -= value; }
         }
 
+        public event RoutedEventHandler Paused
+        {
+            add { ((PlayerInteractiveViewModel)InteractiveViewModel).Paused += value; }
+            remove { ((PlayerInteractiveViewModel)InteractiveViewModel).Paused -= value; }
+        }
+
         public LiteTubePlayer() : base()
         {
             InteractiveViewModel = DefaultInteractiveViewModel = new PlayerInteractiveViewModel(this);
@@ -117,6 +123,7 @@ namespace LiteTube.Controls
     {
         public event RoutedEventHandler IsSkipNextChanged;
         public event RoutedEventHandler IsSkipPreviousChanged;
+        public event RoutedEventHandler Paused;
 
         public PlayerInteractiveViewModel(MediaPlayer mediaPlayer) : base(mediaPlayer)
         {
@@ -216,6 +223,12 @@ namespace LiteTube.Controls
         protected override void OnSkipPrevious(VisualMarker marker)
         {
             IsSkipPreviousChanged?.Invoke(this, new RoutedEventArgs());
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            Paused?.Invoke(this, new RoutedEventArgs());
         }
     }
 

@@ -15,11 +15,13 @@ namespace LiteTube.ViewModels
         {
             _videoList = videoList;
             _uniqueId = videoList.GetHashCode().ToString();
+            ShowAdv = SettingsHelper.IsAdvVisible;
         }
 
         public MostPopularViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)
         {
+            ShowAdv = SettingsHelper.IsAdvVisible;
         }
 
         public override string ToString()

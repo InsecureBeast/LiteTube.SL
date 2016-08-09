@@ -326,4 +326,10 @@
   <data name="PlaylistNotFoundErrorMessage" xml:space="preserve">
     <value>Playlist not found.</value>
   </data>
+  <data name="Uploaded" xml:space="preserve">
+    <value>uploaded videos</value>
+  </data>
+  <data name="AdvertisingPost" xml:space="preserve">
+    <value>Advertising post</value>
+  </data>
 </root>

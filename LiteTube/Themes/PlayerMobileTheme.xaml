@@ -970,7 +970,7 @@
 
                         <TextBlock x:Name="TimeElapsed" 
                                    Grid.Column="0"
-                                   Margin="0,0,0,20"
+                                   Margin="0,0,10,20"
                                    Visibility="{Binding IsTimeElapsedButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
                                    Foreground="{StaticResource PlayerButtonsBrush}">
                             <local:MediaControls.Behavior>
@@ -983,39 +983,37 @@
                                         ViewModel="{TemplateBinding ViewModel}" 
                                         Visibility="{Binding IsTimelineVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}" 
                                         Height="25" 
-                                        Padding="0,0,0,20" 
-                                        Margin="10,0,0,0"/>
+                                        Padding="0,0,0,19" 
+                                        Margin="0,0,0,0"/>
 
-                        <!--<StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left" Margin="30,5,30,5">-->
-                        <!--<TextBlock x:Name="TimeElapsed" 
-                                   Visibility="{Binding IsTimeElapsedButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
-                                   Foreground="{StaticResource PlayerButtonsBrush}">
-                            <local:MediaControls.Behavior>
-                                <local:TimeElapsedBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
-                            </local:MediaControls.Behavior>
-                        </TextBlock>-->
-                        <!--<TextBlock Text=" / " 
-                                   VerticalAlignment="Center" 
-                                   FontSize="{StaticResource PhoneFontSizeNormal}" 
-                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                   Foreground="{StaticResource PlayerButtonsBrush}"/>-->
-                        <!--<TextBlock x:Name="TimeRemaining" 
-                                   Visibility="{Binding IsTimeRemainingButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
-                                   Foreground="{StaticResource PlayerButtonsBrush}">
-                            <local:MediaControls.Behavior>
-                                <local:TimeRemainingBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
-                            </local:MediaControls.Behavior>
-                        </TextBlock>-->
-                        <TextBlock x:Name="TotalDuration" 
-                                   Grid.Column="2"
-                                   Margin="10,0,0,20"
-                                   HorizontalAlignment="Right"
-                                   Visibility="{Binding IsDurationButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
-                                   Foreground="{StaticResource PlayerButtonsBrush}">
-                            <local:MediaControls.Behavior>
-                                <local:TotalDurationBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
-                            </local:MediaControls.Behavior>
-                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="3" 
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right" 
+                                    Margin="0,0,0,20">
+                            <TextBlock x:Name="TimeRemaining" 
+                                        Visibility="{Binding IsTimeRemainingButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
+                                        Foreground="{StaticResource PlayerButtonsBrush}">
+                                <local:MediaControls.Behavior>
+                                    <local:TimeRemainingBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                </local:MediaControls.Behavior>
+                            </TextBlock>
+                            <!--<TextBlock Text=" / " 
+                                       VerticalAlignment="Center" 
+                                       Visibility="{Binding IsDurationButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       Foreground="{StaticResource PlayerButtonsBrush}"/>-->
+                            <TextBlock x:Name="TotalDuration" 
+                                       Margin="5,0,0,0"
+                                       HorizontalAlignment="Right"
+                                       Visibility="{Binding IsDurationButtonVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource VisibleIfConverter}}"
+                                       Foreground="{StaticResource PlayerButtonsBrush}">
+                                <local:MediaControls.Behavior>
+                                    <local:TotalDurationBehavior ViewModel="{Binding ViewModel, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                </local:MediaControls.Behavior>
+                            </TextBlock>
+                        </StackPanel>
                     </Grid>
 
                     <!--Resolution and signal strength-->

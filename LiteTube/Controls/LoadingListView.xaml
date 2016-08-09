@@ -3,8 +3,62 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:common="clr-namespace:LiteTube.Common"
-    xmlns:converters="clr-namespace:LiteTube.Converters">
+    xmlns:converters="clr-namespace:LiteTube.Converters"
+    xmlns:nodes="clr-namespace:LiteTube.ViewModels.Nodes"
+    xmlns:local="clr-namespace:LiteTube.Controls"
+    xmlns:adv="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI">
+    <!--xmlns:adv1="clr-namespace:Microsoft.AdMediator.WindowsPhone8;assembly=Microsoft.AdMediator.WindowsPhone8">-->
 
+    <DataTemplate x:Key="AdvItemDatatemplate">
+        <Grid Margin="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="{StaticResource PlaylistSelectedBrush}"
+                                Grid.Row="0"
+                                Grid.Column="0">
+                <TextBlock Text="{Binding Path=LocalizedResources.AdvertisingPost, Source={StaticResource LocalizedStrings}}"
+                                       Style="{StaticResource PhoneTextSmallStyle}" 
+                                       Foreground="White"
+                                       Margin="5,2,5,2"
+                                       HorizontalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="{StaticResource PlaylistSelectedBrush}"
+                    BorderThickness="1"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+                <!--<adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
+                                        HorizontalAlignment="Stretch" 
+                                        Height="50" 
+                                        Id="AdMediator-Id-C5047D00-4321-4095-A379-3B9EA68B22A6"
+                                        Margin="0,8,0,0" 
+                                        VerticalAlignment="Stretch" 
+                                        Width="300"/>-->
+                <adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
+                                AdUnitId="11626916"
+                                HorizontalAlignment="Center"
+                                Height="80"
+                                VerticalAlignment="Center"
+                                Width="480"
+                                Grid.Row="1"/>
+                <!--<adv:AdControl ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
+                                AdUnitId="10865270"
+                                HorizontalAlignment="Center"
+                                Height="80"
+                                VerticalAlignment="Center"
+                                Width="480"/>-->
+            </Border>
+        </Grid>
+    </DataTemplate>
+    
     <DataTemplate x:Key="LoadingTextBlockDataTemplate">
         <Grid>
             <TextBlock Text="{Binding Path=LocalizedResources.Loading, Source={StaticResource LocalizedStrings}}"
@@ -53,102 +107,127 @@
     </DataTemplate>
 
     <DataTemplate x:Key="LoadingListViewItem">
-        <Grid Margin="0,0,0,5" Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <local:ListBoxTemplateSelector Content="{Binding}" 
+                                       HorizontalAlignment="Left">
+            <local:ListBoxTemplateSelector.Normal>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5" Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" 
-                  HorizontalAlignment="Left"
-                  Background="{StaticResource PhoneSecondaryBackgroundBrush}"
-                  Height="100"
-                  Width="173"
-                  Margin="2">
+                        <Grid Grid.Column="0" 
+                              HorizontalAlignment="Left"
+                              Background="{StaticResource PhoneSecondaryBackgroundBrush}"
+                              Height="100"
+                              Width="173"
+                              Margin="2">
 
-                <Image Source="{Binding ImagePath}" 
-                    Stretch="UniformToFill" />
+                            <Image Source="{Binding ImagePath}" 
+                                   Stretch="UniformToFill" />
 
-                <Border Margin="2"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right"
-                    Visibility="{Binding Duration, Converter={StaticResource ResourceKey=ObjectToVisibilityConverter}}"
-                    Background="Black"
-                    Padding="4,0,4,0">
-                    <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
-                            TextWrapping="NoWrap" 
-                            Foreground="White"
-                            FontSize="14"/>
-                </Border>
-            </Grid>
+                            <Border Margin="2"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right"
+                                    Visibility="{Binding Duration, Converter={StaticResource ResourceKey=ObjectToVisibilityConverter}}"
+                                    Background="Black"
+                                    Padding="4,0,4,0">
+                                <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
+                                           TextWrapping="NoWrap" 
+                                           Foreground="White"
+                                           FontSize="14"/>
+                            </Border>
+                        </Grid>
 
-            <StackPanel Grid.Column="1" 
-                    Margin="0,0,-10,0">
-                <TextBlock Text="{Binding Title}" 
-                        Style="{StaticResource PhoneTextNormalStyle}"
-                        TextTrimming="WordEllipsis"
-                        TextWrapping="Wrap"
-                        MaxHeight="54"/>
-                <TextBlock Text="{Binding ChannelTitle}" 
-                        Style="{StaticResource PhoneTextSmallStyle}"
-                        TextWrapping="NoWrap"/>
-                <TextBlock TextWrapping="NoWrap"
-                        Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
-                        Style="{StaticResource PhoneTextSmallStyle}" 
-                        FontSize="18">
-                        <!--Foreground="#FF67217A">-->
-                <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
-                <Run Text="{Binding PublishedAt}" />
-                </TextBlock>
-            </StackPanel>
-        </Grid>
+                        <StackPanel Grid.Column="1" 
+                                    Margin="0,0,-10,0">
+                            <TextBlock Text="{Binding Title}" 
+                                       Style="{StaticResource PhoneTextNormalStyle}"
+                                       TextTrimming="WordEllipsis"
+                                       TextWrapping="Wrap"
+                                       MaxHeight="54"/>
+                            <TextBlock Text="{Binding ChannelTitle}" 
+                                       Style="{StaticResource PhoneTextSmallStyle}"
+                                       TextWrapping="NoWrap"/>
+                            <TextBlock TextWrapping="NoWrap"
+                                       Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
+                                       Style="{StaticResource PhoneTextSmallStyle}" 
+                                       FontSize="18">
+                                       <!--Foreground="#FF67217A">-->
+                                <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
+                                <Run Text="{Binding PublishedAt}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </local:ListBoxTemplateSelector.Normal>
+            <local:ListBoxTemplateSelector.Adv>
+                <DataTemplate>
+                    <ContentControl ContentTemplate="{StaticResource AdvItemDatatemplate}"
+                                    Margin="2,0,0,0"/>
+                </DataTemplate>
+            </local:ListBoxTemplateSelector.Adv>
+        </local:ListBoxTemplateSelector>
     </DataTemplate>
 
     <DataTemplate x:Key="LoadingPlaylistListViewItem">
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <local:ListBoxTemplateSelector Content="{Binding}" 
+                                       HorizontalAlignment="Left">
+            <local:ListBoxTemplateSelector.Normal>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" 
-                  HorizontalAlignment="Left"
-                  Background="{StaticResource PhoneSecondaryBackgroundBrush}"
-                  Height="100"
-                  Width="173">
+                        <Grid Grid.Column="0" 
+                              HorizontalAlignment="Left"
+                              Background="{StaticResource PhoneSecondaryBackgroundBrush}"
+                              Height="100"
+                              Width="173">
 
-                <Image Source="{Binding ImagePath}" 
-                       Stretch="UniformToFill" />
+                            <Image Source="{Binding ImagePath}" 
+                                   Stretch="UniformToFill" />
 
-                <Border VerticalAlignment="Stretch"
-                        HorizontalAlignment="Right"
-                        Width="50"
-                        Background="#80000000">
-                    <ContentPresenter ContentTemplate="{StaticResource PlayListIcon}" />
-                </Border>
-            </Grid>
+                            <Border VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Right"
+                                    Width="50"
+                                    Background="#80000000">
+                                <ContentPresenter ContentTemplate="{StaticResource PlayListIcon}" />
+                            </Border>
+                        </Grid>
 
-            <StackPanel Grid.Column="1" 
-                        Margin="0,0,-10,0">
-                <TextBlock Text="{Binding Title}" 
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           TextTrimming="WordEllipsis"
-                           TextWrapping="Wrap"
-                           MaxHeight="54"/>
-                <TextBlock Style="{StaticResource PhoneTextSmallStyle}"
-                           TextWrapping="NoWrap">
-                    <Run Text="{Binding ItemsCount}" />
-                    <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
-                </TextBlock>
-                <TextBlock TextWrapping="NoWrap"
-                           Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
-                           Style="{StaticResource PhoneTextSmallStyle}" 
-                           FontSize="18">
-                    <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
-                    <Run Text="{Binding PublishedAt}" />
-                </TextBlock>
-            </StackPanel>
-        </Grid>
+                        <StackPanel Grid.Column="1" 
+                                    Margin="0,0,-10,0">
+                            <TextBlock Text="{Binding Title}" 
+                                       Style="{StaticResource PhoneTextNormalStyle}"
+                                       TextTrimming="WordEllipsis"
+                                       TextWrapping="Wrap"
+                                       MaxHeight="54"/>
+                            <TextBlock Style="{StaticResource PhoneTextSmallStyle}"
+                                       TextWrapping="NoWrap">
+                                <Run Text="{Binding ItemsCount}" />
+                                <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
+                            </TextBlock>
+                            <TextBlock TextWrapping="NoWrap"
+                                       Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
+                                       Style="{StaticResource PhoneTextSmallStyle}" 
+                                       FontSize="18">
+                                <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
+                                <Run Text="{Binding PublishedAt}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </local:ListBoxTemplateSelector.Normal>
+            <local:ListBoxTemplateSelector.Adv>
+                <DataTemplate>
+                    <ContentControl ContentTemplate="{StaticResource AdvItemDatatemplate}"/>
+                </DataTemplate>
+            </local:ListBoxTemplateSelector.Adv>
+        </local:ListBoxTemplateSelector>
     </DataTemplate>
 
     <DataTemplate x:Key="ContextMenuListViewItem">
@@ -305,4 +384,5 @@
                               ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>
         </Grid>
     </DataTemplate>
+
 </ResourceDictionary>

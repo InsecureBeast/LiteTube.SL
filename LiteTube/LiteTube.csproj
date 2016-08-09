@@ -108,7 +108,9 @@
     <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
     <Compile Include="Common\SessionType.cs" />
+    <Compile Include="Common\Tools\LastRequest.cs" />
     <Compile Include="Common\Tools\Theme.cs" />
+    <Compile Include="Controls\ListBoxTemplateSelector.cs" />
     <Compile Include="Controls\LiteTubePlayer.cs" />
     <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
@@ -118,8 +120,10 @@
     <Compile Include="Converters\ColorValueConverter.cs" />
     <Compile Include="Converters\RelatedVideoMarginConverter.cs" />
     <Compile Include="DataClasses\IPlaylistList.cs" />
+    <Compile Include="DataClasses\MActivityList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
     <Compile Include="DataModel\YouTube.cs" />
+    <Compile Include="Interactivity\HighlightUrlBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BugTreckerReporter.cs" />
     <Compile Include="ChannelListPage.xaml.cs">
@@ -169,7 +173,6 @@
     <Compile Include="Converters\TimeSpanFormatConverter.cs" />
     <Compile Include="Converters\UppercaseConverter.cs" />
     <Compile Include="DataClasses\DataClasses.cs" />
-    <Compile Include="DataClasses\IActivity.cs" />
     <Compile Include="DataClasses\IChannel.cs" />
     <Compile Include="DataClasses\IChannelList.cs" />
     <Compile Include="DataClasses\ICommentList.cs" />
@@ -179,8 +182,6 @@
     <Compile Include="DataClasses\IPlaylistItemList.cs" />
     <Compile Include="DataClasses\IProfile.cs" />
     <Compile Include="DataClasses\IResponceList.cs" />
-    <Compile Include="DataClasses\ISnippet.cs" />
-    <Compile Include="DataClasses\ISnippetList.cs" />
     <Compile Include="DataClasses\ISubscriptionList.cs" />
     <Compile Include="DataClasses\IVideoCategory.cs" />
     <Compile Include="DataClasses\IVideoItem.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="ViewModels\HistoryPageViewModel.cs" />
     <Compile Include="ViewModels\LikedViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\AdvNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\ChannelNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PlaylistNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\MyPlaylistListViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistListViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideosViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideoPageViewModel.cs" />
@@ -262,6 +265,7 @@
     <Compile Include="ViewModels\Search\SearchBaseViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SubscriptionChannelsViewModel.cs" />
+    <Compile Include="ViewModels\UploadedPageViewModel.cs" />
     <Compile Include="ViewModels\VideoCategorySectionViewModel.cs" />
     <Compile Include="ViewModels\VideoPageViewModel.cs" />
     <Compile Include="ViewModels\MostPopularViewModel.cs" />
@@ -380,6 +384,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdMediator.config" />
     <None Include="app.config" />
     <None Include="Properties\AssemblyInfo.cs.tmpl" />
     <None Include="DataModel\client_secrets.json" />
@@ -479,7 +484,20 @@
       <HintPath>packages\Google.Apis.YouTube.v3.1.12.0.417\lib\portable-net45+netcore45+wpa81+wp8\Google.Apis.YouTube.v3.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile.Common, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Advertising.Mobile.UI, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Maps, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <HintPath>packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
       <Private>True</Private>

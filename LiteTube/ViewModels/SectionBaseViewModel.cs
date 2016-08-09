@@ -187,6 +187,11 @@ namespace LiteTube.ViewModels
             get { return _deleteCommand; }
         }
 
+        public bool ShowAdv
+        {
+            get; set;
+        }
+
         public void SetNavigationFrame(Frame frame)
         {
             _frame = frame;
@@ -261,19 +266,35 @@ namespace LiteTube.ViewModels
         internal void AddItems(IEnumerable<IVideoItem> items)
         {
             var itemsList = Items.ToList();
+            var itemsArray = items.ToArray();
+            for (int i = 0; i < itemsArray.Length; i++)
+            {
+                var item = itemsArray[i];
+                if (item.Details == null)
+                    continue;
+
+                if (itemsList.Exists(c => c.Id == item.Details.VideoId))
+                    continue;
+
+                if (i % SettingsHelper.AdvCount == 0 && i != 0 && ShowAdv)
+                {
+                    Items.Add(new AdvNodeViewModel());
+                }
+
+                Items.Add(new VideoItemViewModel(item));
+            }
+            /*
             foreach (var item in items)
             {
                 if (item.Details == null)
                     continue;
 
-                if (item.Details.Video == null)
-                    continue;
-
-                if (itemsList.Exists(i => i.Id == item.Details.Video.Id))
+                if (itemsList.Exists(i => i.Id == item.Details.VideoId))
                     continue;
 
                 Items.Add(new VideoItemViewModel(item));
             }
+            */
         }
 
         private async void LoadMore()
@@ -324,6 +345,9 @@ namespace LiteTube.ViewModels
                 return;
 
             if (navObject.ViewModel == null)
+                return;
+
+            if (navObject.ViewModel is AdvNodeViewModel)
                 return;
 
             var id = navObject.ViewModel.VideoId;

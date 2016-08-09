@@ -41,6 +41,7 @@ namespace LiteTube.DataModel
 #region playlists
         string FavoritesPlaylistId { get; }
         string WatchLaterPlaylistId { get; }
+        string UploadedPlaylistId { get; }
         Task AddToFavorites(string videoId);
         Task RemoveFromFavorites(string playlistItemId);
         Task AddToPlaylist(string videoId, string playlistId);
@@ -50,6 +51,7 @@ namespace LiteTube.DataModel
         Task<IPlaylistList> GetPlaylists();
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, string nextPageToken);
         Task<IVideoList> GetVideoPlaylist(string playListId, string nextPageToken);
+        Task<IPlaylistList> GetMyPlaylistList(string nextPageToken);
 #endregion
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
@@ -264,6 +266,11 @@ namespace LiteTube.DataModel
             get { return _remoteDataSource.WatchLaterPlaylistId; }
         }
 
+        public string UploadedPlaylistId
+        {
+            get { return _remoteDataSource.UploadedPlaylistId; }
+        }
+
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId)
         {
             return await _remoteDataSource.GetVideoUriAsync(videoId, _quality);
@@ -358,6 +365,11 @@ namespace LiteTube.DataModel
         public async Task<IVideoList> GetVideoPlaylist(string playListId, string nextPageToken)
         {
             return await _remoteDataSource.GetVideoPlaylist(playListId, _maxPageResult, nextPageToken);
+        }
+
+        public async Task<IPlaylistList> GetMyPlaylistList(string nextPageToken)
+        {
+            return await _remoteDataSource.GetMyPlaylistList(_maxPageResult, nextPageToken);
         }
     }
 }

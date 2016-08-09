@@ -12,6 +12,7 @@ namespace LiteTube.ViewModels
         public ActivitySectionViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener)
         {
+            ShowAdv = SettingsHelper.IsAdvVisible;
         }
 
         public override string ToString()

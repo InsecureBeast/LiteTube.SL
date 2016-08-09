@@ -16,11 +16,11 @@ namespace LiteTube.Interactivity
                     throw new InvalidOperationException("Cannot attach behavior multiple times.");
 
                 AssociatedObject = AssociatedObject;
-                //_frameworkElement = AssociatedObject as FrameworkElement;
-                //if (_frameworkElement == null)
+                //_richTextBox = AssociatedObject as FrameworkElement;
+                //if (_richTextBox == null)
                 //    return;
 
-                //_frameworkElement.Loaded += OnLoaded;
+                //_richTextBox.Loaded += OnLoaded;
             }
         }
 

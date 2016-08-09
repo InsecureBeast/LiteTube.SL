@@ -21,6 +21,7 @@ namespace LiteTube.DataModel
         bool IsAuthorized { get; }
         string FavoritesPlaylistId { get; }
         string WatchLaterPlaylistId { get; }
+        string UploadedPlaylistId { get; }
         Task<IEnumerable<IVideoCategory>> GetCategories(string culture);
         Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken);
         Task<IVideoList> GetRecommended(string pageToken);
@@ -35,7 +36,6 @@ namespace LiteTube.DataModel
         Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType);
         Task<ICommentList> GetComments(string videoId, int maxResult, string nextPageToken);
         Task<ISubscriptionList> GetSubscribtions(int maxResult, string nextPageToken);
-        Task<IVideoList> GetHistory(int maxResult, string nextPageToken);
         bool IsSubscribed(string channelId);
         string GetSubscriptionId(string channelId);
         Task Subscribe(string channelId);
@@ -43,19 +43,23 @@ namespace LiteTube.DataModel
         Task SetRating(string videoId, RatingEnum rating);
         Task<RatingEnum> GetRating(string videoId);
         Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality);
-        Task AddToPlaylist(string videoId, string playlistId);
-        Task RemovePlaylistItem(string playlistItemId);
-        Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
-        Task<IResponceList> GetLiked(int maxResult, string nextPageToken);
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
+#region playlists
+        Task<IVideoList> GetHistory(int maxResult, string nextPageToken);
+        Task AddToPlaylist(string videoId, string playlistId);
+        Task RemovePlaylistItem(string playlistItemId);
+        Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
+        Task<IResponceList> GetLiked(int maxResult, string nextPageToken);
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken);
+        Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken);
         //Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken);
         Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken);
+#endregion
     }
-    
+
     class RemoteDataSource : IRemoteDataSource
     {
         private readonly IYouTubeService _youTubeServiceControl;
@@ -177,9 +181,10 @@ namespace LiteTube.DataModel
 
         private async Task<VideoListResponse> GetVideo(string videoId)
         {
-            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics,player");
+            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics");
             videoRequest.Id = videoId;
             videoRequest.Key = _youTubeServiceControl.ApiKey;
+            videoRequest.PrettyPrint = true;
 
             var videoResponse = await videoRequest.ExecuteAsync();
             return videoResponse;
@@ -187,7 +192,7 @@ namespace LiteTube.DataModel
 
         public async Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken)
         {
-            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics,player");
+            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics");
             videoRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
             videoRequest.Chart = VideosResource.ListRequest.ChartEnum.MostPopular;
             videoRequest.Hl = I18nLanguages.GetHl(culture); ;
@@ -231,6 +236,11 @@ namespace LiteTube.DataModel
             get { return _watchLaterPlayListId; }
         }
 
+        public string UploadedPlaylistId
+        {
+            get { return _uploadPlayListId; }
+        }
+
         public async Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken)
         {
             if (string.IsNullOrEmpty(playlistId))
@@ -272,7 +282,7 @@ namespace LiteTube.DataModel
         {
             var res = await _youTubeWeb.GetRelatedVideo(videoId, _youTubeServiceControl.OAuthToken, pageToken);
             if (res == null)
-                return null;
+                return MVideoList.Empty;
 
             var videoIds = new StringBuilder();
             foreach (var id in res.Ids)
@@ -282,6 +292,9 @@ namespace LiteTube.DataModel
             }
 
             var videos = await GetVideo(videoIds.ToString());
+            if (videoIds == null)
+                return MVideoList.Empty;
+
             videos.NextPageToken = res.NextPageToken;
             return new MVideoList(videos);
             //var request = _youTubeService.Search.List("snippet,id");
@@ -655,6 +668,19 @@ namespace LiteTube.DataModel
             return new MPlaylistList(response);
         }
 
+        public async Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken)
+        {
+            var youTubeService = _youTubeServiceControl.GetAuthorizedService();
+            var request = youTubeService.Playlists.List("contentDetails,snippet");
+            request.Key = _youTubeServiceControl.ApiKey;
+            request.PageToken = nextPageToken;
+            request.Mine = true;
+            request.MaxResults = maxResult;
+
+            var response = await request.ExecuteAsync();
+            return new MPlaylistList(response);
+        }
+
         //private void CheckProfile()
         //{
         //    if (!_youTubeServiceControl.IsAuthorized)
@@ -786,7 +812,7 @@ namespace LiteTube.DataModel
 
         private async Task<IVideoList> GetChannelVideosApi(string channelId, int maxPageResult, string nextPageToken)
         {
-            var request = _youTubeService.Search.List("snippet,id");
+            var request = _youTubeService.Search.List("snippet");
             request.Key = _youTubeServiceControl.ApiKey;
             request.PageToken = nextPageToken;
             request.MaxResults = maxPageResult;

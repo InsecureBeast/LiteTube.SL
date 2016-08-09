@@ -16,6 +16,7 @@ namespace LiteTube.ViewModels
         {
             _categoryId = categoryId;
             Title = title;
+            ShowAdv = SettingsHelper.IsAdvVisible;
             LayoutHelper.InvokeFromUiThread(async() => await FirstLoad());
         }
 

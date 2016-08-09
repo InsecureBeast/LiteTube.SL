@@ -12,14 +12,14 @@ namespace LiteTube.ViewModels.Nodes
         public VideoItemViewModel(IVideoItem videoItem)
         {
             VideoItem = videoItem;
-            _videoId = videoItem.Details.Video.Id;
+            _videoId = videoItem.Details.VideoId;
             _id = Guid.NewGuid().ToString();
             Title = videoItem.Details.Title;
             ChannelTitle = videoItem.ChannelTitle;
             Description = videoItem.Details.Description;
             ImagePath = videoItem.Thumbnails.GetThumbnailUrl();
             Duration = videoItem.Details.Duration;
-            ViewCount = videoItem.Details.Video.Statistics.ViewCount;
+            ViewCount = videoItem.Details.Statistics.ViewCount;
             PublishedAt = videoItem.PublishedAt;
         }
 

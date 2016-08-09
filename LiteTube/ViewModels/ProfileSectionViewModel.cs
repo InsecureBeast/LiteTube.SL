@@ -20,6 +20,8 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _videoCategoryCommand;
         private readonly RelayCommand<FrameworkElement> _favoritesCommand;
         private readonly RelayCommand<FrameworkElement> _likedCommand;
+        private readonly RelayCommand<FrameworkElement> _uploadedCommand;
+        private readonly RelayCommand<FrameworkElement> _myPlaylistsCommand;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Func<IDataSource> _getDataSource;
@@ -44,6 +46,8 @@ namespace LiteTube.ViewModels
             _videoCategoryCommand = new RelayCommand<FrameworkElement>(VideoCategories);
             _favoritesCommand = new RelayCommand<FrameworkElement>(Favorites);
             _likedCommand = new RelayCommand<FrameworkElement>(Liked);
+            _uploadedCommand = new RelayCommand<FrameworkElement>(Uploaded);
+            _myPlaylistsCommand = new RelayCommand<FrameworkElement>(MyPlaylists);
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _getDataSource().Subscribe(this);
@@ -79,6 +83,16 @@ namespace LiteTube.ViewModels
         public ICommand LikedCommand
         {
             get { return _likedCommand; }
+        }
+
+        public ICommand UploadedCommand
+        {
+            get { return _uploadedCommand; }
+        }
+
+        public ICommand MyPlaylistsCommand
+        {
+            get { return _myPlaylistsCommand; }
         }
 
         public ICommand LoginCommand
@@ -180,6 +194,12 @@ namespace LiteTube.ViewModels
                 LoadProfileInfo();
         }
 
+        private void VideoCategories(FrameworkElement control)
+        {
+            //var index = IsAuthorized ? 7 : 0;
+            NavigateTo(0);
+        }
+
         private void Recommended(FrameworkElement control)
         {
             NavigateTo(1);
@@ -190,25 +210,29 @@ namespace LiteTube.ViewModels
             NavigateTo(2);
         }
 
-        private void GetHistory(FrameworkElement control)
-        {
-            NavigateTo(5);
-        }
-
-        private void VideoCategories(FrameworkElement control)
-        {
-            //var index = IsAuthorized ? 5 : 0;
-            NavigateTo(0);
-        }
-
-        private void Favorites(FrameworkElement control)
+        private void MyPlaylists(FrameworkElement control)
         {
             NavigateTo(3);
         }
 
-        private void Liked(FrameworkElement control)
+        private void Favorites(FrameworkElement control)
         {
             NavigateTo(4);
+        }
+
+        private void Liked(FrameworkElement control)
+        {
+            NavigateTo(5);
+        }
+
+        private void Uploaded(FrameworkElement control)
+        {
+            NavigateTo(6);
+        }
+
+        private void GetHistory(FrameworkElement control)
+        {
+            NavigateTo(7);
         }
 
         private void NavigateTo(int index)

@@ -97,6 +97,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advertising post.
+        /// </summary>
+        public static string AdvertisingPost {
+            get {
+                return ResourceManager.GetString("AdvertisingPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LightTube.
         /// </summary>
         public static string ApplicationTitle {
@@ -561,6 +570,15 @@ namespace LiteTube.Resources {
         public static string Unsubscribe {
             get {
                 return ResourceManager.GetString("Unsubscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to uploaded videos.
+        /// </summary>
+        public static string Uploaded {
+            get {
+                return ResourceManager.GetString("Uploaded", resourceCulture);
             }
         }
         

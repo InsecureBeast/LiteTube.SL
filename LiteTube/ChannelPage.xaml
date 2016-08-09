@@ -93,10 +93,11 @@
                                 <Run Text="{Binding ChannelVideoCount}"/>
                                 <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
-                        <TextBlock Text="{Binding Description}"
-                                   Margin="{StaticResource DefaultTextBlockMargin}"
-                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                   TextWrapping="Wrap" />
+                        <RichTextBox IsReadOnly="True"
+                                     Name="DescriptionRcTbx"
+                                     Margin="-12,12,-12,12"
+                                     Foreground="{StaticResource PhoneSubtleBrush}"
+                                     TextWrapping="Wrap" />
                     </StackPanel>
                 </ScrollViewer>
             </phone:PivotItem>

@@ -14,7 +14,7 @@ namespace LiteTube.DataModel
 
         public void SetItem(IVideoItem item)
         {
-            cache[item.Details.Video.Id] = item;
+            cache[item.Details.VideoId] = item;
         }
 
         public IVideoItem GetItem(string id)

@@ -1,33 +1,96 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Automation.Peers;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
-using Windows.Foundation;
-using Microsoft.Phone.Tasks;
-using MyToolkit.Command;
+using System.Windows.Interactivity;
 using LiteTube.Common.Helpers;
 using LiteTube.Common.Tools;
-using System.Windows.Media;
+using Microsoft.Phone.Tasks;
 
-namespace LiteTube.Tools
+namespace LiteTube.Interactivity
 {
-    public static class HyperlinkHighlighter
+    public class HighlightUrlBehavior : Behavior<RichTextBox>, IAttachedObject
     {
-        public static void HighlightUrls(string text, RichTextBox textBlock)
+        protected RichTextBox _richTextBox;
+
+        public static DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(HighlightUrlBehavior), new PropertyMetadata(false));
+
+        public bool IsEnabled
         {
-            var paragraph = GetParagraph(text);
-            textBlock.Blocks.Clear();
-            textBlock.Blocks.Add(paragraph);
-            textBlock.Tap += TextBlockOnTap;
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            _richTextBox = AssociatedObject as RichTextBox;
+            if (_richTextBox == null)
+                return;
+
+            _richTextBox.Loaded += OnLoaded;
+            _richTextBox.Tap += RichTextBoxOnTap;
         }
 
-        private static void TextBlockOnTap(object sender, GestureEventArgs e)
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+            var fe = AssociatedObject as RichTextBox;
+            if (fe == null)
+                return;
+
+            //fe.RemoveHandler(UIElement.PointerPressedEvent, new PointerEventHandler(OnPointerPressed));
+            fe.Loaded -= OnLoaded;
+            fe.Tap -= RichTextBoxOnTap;
+        }
+        /*
+        protected override Attach(DependencyObject dependencyObject)
+        {
+            if (dependencyObject != AssociatedObject)
+            {
+                if (AssociatedObject != null)
+                    throw new InvalidOperationException("Cannot attach behavior multiple times.");
+
+                AssociatedObject = dependencyObject;
+                _richTextBox = AssociatedObject as RichTextBox;
+                if (_richTextBox == null)
+                    return;
+
+                _richTextBox.Loaded += OnLoaded;
+                _richTextBox.Tap += RichTextBoxOnTap;
+            }
+        }
+        
+        public void Detach()
+        {
+            var fe = AssociatedObject as RichTextBox;
+            if (fe == null)
+                return;
+
+            //fe.RemoveHandler(UIElement.PointerPressedEvent, new PointerEventHandler(OnPointerPressed));
+            fe.Loaded -= OnLoaded;
+            fe.Tap -= RichTextBoxOnTap;
+            AssociatedObject = null;
+        }
+        */
+        //public DependencyObject AssociatedObject { get; private set; }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as RichTextBox;
+            if (textBox == null)
+                return;
+
+            if (textBox.Tag == null)
+                return;
+            var paragraph = GetParagraph(textBox.Tag.ToString());
+            textBox.Blocks.Clear();
+            textBox.Blocks.Add(paragraph);
+        }
+
+        private void RichTextBoxOnTap(object sender, GestureEventArgs e)
         {
             var richTb = sender as RichTextBox;
             if (richTb == null)
@@ -49,14 +112,14 @@ namespace LiteTube.Tools
                 }
             }
 
-            if (element == null) 
+            if (element == null)
                 return;
 
             var underline = element as Run;
             if (underline == null)
                 return;
-
-            HyperlinkClick(underline);
+            underline.Foreground = ThemeManager.AccentSolidColorBrush;
+            HyperlinkClick(underline.Text);
         }
 
         private static Paragraph GetParagraph(string text)
@@ -115,8 +178,19 @@ namespace LiteTube.Tools
                 var run2 = new Run
                 {
                     Text = url,
-                    Foreground = ThemeManager.AccentSolidColorBrush
+                    Foreground = ThemeManager.AccentDarkSolidColorBrush
                 };
+                /*
+                var hyperlink = new Hyperlink
+                {
+                    Inlines = { run2 },
+                    Command = new RelayCommand<string>(HyperlinkClick),
+                    TextDecorations = null,
+                    Foreground = ThemeManager.AccentDarkSolidColorBrush,
+                    MouseOverForeground = ThemeManager.AccentSolidColorBrush,
+                    CommandParameter = url
+                };
+                 */
                 paragraph.Inlines.Add(run2);
             }
             catch (Exception)
@@ -125,16 +199,23 @@ namespace LiteTube.Tools
             }
         }
 
-        private static void HyperlinkClick(Run run)
+        private static void AddText(string text, Paragraph paragraph)
         {
-            var hyperlink = run.Text;
-            if (string.IsNullOrEmpty(hyperlink))
+            paragraph.Inlines.Add(new Run { Text = text });
+        }
+
+        private static void HyperlinkClick(string hyperlink)
+        {
+            if (hyperlink == null)
                 return;
 
-            if (!Uri.IsWellFormedUriString(hyperlink, UriKind.Absolute))
-                return;
+            //var inline = hyperlink.Inlines.FirstOrDefault();
+            //if (inline == null)
+            //    return;
 
-            run.Foreground = ThemeManager.AccentDarkSolidColorBrush;
+            //var run = inline as Run;
+            //if (run == null)
+            //    return;
 
             var videoId = GetVideoId(hyperlink);
             var channelId = GetChannelId(hyperlink);
@@ -157,13 +238,13 @@ namespace LiteTube.Tools
                 return;
             }
 
-//            if (!string.IsNullOrEmpty(username))
-//            {
-//#if SILVERLIGHT
-//                NavigationHelper.GoToChannelPage(null, username);
-//#endif
-//                return;
-//            }
+            //            if (!string.IsNullOrEmpty(username))
+            //            {
+            //#if SILVERLIGHT
+            //                NavigationHelper.GoToChannelPage(null, username);
+            //#endif
+            //                return;
+            //            }
 
             if (!string.IsNullOrEmpty(playlistId))
             {
@@ -180,11 +261,6 @@ namespace LiteTube.Tools
             task.Show();
         }
 
-        private static void AddText(string text, Paragraph paragraph)
-        {
-            paragraph.Inlines.Add(new Run { Text = text});
-        }
-
         private static string GetVideoId(string url)
         {
             var videoId = string.Empty;
@@ -193,12 +269,7 @@ namespace LiteTube.Tools
             foreach (Match match in colm)
             {
                 videoId = match.Value.Substring(8, match.Value.Length - 8);
-                var ampIndex = videoId.IndexOf("&");
-                if (ampIndex == -1)
-                    return videoId;
-
-                var v = videoId.Substring(0, ampIndex);
-                return v;
+                return videoId;
             }
             return videoId;
         }
@@ -234,7 +305,11 @@ namespace LiteTube.Tools
         private static string GetPlaylistId(string url)
         {
             var listIndex = url.LastIndexOf("list=", StringComparison.Ordinal);
-            return listIndex == -1 ? string.Empty : url.Substring(listIndex + 5);
+            if (listIndex == -1)
+                return string.Empty;
+
+            return url.Substring(listIndex + 5);
         }
+       
     }
 }

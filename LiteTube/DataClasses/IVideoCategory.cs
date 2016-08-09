@@ -4,10 +4,8 @@ namespace LiteTube.DataClasses
 {
     public interface IVideoCategory
     {
-        string ETag { get; }
         string Id { get; }
         string ChannelId { get; }
-        string ChannelETag { get; }
         string Title { get; }
     }
 
@@ -15,17 +13,12 @@ namespace LiteTube.DataClasses
     {
         public MVideoCategory(VideoCategory category)
         {
-            ETag = category.ETag;
             Id = category.Id;
-            ChannelId = category.Snippet.ChannelId;
-            ChannelETag = category.Snippet.ETag;
-            Title = category.Snippet.Title;
-        }
+            if (category.Snippet == null)
+                return;
 
-        public string ETag
-        {
-            get;
-            private set;
+            ChannelId = category.Snippet.ChannelId;
+            Title = category.Snippet.Title;
         }
 
         public string Id
@@ -35,12 +28,6 @@ namespace LiteTube.DataClasses
         }
 
         public string ChannelId
-        {
-            get;
-            private set;
-        }
-
-        public string ChannelETag
         {
             get;
             private set;

@@ -27,6 +27,9 @@ namespace LiteTube.DataClasses
     {
         public MCommentList(CommentThreadListResponse response)
         {
+            if (response == null)
+                return;
+
             NextPageToken = response.NextPageToken;
             PageInfo = new MPageInfo(response.PageInfo);
             VisitorId = response.VisitorId;

@@ -86,6 +86,11 @@ namespace LiteTube.DataModel
             get { return _remoteDataSource.WatchLaterPlaylistId; }
         }
 
+        public string UploadedPlaylistId
+        {
+            get { return _remoteDataSource.UploadedPlaylistId; }
+        }
+
         public async Task<IEnumerable<IVideoCategory>> GetCategories(string culture)
         {
             try
@@ -208,7 +213,7 @@ namespace LiteTube.DataModel
             catch (Exception e)
             {
                 Debug.WriteLine("GetChannelVideoList method called with exception " + e.Message);
-                throw;
+                return MVideoList.Empty;
             }
         }
 
@@ -549,6 +554,20 @@ namespace LiteTube.DataModel
             {
                 Debug.WriteLine("GetVideoPlaylist method called with exception " + e.Message);
                 throw e;
+            }
+        }
+
+        public async Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken)
+        {
+            try
+            {
+                Debug.WriteLine("GetMyPlaylistList method called");
+                return await _remoteDataSource.GetMyPlaylistList(maxResult, nextPageToken);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetMyPlaylistList method called with exception " + e.Message);
+                throw;
             }
         }
     }

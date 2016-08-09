@@ -31,8 +31,8 @@ namespace LiteTube
         private bool _resumed;
         private TimeSpan _playerPosition;
         private bool _isFullScreen = false;
-        private bool _isRelatedLoading = false;
         private const string RelatedListBoxName = "RelatedListBox";
+        private bool _isPaused = false;
 
         public PlaylistVideoPage()
         {
@@ -160,6 +160,14 @@ namespace LiteTube
 
                 _resumed = false;
                 player.Position = _playerPosition;
+
+                if (_isPaused)
+                {
+                    player.PlayResume();
+                    player.Position = _playerPosition;
+                    player.Pause();
+                    _isPaused = false;
+                }
             });
         }
 
@@ -443,6 +451,7 @@ namespace LiteTube
             player.IsSkipPreviousChanged += OnSkipPreviousChanged;
             player.MediaEnded += OnMediaEnded;
             player.CurrentStateChanged += OnCurrentStateChanged;
+            player.Paused += Player_Paused;
         }
 
         private void UnsubscribePlayerEvents(LiteTubePlayer player)
@@ -450,6 +459,10 @@ namespace LiteTube
             player.MediaOpened -= PlayerOnMediaOpened;
             player.MediaEnded -= OnMediaEnded;
             player.CurrentStateChanged -= OnCurrentStateChanged;
+            player.Paused -= Player_Paused;
+            player.IsFullScreenChanged -= PlayerIsFullScreenChanged;
+            player.IsSkipNextChanged -= OnSkipNextChanged;
+            player.IsSkipPreviousChanged -= OnSkipPreviousChanged;
         }
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
@@ -487,14 +500,14 @@ namespace LiteTube
                 {
                     viewModel.VideoViewModel.PropertyChanged += (ss, aa) =>
                     {
-                        //if (aa.PropertyName == "Description")
-                        //{
+                        if (aa.PropertyName == "Description")
+                        {
 
-                        //    if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
-                        //        return;
+                            if (string.IsNullOrEmpty(viewModel.VideoViewModel.Description))
+                                return;
 
-                        //    HyperlinkHighlighter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
-                        //}
+                            HyperlinkHighlighter.HighlightUrls(viewModel.VideoViewModel.Description, descriptionTextBlock);
+                        }
 
                         if (aa.PropertyName == "SelectedVideoQualityItem")
                         {
@@ -505,6 +518,12 @@ namespace LiteTube
                     _playerPosition = TimeSpan.FromSeconds(0);
                 }
             };
+        }
+
+        private void Player_Paused(object sender, RoutedEventArgs e)
+        {
+            _isPaused = true;
+            _playerPosition = player.Position;
         }
     }
 }

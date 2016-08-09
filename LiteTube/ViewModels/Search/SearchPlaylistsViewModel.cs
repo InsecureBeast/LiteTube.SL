@@ -50,11 +50,28 @@ namespace LiteTube.ViewModels.Search
 
         private void AddItems(IEnumerable<IPlaylist> items)
         {
+            //var itemsList = Items.ToList();
+            //foreach (var item in items)
+            //{
+            //    if (itemsList.Exists(i => i.Id == item.Id))
+            //        continue;
+            //    Items.Add(new PlaylistNodeViewModel(item));
+            //}
+
             var itemsList = Items.ToList();
-            foreach (var item in items)
+            var itemsArray = items.ToArray();
+            for (int i = 0; i < itemsArray.Length; i++)
             {
-                if (itemsList.Exists(i => i.Id == item.Id))
-                    continue;
+                var item = itemsArray[i];
+
+                if (itemsList.Exists(c => c.Id == item.Id))
+                   continue;
+
+                if (i % SettingsHelper.AdvCount == 0 && i != 0 && ShowAdv)
+                {
+                    Items.Add(new AdvNodeViewModel());
+                }
+
                 Items.Add(new PlaylistNodeViewModel(item));
             }
         }

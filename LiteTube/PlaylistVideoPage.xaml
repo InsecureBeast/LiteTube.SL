@@ -224,19 +224,19 @@
                             <Run Text="{Binding PublishedAt}"/>
                         </TextBlock>
 
-                        <!--<RichTextBox Grid.Row="4"
+                        <RichTextBox Grid.Row="4"
                                      IsReadOnly="True"
                                      TextWrapping="Wrap"
                                      Name="descriptionTextBlock"
                                      Foreground="{StaticResource PhoneSubtleBrush}"
                                      Padding="0"
                                      UseLayoutRounding="True"
-                                     Margin="-12,12,-12,12"/>-->
-                        <TextBlock Text="{Binding Description}"
+                                     Margin="-12,12,-12,12"/>
+                        <!--<TextBlock Text="{Binding Description}"
                                    Grid.Row="4"
                                    Style="{StaticResource PhoneTextSmallStyle}"
                                    Margin="{StaticResource DefaultTextBlockMargin}"
-                                   TextWrapping="Wrap"/>
+                                   TextWrapping="Wrap"/>-->
                    </Grid>
                 </ScrollViewer>
             </phone:PivotItem>
@@ -301,7 +301,9 @@
                                          IsSkipBackVisible="False"
                                          IsSkipNextVisible="True"
                                          IsSkipPreviousVisible="True"
-                                         AllowMediaStartingDeferrals="False">
+                                         AllowMediaStartingDeferrals="False"
+                                         IsTimeRemainingVisible="True"
+                                         IsDurationVisible="False">
                 <controls:LiteTubePlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </controls:LiteTubePlayer.RenderTransform>

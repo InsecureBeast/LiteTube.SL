@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using LiteTube.Common.Helpers;
 using Microsoft.Phone.Info;
+using LiteTube.Common.Tools;
 
 namespace LiteTube
 {
@@ -33,6 +34,11 @@ namespace LiteTube
                     builder.AppendFormat("param = {0}{1}", p, Environment.NewLine);
                 }
 
+                builder.AppendLine();
+                builder.AppendFormat("VideoId - {0}{1}", LastRequest.VideoId, Environment.NewLine);
+                builder.AppendFormat("ChannelId - {0}{1}", LastRequest.ChannelId, Environment.NewLine);
+                builder.AppendFormat("PlaylistId - {0}{1}", LastRequest.PlaylistId, Environment.NewLine);
+                builder.AppendFormat("Search string - {0}{1}", LastRequest.SearchString, Environment.NewLine);
                 await Send(exception, builder.ToString());
             }
             catch (Exception)

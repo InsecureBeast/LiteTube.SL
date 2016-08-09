@@ -14,7 +14,6 @@ namespace LiteTube.DataClasses
         string Description { get; }
         string Dimension { get; }
         string Definition { get; }
-        IVideo Video { get; }
         IVideoStatistics Statistics { get; }
         bool IsPaid { get; }
     }
@@ -28,19 +27,10 @@ namespace LiteTube.DataClasses
         UInt64? CommentCount { get; }
     }
 
-    public interface IVideo
-    {
-        string Id { get; }
-        IVideoStatistics Statistics { get; }
-        Uri PlayerUri { get; }
-        string EmbedHtml { get; }
-    }
-
     public interface IVideoItem
     {
         string ChannelId { get; }
         string ChannelTitle { get; set; }
-        string ETag { get; }
         IThumbnailDetails Thumbnails { get; }
         DateTime? PublishedAt { get; }
         string PublishedAtRaw { get; }
@@ -149,18 +139,12 @@ namespace LiteTube.DataClasses
             VideoId = video.Id;
             if (video.Snippet != null)
             {
-                Title = video.Snippet.Localized.Title;
-                Description = video.Snippet.Localized.Description;
+                Title = video.Snippet.Title;
+                Description = video.Snippet.Description;
             }
             Definition = video.ContentDetails.Definition;
-            Video = new MVideo(video);
             Statistics = new MVideoStatistics(video.Statistics);
             IsPaid = video.ContentDetails.RegionRestriction != null;
-            //if (video.ContentDetails.RegionRestriction != null)
-            //{
-            //    var isBlocked = video.ContentDetails.RegionRestriction.Allowed.C
-            //}
-            
         }
 
         public TimeSpan Duration
@@ -198,13 +182,6 @@ namespace LiteTube.DataClasses
             get;
             private set;
         }
-
-        public IVideo Video
-        {
-            get;
-            private set;
-        }
-
 
         public IVideoStatistics Statistics
         {
@@ -261,39 +238,6 @@ namespace LiteTube.DataClasses
         }
     }
 
-    class MVideo : IVideo
-    {
-        public MVideo(Video video)
-        {
-            this.Id = video.Id;
-            this.Statistics = new MVideoStatistics(video.Statistics);
-        }
-
-        public string Id
-        {
-            get;
-            private set;
-        }
-
-        public IVideoStatistics Statistics
-        {
-            get;
-            private set;
-        }
-
-        public Uri PlayerUri
-        {
-            get;
-            private set;
-        }
-
-        public string EmbedHtml
-        {
-            get;
-            private set;
-        }
-    }
-
     class MVideoItem : IVideoItem
     {
         public static IVideoItem Empty
@@ -308,7 +252,6 @@ namespace LiteTube.DataClasses
 
             ChannelId = video.Snippet.ChannelId;
             ChannelTitle = video.Snippet.ChannelTitle;
-            ETag = video.ETag;
             Thumbnails = new MThumbnailDetails(video.Snippet.Thumbnails);
             PublishedAt = video.Snippet.PublishedAt;
             PublishedAtRaw = video.Snippet.PublishedAtRaw;
@@ -317,24 +260,28 @@ namespace LiteTube.DataClasses
 
         public MVideoItem(SearchResult item, IVideoDetails details)
         {
+            Details = details;
+            if (item.Snippet == null)
+                return;
+
             ChannelId = item.Snippet.ChannelId;
             ChannelTitle = item.Snippet.ChannelTitle;
-            ETag = item.ETag;
             Thumbnails = new MThumbnailDetails(item.Snippet.Thumbnails);
             PublishedAt = item.Snippet.PublishedAt;
             PublishedAtRaw = item.Snippet.PublishedAtRaw;
-            Details = details;
         }
 
         public MVideoItem(IPlayListItem item, IVideoDetails details)
         {
+            Details = details;
+            if (item.Snippet == null)
+                return;
+
             ChannelId = item.Snippet.ChannelId;
             ChannelTitle = item.Snippet.ChannelTitle;
-            ETag = item.ETag;
             Thumbnails = item.Snippet.Thumbnails;
             PublishedAt = item.Snippet.PublishedAt;
             PublishedAtRaw = item.Snippet.PublishedAtRaw;
-            Details = details;
         }
 
         public string ChannelId
@@ -347,12 +294,6 @@ namespace LiteTube.DataClasses
         {
             get;
             set;
-        }
-
-        public string ETag
-        {
-            get;
-            private set;
         }
 
         public IThumbnailDetails Thumbnails

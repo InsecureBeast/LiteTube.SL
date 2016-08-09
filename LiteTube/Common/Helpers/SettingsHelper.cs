@@ -194,6 +194,17 @@ namespace LiteTube.Common.Helpers
 
         }
 
+        //TODO for prov version set false
+        public static bool IsAdvVisible
+        {
+            get { return true; }
+        }
+
+        public static int AdvCount
+        {
+            get { return 20; }
+        }
+
         internal static void SaveTheme(ApplicationTheme theme)
         {
             ApplicationData.Current.RoamingSettings.Values["Theme"] = (int)theme;
