@@ -213,7 +213,7 @@ namespace LiteTube.DataModel
             catch (Exception e)
             {
                 Debug.WriteLine("GetChannelVideoList method called with exception " + e.Message);
-                throw;
+                return MVideoList.Empty;
             }
         }
 

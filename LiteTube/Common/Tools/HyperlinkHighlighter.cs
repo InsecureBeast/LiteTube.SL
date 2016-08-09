@@ -56,8 +56,7 @@ namespace LiteTube.Tools
             if (underline == null)
                 return;
 
-            underline.Foreground = ThemeManager.AccentDarkSolidColorBrush;
-            HyperlinkClick(underline.Text);
+            HyperlinkClick(underline);
         }
 
         private static Paragraph GetParagraph(string text)
@@ -126,13 +125,16 @@ namespace LiteTube.Tools
             }
         }
 
-        private static void HyperlinkClick(string hyperlink)
+        private static void HyperlinkClick(Run run)
         {
+            var hyperlink = run.Text;
             if (string.IsNullOrEmpty(hyperlink))
                 return;
 
             if (!Uri.IsWellFormedUriString(hyperlink, UriKind.Absolute))
                 return;
+
+            run.Foreground = ThemeManager.AccentDarkSolidColorBrush;
 
             var videoId = GetVideoId(hyperlink);
             var channelId = GetChannelId(hyperlink);

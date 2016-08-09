@@ -812,7 +812,7 @@ namespace LiteTube.DataModel
 
         private async Task<IVideoList> GetChannelVideosApi(string channelId, int maxPageResult, string nextPageToken)
         {
-            var request = _youTubeService.Search.List("snippet,id");
+            var request = _youTubeService.Search.List("snippet");
             request.Key = _youTubeServiceControl.ApiKey;
             request.PageToken = nextPageToken;
             request.MaxResults = maxPageResult;
