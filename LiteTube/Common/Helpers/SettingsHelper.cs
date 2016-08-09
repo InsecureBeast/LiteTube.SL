@@ -202,7 +202,7 @@ namespace LiteTube.Common.Helpers
 
         public static int AdvCount
         {
-            get { return 25; }
+            get { return 20; }
         }
 
         internal static void SaveTheme(ApplicationTheme theme)

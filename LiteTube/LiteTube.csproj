@@ -242,7 +242,7 @@
     <Compile Include="ViewModels\HistoryPageViewModel.cs" />
     <Compile Include="ViewModels\LikedViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\AddNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\AdvNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\ChannelNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />

@@ -79,7 +79,7 @@ namespace LiteTube.ViewModels
 
                 if (i % 20 == 0 && i != 0 && ShowAdv)
                 {
-                    Items.Add(new AddNodeViewModel());
+                    Items.Add(new AdvNodeViewModel());
                 }
 
                 Items.Add(new PlaylistNodeViewModel(item));

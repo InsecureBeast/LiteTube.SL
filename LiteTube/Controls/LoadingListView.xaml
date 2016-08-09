@@ -31,10 +31,10 @@
                                        HorizontalAlignment="Center"/>
             </Border>
             <Border BorderBrush="{StaticResource PlaylistSelectedBrush}"
-                                BorderThickness="1"
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2">
+                    BorderThickness="1"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
                 <!--<adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
                                         HorizontalAlignment="Stretch" 
                                         Height="50" 
@@ -42,21 +42,19 @@
                                         Margin="0,8,0,0" 
                                         VerticalAlignment="Stretch" 
                                         Width="300"/>-->
-                <!--<adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
-                                       AdUnitId="11626916"
-                                       HorizontalAlignment="Left"
-                                       Height="80"
-                                       VerticalAlignment="Center"
-                                       Width="480"
-                                       Margin="-20,5,0,0"
-                                       Grid.Row="1"/>-->
-                <adv:AdControl ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
-                                           AdUnitId="10865270"
-                                           HorizontalAlignment="Center"
-                                           Height="80"
-                                           VerticalAlignment="Center"
-                                           Width="480"
-                                           Margin="0,0,0,0" />
+                <adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
+                                AdUnitId="11626916"
+                                HorizontalAlignment="Center"
+                                Height="80"
+                                VerticalAlignment="Center"
+                                Width="480"
+                                Grid.Row="1"/>
+                <!--<adv:AdControl ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
+                                AdUnitId="10865270"
+                                HorizontalAlignment="Center"
+                                Height="80"
+                                VerticalAlignment="Center"
+                                Width="480"/>-->
             </Border>
         </Grid>
     </DataTemplate>

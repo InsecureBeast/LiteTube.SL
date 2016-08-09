@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiteTube.ViewModels.Nodes
 {
-    class AddNodeViewModel : NodeViewModelBase
+    class AdvNodeViewModel : NodeViewModelBase
     {
         public override string Id
         {
