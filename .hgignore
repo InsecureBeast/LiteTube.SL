@@ -20,3 +20,6 @@ Fast app resume backstack sample/*
 LiteTube10/obj/*
 LiteTube10/bin/*
 LiteTube10/LiteTube10.csproj.user
+LiteTubePro/Bin/*
+LiteTubePro/obj/*
+packages/*
