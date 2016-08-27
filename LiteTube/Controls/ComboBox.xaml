@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="LiteTube.Controls.ComboBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="50" 
+    d:DesignWidth="480">
+
+    <!-- Внешняя граница контрола -->
+        <!-- Контейнер для содержимого контрола. Размер этого контейнера будет изменяться в зависимости от того, в каком состоянии находится контрол -->
+        <Grid x:Name="LayoutRoot" 
+              Background="{StaticResource TransparentBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            
+            <Border VerticalAlignment="Center"
+                    BorderBrush="{StaticResource NavigationBorderBrush}" 
+                    BorderThickness="{StaticResource PhoneBorderThickness}"
+                    Background="{StaticResource TransparentBrush}">
+                <TextBlock x:Name="SelectedValueTextBlock" 
+                           Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                           FontSize="{StaticResource PhoneFontSizeMedium}"
+                           VerticalAlignment="Center" 
+                           Tap="SelectedValueTextBlock_Tap" 
+                           Margin="10,4,10,4" />
+            </Border>
+            
+            <Popup x:Name="Popup"
+                   MaxHeight="250" 
+                   Grid.Row="0">
+            <Border BorderBrush="{StaticResource NavigationBorderBrush}" 
+                    BorderThickness="{StaticResource PhoneBorderThickness}">
+                <ListBox  x:Name="DropDownList"
+                          VerticalAlignment="Top" 
+                          SelectionMode="Single" 
+                          SelectionChanged="DropDownList_SelectionChanged" 
+                          FontSize="{StaticResource PhoneFontSizeMedium}"
+                          Background="{StaticResource NavigationPanelBrush}"
+                          Padding="10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}"
+                                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                                       Margin="5" 
+                                       Text="{Binding}" >
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        </Popup>
+        </Grid>
+</UserControl>

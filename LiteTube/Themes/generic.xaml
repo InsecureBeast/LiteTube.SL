@@ -3,6 +3,7 @@
                     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:controls="clr-namespace:LiteTube.Controls"
     >
 
     <Color x:Key="NavigationPanelColor">#FF2B2B2B</Color>
@@ -20,6 +21,7 @@
     <SolidColorBrush x:Key="PhoneTextBoxBackgroundBrush" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="PlaylistSelectedBrush" Color="#50000000" />
     <SolidColorBrush x:Key="InverseForegroundBrush" Color="#50000000" />
+    <SolidColorBrush x:Key="NavigationBorderBrush" Color="#FFA5A5A5" />
 
     <Thickness x:Key="DefaultTextBlockMargin">0,12,0,5</Thickness>
     <Thickness x:Key="DefaultControlMargin">0,12,0,0</Thickness>
@@ -103,12 +105,12 @@
     </Style>
 
     <Style x:Key="AutoCompleteBoxStyle" TargetType="toolkit:AutoCompleteBox">
-        <Setter Property="Background" Value="#FFF1F0EE"/>
+        <Setter Property="Background" Value="{StaticResource NavigationPanelBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource PhoneTextBoxBrush}"/>
         <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
         <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource NavigationPanelForegroundBrush}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -121,25 +123,28 @@
             <Setter.Value>
                 <ControlTemplate TargetType="toolkit:AutoCompleteBox">
                     <Grid>
-                        <TextBox
-                            x:Name="Text"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="White"
-                            BorderThickness="0"
-                            FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontStyle="{TemplateBinding FontStyle}"
-                            FontWeight="{TemplateBinding FontWeight}"
-                            Foreground="{TemplateBinding Foreground}"
-                            InputScope="{TemplateBinding InputScope}"
-                            Opacity="{TemplateBinding Opacity}"
-                            Padding="{TemplateBinding Padding}"
-                            Margin="10"/>
+                        <Border BorderBrush="{StaticResource NavigationBorderBrush}"
+                                BorderThickness="{StaticResource PhoneBorderThickness}">
+                            <TextBox
+                                    x:Name="Text"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{StaticResource NavigationBorderBrush}"
+                                    BorderThickness="0"
+                                    FontFamily="{TemplateBinding FontFamily}"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontStyle="{TemplateBinding FontStyle}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    InputScope="{TemplateBinding InputScope}"
+                                    Opacity="{TemplateBinding Opacity}"
+                                    Padding="{TemplateBinding Padding}"
+                                    Margin="4"/>
+                        </Border>
                         <Popup x:Name="Popup">
                             <ListBox
                                 x:Name="Selector"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="Gray"
+                                BorderBrush="{StaticResource NavigationBorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 FontFamily="{TemplateBinding FontFamily}"
                                 FontSize="{TemplateBinding FontSize}"
@@ -149,7 +154,8 @@
                                 IsTabStop="False"
                                 ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                 ItemTemplate="{TemplateBinding ItemTemplate}"
-                                Opacity="{TemplateBinding Opacity}"
+                                Opacity="{TemplateBinding Opacity}"  
+                                Height="260"
                                 Padding="0,8"/>
                         </Popup>
                     </Grid>
@@ -166,7 +172,6 @@
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="Margin" Value="{StaticResource PhoneTouchTargetOverhang}"/>
-        <Setter Property="PickerPageUri" Value="/Microsoft.Phone.Controls.Toolkit;component/ListPicker/ListPickerPage.xaml"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="toolkit:ListPicker">
@@ -303,5 +308,6 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 
 </ResourceDictionary>

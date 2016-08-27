@@ -1,8 +1,11 @@
-﻿using LiteTube.DataModel;
+﻿using LiteTube.Common;
+using LiteTube.DataModel;
 using LiteTube.ViewModels.Search;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace LiteTube.ViewModels
 {
@@ -11,8 +14,11 @@ namespace LiteTube.ViewModels
         private readonly SearchVideoViewModel _searchVideoViewModel;
         private readonly SearchChannelsViewModel _searchChannelsViewModel;
         private readonly SearchPlaylistsViewModel _searchPlaylistsViewModel;
+        private readonly RelayCommand _searchSettingCommand;
         private string _searchString;
         private int _selectedIndex;
+        private bool _isSearchSettingsVisible = false;
+        private List<string> _sortingItems;
 
         public SearchPageViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener)
             : base(getDataSource, connectionListener, null)
@@ -20,6 +26,15 @@ namespace LiteTube.ViewModels
             _searchVideoViewModel = new SearchVideoViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
             _searchChannelsViewModel = new SearchChannelsViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
             _searchPlaylistsViewModel = new SearchPlaylistsViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
+            _searchSettingCommand = new RelayCommand(SearchSettings);
+
+            _sortingItems = new List<string>()
+            {
+                "По релевантности",
+                "По дате загрузки",
+                "По числу просмотров",
+                "По рейтингу"
+            };
         }
 
         public SearchVideoViewModel SearchVideoViewModel
@@ -37,12 +52,31 @@ namespace LiteTube.ViewModels
             get { return _searchPlaylistsViewModel; }
         }
 
+        public ICommand SearchSettingCommand
+        {
+            get { return _searchSettingCommand; }
+        }
+
+        public bool IsSearchSettingsVisible
+        {
+            get { return _isSearchSettingsVisible; }
+            set
+            {
+                _isSearchSettingsVisible = value;
+                NotifyOfPropertyChanged(() => IsSearchSettingsVisible);
+            }
+        }
+
         public string SearchString
         {
             get { return _searchString; }
             set { _searchString = value; }
         }
 
+        public List<string> SortingItems
+        {
+            get { return _sortingItems; }
+        }
         internal async Task Search(int selectedIndex)
         {
             if (string.IsNullOrEmpty(_searchString))
@@ -86,6 +120,11 @@ namespace LiteTube.ViewModels
                 return;
             }
             HideProgressIndicator();
+        }
+
+        private void SearchSettings()
+        {
+            IsSearchSettingsVisible = !IsSearchSettingsVisible;
         }
     }
 }

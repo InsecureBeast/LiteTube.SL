@@ -7,6 +7,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="clr-namespace:MyToolkit.Controls;assembly=MyToolkit.Extended"
     xmlns:controls="clr-namespace:LiteTube.Controls"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -25,25 +26,105 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        
+
         <!--TitlePanel contains the name of the application and page title-->
         <controls:NavigationPanel Grid.Row="0" 
                                   x:Name="NavControl"
                                   DataContext="{Binding NavigationPanelViewModel}"/>
 
-        <Border Grid.Row="1"
-                Background="{StaticResource NavigationPanelBrush}"
-                Margin="0">
+        <Grid Grid.Row="1"
+              Background="{StaticResource NavigationPanelBrush}"
+              Margin="0,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
             <toolkit:AutoCompleteBox Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Default}"
                                      MinimumPrefixLength="2"
                                      FilterMode="ContainsCaseSensitive"
                                      Populating="SearchBox_OnPopulating"
+                                     VerticalAlignment="Top"
                                      Style="{StaticResource AutoCompleteBoxStyle}"
                                      x:Uid="SearchBox"
                                      x:Name="SearchBox"
-                                     KeyUp="TextBox_KeyUp"
-                                     Margin="13,0,15,2"/>
-        </Border>
+                                     KeyUp="TextBox_KeyUp" 
+                                     Margin="10,0,4,20"/>
+
+            <ToggleButton Grid.Column="1"
+                          x:Name="searchSettingsToggleButton"
+                          Style="{StaticResource NavigationControlToggleButtonStyle}"
+                          ContentTemplate="{StaticResource SearchSettingsIcon}"
+                          IsChecked="{Binding IsSearchSettingsVisible, Mode=TwoWay}"
+                          Height="55"
+                          Width="55"
+                          VerticalAlignment="Top"/>
+            <Grid Visibility="{Binding IsSearchSettingsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"          
+                  Grid.Row="1"
+                  Grid.ColumnSpan="3"
+                  Margin="10,0,10,20">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical"
+                            Margin="0,0,10,0">
+                    <TextBlock Text="Sorting"
+                               Foreground="White"
+                               Margin="0,0,0,4"/>
+                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
+                                       SelectedItem="{Binding SortingSelectedItem}" />
+
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical"
+                            Margin="0,0,10,0"
+                            Grid.Row="1">
+                    <TextBlock Text="Quality"
+                               Foreground="White"
+                               Margin="0,12,0,4"/>
+                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
+                                       SelectedItem="{Binding SortingSelectedItem}" />
+
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical"
+                            Margin="10,0,0,0"
+                            Grid.Row="0"
+                            Grid.Column="1">
+                    <TextBlock Text="Loading date"
+                               Foreground="White"
+                               Margin="0,0,0,4"/>
+                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
+                                       SelectedItem="{Binding SortingSelectedItem}" />
+
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical"
+                            Margin="10,0,0,0"
+                            Grid.Row="1"
+                            Grid.Column="1">
+                    <TextBlock Text="Duration"
+                               Foreground="White"
+                               Margin="0,12,0,4"/>
+                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
+                                       SelectedItem="{Binding SortingSelectedItem}" />
+
+                </StackPanel>
+            </Grid>
+        </Grid>
 
         <!--Pivot Control-->
         <phone:Pivot Name="Pivot"
@@ -55,7 +136,7 @@
                     <TextBlock Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
-                
+
                 <ContentPresenter Grid.Row="2"
                                   Name="SearchList"
                                   Content="{Binding SearchVideoViewModel}"
@@ -89,7 +170,7 @@
                                   ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
             </phone:PivotItem>
         </phone:Pivot>
-        
+
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
