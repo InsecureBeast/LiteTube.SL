@@ -211,7 +211,25 @@ namespace LiteTube.Tools
             foreach (Match match in colm)
             {
                 channelId = match.Value.Substring(8, match.Value.Length - 8);
-                return channelId;
+
+                var ampIndex = channelId.IndexOf("&");
+                if (ampIndex == -1)
+                    return channelId;
+
+                ampIndex = channelId.IndexOf("/");
+                if (ampIndex == -1)
+                    return channelId;
+
+                ampIndex = channelId.IndexOf("?");
+                if (ampIndex == -1)
+                    return channelId;
+
+                ampIndex = channelId.IndexOf(".");
+                if (ampIndex != -1)
+                    return string.Empty;
+
+                var c = channelId.Substring(0, ampIndex);
+                return c;
             }
 
             return channelId;
