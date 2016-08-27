@@ -67,7 +67,7 @@ namespace LiteTube.ViewModels.Search
                 if (itemsList.Exists(c => c.Id == item.Id))
                    continue;
 
-                if (i % SettingsHelper.AdvCount == 0 && i != 0 && ShowAdv)
+                if (Items.Count % SettingsHelper.AdvCount == 0 && Items.Count != 0 && ShowAdv)
                 {
                     Items.Add(new AdvNodeViewModel());
                 }

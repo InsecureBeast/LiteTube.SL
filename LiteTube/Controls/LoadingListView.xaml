@@ -10,7 +10,8 @@
     <!--xmlns:adv1="clr-namespace:Microsoft.AdMediator.WindowsPhone8;assembly=Microsoft.AdMediator.WindowsPhone8">-->
 
     <DataTemplate x:Key="AdvItemDatatemplate">
-        <Grid Margin="0,10,0,10">
+        <Grid Margin="0,10,0,15"
+              Visibility="{Binding IsAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -22,14 +23,16 @@
             </Grid.ColumnDefinitions>
 
             <Border Background="{StaticResource PlaylistSelectedBrush}"
-                                Grid.Row="0"
-                                Grid.Column="0">
+                    Grid.Row="0"
+                    Grid.Column="0">
                 <TextBlock Text="{Binding Path=LocalizedResources.AdvertisingPost, Source={StaticResource LocalizedStrings}}"
-                                       Style="{StaticResource PhoneTextSmallStyle}" 
-                                       Foreground="White"
-                                       Margin="5,2,5,2"
-                                       HorizontalAlignment="Center"/>
+                           Style="{StaticResource PhoneTextSmallStyle}" 
+                           Foreground="White"
+                           Margin="5,2,5,2"
+                           Width="163"
+                           HorizontalAlignment="Left"/>
             </Border>
+
             <Border BorderBrush="{StaticResource PlaylistSelectedBrush}"
                     BorderThickness="1"
                     Grid.Row="1"
@@ -42,6 +45,11 @@
                                         Margin="0,8,0,0" 
                                         VerticalAlignment="Stretch" 
                                         Width="300"/>-->
+                <!--<ContentPresenter Content="{Binding Element}"
+                                  Grid.Row="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>-->
+                
                 <adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
                                 AdUnitId="11626916"
                                 HorizontalAlignment="Center"
@@ -108,10 +116,11 @@
 
     <DataTemplate x:Key="LoadingListViewItem">
         <local:ListBoxTemplateSelector Content="{Binding}" 
-                                       HorizontalAlignment="Left">
+                                       HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5" Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
+                    <Grid Margin="0,0,0,5" 
+                          Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -144,7 +153,6 @@
                                     Margin="0,0,-10,0">
                             <TextBlock Text="{Binding Title}" 
                                        Style="{StaticResource PhoneTextNormalStyle}"
-                                       TextTrimming="WordEllipsis"
                                        TextWrapping="Wrap"
                                        MaxHeight="54"/>
                             <TextBlock Text="{Binding ChannelTitle}" 
@@ -164,8 +172,9 @@
             </local:ListBoxTemplateSelector.Normal>
             <local:ListBoxTemplateSelector.Adv>
                 <DataTemplate>
-                    <ContentControl ContentTemplate="{StaticResource AdvItemDatatemplate}"
-                                    Margin="2,0,0,0"/>
+                    <ContentPresenter ContentTemplate="{StaticResource AdvItemDatatemplate}"
+                                      Content="{Binding}"
+                                      Margin="2,0,0,0"/>
                 </DataTemplate>
             </local:ListBoxTemplateSelector.Adv>
         </local:ListBoxTemplateSelector>
@@ -173,7 +182,7 @@
 
     <DataTemplate x:Key="LoadingPlaylistListViewItem">
         <local:ListBoxTemplateSelector Content="{Binding}" 
-                                       HorizontalAlignment="Left">
+                                       HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
                     <Grid Margin="0,0,0,5">
@@ -224,7 +233,7 @@
             </local:ListBoxTemplateSelector.Normal>
             <local:ListBoxTemplateSelector.Adv>
                 <DataTemplate>
-                    <ContentControl ContentTemplate="{StaticResource AdvItemDatatemplate}"/>
+                    <ContentPresenter ContentTemplate="{StaticResource AdvItemDatatemplate}"/>
                 </DataTemplate>
             </local:ListBoxTemplateSelector.Adv>
         </local:ListBoxTemplateSelector>
