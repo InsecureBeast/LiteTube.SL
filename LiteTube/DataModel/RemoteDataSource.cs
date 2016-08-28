@@ -123,7 +123,7 @@ namespace LiteTube.DataModel
             activityRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
             activityRequest.MaxResults = SEARCH_PAGE_MAX_RESULT;
             activityRequest.PageToken = pageToken;
-            activityRequest.Home = true;
+            //activityRequest.Home = true; //deprecated from 12 sept 2016
             activityRequest.Key = _youTubeServiceControl.ApiKey;
             activityRequest.PublishedAfter = DateTime.Today;
             //activityRequest.OauthToken = _youTubeServiceControl.OAuthToken;
