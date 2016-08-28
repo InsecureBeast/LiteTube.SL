@@ -164,6 +164,11 @@ namespace LiteTube
             {
                 _playerState = player.GetMediaState();
                 _sensor.OrientationChanged -= Sensor_OrientationChanged;
+
+                UnsubscribePlayerEvents(player);
+                player.Close(); // shut things like ads down.
+                player.Dispose();
+
                 base.OnNavigatedFrom(e);
             }
             catch (Exception)

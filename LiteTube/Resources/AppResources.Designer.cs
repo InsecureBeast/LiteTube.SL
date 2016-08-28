@@ -106,6 +106,24 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to all time.
+        /// </summary>
+        public static string AllTime {
+            get {
+                return ResourceManager.GetString("AllTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to any.
+        /// </summary>
+        public static string Any {
+            get {
+                return ResourceManager.GetString("Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LightTube.
         /// </summary>
         public static string ApplicationTitle {
@@ -295,6 +313,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to high (HD).
+        /// </summary>
+        public static string High {
+            get {
+                return ResourceManager.GetString("High", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -313,6 +340,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to last hour.
+        /// </summary>
+        public static string LastHour {
+            get {
+                return ResourceManager.GetString("LastHour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to liked.
         /// </summary>
         public static string LikedVideos {
@@ -327,6 +363,24 @@ namespace LiteTube.Resources {
         public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to long.
+        /// </summary>
+        public static string Long {
+            get {
+                return ResourceManager.GetString("Long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to medium.
+        /// </summary>
+        public static string Medium {
+            get {
+                return ResourceManager.GetString("Medium", resourceCulture);
             }
         }
         
@@ -412,6 +466,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to rating.
+        /// </summary>
+        public static string Rating {
+            get {
+                return ResourceManager.GetString("Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to recommended for you.
         /// </summary>
         public static string RecommendedForYou {
@@ -435,6 +498,15 @@ namespace LiteTube.Resources {
         public static string RelatedVideos {
             get {
                 return ResourceManager.GetString("RelatedVideos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to relevance.
+        /// </summary>
+        public static string Relevance {
+            get {
+                return ResourceManager.GetString("Relevance", resourceCulture);
             }
         }
         
@@ -466,6 +538,42 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to duration.
+        /// </summary>
+        public static string SearchDuration {
+            get {
+                return ResourceManager.GetString("SearchDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to order by.
+        /// </summary>
+        public static string SearchOrder {
+            get {
+                return ResourceManager.GetString("SearchOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to quality.
+        /// </summary>
+        public static string SearchQuality {
+            get {
+                return ResourceManager.GetString("SearchQuality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to uploade date.
+        /// </summary>
+        public static string SearchUpload {
+            get {
+                return ResourceManager.GetString("SearchUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select region.
         /// </summary>
         public static string SelectRegion {
@@ -493,6 +601,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to short.
+        /// </summary>
+        public static string Short {
+            get {
+                return ResourceManager.GetString("Short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign In.
         /// </summary>
         public static string SignIn {
@@ -516,6 +633,15 @@ namespace LiteTube.Resources {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to standart.
+        /// </summary>
+        public static string Standart {
+            get {
+                return ResourceManager.GetString("Standart", resourceCulture);
             }
         }
         
@@ -556,6 +682,33 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to this month.
+        /// </summary>
+        public static string ThisMonth {
+            get {
+                return ResourceManager.GetString("ThisMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to this week.
+        /// </summary>
+        public static string ThisWeek {
+            get {
+                return ResourceManager.GetString("ThisWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to this year.
+        /// </summary>
+        public static string ThisYear {
+            get {
+                return ResourceManager.GetString("ThisYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to today.
         /// </summary>
         public static string Today {
@@ -565,11 +718,29 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to today.
+        /// </summary>
+        public static string TToday {
+            get {
+                return ResourceManager.GetString("TToday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unsubscribe.
         /// </summary>
         public static string Unsubscribe {
             get {
                 return ResourceManager.GetString("Unsubscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to upload date.
+        /// </summary>
+        public static string UploadDate {
+            get {
+                return ResourceManager.GetString("UploadDate", resourceCulture);
             }
         }
         
@@ -624,6 +795,15 @@ namespace LiteTube.Resources {
         public static string videos {
             get {
                 return ResourceManager.GetString("videos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to view count.
+        /// </summary>
+        public static string ViewCount {
+            get {
+                return ResourceManager.GetString("ViewCount", resourceCulture);
             }
         }
         

@@ -80,47 +80,51 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Vertical"
+                            x:Name="OrderStackPanel"
                             Margin="0,0,10,0">
-                    <TextBlock Text="Sorting"
+                    <TextBlock Text="{Binding Path=LocalizedResources.SearchOrder, Source={StaticResource LocalizedStrings}}"
                                Foreground="White"
                                Margin="0,0,0,4"/>
-                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
-                                       SelectedItem="{Binding SortingSelectedItem}" />
+                    <controls:ComboBox ItemsSource="{Binding OrderItems}"
+                                       SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" />
 
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
+                            x:Name="DefinitionStackPanel"
                             Margin="0,0,10,0"
                             Grid.Row="1">
-                    <TextBlock Text="Quality"
+                    <TextBlock Text="{Binding Path=LocalizedResources.SearchQuality, Source={StaticResource LocalizedStrings}}"
                                Foreground="White"
                                Margin="0,12,0,4"/>
-                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
-                                       SelectedItem="{Binding SortingSelectedItem}" />
+                    <controls:ComboBox ItemsSource="{Binding DefinitionItems}"
+                                       SelectedItem="{Binding SelectedDefinitionItem, Mode=TwoWay}" />
 
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
+                            x:Name="UploadStackPanel"
                             Margin="10,0,0,0"
                             Grid.Row="0"
                             Grid.Column="1">
-                    <TextBlock Text="Loading date"
+                    <TextBlock Text="{Binding Path=LocalizedResources.SearchUpload, Source={StaticResource LocalizedStrings}}"
                                Foreground="White"
                                Margin="0,0,0,4"/>
-                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
-                                       SelectedItem="{Binding SortingSelectedItem}" />
+                    <controls:ComboBox ItemsSource="{Binding UploadItems}"
+                                       SelectedItem="{Binding SelectedUploadItem, Mode=TwoWay}" />
 
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
+                            x:Name="DurationStackPanel"
                             Margin="10,0,0,0"
                             Grid.Row="1"
                             Grid.Column="1">
-                    <TextBlock Text="Duration"
+                    <TextBlock Text="{Binding Path=LocalizedResources.SearchDuration, Source={StaticResource LocalizedStrings}}"
                                Foreground="White"
                                Margin="0,12,0,4"/>
-                    <controls:ComboBox ItemsSource="{Binding SortingItems}"
-                                       SelectedItem="{Binding SortingSelectedItem}" />
+                    <controls:ComboBox ItemsSource="{Binding DurationItems}"
+                                       SelectedItem="{Binding SelectedDurationItem, Mode=TwoWay}" />
 
                 </StackPanel>
             </Grid>

@@ -33,6 +33,17 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
+            if (pivot.SelectedIndex != 0)
+            {
+                DurationStackPanel.Visibility = Visibility.Collapsed;
+                DefinitionStackPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                DurationStackPanel.Visibility = Visibility.Visible;
+                DefinitionStackPanel.Visibility = Visibility.Visible;
+            }
+
             await viewModel.Search(pivot.SelectedIndex);
         }   
 

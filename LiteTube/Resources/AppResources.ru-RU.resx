@@ -332,4 +332,64 @@
   <data name="AdvertisingPost" xml:space="preserve">
     <value>Рекламная запись</value>
   </data>
+  <data name="AllTime" xml:space="preserve">
+    <value>за все время</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>любое</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>высокое (HD)</value>
+  </data>
+  <data name="LastHour" xml:space="preserve">
+    <value>за последний час</value>
+  </data>
+  <data name="Long" xml:space="preserve">
+    <value>длинное</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>среднее</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>по рейтингу</value>
+  </data>
+  <data name="Relevance" xml:space="preserve">
+    <value>по релевантности</value>
+  </data>
+  <data name="SearchDuration" xml:space="preserve">
+    <value>длительность</value>
+  </data>
+  <data name="SearchOrder" xml:space="preserve">
+    <value>сортировать</value>
+  </data>
+  <data name="SearchQuality" xml:space="preserve">
+    <value>качество видео</value>
+  </data>
+  <data name="SearchUpload" xml:space="preserve">
+    <value>по дате загрузки</value>
+  </data>
+  <data name="Short" xml:space="preserve">
+    <value>короткое</value>
+  </data>
+  <data name="Standart" xml:space="preserve">
+    <value>стандартное</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>за этот месяц</value>
+  </data>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>за эту неделю</value>
+  </data>
+  <data name="ThisYear" xml:space="preserve">
+    <value>за этот год</value>
+  </data>
+  <data name="TToday" xml:space="preserve">
+    <value>за сегодня</value>
+  </data>
+  <data name="UploadDate" xml:space="preserve">
+    <value>по дате загрузки</value>
+  </data>
+  <data name="ViewCount" xml:space="preserve">
+    <value>по числу просмотров</value>
+  </data>
 </root>

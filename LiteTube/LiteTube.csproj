@@ -123,6 +123,7 @@
     <Compile Include="Converters\ColorValueConverter.cs" />
     <Compile Include="Converters\RelatedVideoMarginConverter.cs" />
     <Compile Include="DataClasses\IPlaylistList.cs" />
+    <Compile Include="DataClasses\SearchFilter.cs" />
     <Compile Include="DataClasses\MActivityList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
     <Compile Include="DataModel\YouTube.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="ViewModels\RecommendedSectionViewModel.cs" />
     <Compile Include="ViewModels\RelatedVideosViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchChannelsViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchFilterItem.cs" />
     <Compile Include="ViewModels\Search\SearchPageViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchPlaylistsViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchVideoViewModel.cs" />

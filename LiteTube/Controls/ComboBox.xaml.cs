@@ -12,7 +12,7 @@ namespace LiteTube.Controls
     public partial class ComboBox : UserControl
     {
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(ComboBox), null);
-        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItemSource", typeof(string), typeof(ComboBox), null);
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItemSource", typeof(object), typeof(ComboBox), null);
 
         public ComboBox()
         {
@@ -26,9 +26,9 @@ namespace LiteTube.Controls
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        public string SelectedItem
+        public object SelectedItem
         {
-            get { return GetValue(SelectedItemProperty) as string; }
+            get { return GetValue(SelectedItemProperty) as object; }
             set { SetValue(SelectedItemProperty, value); }
         }
 
@@ -40,9 +40,24 @@ namespace LiteTube.Controls
 
             page.MouseLeftButtonDown += Page_MouseLeftButtonDown;
             DropDownList.ItemsSource = ItemsSource;
-            var firstItem = DropDownList.Items.First().ToString();
-            DropDownList.SelectedItem = firstItem;
-            SelectedValueTextBlock.Text = firstItem;
+
+            if (DropDownList.Items.Count == 0)
+                return;
+
+            //var firstItem = DropDownList.Items.FirstOrDefault();
+            //if (firstItem == null)
+            //    return;
+
+            //if (DropDownList.SelectedItem == null)
+            //{
+            //    DropDownList.SelectedItem = firstItem.ToString();
+            //    SelectedValueTextBlock.Text = firstItem.ToString();
+            //    return;
+            //}
+            if (SelectedItem == null)
+                return;
+
+            SelectedValueTextBlock.Text = SelectedItem.ToString();
         }
 
         private void Page_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -53,8 +68,8 @@ namespace LiteTube.Controls
         private void DropDownList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // при выборе элемента из списка - устанавливаем выбранный элемент и сворачиваем список
-            SelectedItem = DropDownList.SelectedItem.ToString();
-            SelectedValueTextBlock.Text = SelectedItem;
+            SelectedItem = DropDownList.SelectedItem;
+            SelectedValueTextBlock.Text = SelectedItem.ToString();
             Popup.IsOpen = false;
         }
 
