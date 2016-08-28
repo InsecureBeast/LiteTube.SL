@@ -38,43 +38,7 @@ namespace LiteTube.ViewModels
             _searchPlaylistsViewModel = new SearchPlaylistsViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
             _searchSettingCommand = new RelayCommand(SearchSettings);
 
-            _orderItems = new List<OrderSearchFilterItem>()
-            {
-                new OrderSearchFilterItem(AppResources.Relevance, SearchResource.ListRequest.OrderEnum.Relevance),
-                new OrderSearchFilterItem(AppResources.UploadDate, SearchResource.ListRequest.OrderEnum.Date),
-                new OrderSearchFilterItem(AppResources.ViewCount, SearchResource.ListRequest.OrderEnum.ViewCount),
-                new OrderSearchFilterItem(AppResources.Rating, SearchResource.ListRequest.OrderEnum.Rating)
-            };
-
-            SelectedOrder = _orderItems.First();
-
-            _uploadItems = new List<UploadSearchFilterItem>()
-            {
-                new UploadSearchFilterItem(AppResources.AllTime, null),
-                new UploadSearchFilterItem(AppResources.LastHour, DateTime.Now - TimeSpan.FromHours(1)),
-                new UploadSearchFilterItem(AppResources.TToday, DateTime.Today),
-                new UploadSearchFilterItem(AppResources.ThisWeek, DateTime.Today - TimeSpan.FromDays(7)),
-                new UploadSearchFilterItem(AppResources.ThisMonth, DateTime.Today - TimeSpan.FromDays(30)),
-                new UploadSearchFilterItem(AppResources.ThisYear, DateTime.Today - TimeSpan.FromDays(365)),
-            };
-            SelectedUploadItem = _uploadItems.First();
-
-            _definitionItems = new List<VideoDefinitionSearchFilterItem>()
-            {
-                new VideoDefinitionSearchFilterItem(AppResources.Any, SearchResource.ListRequest.VideoDefinitionEnum.Any),
-                new VideoDefinitionSearchFilterItem(AppResources.Standart, SearchResource.ListRequest.VideoDefinitionEnum.Standard),
-                new VideoDefinitionSearchFilterItem(AppResources.High, SearchResource.ListRequest.VideoDefinitionEnum.High),
-            };
-            SelectedDefinitionItem = _definitionItems.First();
-
-            _durationItems = new List<VideoDurationSearchFilterItem>()
-            {
-                new VideoDurationSearchFilterItem(AppResources.Any, SearchResource.ListRequest.VideoDurationEnum.Any),
-                new VideoDurationSearchFilterItem(AppResources.Long, SearchResource.ListRequest.VideoDurationEnum.Long__),
-                new VideoDurationSearchFilterItem(AppResources.Medium, SearchResource.ListRequest.VideoDurationEnum.Medium),
-                new VideoDurationSearchFilterItem(AppResources.Short, SearchResource.ListRequest.VideoDurationEnum.Short__)
-            };
-            SelectedDurationItem = _durationItems.First();
+            CreateFilters();
         }
 
         public SearchVideoViewModel SearchVideoViewModel
@@ -241,6 +205,47 @@ namespace LiteTube.ViewModels
         private void SearchSettings()
         {
             IsSearchSettingsVisible = !IsSearchSettingsVisible;
+        }
+
+        private void CreateFilters()
+        {
+            _orderItems = new List<OrderSearchFilterItem>()
+            {
+                new OrderSearchFilterItem(AppResources.Relevance, SearchResource.ListRequest.OrderEnum.Relevance),
+                new OrderSearchFilterItem(AppResources.UploadDate, SearchResource.ListRequest.OrderEnum.Date),
+                new OrderSearchFilterItem(AppResources.ViewCount, SearchResource.ListRequest.OrderEnum.ViewCount),
+                new OrderSearchFilterItem(AppResources.Rating, SearchResource.ListRequest.OrderEnum.Rating)
+            };
+
+            SelectedOrder = _orderItems.First();
+
+            _uploadItems = new List<UploadSearchFilterItem>()
+            {
+                new UploadSearchFilterItem(AppResources.AllTime, null),
+                new UploadSearchFilterItem(AppResources.LastHour, DateTime.Now - TimeSpan.FromHours(1)),
+                new UploadSearchFilterItem(AppResources.TToday, DateTime.Today),
+                new UploadSearchFilterItem(AppResources.ThisWeek, DateTime.Today - TimeSpan.FromDays(7)),
+                new UploadSearchFilterItem(AppResources.ThisMonth, DateTime.Today - TimeSpan.FromDays(30)),
+                new UploadSearchFilterItem(AppResources.ThisYear, DateTime.Today - TimeSpan.FromDays(365)),
+            };
+            SelectedUploadItem = _uploadItems.First();
+
+            _definitionItems = new List<VideoDefinitionSearchFilterItem>()
+            {
+                new VideoDefinitionSearchFilterItem(AppResources.Any, SearchResource.ListRequest.VideoDefinitionEnum.Any),
+                new VideoDefinitionSearchFilterItem(AppResources.Standart, SearchResource.ListRequest.VideoDefinitionEnum.Standard),
+                new VideoDefinitionSearchFilterItem(AppResources.High, SearchResource.ListRequest.VideoDefinitionEnum.High),
+            };
+            SelectedDefinitionItem = _definitionItems.First();
+
+            _durationItems = new List<VideoDurationSearchFilterItem>()
+            {
+                new VideoDurationSearchFilterItem(AppResources.Any, SearchResource.ListRequest.VideoDurationEnum.Any),
+                new VideoDurationSearchFilterItem(AppResources.Long, SearchResource.ListRequest.VideoDurationEnum.Long__),
+                new VideoDurationSearchFilterItem(AppResources.Medium, SearchResource.ListRequest.VideoDurationEnum.Medium),
+                new VideoDurationSearchFilterItem(AppResources.Short, SearchResource.ListRequest.VideoDurationEnum.Short__)
+            };
+            SelectedDurationItem = _durationItems.First();
         }
     }
 }
