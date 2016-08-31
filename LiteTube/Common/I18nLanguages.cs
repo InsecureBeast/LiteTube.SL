@@ -64,10 +64,11 @@ namespace LiteTube.Common
             _regions.Add(new Tuple<string, string, string>("NG", "af", "Nigeria"));
             _regions.Add(new Tuple<string, string, string>("NO", "no", "Norway"));
             _regions.Add(new Tuple<string, string, string>("OM", "ar", "Oman"));
+            _regions.Add(new Tuple<string, string, string>("PK", "en", "Pakistan"));
             _regions.Add(new Tuple<string, string, string>("PE", "es-419", "Peru"));
             _regions.Add(new Tuple<string, string, string>("PH", "en", "Philippines"));
             _regions.Add(new Tuple<string, string, string>("PL", "pl", "Poland"));
-            _regions.Add(new Tuple<string, string, string>("PT", "pt-PT", "Portugal"));
+            _regions.Add(new Tuple<string, string, string>("PT", "pt", "Portugal"));
             _regions.Add(new Tuple<string, string, string>("PR", "es", "Puerto Rico"));
             _regions.Add(new Tuple<string, string, string>("QA", "ar", "Qatar"));
             _regions.Add(new Tuple<string, string, string>("RO", "ro", "Romania"));
