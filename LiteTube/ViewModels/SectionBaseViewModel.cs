@@ -276,11 +276,7 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(c => c.Id == item.Details.VideoId))
                     continue;
 
-                if (Items.Count % SettingsHelper.AdvCount == 0 && Items.Count != 0 && ShowAdv)
-                {
-                    Items.Add(new AdvNodeViewModel());
-                }
-
+                AdvHelper.AddAdv(Items, ShowAdv);
                 Items.Add(new VideoItemViewModel(item));
             }
             /*

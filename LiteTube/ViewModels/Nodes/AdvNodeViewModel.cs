@@ -1,10 +1,14 @@
-﻿using Microsoft.Advertising.Mobile.UI;
+﻿using LiteTube.Common;
+using Microsoft.AdMediator.WindowsPhone8;
+using Microsoft.Advertising.Mobile.UI;
+using MyToolkit.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -12,10 +16,12 @@ namespace LiteTube.ViewModels.Nodes
     {
         private FrameworkElement _element;
         private bool _isAvailable = true;
+        private readonly RelayCommand<AdMediatorControl> _mediatorErrorCommand;
 
         public AdvNodeViewModel()
         {
             _element = GetAdvElement();
+            _mediatorErrorCommand = new RelayCommand<AdMediatorControl>(OnMediatorError);
         }
 
         public override string Id
@@ -46,6 +52,16 @@ namespace LiteTube.ViewModels.Nodes
                 _isAvailable = value;
                 NotifyOfPropertyChanged(() => IsAvailable);
             }
+        }
+
+        public ICommand MediatorErrorCommand
+        {
+            get { return _mediatorErrorCommand; }
+        }
+
+        private void OnMediatorError(AdMediatorControl adMediator)
+        {
+
         }
 
         private FrameworkElement GetAdvElement()

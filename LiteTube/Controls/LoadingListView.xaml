@@ -6,8 +6,9 @@
     xmlns:converters="clr-namespace:LiteTube.Converters"
     xmlns:nodes="clr-namespace:LiteTube.ViewModels.Nodes"
     xmlns:local="clr-namespace:LiteTube.Controls"
-    xmlns:adv="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI">
-    <!--xmlns:adv1="clr-namespace:Microsoft.AdMediator.WindowsPhone8;assembly=Microsoft.AdMediator.WindowsPhone8">-->
+    xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:adv="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:adv1="clr-namespace:Microsoft.AdMediator.WindowsPhone8;assembly=Microsoft.AdMediator.WindowsPhone8">
 
     <DataTemplate x:Key="AdvItemDatatemplate">
         <Grid Margin="0,10,0,15"
@@ -38,25 +39,35 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
-                <!--<adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
-                                        HorizontalAlignment="Stretch" 
+                <adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
+                                        HorizontalAlignment="Left" 
                                         Height="50" 
                                         Id="AdMediator-Id-C5047D00-4321-4095-A379-3B9EA68B22A6"
-                                        Margin="0,8,0,0" 
-                                        VerticalAlignment="Stretch" 
-                                        Width="300"/>-->
+                                        Margin="0" 
+                                        VerticalAlignment="Top"
+                                        Width="320"
+                                        Grid.Row="1">
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="AdMediatorError">
+                            <interactivity:InvokeCommandAction Command="{Binding MediatorErrorCommand}"
+                                                               CommandParameter="{Binding ElementName=AdMediator_F3EEB8}"/>
+
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
+
+                </adv1:AdMediatorControl>
                 <!--<ContentPresenter Content="{Binding Element}"
                                   Grid.Row="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"/>-->
                 
-                <adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
+                <!--<adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
                                 AdUnitId="11626916"
                                 HorizontalAlignment="Center"
                                 Height="80"
                                 VerticalAlignment="Center"
                                 Width="480"
-                                Grid.Row="1"/>
+                                Grid.Row="1"/>-->
                 <!--<adv:AdControl ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
                                 AdUnitId="10865270"
                                 HorizontalAlignment="Center"
