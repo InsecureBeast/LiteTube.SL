@@ -5,12 +5,13 @@ using LiteTube.Common.Helpers;
 using LiteTube.DataModel;
 using LiteTube.Common.Tools;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace LiteTube.ViewModels
 {
-    class SettingsViewModel
+    class SettingsViewModel : PropertyChangedBase
     {
-        private readonly ObservableCollection<string> _languages;
+        private readonly ObservableCollection<string> _regions;
         private readonly ObservableCollection<string> _videoQualities;
         private readonly ObservableCollection<ApplicationTheme> _applicationThemes;
         private readonly Func<IDataSource> _getDataSource;
@@ -19,26 +20,28 @@ namespace LiteTube.ViewModels
         private string _selectedQuality;
         private ApplicationTheme _selectedApplicationTheme;
         private ApplicationTheme _oldSelectedApplicationTheme;
+        private ObservableCollection<string> _applicationLanguages;
+        private string _selectedLanguage;
+        private bool _isMustRestarted = false;
+        private string _currentLanguage;
 
         public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
             _getDataSource = getGetDataSource;
-            _languages = new ObservableCollection<string>(I18nLanguages.Languages);
+            _regions = new ObservableCollection<string>(I18nLanguages.Languages);
             var videoQuality = new VideoQuality();
             _videoQualities = new ObservableCollection<string>(videoQuality.GetQualityNames());
 
-            _applicationThemes = new ObservableCollection<ApplicationTheme>(
-                new List<ApplicationTheme>
-                {
-                    ApplicationTheme.Light,
-                    ApplicationTheme.Dark
-                });
+            _applicationThemes = new ObservableCollection<ApplicationTheme>(ThemeManager.GetSupportedThemes());
+            _applicationLanguages = new ObservableCollection<string>(LanguageManager.GetSupportedLanguages());
 
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
             _navigatioPanelViewModel.IsSettingsSelected = true;
             _selectedRegion = SettingsHelper.GetRegionName();
             _selectedQuality = SettingsHelper.GetQuality();
             _selectedApplicationTheme = SettingsHelper.GetTheme();
+            _selectedLanguage = SettingsHelper.GetLanguage();
+            _currentLanguage = _selectedLanguage;
             _oldSelectedApplicationTheme = _selectedApplicationTheme;
         }
 
@@ -47,9 +50,14 @@ namespace LiteTube.ViewModels
             get { return _navigatioPanelViewModel; }
         }
 
-        public ObservableCollection<string> Languages
+        public ObservableCollection<string> Regions
         {
-            get { return _languages; }
+            get { return _regions; }
+        }
+
+        public ObservableCollection<string> ApplicationLanguages
+        {
+            get { return _applicationLanguages; }
         }
 
         public ObservableCollection<string> VideoQualities
@@ -74,6 +82,26 @@ namespace LiteTube.ViewModels
             set { _selectedQuality = value; }
         }
 
+        public string SelectedLanguage
+        {
+            get { return _selectedLanguage; }
+            set
+            {
+                _selectedLanguage = value;
+                IsMustRestarted = _selectedLanguage != _currentLanguage;
+            }
+        }
+
+        public bool IsMustRestarted
+        {
+            get { return _isMustRestarted; }
+            set
+            {
+                _isMustRestarted = value;
+                NotifyOfPropertyChanged(() => IsMustRestarted);
+            }
+        }
+
         public ApplicationTheme SelectedApplicationTheme
         {
             get { return _selectedApplicationTheme; }
@@ -91,6 +119,7 @@ namespace LiteTube.ViewModels
             SettingsHelper.SaveQuality(_selectedQuality);
             SettingsHelper.SaveRegion(_selectedRegion);
             SettingsHelper.SaveTheme(_selectedApplicationTheme);
+            SettingsHelper.SaveLanguage(_selectedLanguage);
             _getDataSource().Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
         }
 

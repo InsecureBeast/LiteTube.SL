@@ -392,4 +392,10 @@
   <data name="ViewCount" xml:space="preserve">
     <value>по числу просмотров</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык приложения</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>Перезапустите приложение, чтобы изменения вступили в силу.</value>
+  </data>
 </root>

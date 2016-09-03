@@ -1,4 +1,6 @@
 ﻿using LiteTube.Common.Helpers;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
@@ -96,6 +98,15 @@ namespace LiteTube.Common.Tools
         public static SolidColorBrush InverseForegroundBrush
         {
             get { return _inverseForegroundBrush; }
+        }
+
+        public static IEnumerable<ApplicationTheme> GetSupportedThemes()
+        {
+            return new List<ApplicationTheme>
+                {
+                    ApplicationTheme.Light,
+                    ApplicationTheme.Dark
+                };
         }
 
         private static void GoToDarkTheme()

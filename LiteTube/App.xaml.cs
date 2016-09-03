@@ -14,6 +14,7 @@ using Windows.ApplicationModel.Activation;
 using Google;
 using LiteTube.Common.Exceptions;
 using System.Xml;
+using System.Threading;
 
 namespace LiteTube
 {
@@ -37,10 +38,11 @@ namespace LiteTube
         /// </summary>
         public App()
         {
-            //TODO in settings
-            //var culture = new CultureInfo("en-US");
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //Thread.CurrentThread.CurrentUICulture = culture;
+            var culture = SettingsHelper.GetLanguage();
+            if (!string.IsNullOrEmpty(culture))
+                LanguageManager.ChangeLanguage(SettingsHelper.GetLanguage());
+            else
+                SettingsHelper.SaveLanguage(Thread.CurrentThread.CurrentCulture.DisplayName);
 
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;

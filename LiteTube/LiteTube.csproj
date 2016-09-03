@@ -109,6 +109,7 @@
     <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
     <Compile Include="Common\SessionType.cs" />
+    <Compile Include="Common\Tools\LanguageManager.cs" />
     <Compile Include="Common\Tools\LastRequest.cs" />
     <Compile Include="Common\Tools\Theme.cs" />
     <Compile Include="Controls\ComboBox.xaml.cs">

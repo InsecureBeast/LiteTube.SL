@@ -49,17 +49,35 @@
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
+    <Grid x:Name="LayoutRoot" 
+          Background="{StaticResource PhoneBackgroundBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
         <StackPanel Orientation="Vertical"
                     Width="260"
                     HorizontalAlignment="Left"
                     Margin="12">
 
+            <TextBlock Name="ApplicationLanguage"
+                       Text="{Binding Path=LocalizedResources.Language, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource PhoneTextLargeStyle}"
+                       Margin="{StaticResource DefaultTextBlockMargin}"
+                       HorizontalAlignment="Left" />
+            <toolkit:ListPicker ItemsSource="{Binding ApplicationLanguages}"
+                                SelectedItem ="{Binding SelectedLanguage, Mode=TwoWay}"
+                                HorizontalAlignment="Stretch"
+                                Margin="0"
+                                FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
+            
             <TextBlock Name="Region"
                        Text="{Binding Path=LocalizedResources.SelectRegion, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextLargeStyle}"
                        Margin="{StaticResource DefaultTextBlockMargin}"/>
-            <toolkit:ListPicker ItemsSource="{Binding Languages}"
+            <toolkit:ListPicker ItemsSource="{Binding Regions}"
                                 SelectedItem ="{Binding SelectedRegion, Mode=TwoWay}"
                                 HorizontalAlignment="Stretch"
                                 Margin="0"
@@ -88,6 +106,14 @@
                                 Margin="0"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
         </StackPanel>
+
+        <TextBlock Text="{Binding Path=LocalizedResources.RestartApp, Source={StaticResource LocalizedStrings}}"
+                   Margin="12"
+                   FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                   Foreground="{StaticResource PhoneAccentBrush}"
+                   Visibility="{Binding IsMustRestarted, Converter={StaticResource BooleanToVisibilityConverter}}"
+                   Grid.Row="1"
+                   TextWrapping="Wrap"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

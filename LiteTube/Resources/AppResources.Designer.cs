@@ -340,6 +340,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to last hour.
         /// </summary>
         public static string LastHour {
@@ -529,6 +538,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please restart the app to apply changes.
+        /// </summary>
+        public static string RestartApp {
+            get {
+                return ResourceManager.GetString("RestartApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -565,7 +583,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to uploade date.
+        ///   Looks up a localized string similar to upload date.
         /// </summary>
         public static string SearchUpload {
             get {

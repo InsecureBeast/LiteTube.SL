@@ -366,7 +366,7 @@
     <value>quality</value>
   </data>
   <data name="SearchUpload" xml:space="preserve">
-    <value>uploade date</value>
+    <value>upload date</value>
   </data>
   <data name="Short" xml:space="preserve">
     <value>short</value>
@@ -391,5 +391,11 @@
   </data>
   <data name="ViewCount" xml:space="preserve">
     <value>view count</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>Please restart the app to apply changes</value>
   </data>
 </root>
