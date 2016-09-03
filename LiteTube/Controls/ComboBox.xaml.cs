@@ -32,6 +32,12 @@ namespace LiteTube.Controls
             set { SetValue(SelectedItemProperty, value); }
         }
 
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            DropDownList.MinWidth = availableSize.Width;
+            return base.MeasureOverride(availableSize);
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var page = VisualHelper.FindParent<Page>(this);
@@ -58,6 +64,7 @@ namespace LiteTube.Controls
                 return;
 
             SelectedValueTextBlock.Text = SelectedItem.ToString();
+            DropDownList.SelectedItem = SelectedItem;
         }
 
         private void Page_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -65,7 +72,7 @@ namespace LiteTube.Controls
             Popup.IsOpen = false;
         }
 
-        private void DropDownList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void DropDownList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // при выборе элемента из списка - устанавливаем выбранный элемент и сворачиваем список
             SelectedItem = DropDownList.SelectedItem;
@@ -73,7 +80,7 @@ namespace LiteTube.Controls
             Popup.IsOpen = false;
         }
 
-        private void SelectedValueTextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void SelectedValueTextBlock_Tap(object sender, GestureEventArgs e)
         {
             Popup.IsOpen = !Popup.IsOpen;
         }

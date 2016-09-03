@@ -43,6 +43,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <toolkit:AutoCompleteBox Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Default}"
@@ -54,7 +55,7 @@
                                      x:Uid="SearchBox"
                                      x:Name="SearchBox"
                                      KeyUp="TextBox_KeyUp" 
-                                     Margin="10,0,4,20"/>
+                                     Margin="10,0,4,0"/>
 
             <ToggleButton Grid.Column="1"
                           x:Name="searchSettingsToggleButton"
@@ -64,10 +65,15 @@
                           Height="55"
                           Width="55"
                           VerticalAlignment="Top"/>
+
+            <Border Height="10"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Visibility="{Binding ElementName=searchSettingsToggleButton, Path=IsChecked, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
             <Grid Visibility="{Binding IsSearchSettingsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"          
-                  Grid.Row="1"
+                  Grid.Row="2"
                   Grid.ColumnSpan="3"
-                  Margin="10,0,10,20">
+                  Background="{StaticResource NavigationPanelButtonPressedBackgroundBrush}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -81,50 +87,62 @@
 
                 <StackPanel Orientation="Vertical"
                             x:Name="OrderStackPanel"
-                            Margin="0,0,10,0">
+                            Margin="10,0,10,12">
                     <TextBlock Text="{Binding Path=LocalizedResources.SearchOrder, Source={StaticResource LocalizedStrings}}"
-                               Foreground="White"
+                               Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                               FontWeight="Light"
                                Margin="0,0,0,4"/>
                     <controls:ComboBox ItemsSource="{Binding OrderItems}"
-                                       SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" />
+                                       SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" 
+                                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                                       FontWeight="Light"/>
 
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
                             x:Name="DefinitionStackPanel"
-                            Margin="0,0,10,0"
+                            Margin="10,0,10,10"
                             Grid.Row="1">
                     <TextBlock Text="{Binding Path=LocalizedResources.SearchQuality, Source={StaticResource LocalizedStrings}}"
-                               Foreground="White"
-                               Margin="0,12,0,4"/>
+                               Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                               FontWeight="Light"
+                               Margin="0,0,0,4"/>
                     <controls:ComboBox ItemsSource="{Binding DefinitionItems}"
-                                       SelectedItem="{Binding SelectedDefinitionItem, Mode=TwoWay}" />
+                                       SelectedItem="{Binding SelectedDefinitionItem, Mode=TwoWay}" 
+                                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                                       FontWeight="Light"/>
 
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
                             x:Name="UploadStackPanel"
-                            Margin="10,0,0,0"
+                            Margin="10,0,10,12"
                             Grid.Row="0"
                             Grid.Column="1">
                     <TextBlock Text="{Binding Path=LocalizedResources.SearchUpload, Source={StaticResource LocalizedStrings}}"
-                               Foreground="White"
+                               Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                               FontWeight="Light"
                                Margin="0,0,0,4"/>
                     <controls:ComboBox ItemsSource="{Binding UploadItems}"
-                                       SelectedItem="{Binding SelectedUploadItem, Mode=TwoWay}" />
+                                       SelectedItem="{Binding SelectedUploadItem, Mode=TwoWay}" 
+                                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                                       FontWeight="Light"/>
 
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
                             x:Name="DurationStackPanel"
-                            Margin="10,0,0,0"
+                            Margin="10,0,10,10"
                             Grid.Row="1"
                             Grid.Column="1">
                     <TextBlock Text="{Binding Path=LocalizedResources.SearchDuration, Source={StaticResource LocalizedStrings}}"
-                               Foreground="White"
-                               Margin="0,12,0,4"/>
+                               Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                               FontWeight="Light"
+                               Margin="0,0,0,4"/>
                     <controls:ComboBox ItemsSource="{Binding DurationItems}"
-                                       SelectedItem="{Binding SelectedDurationItem, Mode=TwoWay}" />
+                                       SelectedItem="{Binding SelectedDurationItem, Mode=TwoWay}"
+                                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                                       FontWeight="Light"/>
 
                 </StackPanel>
             </Grid>
