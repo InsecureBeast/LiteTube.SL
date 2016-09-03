@@ -200,11 +200,6 @@ namespace LiteTube.Common.Helpers
             get { return true; }
         }
 
-        public static int AdvCount
-        {
-            get { return 20; }
-        }
-
         internal static void SaveTheme(ApplicationTheme theme)
         {
             ApplicationData.Current.RoamingSettings.Values["Theme"] = (int)theme;
