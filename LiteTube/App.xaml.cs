@@ -13,6 +13,8 @@ using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
 using Google;
 using LiteTube.Common.Exceptions;
+using System.Xml;
+using System.Threading;
 
 namespace LiteTube
 {
@@ -36,10 +38,17 @@ namespace LiteTube
         /// </summary>
         public App()
         {
-            //TODO in settings
-            //var culture = new CultureInfo("en-US");
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //Thread.CurrentThread.CurrentUICulture = culture;
+            var culture = SettingsHelper.GetLanguage();
+            if (!string.IsNullOrEmpty(culture))
+                LanguageManager.ChangeLanguage(SettingsHelper.GetLanguage());
+            else
+            {
+                var current = Thread.CurrentThread.CurrentCulture.Name;
+                if (current == "ru-RU")
+                    SettingsHelper.SaveLanguage(LanguageManager.Ru.DisplayName);
+                else
+                    SettingsHelper.SaveLanguage(LanguageManager.En.DisplayName);
+            }
 
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
@@ -195,6 +204,9 @@ namespace LiteTube
         // Code to execute on Unhandled Exceptions
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
+            if (AdvUnhandledException(e))
+                return;
+
             if (Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
@@ -232,6 +244,40 @@ namespace LiteTube
             
 #endif
             _container.DialogService.ShowException(e.ExceptionObject);
+        }
+
+        private bool AdvUnhandledException(ApplicationUnhandledExceptionEventArgs e)
+        {
+            if (e != null)
+            {
+                Exception exception = e.ExceptionObject;
+                if ((exception is XmlException || exception is NullReferenceException) && exception.ToString().ToUpper().Contains("INNERACTIVE"))
+                {
+                    Debug.WriteLine("Handled Inneractive exception {0}", exception);
+                    e.Handled = true;
+                    return true;
+                }
+                else if (exception is NullReferenceException && exception.ToString().ToUpper().Contains("SOMA"))
+                {
+                    Debug.WriteLine("Handled Smaato null reference exception {0}", exception);
+                    e.Handled = true;
+                    return true;
+                }
+                else if ((exception is System.IO.IOException || exception is NullReferenceException) && exception.ToString().ToUpper().Contains("GOOGLE"))
+                {
+                    Debug.WriteLine("Handled Google exception {0}", exception);
+                    e.Handled = true;
+                    return true;
+                }
+                else if ((exception is NullReferenceException || exception is XamlParseException) && exception.ToString().ToUpper().Contains("MICROSOFT.ADVERTISING"))
+                {
+                    Debug.WriteLine("Handled Microsoft.Advertising exception {0}", exception);
+                    e.Handled = true;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #region Phone application initialization

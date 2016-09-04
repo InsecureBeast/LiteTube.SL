@@ -27,7 +27,7 @@
             <DataTemplate x:Key="MiddlePanoramaHeader">
                 <TextBlock Text="{Binding}"
                            Style="{StaticResource TitleTextBlockStyle}"
-                           Margin="0"/>
+                           Margin="-4,0,0,0"/>
             </DataTemplate>
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>

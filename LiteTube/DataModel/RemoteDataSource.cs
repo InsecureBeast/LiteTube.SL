@@ -33,7 +33,7 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetChannelVideoList(string channelId, string culture, int maxPageResult, string pageToken);
         Task<IEnumerable<IGuideCategory>> GetGuideCategories(string culture);
         Task<IChannelList> GetChannels(string categoryId, string culture, int maxPageResult, string nextPageToken);
-        Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType);
+        Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, string culture, SearchType serachType, SearchFilter searchFilter);
         Task<ICommentList> GetComments(string videoId, int maxResult, string nextPageToken);
         Task<ISubscriptionList> GetSubscribtions(int maxResult, string nextPageToken);
         bool IsSubscribed(string channelId);
@@ -123,7 +123,7 @@ namespace LiteTube.DataModel
             activityRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
             activityRequest.MaxResults = SEARCH_PAGE_MAX_RESULT;
             activityRequest.PageToken = pageToken;
-            activityRequest.Home = true;
+            //activityRequest.Home = true; //deprecated from 12 sept 2016
             activityRequest.Key = _youTubeServiceControl.ApiKey;
             activityRequest.PublishedAfter = DateTime.Today;
             //activityRequest.OauthToken = _youTubeServiceControl.OAuthToken;
@@ -371,7 +371,7 @@ namespace LiteTube.DataModel
             return new MChannelList(channelListResponse);
         }
 
-        public async Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType searchType)
+        public async Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, string culture, SearchType searchType, SearchFilter searchFilter)
         {
             var request = _youTubeService.Search.List("snippet,id");
             request.Key = _youTubeServiceControl.ApiKey;
@@ -379,6 +379,17 @@ namespace LiteTube.DataModel
             request.MaxResults = SEARCH_PAGE_MAX_RESULT;
             request.Type = searchType.ToTypeString();
             request.Q = searchString;
+            request.Order = searchFilter.Order;
+            request.PublishedAfter = searchFilter.PublishedAfter;
+            request.PublishedBefore = searchFilter.PublishedBefore;
+            request.RegionCode = I18nLanguages.GetRegionCode(culture);
+            request.RelevanceLanguage = I18nLanguages.GetRegionCode(culture);
+
+            if (searchType == SearchType.Video)
+            {
+                request.VideoDuration = searchFilter.VideoDuration;
+                request.VideoDefinition = searchFilter.VideoDefinition;
+            }
 
             var response = await request.ExecuteAsync();
             

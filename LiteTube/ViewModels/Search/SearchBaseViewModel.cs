@@ -11,6 +11,7 @@ namespace LiteTube.ViewModels.Search
     {
         private string _searchString;
         private readonly SearchType _searchType;
+        private SearchFilter _searchFilter;
 
         public SearchBaseViewModel(SearchType searchType, Func<IDataSource> geDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator)
             : base(geDataSource, connectionListener, changeProgressIndicator)
@@ -19,6 +20,13 @@ namespace LiteTube.ViewModels.Search
             IsLoading = false;
             IsEmpty = false;
             ShowAdv = SettingsHelper.IsAdvVisible;
+            _searchFilter = new SearchFilter();
+        }
+
+        public SearchFilter SearchFilter
+        {
+            get { return _searchFilter; }
+            set { _searchFilter = value; }
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
@@ -26,7 +34,7 @@ namespace LiteTube.ViewModels.Search
             if (string.IsNullOrEmpty(_searchString))
                 return null;
 
-            return await _getGeDataSource().Search(_searchString, nextPageToken, _searchType);
+            return await _getGeDataSource().Search(_searchString, nextPageToken, _searchType, _searchFilter);
         }
 
         internal async Task Search(string searchString)

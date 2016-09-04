@@ -200,14 +200,26 @@ namespace LiteTube.Common.Helpers
             get { return true; }
         }
 
-        public static int AdvCount
-        {
-            get { return 20; }
-        }
-
         internal static void SaveTheme(ApplicationTheme theme)
         {
-            ApplicationData.Current.RoamingSettings.Values["Theme"] = (int)theme;
+            try
+            {
+                ApplicationData.Current.RoamingSettings.Values["Theme"] = (int)theme;
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        internal static void SaveLanguage(string culture)
+        {
+            try
+            {
+                ApplicationData.Current.RoamingSettings.Values["Culture"] = (string)culture;
+            }
+            catch (Exception)
+            {
+            }
         }
 
         internal static ApplicationTheme GetTheme()
@@ -219,6 +231,17 @@ namespace LiteTube.Common.Helpers
             }
 
             return theme;
+        }
+
+        internal static string GetLanguage()
+        {
+            var language = string.Empty;
+            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("Culture"))
+            {
+                language = (string)(ApplicationData.Current.RoamingSettings.Values["Culture"]);
+            }
+
+            return language;
         }
 
         // Helper method for removing a key/value pair from isolated storage

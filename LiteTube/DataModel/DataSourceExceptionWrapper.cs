@@ -245,12 +245,12 @@ namespace LiteTube.DataModel
             }
         }
 
-        public async Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, SearchType serachType)
+        public async Task<IResponceList> Search(string searchString, int maxResult, string nextPageToken, string culture, SearchType serachType, SearchFilter searchFilter)
         {
             try
             {
                 Debug.WriteLine("Search method called");
-                return await _remoteDataSource.Search(searchString, maxResult, nextPageToken, serachType);
+                return await _remoteDataSource.Search(searchString, maxResult, culture, nextPageToken, serachType, searchFilter);
             }
             catch (Exception e)
             {

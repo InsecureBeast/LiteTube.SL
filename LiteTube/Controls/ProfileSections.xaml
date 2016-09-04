@@ -15,7 +15,7 @@
                  ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
 
             <ListBoxItem toolkit:TiltEffect.SuppressTilt="True"
-                         Margin="0,5,0,10">
+                         Margin="0,5,0,30">
                 <Grid Background="{StaticResource PhoneBackgroundBrush}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -35,7 +35,19 @@
                                    VerticalAlignment="Center"
                                    FontSize="{StaticResource PhoneFontSizeMedium}"
                                    Foreground="{StaticResource PhoneSubtleBrush}" />
-                        
+
+                        <!--<Ellipse Width="110"
+                                 Height="110"
+                                 Grid.Column="0"
+                                 Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Ellipse.Fill>
+                                <ImageBrush>
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="{Binding ProfileImage}" />
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>-->
                         <Image Grid.Column="0"
                                Height="110"
                                Width="110"

@@ -332,4 +332,70 @@
   <data name="AdvertisingPost" xml:space="preserve">
     <value>Advertising post</value>
   </data>
+  <data name="AllTime" xml:space="preserve">
+    <value>all time</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>any</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>high (HD)</value>
+  </data>
+  <data name="LastHour" xml:space="preserve">
+    <value>last hour</value>
+  </data>
+  <data name="Long" xml:space="preserve">
+    <value>long</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>medium</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>rating</value>
+  </data>
+  <data name="Relevance" xml:space="preserve">
+    <value>relevance</value>
+  </data>
+  <data name="SearchDuration" xml:space="preserve">
+    <value>duration</value>
+  </data>
+  <data name="SearchOrder" xml:space="preserve">
+    <value>order by</value>
+  </data>
+  <data name="SearchQuality" xml:space="preserve">
+    <value>quality</value>
+  </data>
+  <data name="SearchUpload" xml:space="preserve">
+    <value>upload date</value>
+  </data>
+  <data name="Short" xml:space="preserve">
+    <value>short</value>
+  </data>
+  <data name="Standart" xml:space="preserve">
+    <value>standart</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>this month</value>
+  </data>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>this week</value>
+  </data>
+  <data name="ThisYear" xml:space="preserve">
+    <value>this year</value>
+  </data>
+  <data name="TToday" xml:space="preserve">
+    <value>today</value>
+  </data>
+  <data name="UploadDate" xml:space="preserve">
+    <value>upload date</value>
+  </data>
+  <data name="ViewCount" xml:space="preserve">
+    <value>view count</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>Please restart the app to apply changes</value>
+  </data>
 </root>

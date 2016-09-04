@@ -6,11 +6,13 @@
     xmlns:converters="clr-namespace:LiteTube.Converters"
     xmlns:nodes="clr-namespace:LiteTube.ViewModels.Nodes"
     xmlns:local="clr-namespace:LiteTube.Controls"
-    xmlns:adv="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI">
-    <!--xmlns:adv1="clr-namespace:Microsoft.AdMediator.WindowsPhone8;assembly=Microsoft.AdMediator.WindowsPhone8">-->
+    xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:adv="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:adv1="clr-namespace:Microsoft.AdMediator.WindowsPhone8;assembly=Microsoft.AdMediator.WindowsPhone8">
 
     <DataTemplate x:Key="AdvItemDatatemplate">
-        <Grid Margin="0,10,0,10">
+        <Grid Margin="0,10,0,15"
+              Visibility="{Binding IsAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -22,33 +24,50 @@
             </Grid.ColumnDefinitions>
 
             <Border Background="{StaticResource PlaylistSelectedBrush}"
-                                Grid.Row="0"
-                                Grid.Column="0">
+                    Grid.Row="0"
+                    Grid.Column="0">
                 <TextBlock Text="{Binding Path=LocalizedResources.AdvertisingPost, Source={StaticResource LocalizedStrings}}"
-                                       Style="{StaticResource PhoneTextSmallStyle}" 
-                                       Foreground="White"
-                                       Margin="5,2,5,2"
-                                       HorizontalAlignment="Center"/>
+                           Style="{StaticResource PhoneTextSmallStyle}" 
+                           Foreground="White"
+                           Margin="5,2,5,2"
+                           Width="163"
+                           HorizontalAlignment="Left"/>
             </Border>
+
             <Border BorderBrush="{StaticResource PlaylistSelectedBrush}"
                     BorderThickness="1"
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
-                <!--<adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
-                                        HorizontalAlignment="Stretch" 
+                <adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
+                                        HorizontalAlignment="Center" 
                                         Height="50" 
                                         Id="AdMediator-Id-C5047D00-4321-4095-A379-3B9EA68B22A6"
-                                        Margin="0,8,0,0" 
-                                        VerticalAlignment="Stretch" 
-                                        Width="300"/>-->
-                <adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
+                                        Margin="0" 
+                                        VerticalAlignment="Top"
+                                        Width="320"
+                                        Grid.Row="1">
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="AdMediatorError">
+                            <interactivity:InvokeCommandAction Command="{Binding MediatorErrorCommand}"
+                                                               CommandParameter="{Binding ElementName=AdMediator_F3EEB8}"/>
+
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
+
+                </adv1:AdMediatorControl>
+                <!--<ContentPresenter Content="{Binding Element}"
+                                  Grid.Row="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>-->
+                
+                <!--<adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
                                 AdUnitId="11626916"
                                 HorizontalAlignment="Center"
                                 Height="80"
                                 VerticalAlignment="Center"
                                 Width="480"
-                                Grid.Row="1"/>
+                                Grid.Row="1"/>-->
                 <!--<adv:AdControl ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
                                 AdUnitId="10865270"
                                 HorizontalAlignment="Center"
@@ -108,10 +127,11 @@
 
     <DataTemplate x:Key="LoadingListViewItem">
         <local:ListBoxTemplateSelector Content="{Binding}" 
-                                       HorizontalAlignment="Left">
+                                       HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5" Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
+                    <Grid Margin="0,0,0,5" 
+                          Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -144,7 +164,6 @@
                                     Margin="0,0,-10,0">
                             <TextBlock Text="{Binding Title}" 
                                        Style="{StaticResource PhoneTextNormalStyle}"
-                                       TextTrimming="WordEllipsis"
                                        TextWrapping="Wrap"
                                        MaxHeight="54"/>
                             <TextBlock Text="{Binding ChannelTitle}" 
@@ -164,8 +183,9 @@
             </local:ListBoxTemplateSelector.Normal>
             <local:ListBoxTemplateSelector.Adv>
                 <DataTemplate>
-                    <ContentControl ContentTemplate="{StaticResource AdvItemDatatemplate}"
-                                    Margin="2,0,0,0"/>
+                    <ContentPresenter ContentTemplate="{StaticResource AdvItemDatatemplate}"
+                                      Content="{Binding}"
+                                      Margin="2,0,0,0"/>
                 </DataTemplate>
             </local:ListBoxTemplateSelector.Adv>
         </local:ListBoxTemplateSelector>
@@ -173,7 +193,7 @@
 
     <DataTemplate x:Key="LoadingPlaylistListViewItem">
         <local:ListBoxTemplateSelector Content="{Binding}" 
-                                       HorizontalAlignment="Left">
+                                       HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
                     <Grid Margin="0,0,0,5">
@@ -224,7 +244,7 @@
             </local:ListBoxTemplateSelector.Normal>
             <local:ListBoxTemplateSelector.Adv>
                 <DataTemplate>
-                    <ContentControl ContentTemplate="{StaticResource AdvItemDatatemplate}"/>
+                    <ContentPresenter ContentTemplate="{StaticResource AdvItemDatatemplate}"/>
                 </DataTemplate>
             </local:ListBoxTemplateSelector.Adv>
         </local:ListBoxTemplateSelector>
