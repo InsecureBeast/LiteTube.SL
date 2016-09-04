@@ -16,6 +16,16 @@ namespace LiteTube.Common.Tools
         private static string RUSSIAN = _ru.DisplayName;
         private static string ENGLISH = _en.DisplayName;
 
+        public static CultureInfo Ru
+        {
+            get { return _ru; }
+        }
+
+        public static CultureInfo En
+        {
+            get { return _en; }
+        }
+
         public static List<string> GetSupportedLanguages()
         {
             return new List<string> { ENGLISH, RUSSIAN };

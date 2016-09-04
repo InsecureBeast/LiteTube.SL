@@ -42,7 +42,13 @@ namespace LiteTube
             if (!string.IsNullOrEmpty(culture))
                 LanguageManager.ChangeLanguage(SettingsHelper.GetLanguage());
             else
-                SettingsHelper.SaveLanguage(Thread.CurrentThread.CurrentCulture.DisplayName);
+            {
+                var current = Thread.CurrentThread.CurrentCulture.Name;
+                if (current == "ru-RU")
+                    SettingsHelper.SaveLanguage(LanguageManager.Ru.DisplayName);
+                else
+                    SettingsHelper.SaveLanguage(LanguageManager.En.DisplayName);
+            }
 
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
