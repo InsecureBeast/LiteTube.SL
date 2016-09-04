@@ -73,7 +73,7 @@
             <Grid Visibility="{Binding IsSearchSettingsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"          
                   Grid.Row="2"
                   Grid.ColumnSpan="3"
-                  Background="{StaticResource NavigationPanelButtonPressedBackgroundBrush}">
+                  >
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
