@@ -40,7 +40,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
                 <adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
-                                        HorizontalAlignment="Left" 
+                                        HorizontalAlignment="Center" 
                                         Height="50" 
                                         Id="AdMediator-Id-C5047D00-4321-4095-A379-3B9EA68B22A6"
                                         Margin="0" 
