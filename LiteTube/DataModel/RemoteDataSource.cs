@@ -383,7 +383,7 @@ namespace LiteTube.DataModel
             request.PublishedAfter = searchFilter.PublishedAfter;
             request.PublishedBefore = searchFilter.PublishedBefore;
             request.RegionCode = I18nLanguages.GetRegionCode(culture);
-            request.RelevanceLanguage = I18nLanguages.GetRegionCode(culture);
+            request.RelevanceLanguage = I18nLanguages.GetHl(culture);
 
             if (searchType == SearchType.Video)
             {
