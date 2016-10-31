@@ -213,23 +213,20 @@ namespace LiteTube.Tools
                 channelId = match.Value.Substring(8, match.Value.Length - 8);
 
                 var ampIndex = channelId.IndexOf("&");
-                if (ampIndex == -1)
-                    return channelId;
+                if (ampIndex != -1)
+                    return channelId.Substring(0, ampIndex);
 
                 ampIndex = channelId.IndexOf("/");
-                if (ampIndex == -1)
-                    return channelId;
+                if (ampIndex != -1)
+                    return channelId.Substring(0, ampIndex);
 
                 ampIndex = channelId.IndexOf("?");
-                if (ampIndex == -1)
-                    return channelId;
+                if (ampIndex != -1)
+                    return channelId.Substring(0, ampIndex);
 
                 ampIndex = channelId.IndexOf(".");
                 if (ampIndex != -1)
                     return string.Empty;
-
-                var c = channelId.Substring(0, ampIndex);
-                return c;
             }
 
             return channelId;
