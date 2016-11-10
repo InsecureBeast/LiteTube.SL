@@ -11,7 +11,6 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Google;
 using VideoLibrary;
-using YouTube = LiteTube.Multimedia.YouTube;
 
 namespace LiteTube.DataModel
 {
@@ -44,7 +43,7 @@ namespace LiteTube.DataModel
         Task Unsubscribe(string subscriptionId);
         Task SetRating(string videoId, RatingEnum rating);
         Task<RatingEnum> GetRating(string videoId);
-        Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality);
+        Task<YouTubeUri> GetVideoUriAsync(string videoId, Multimedia.YouTubeQuality quality);
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
@@ -546,17 +545,10 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            using (var cli = Client.For(VideoLibrary.YouTube.Default))
-            {
-                var uri = string.Format("https://www.youtube.com/watch?v={0}", videoId);
-                var videoInfos = await cli.GetAllVideosAsync(uri);
-                return new YouTubeUri() {Uri = new Uri(videoInfos.First().Uri)};
-            }
-
-            //YouTubeWeb.OpenVideo(videoId, _youTubeServiceControl.OAuthToken);
-            //var r = await YouTube.GetUrisAsync(videoId);
-            //var url = await YouTube.GetVideoUriAsync(videoId, /*_youTubeServiceControl.OAuthToken, */quality);
-            //return url;
+            var uri = string.Format("https://www.youtube.com/watch?v={0}", videoId);
+            var video = await VideoLibrary.YouTube.GetVideoAsync(uri, VideoQualityHelper.GetVideoQuality(quality));
+            var url = await video.GetUriAsync();
+            return new YouTubeUri() { Uri = new Uri(url) };
         }
 
         public async Task AddToPlaylist(string videoId, string playlistId)

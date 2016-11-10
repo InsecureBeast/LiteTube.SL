@@ -23,3 +23,5 @@ LiteTube10/LiteTube10.csproj.user
 packages/*
 .vs/LiteTube/v14/.suo
 libvideo/obj/*
+LiteTube.LibVideo/Bin/*
+LiteTube.LibVideo/obj/*

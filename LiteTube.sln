@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube", "LiteTube\LiteTube.csproj", "{A6DC8489-F102-4558-95B0-3FC6B3ABBAB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libvideo", "libvideo\libvideo.csproj", "{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube.LibVideo", "LiteTube.LibVideo\LiteTube.LibVideo.csproj", "{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +35,18 @@ Global
 		{A6DC8489-F102-4558-95B0-3FC6B3ABBAB0}.Release|x86.ActiveCfg = Release|x86
 		{A6DC8489-F102-4558-95B0-3FC6B3ABBAB0}.Release|x86.Build.0 = Release|x86
 		{A6DC8489-F102-4558-95B0-3FC6B3ABBAB0}.Release|x86.Deploy.0 = Release|x86
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Release|ARM.ActiveCfg = Release|Any CPU
-		{4DFEDF29-6CB3-4369-8ED9-104A34B8A045}.Release|x86.ActiveCfg = Release|Any CPU
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Debug|ARM.Build.0 = Debug|ARM
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Debug|x86.ActiveCfg = Debug|x86
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Debug|x86.Build.0 = Debug|x86
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|ARM.ActiveCfg = Release|ARM
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|ARM.Build.0 = Release|ARM
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|x86.ActiveCfg = Release|x86
+		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

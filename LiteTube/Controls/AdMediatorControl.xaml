@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="LiteTube.Controls.AdMediatorControl"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:adv="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+            xmlns:adv1="clr-namespace:Microsoft.AdMediator.WindowsPhone8;assembly=Microsoft.AdMediator.WindowsPhone8"
+             xmlns:soma="clr-namespace:SOMAWP8;assembly=SOMAWP8"
+            mc:Ignorable="d"
+            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+            FontSize="{StaticResource PhoneFontSizeNormal}"
+            Foreground="{StaticResource PhoneForegroundBrush}"
+            d:DesignHeight="50" 
+             d:DesignWidth="320">
+
+    <Grid x:Name="LayoutRoot" 
+          Background="Transparent">
+        <adv1:AdMediatorControl x:Name="AdMediator_F3EEB8" 
+                                HorizontalAlignment="Center" 
+                                Height="50" 
+                                Id="AdMediator-Id-C5047D00-4321-4095-A379-3B9EA68B22A6"
+                                Margin="0" 
+                                VerticalAlignment="Top"
+                                Width="320"
+                                Grid.Row="1"
+                                Visibility="Visible"/>
+        <adv1:AdMediatorControl x:Name="AdMediator_Most_popular" 
+                                Id="AdMediator-Id-67D94033-2C8C-4775-94DB-67AA2F32A74E"
+                                HorizontalAlignment="Center" 
+                                Height="50" 
+                                Margin="0" 
+                                VerticalAlignment="Top"
+                                Width="320"
+                                Grid.Row="1"
+                                Visibility="Collapsed"/>
+
+        <adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
+                       Name="adMsControl"
+                        AdUnitId="11626916"
+                        HorizontalAlignment="Center"
+                        Height="50"
+                        VerticalAlignment="Center"
+                        Width="320"/>
+        <soma:SomaAdViewer Name="adSomaViewer"
+                           Height="50"
+                           Width="320"/>
+        <!--<adv:AdControl ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
+                       Name="adMsControl"
+                        AdUnitId="10865270"
+                        HorizontalAlignment="Center"
+                        Height="50"
+                        VerticalAlignment="Center"
+                        Width="320"/>-->
+    </Grid>
+</UserControl>
