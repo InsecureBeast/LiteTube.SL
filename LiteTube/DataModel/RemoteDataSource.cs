@@ -545,8 +545,7 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            var uri = string.Format("https://www.youtube.com/watch?v={0}", videoId);
-            var video = await VideoLibrary.YouTube.GetVideoAsync(uri, VideoQualityHelper.GetVideoQuality(quality));
+            var video = await VideoLibrary.YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality));
             var url = await video.GetUriAsync();
             return new YouTubeUri() { Uri = new Uri(url) };
         }

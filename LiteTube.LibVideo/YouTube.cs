@@ -9,15 +9,15 @@ using VideoLibrary.Helpers;
 
 namespace VideoLibrary
 {
-
     public class YouTube
     {
-        public async static Task<YouTubeVideo> GetVideoAsync(string videoUri, VideoQuality quality)
+        public async static Task<YouTubeVideo> GetVideoAsync(string videoId, VideoQuality quality)
         {
-            if (!TryNormalize(videoUri, out videoUri))
+            var url = string.Format("https://www.youtube.com/watch?v={0}&nomobile=1", videoId);
+            if (!TryNormalize(url, out url))
                 throw new ArgumentException("URL is not a valid YouTube URL!");
 
-            string source = await HttpUtils.HttpGetAsync(videoUri, string.Empty);
+            string source = await HttpUtils.HttpGetAsync(url, string.Empty);
             var res = ParseVideos(source).ToList();
             var uri = TryFindBestVideoUri(res, VideoQuality.Quality144P, quality);
             return uri;
@@ -25,14 +25,13 @@ namespace VideoLibrary
 
         private static YouTubeVideo TryFindBestVideoUri(IEnumerable<YouTubeVideo> uris, VideoQuality minQuality, VideoQuality maxQuality)
         {
-            var selected = uris.Where(i => (int)i.AudioFormat != -1 &&
+            var selected = uris.Where(i => i.AudioFormat != AudioFormat.Unknown &&
                                     i.Resolution != -1 &&
                                     !i.Is3D &&
-                                    i.Format == VideoFormat.Mp4 &&
+                                    (i.Format == VideoFormat.Mp4 || i.Format == VideoFormat.Mobile) &&
                                     i.Resolution >= GetResolution(minQuality) &&
-                                    i.Resolution <= GetResolution(maxQuality));
-            var ordered = selected.OrderByDescending(u => u.Resolution);
-
+                                    i.Resolution <= GetResolution(maxQuality)).ToList();
+            var ordered = selected.OrderByDescending(u => u.Resolution).ToList();
             return ordered.FirstOrDefault();
         }
 

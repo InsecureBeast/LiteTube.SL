@@ -13,8 +13,8 @@ namespace LiteTube.Common
         {
             _quality = new Dictionary<string, YouTubeQuality>
             {
-                //{ "144p", YouTubeQuality.Quality144P },
-                //{ "240p", YouTubeQuality.Quality240P },
+                { "144p", YouTubeQuality.Quality144P },
+                { "240p", YouTubeQuality.Quality240P },
                 { "360p", YouTubeQuality.Quality360P },
                 { "480p", YouTubeQuality.Quality480P },
                 { "720p", YouTubeQuality.Quality720P },
