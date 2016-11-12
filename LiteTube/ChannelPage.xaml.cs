@@ -24,7 +24,7 @@ namespace LiteTube
         public ChannelPage()
         {
             InitializeComponent();
-
+            ApplicationBar.Mode = ApplicationBarMode.Default;
             _subscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Subscribe.png", AppResources.Subscribe, Subscribe_Click);
             _unsubscribeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Unsubscribe.png", AppResources.Unsubscribe, Unsubscribe_Click);
         }

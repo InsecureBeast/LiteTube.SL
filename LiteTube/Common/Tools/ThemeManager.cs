@@ -129,7 +129,7 @@ namespace LiteTube.Common.Tools
             
             var backgroundBrush = Application.Current.Resources["PhoneBackgroundBrush"] as SolidColorBrush;
             if (backgroundBrush != null)
-                backgroundBrush.Color = Colors.Black;
+                backgroundBrush.Color = Color.FromArgb(255, 30, 30, 30);
 
             var mainForegroundBrush = Application.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush;
             if (mainForegroundBrush != null)
