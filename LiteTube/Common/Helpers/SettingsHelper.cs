@@ -75,6 +75,22 @@ namespace LiteTube.Common.Helpers
             ApplicationData.Current.RoamingSettings.Values["AccessToken"] = accessToken;
         }
 
+        internal static bool GetIsAutoPlayVideo()
+        {
+            var isAutoplay = true;
+            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("IsAutoplayVideo"))
+            {
+                isAutoplay = (bool)(ApplicationData.Current.RoamingSettings.Values["IsAutoplayVideo"]);
+            }
+
+            return isAutoplay;
+        }
+
+        internal static void SaveAutoplayVideo(bool isAutoplayVideo)
+        {
+            ApplicationData.Current.RoamingSettings.Values["IsAutoplayVideo"] = isAutoplayVideo;
+        }
+
         internal static void SaveIsRevokedAccessToken(bool isRevoked)
         {
             ApplicationData.Current.RoamingSettings.Values["IsRevokedAccessToken"] = isRevoked;

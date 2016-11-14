@@ -398,4 +398,7 @@
   <data name="RestartApp" xml:space="preserve">
     <value>Please restart the app to apply changes</value>
   </data>
+  <data name="IsAutoplay" xml:space="preserve">
+    <value>Autoplay video</value>
+  </data>
 </root>

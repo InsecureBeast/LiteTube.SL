@@ -33,12 +33,15 @@ namespace LiteTube
         private bool _isFullScreen = false;
         private const string RelatedListBoxName = "RelatedListBox";
         private bool _isPaused = false;
+        private bool _autoPlay = true;
 
         public PlaylistVideoPage()
         {
             InitializeComponent();
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             SubscribePlayerEvents(player);
+            _autoPlay = SettingsHelper.GetIsAutoPlayVideo();
+            player.AutoPlay = _autoPlay;
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
@@ -400,7 +403,7 @@ namespace LiteTube
                 IsSkipNextVisible = true,
                 IsSkipPreviousVisible = true,
                 AllowMediaStartingDeferrals = false,
-                AutoPlay = true,
+                AutoPlay = _autoPlay,
                 Position = TimeSpan.FromSeconds(0)
             };
 

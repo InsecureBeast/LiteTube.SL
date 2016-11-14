@@ -64,6 +64,14 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="SettingsTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Margin" Value="{StaticResource DefaultControlMargin}"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
+    </Style>
+
     <Style x:Key="PivotItemHeaderTextStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}" />
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}" />

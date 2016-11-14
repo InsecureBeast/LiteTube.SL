@@ -331,6 +331,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autoplay video.
+        /// </summary>
+        public static string IsAutoplay {
+            get {
+                return ResourceManager.GetString("IsAutoplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to joined.
         /// </summary>
         public static string JoinedString {

@@ -24,6 +24,7 @@ namespace LiteTube.ViewModels
         private string _selectedLanguage;
         private bool _isMustRestarted = false;
         private string _currentLanguage;
+        private bool _isAutoplayVideo = true;
 
         public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
         {
@@ -42,6 +43,7 @@ namespace LiteTube.ViewModels
             _selectedApplicationTheme = SettingsHelper.GetTheme();
             _selectedLanguage = SettingsHelper.GetLanguage();
             _currentLanguage = _selectedLanguage;
+            _isAutoplayVideo = SettingsHelper.GetIsAutoPlayVideo();
             _oldSelectedApplicationTheme = _selectedApplicationTheme;
         }
 
@@ -102,6 +104,16 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public bool IsAutoplayVideo
+        {
+            get { return _isAutoplayVideo; }
+            set
+            {
+                _isAutoplayVideo = value;
+                NotifyOfPropertyChanged(() => IsAutoplayVideo);
+            }
+        }
+
         public ApplicationTheme SelectedApplicationTheme
         {
             get { return _selectedApplicationTheme; }
@@ -120,6 +132,7 @@ namespace LiteTube.ViewModels
             SettingsHelper.SaveRegion(_selectedRegion);
             SettingsHelper.SaveTheme(_selectedApplicationTheme);
             SettingsHelper.SaveLanguage(_selectedLanguage);
+            SettingsHelper.SaveAutoplayVideo(_isAutoplayVideo);
             _getDataSource().Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
         }
 

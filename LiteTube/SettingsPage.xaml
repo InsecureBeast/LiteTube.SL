@@ -52,68 +52,62 @@
     <Grid x:Name="LayoutRoot" 
           Background="{StaticResource PhoneBackgroundBrush}">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
         <StackPanel Orientation="Vertical"
-                    Width="260"
-                    HorizontalAlignment="Left"
-                    Margin="12">
+                    HorizontalAlignment="Stretch"
+                    Margin="20,10,20,0">
 
+            <TextBlock Text="{Binding Path=LocalizedResources.RestartApp, Source={StaticResource LocalizedStrings}}"
+                       FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                       Foreground="{StaticResource PhoneAccentBrush}"
+                       Visibility="{Binding IsMustRestarted, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       TextWrapping="Wrap"/>
+            
             <TextBlock Name="ApplicationLanguage"
                        Text="{Binding Path=LocalizedResources.Language, Source={StaticResource LocalizedStrings}}"
-                       Style="{StaticResource PhoneTextLargeStyle}"
-                       Margin="{StaticResource DefaultTextBlockMargin}"
+                       Style="{StaticResource SettingsTextBlockStyle}"
                        HorizontalAlignment="Left" />
             <toolkit:ListPicker ItemsSource="{Binding ApplicationLanguages}"
                                 SelectedItem ="{Binding SelectedLanguage, Mode=TwoWay}"
-                                HorizontalAlignment="Stretch"
                                 Margin="0"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
             
             <TextBlock Name="Region"
                        Text="{Binding Path=LocalizedResources.SelectRegion, Source={StaticResource LocalizedStrings}}"
-                       Style="{StaticResource PhoneTextLargeStyle}"
-                       Margin="{StaticResource DefaultTextBlockMargin}"/>
+                       Style="{StaticResource SettingsTextBlockStyle}"/>
             <toolkit:ListPicker ItemsSource="{Binding Regions}"
                                 SelectedItem ="{Binding SelectedRegion, Mode=TwoWay}"
-                                HorizontalAlignment="Stretch"
                                 Margin="0"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}">
             </toolkit:ListPicker>
 
             <TextBlock Name="VideoQuality"
                        Text="{Binding Path=LocalizedResources.VideoQuality, Source={StaticResource LocalizedStrings}}"
-                       Style="{StaticResource PhoneTextLargeStyle}"
-                       Margin="{StaticResource DefaultTextBlockMargin}"
+                       Style="{StaticResource SettingsTextBlockStyle}"
                        HorizontalAlignment="Left" />
             <toolkit:ListPicker ItemsSource="{Binding VideoQualities}"
                                 SelectedItem ="{Binding SelectedQuality, Mode=TwoWay}"
-                                HorizontalAlignment="Stretch"
                                 Margin="0"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
+
+            <TextBlock Name="autoplayVideo"
+                       Text="{Binding Path=LocalizedResources.IsAutoplay, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource SettingsTextBlockStyle}"
+                       HorizontalAlignment="Left" />
+
+            <toolkit:ToggleSwitch Name="AutoplayVideoSwitch"
+                                  IsChecked="{Binding IsAutoplayVideo, Mode=TwoWay}"
+                                  Margin="-12,-30,-10,-30"/>
 
             <TextBlock Name="ApplicationTheme"
                        Text="{Binding Path=LocalizedResources.Theme, Source={StaticResource LocalizedStrings}}"
-                       Style="{StaticResource PhoneTextLargeStyle}"
-                       Margin="{StaticResource DefaultTextBlockMargin}"
+                       Style="{StaticResource SettingsTextBlockStyle}"
                        HorizontalAlignment="Left" />
+
             <toolkit:ListPicker ItemsSource="{Binding ApplicationThemes}"
                                 SelectedItem ="{Binding SelectedApplicationTheme, Mode=TwoWay}"
-                                HorizontalAlignment="Stretch"
                                 Margin="0"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
         </StackPanel>
-
-        <TextBlock Text="{Binding Path=LocalizedResources.RestartApp, Source={StaticResource LocalizedStrings}}"
-                   Margin="12"
-                   FontSize="{StaticResource PhoneFontSizeMediumLarge}"
-                   Foreground="{StaticResource PhoneAccentBrush}"
-                   Visibility="{Binding IsMustRestarted, Converter={StaticResource BooleanToVisibilityConverter}}"
-                   Grid.Row="1"
-                   TextWrapping="Wrap"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

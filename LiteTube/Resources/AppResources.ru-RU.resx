@@ -398,4 +398,7 @@
   <data name="RestartApp" xml:space="preserve">
     <value>Перезапустите приложение, чтобы изменения вступили в силу.</value>
   </data>
+  <data name="IsAutoplay" xml:space="preserve">
+    <value>Автовоспроизведение видео</value>
+  </data>
 </root>

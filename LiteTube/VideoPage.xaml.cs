@@ -34,12 +34,15 @@ namespace LiteTube
         private bool _isFullScreen = false;
         private bool _isRelatedLoading = false;
         private bool _isPaused = false;
+        private bool _autoPlay = true;
 
         public VideoPage()
         {
             InitializeComponent();
+            _autoPlay = SettingsHelper.GetIsAutoPlayVideo();
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             SubscribePlayerEvents(player);
+            player.AutoPlay = _autoPlay;
             
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
@@ -347,7 +350,7 @@ namespace LiteTube
                 IsSkipAheadVisible = false,
                 IsSkipBackVisible = false,
                 AllowMediaStartingDeferrals = false,
-                AutoPlay = true,
+                AutoPlay = _autoPlay,
                 VideoTitle = viewModel.Title,
                 ChannelTitle = viewModel.ChannelTitle,
                 RelatedItems = viewModel.RelatedVideosViewModel.Items,
