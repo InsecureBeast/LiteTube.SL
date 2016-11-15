@@ -60,7 +60,7 @@
                                   Grid.Row="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"/>-->
-                
+
                 <!--<adv:AdControl ApplicationId="a5239a3d-fa0b-4995-9c19-0f7a998b83c3"
                                 AdUnitId="11626916"
                                 HorizontalAlignment="Center"
@@ -77,7 +77,7 @@
             </Border>
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="LoadingTextBlockDataTemplate">
         <Grid>
             <TextBlock Text="{Binding Path=LocalizedResources.Loading, Source={StaticResource LocalizedStrings}}"
@@ -93,7 +93,7 @@
                        Visibility="{Binding IsConnected, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="CategoryItemTemplate">
         <Grid Margin="0,0,0,5"
               Background="{StaticResource PhoneSecondaryBackgroundBrush}"
@@ -114,14 +114,27 @@
                        MaxHeight="80"
                        Foreground="{StaticResource PhoneSecondaryForegroundBrush}"/>
             
-            <Border Grid.Column="1"
+            <Ellipse Width="55"
+                     Height="55"
+                     Margin="20"
+                     Grid.Column="1"
+                     Visibility="{Binding Image, Converter={StaticResource StringToVisibilityConverter}}">
+                <Ellipse.Fill>
+                    <ImageBrush>
+                        <ImageBrush.ImageSource>
+                            <BitmapImage UriSource="{Binding Image}" />
+                        </ImageBrush.ImageSource>
+                    </ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <!--<Border Grid.Column="1"
                     Margin="20"
                     Width="55"
                     Height="55"
                     VerticalAlignment="Center"
                     Visibility="{Binding Image, Converter={StaticResource StringToVisibilityConverter}}">
                 <Image Source="{Binding Image}"/>
-            </Border>
+            </Border>-->
         </Grid>
     </DataTemplate>
 
@@ -359,13 +372,19 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="{Binding AuthorProfileImageUrl}" 
-                                   Stretch="UniformToFill"
-                                   Height="45"
-                                   Width="45"
-                                   VerticalAlignment="Top"
-                                   Margin="{Binding IsReplay, Converter={StaticResource CommentMarginConverter}}"/>
-
+                            <Ellipse Width="45"
+                                     Height="45"
+                                     VerticalAlignment="Top"
+                                     Margin="{Binding IsReplay, Converter={StaticResource CommentMarginConverter}}">
+                                <Ellipse.Fill>
+                                    <ImageBrush>
+                                        <ImageBrush.ImageSource>
+                                            <BitmapImage UriSource="{Binding AuthorProfileImageUrl}" />
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            
                             <StackPanel Grid.Column="1"
                                         Margin="0,-2,0,0">
                                 <Grid>

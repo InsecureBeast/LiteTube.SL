@@ -16,7 +16,7 @@
     shell:SystemTray.ProgressIndicator="{Binding ProgressIndicator}"
     Style="{StaticResource PageThemeStyle}"
     UseLayoutRounding="True">
-    
+
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,7 +24,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
-    
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
         <Grid.RowDefinitions>
@@ -231,7 +231,7 @@
                     <TextBlock Text="{Binding Path=LocalizedResources.RelatedVideos, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
-                
+
                 <ContentPresenter Content="{Binding RelatedVideosViewModel}"
                                   ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
@@ -253,11 +253,23 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+
+                        <Ellipse Width="45"
+                                 Height="45"
+                                 VerticalAlignment="Top">
+                            <Ellipse.Fill>
+                                <ImageBrush>
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="{Binding CommentsViewModel.ProfileImage}" />
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
                         
-                        <Image Source="{Binding CommentsViewModel.ProfileImage}"
+                        <!--<Image Source="{Binding CommentsViewModel.ProfileImage}"
                                Width="45"
                                Height="45"
-                               VerticalAlignment="Top"/>
+                               VerticalAlignment="Top"/>-->
                         <TextBox AcceptsReturn="True"
                                  Grid.Column="1"
                                  MaxHeight="150"
@@ -267,7 +279,7 @@
                                  Text="{Binding CommentsViewModel.CommentText, Mode=TwoWay}"
                                  IsEnabled="{Binding CommentsViewModel.IsAddingComment, Converter={StaticResource InverseBooleanConverter}}"/>
                     </Grid>
-                    
+
                     <ContentPresenter Content="{Binding CommentsViewModel}"
                                       ContentTemplate="{StaticResource CommentsLoadingListView}"
                                       Margin="{StaticResource DefaultControlMargin}"
@@ -280,7 +292,7 @@
               VerticalAlignment="Top"
               Background="Black"
               Name="playerBg">
-                <controls:LiteTubePlayer x:Name="player"
+            <controls:LiteTubePlayer x:Name="player"
                                          VideoTitle="{Binding Title}"
                                          ChannelTitle="{Binding ChannelTitle}"
                                          ItemClickCommand="{Binding RelatedVideosViewModel.ItemClickCommand}"
@@ -318,9 +330,11 @@
     <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
             <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click"/>
-            --><!--<shell:ApplicationBar.MenuItems>
+            -->
+    <!--<shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Copy video url" x:Uid="CopyVideoUrl"/>
-            </shell:ApplicationBar.MenuItems>--><!--
+            </shell:ApplicationBar.MenuItems>-->
+    <!--
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>-->
 

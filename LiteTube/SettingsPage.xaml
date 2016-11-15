@@ -69,6 +69,7 @@
             <toolkit:ListPicker ItemsSource="{Binding ApplicationLanguages}"
                                 SelectedItem ="{Binding SelectedLanguage, Mode=TwoWay}"
                                 Margin="0"
+                                BorderBrush="{StaticResource PhoneSubtleBrush}"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
             
             <TextBlock Name="Region"
@@ -77,6 +78,7 @@
             <toolkit:ListPicker ItemsSource="{Binding Regions}"
                                 SelectedItem ="{Binding SelectedRegion, Mode=TwoWay}"
                                 Margin="0"
+                                BorderBrush="{StaticResource PhoneSubtleBrush}"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}">
             </toolkit:ListPicker>
 
@@ -87,6 +89,7 @@
             <toolkit:ListPicker ItemsSource="{Binding VideoQualities}"
                                 SelectedItem ="{Binding SelectedQuality, Mode=TwoWay}"
                                 Margin="0"
+                                BorderBrush="{StaticResource PhoneSubtleBrush}"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
 
             <TextBlock Name="autoplayVideo"
@@ -95,6 +98,7 @@
                        HorizontalAlignment="Left" />
 
             <toolkit:ToggleSwitch Name="AutoplayVideoSwitch"
+                                  BorderBrush="{StaticResource PhoneSubtleBrush}"
                                   IsChecked="{Binding IsAutoplayVideo, Mode=TwoWay}"
                                   Margin="-12,-30,-10,-30"/>
 
@@ -106,6 +110,7 @@
             <toolkit:ListPicker ItemsSource="{Binding ApplicationThemes}"
                                 SelectedItem ="{Binding SelectedApplicationTheme, Mode=TwoWay}"
                                 Margin="0"
+                                BorderBrush="{StaticResource PhoneSubtleBrush}"
                                 FullModeItemTemplate="{StaticResource FullModeTemplate}"/>
         </StackPanel>
     </Grid>
