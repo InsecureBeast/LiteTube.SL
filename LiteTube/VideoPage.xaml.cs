@@ -102,7 +102,7 @@ namespace LiteTube
 
                 player.Position = _playerPosition;
 
-                if (_isPaused)
+                if (_isPaused || !_autoPlay)
                 {
                     player.PlayResume();
                     player.Position = _playerPosition;
