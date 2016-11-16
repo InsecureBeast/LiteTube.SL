@@ -166,7 +166,7 @@ namespace LiteTube.DataModel
 
             var res = await _youTubeWeb.GetRecommended(_youTubeServiceControl.OAuthToken, pageToken);
             if (res == null)
-                return null;
+                return MVideoList.Empty;
 
             var videoIds = new StringBuilder();
             foreach (var id in res.Ids)
@@ -219,7 +219,7 @@ namespace LiteTube.DataModel
 
             var categoriesListResponse = await categoriesListRequest.ExecuteAsync();
             var items = categoriesListResponse.Items.Where(c => c.Snippet != null && c.Snippet.Assignable == true);
-            return items.Select(category => new MVideoCategory(category)).Cast<IVideoCategory>().ToList();
+            return items.Select(category => new MVideoCategory(category));//.Cast<IVideoCategory>().ToList();
         }
 
         public bool IsAuthorized
@@ -265,7 +265,7 @@ namespace LiteTube.DataModel
 
             var response = await channelRequest.ExecuteAsync();
             var channel = response.Items.FirstOrDefault();
-            return channel != null ? new MChannel(channel) : null;
+            return channel != null ? new MChannel(channel) : MChannel.Empty;
         }
 
         public async Task<IChannel> GetChannelByUsername(string username)
@@ -276,7 +276,7 @@ namespace LiteTube.DataModel
 
             var response = await channelRequest.ExecuteAsync();
             var channel = response.Items.FirstOrDefault();
-            return channel != null ? new MChannel(channel) : null;
+            return channel != null ? new MChannel(channel) : MChannel.Empty;
         }
 
         public async Task<IVideoList> GetRelatedVideos(string videoId, int maxResult, string pageToken)
@@ -293,9 +293,6 @@ namespace LiteTube.DataModel
             }
 
             var videos = await GetVideo(videoIds.ToString());
-            if (videoIds == null)
-                return MVideoList.Empty;
-
             videos.NextPageToken = res.NextPageToken;
             return new MVideoList(videos);
             //var request = _youTubeService.Search.List("snippet,id");

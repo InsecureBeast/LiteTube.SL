@@ -197,31 +197,38 @@ namespace LiteTube
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            NavigationHelper.OnNavigatedTo(this);
-
-            SubscribeModelEvents();
-            _sensor.OrientationChanged += Sensor_OrientationChanged;
-            
-            if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
-                SetVisibilityControls(Visibility.Collapsed);
-            else
-                SetVisibilityControls(Visibility.Visible);
-
-            var viewModel = DataContext as PlaylistVideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            if (viewModel.NavigationPanelViewModel == null)
-                return;
-
-            var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.VideoUri") };
-            player.SetBinding(LiteTubePlayer.SourceProperty, binding);
-
-            if (viewModel.NavigationPanelViewModel.IsAuthorized)
+            try
             {
+                NavigationHelper.OnNavigatedTo(this);
+
+                SubscribeModelEvents();
+                _sensor.OrientationChanged += Sensor_OrientationChanged;
+            
+                if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
+                    SetVisibilityControls(Visibility.Collapsed);
+                else
+                    SetVisibilityControls(Visibility.Visible);
+
+                var viewModel = DataContext as PlaylistVideoPageViewModel;
+                if (viewModel == null)
+                    return;
+
+                if (viewModel.NavigationPanelViewModel == null)
+                    return;
+
+                var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.VideoUri") };
+                player.SetBinding(LiteTubePlayer.SourceProperty, binding);
+
+                if (!viewModel.NavigationPanelViewModel.IsAuthorized) 
+                    return;
+                
                 if (_currentApplicationBar.Buttons.Contains(_favoritesApplicationBarButton))
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
+            }
+            catch (Exception)
+            {
+                ;
             }
         }
 
@@ -234,7 +241,8 @@ namespace LiteTube
                 base.OnNavigatedFrom(e);
             }
             catch (Exception)
-	        {
+            {
+                ;
             }
         }
 

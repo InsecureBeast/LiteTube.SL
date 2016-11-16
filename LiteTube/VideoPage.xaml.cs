@@ -135,29 +135,36 @@ namespace LiteTube
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            NavigationHelper.OnNavigatedTo(this);
-
-            SubscribedelEvents();
-
-            _sensor.OrientationChanged += Sensor_OrientationChanged;
-
-            if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
-                SetVisibilityControls(Visibility.Collapsed);
-            else
-                SetVisibilityControls(Visibility.Visible);
-
-            var viewModel = DataContext as VideoPageViewModel;
-            if (viewModel == null)
-                return;
-
-            var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
-            player.SetBinding(LiteTubePlayer.SourceProperty, binding);
-
-            if (viewModel.NavigationPanelViewModel.IsAuthorized)
+            try
             {
+                NavigationHelper.OnNavigatedTo(this);
+
+                SubscribedelEvents();
+
+                _sensor.OrientationChanged += Sensor_OrientationChanged;
+
+                if (VideoPageViewHelper.IsLandscapeOrientation(Orientation))
+                    SetVisibilityControls(Visibility.Collapsed);
+                else
+                    SetVisibilityControls(Visibility.Visible);
+
+                var viewModel = DataContext as VideoPageViewModel;
+                if (viewModel == null)
+                    return;
+
+                var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
+                player.SetBinding(MediaPlayer.SourceProperty, binding);
+
+                if (!viewModel.NavigationPanelViewModel.IsAuthorized) 
+                    return;
+            
                 if (_currentApplicationBar.Buttons.Contains(_favoritesApplicationBarButton))
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
+            }
+            catch (Exception)
+            {
+                ;
             }
         }
 
