@@ -9,10 +9,15 @@ namespace LiteTube.Common.Helpers
 
         public static void AddAdv(IList items, bool showAdv)
         {
-            if (items.Count == AdvCount && showAdv)
+            if (!showAdv)
+                return;
+
+            if (items.Count == AdvCount || items.Count == AdvCount * 4)
             {
                 items.Add(new AdvNodeViewModel());
             }
+
+
 
             //if ((items.Count - 10) % AdvCount == 0 && items.Count != 0 && showAdv)
             //{
