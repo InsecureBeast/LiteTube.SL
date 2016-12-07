@@ -11,7 +11,7 @@ namespace VideoLibrary
 {
     public class YouTube
     {
-        public async static Task<YouTubeVideo> GetVideoAsync(string videoId, VideoQuality quality)
+        public static async Task<YouTubeVideo> GetVideoAsync(string videoId, VideoQuality quality)
         {
             var url = string.Format("https://www.youtube.com/watch?v={0}&nomobile=1", videoId);
             if (!TryNormalize(url, out url))

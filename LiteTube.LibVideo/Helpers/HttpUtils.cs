@@ -22,17 +22,9 @@ namespace VideoLibrary
                 client.DefaultRequestHeaders.Add("User-Agent", BOT_USER_AGENT1);
                 if (!string.IsNullOrEmpty(accessToken))
                     client.DefaultRequestHeaders.Add("Authorization", accessToken);
-                try
-                {
-                    var response = await client.GetAsync(new Uri(uri, UriKind.Absolute));
-                    return await response.Content.ReadAsStringAsync();
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
                 
+                var response = await client.GetAsync(new Uri(uri, UriKind.Absolute));
+                return await response.Content.ReadAsStringAsync();
             }
         }
     }
