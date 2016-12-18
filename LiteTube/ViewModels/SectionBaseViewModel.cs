@@ -27,7 +27,7 @@ namespace LiteTube.ViewModels
         protected string _uniqueId;
         protected string _title;
         private string _description;
-        protected readonly Func<IDataSource> _getGeDataSource;
+        protected readonly Func<IDataSource> _getDataSource;
         protected readonly IConnectionListener _connectionListener;
         protected Frame _frame;
         protected bool _hasItems;
@@ -52,7 +52,7 @@ namespace LiteTube.ViewModels
             if (connectionListener == null) 
                 throw new ArgumentNullException("connectionListener");
 
-            _getGeDataSource = getGeDataSource;
+            _getDataSource = getGeDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
 
@@ -101,7 +101,7 @@ namespace LiteTube.ViewModels
 
         public Func<IDataSource> GetDataSource
         {
-            get { return _getGeDataSource; }
+            get { return _getDataSource; }
         }
 
         public bool IsLoading
@@ -283,7 +283,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new VideoItemViewModel(item, _getGeDataSource(), menuProvider));
+                Items.Add(new VideoItemViewModel(item, _getDataSource(), menuProvider));
             }
             /*
             foreach (var item in items)
@@ -355,7 +355,7 @@ namespace LiteTube.ViewModels
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
 #if SILVERLIGHT
-            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getGeDataSource, _connectionListener));
+            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getDataSource, _connectionListener));
 #endif
         }
 

@@ -23,7 +23,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            var res = await _getGeDataSource().GetFavorites(nextPageToken);
+            var res = await _getDataSource().GetFavorites(nextPageToken);
             return res;
         }
 
@@ -49,7 +49,7 @@ namespace LiteTube.ViewModels
             {
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
-                Items.Add(new PlayListItemNodeViewModel(item, _getGeDataSource(), Delete, menuProvider));
+                Items.Add(new PlayListItemNodeViewModel(item, _getDataSource(), Delete, menuProvider));
             }
 
             IsLoading = false;
@@ -62,7 +62,7 @@ namespace LiteTube.ViewModels
             var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
             foreach (var item in items)
             {
-                await _getGeDataSource().RemoveFromFavorites(item.Id);
+                await _getDataSource().RemoveFromFavorites(item.Id);
                 Items.Remove(item);
             }
         }

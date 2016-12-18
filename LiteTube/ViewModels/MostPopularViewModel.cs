@@ -44,7 +44,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetMostPopular(nextPageToken);
+            return await _getDataSource().GetMostPopular(nextPageToken);
         }
     }
 }

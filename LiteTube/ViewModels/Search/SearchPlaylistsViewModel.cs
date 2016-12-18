@@ -44,7 +44,7 @@ namespace LiteTube.ViewModels.Search
                 return;
 
 #if SILVERLIGHT
-            NavigationHelper.Navigate("/PlaylistVideoPage.xaml", new PlaylistVideoPageViewModel(playlistId, _getGeDataSource, _connectionListener));
+            NavigationHelper.Navigate("/PlaylistVideoPage.xaml", new PlaylistVideoPageViewModel(playlistId, _getDataSource, _connectionListener));
 #endif
         }
 
@@ -72,7 +72,7 @@ namespace LiteTube.ViewModels.Search
                    continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new PlaylistNodeViewModel(item, _getGeDataSource(), menuProvider));
+                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), menuProvider));
             }
         }
     }

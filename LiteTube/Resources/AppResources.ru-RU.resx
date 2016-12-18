@@ -401,7 +401,7 @@
   <data name="IsAutoplay" xml:space="preserve">
     <value>Автовоспроизведение видео</value>
   </data>
-  <data name="AddToWatchLater" xml:space="preserve">
+  <data name="WatchLater" xml:space="preserve">
     <value>посмотреть позже</value>
   </data>
 </root>

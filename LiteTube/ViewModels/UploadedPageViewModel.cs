@@ -14,8 +14,8 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            var uploadedPlaylistId = _getGeDataSource().UploadedPlaylistId;
-            return await _getGeDataSource().GetVideoPlaylist(uploadedPlaylistId, nextPageToken);
+            var uploadedPlaylistId = _getDataSource().UploadedPlaylistId;
+            return await _getDataSource().GetVideoPlaylist(uploadedPlaylistId, nextPageToken);
         }
     }
 }

@@ -27,9 +27,9 @@ namespace LiteTube.ViewModels
 #if SILVERLIGHT
             _indicatorHolder = new ProgressIndicatorHolder();
 #endif
-            _mostPopularViewModel = new MostPopularViewModel(_getGeDataSource, _connectionListener);
-            _profileSectionViewModel = new ProfileSectionViewModel(_getGeDataSource, connectionListener);
-            _activitySectionViewModel = new ActivitySectionViewModel(_getGeDataSource, _connectionListener);
+            _mostPopularViewModel = new MostPopularViewModel(_getDataSource, _connectionListener);
+            _profileSectionViewModel = new ProfileSectionViewModel(_getDataSource, connectionListener);
+            _activitySectionViewModel = new ActivitySectionViewModel(_getDataSource, _connectionListener);
 
             geDataSource().Subscribe((IListener<UpdateSettingsEventArgs>)this);
             geDataSource().Subscribe((IListener<UpdateContextEventArgs>)this);
@@ -91,7 +91,7 @@ namespace LiteTube.ViewModels
             IsEmpty = false;
 
             _mostPopularViewModel.Items.Clear();
-            if (_getGeDataSource().IsAuthorized)
+            if (_getDataSource().IsAuthorized)
             {
                 _activitySectionViewModel.Items.Clear();
                 _activitySectionViewModel.FirstLoad();
@@ -113,14 +113,14 @@ namespace LiteTube.ViewModels
 
         private async Task LoadGuideCategories()
         {
-            var sections = await _getGeDataSource().GetCategories();
+            var sections = await _getDataSource().GetCategories();
             if (sections == null)
                 return;
 
             Items.Clear();
             foreach (var section in sections)
             {
-                Items.Add(new VideoCategoryNodeViewModel(section, _getGeDataSource()));
+                Items.Add(new VideoCategoryNodeViewModel(section, _getDataSource()));
             }
         }
 
@@ -136,7 +136,7 @@ namespace LiteTube.ViewModels
             var categoryId = viewModel.CategoryId;
             var title = viewModel.Title;
 #if SILVERLIGHT
-            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _getGeDataSource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _getDataSource, _connectionListener);
             App.NavigateTo("/SectionPage.xaml");
 #endif
         }

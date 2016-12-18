@@ -34,7 +34,7 @@ namespace LiteTube.ViewModels.Search
             if (string.IsNullOrEmpty(_searchString))
                 return null;
 
-            return await _getGeDataSource().Search(_searchString, nextPageToken, _searchType, _searchFilter);
+            return await _getDataSource().Search(_searchString, nextPageToken, _searchType, _searchFilter);
         }
 
         internal async Task Search(string searchString)

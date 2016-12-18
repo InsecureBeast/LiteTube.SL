@@ -4,6 +4,7 @@ using System;
 using LiteTube.Common;
 using LiteTube.DataModel;
 using System.Windows;
+using LiteTube.Common.Helpers;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
 #else
@@ -22,6 +23,7 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _likedCommand;
         private readonly RelayCommand<FrameworkElement> _uploadedCommand;
         private readonly RelayCommand<FrameworkElement> _myPlaylistsCommand;
+        private readonly RelayCommand<FrameworkElement> _watchLaterCommand;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Func<IDataSource> _getDataSource;
@@ -48,6 +50,7 @@ namespace LiteTube.ViewModels
             _likedCommand = new RelayCommand<FrameworkElement>(Liked);
             _uploadedCommand = new RelayCommand<FrameworkElement>(Uploaded);
             _myPlaylistsCommand = new RelayCommand<FrameworkElement>(MyPlaylists);
+            _watchLaterCommand = new RelayCommand<FrameworkElement>(WatchLater);
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _getDataSource().Subscribe(this);
@@ -93,6 +96,11 @@ namespace LiteTube.ViewModels
         public ICommand MyPlaylistsCommand
         {
             get { return _myPlaylistsCommand; }
+        }
+
+        public ICommand WatchLaterCommand
+        {
+            get { return _watchLaterCommand; }
         }
 
         public ICommand LoginCommand
@@ -213,6 +221,15 @@ namespace LiteTube.ViewModels
         private void MyPlaylists(FrameworkElement control)
         {
             NavigateTo(3);
+        }
+
+        private void WatchLater(FrameworkElement control)
+        {
+#if SILVERLIGHT
+            var id = _getDataSource().WatchLaterPlaylistId;
+            var view = string.Format("/PlaylistVideoPage.xaml", id);
+            NavigationHelper.Navigate(view, new PlaylistVideoPageViewModel(id, _getDataSource, _connectionListener));
+#endif
         }
 
         private void Favorites(FrameworkElement control)

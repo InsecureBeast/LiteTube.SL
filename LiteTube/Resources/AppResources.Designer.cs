@@ -97,15 +97,6 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to watch later.
-        /// </summary>
-        public static string AddToWatchLater {
-            get {
-                return ResourceManager.GetString("AddToWatchLater", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Advertising post.
         /// </summary>
         public static string AdvertisingPost {
@@ -858,6 +849,15 @@ namespace LiteTube.Resources {
         public static string WatchHistory {
             get {
                 return ResourceManager.GetString("WatchHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to watch later.
+        /// </summary>
+        public static string WatchLater {
+            get {
+                return ResourceManager.GetString("WatchLater", resourceCulture);
             }
         }
         

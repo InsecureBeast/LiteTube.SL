@@ -122,7 +122,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetChannelVideoList(_channelId, nextPageToken);
+            return await _getDataSource().GetChannelVideoList(_channelId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -141,17 +141,17 @@ namespace LiteTube.ViewModels
 
         private void InitializeCommands()
         {
-            _subscribeCommand = new SubscribeCommand(_getGeDataSource, () => _channelId, InvalidateCommands);
-            _unsubscribeCommand = new UnsubscribeCommand(_getGeDataSource, () => _channelId, InvalidateCommands);
+            _subscribeCommand = new SubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
+            _unsubscribeCommand = new UnsubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
         }
 
         private async Task LoadChannel(string channelId, string username)
         {
             IChannel ch;
             if (string.IsNullOrEmpty(username))
-                ch = await _getGeDataSource().GetChannel(channelId);
+                ch = await _getDataSource().GetChannel(channelId);
             else
-                ch = await _getGeDataSource().GetChannelByUsername(username);
+                ch = await _getDataSource().GetChannelByUsername(username);
 
             _uniqueId = ch.Id;
             Title = ch.Title;
@@ -161,12 +161,12 @@ namespace LiteTube.ViewModels
             ChannelImage = ch.Thumbnails.GetThumbnailUrl();
             Image = ch.Image;
             _channel = ch;
-            IsSubscribed = _getGeDataSource().IsSubscribed(channelId);
+            IsSubscribed = _getDataSource().IsSubscribed(channelId);
         }
 
         private void InvalidateCommands()
         {
-            IsSubscribed = _getGeDataSource().IsSubscribed(_channelId);
+            IsSubscribed = _getDataSource().IsSubscribed(_channelId);
         }
 
         private async void OnSelectedIndexChanged(int index)

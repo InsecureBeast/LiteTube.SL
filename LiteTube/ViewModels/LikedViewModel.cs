@@ -18,7 +18,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetLiked(nextPageToken);
+            return await _getDataSource().GetLiked(nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -47,7 +47,7 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
 
-                Items.Add(new PlayListItemNodeViewModel(item, _getGeDataSource(), Delete, menuProvider));
+                Items.Add(new PlayListItemNodeViewModel(item, _getDataSource(), Delete, menuProvider));
             }
 
             IsLoading = false;

@@ -190,7 +190,7 @@
                                      Style="{StaticResource ContextMenuStyle}"
                                      IsZoomEnabled="False">
                     <toolkit:MenuItem Name="AddToWatchLater"  
-                                      Header="{Binding Path=LocalizedResources.AddToWatchLater, Source={StaticResource LocalizedStrings}}" 
+                                      Header="{Binding Path=LocalizedResources.WatchLater, Source={StaticResource LocalizedStrings}}" 
                                       Visibility="{Binding MenuProvider.CanAddToPlayList, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       Command="{Binding AddToPlaylistCommand}"
                                       CommandParameter="WatchLater"/>
