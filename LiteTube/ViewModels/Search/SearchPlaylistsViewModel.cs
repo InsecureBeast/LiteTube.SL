@@ -57,7 +57,11 @@ namespace LiteTube.ViewModels.Search
             //        continue;
             //    Items.Add(new PlaylistNodeViewModel(item));
             //}
-
+            var menuProvider = new ContextMenuProvider()
+            {
+                CanAddToPlayList = false,
+                CanDelete = false
+            };
             var itemsList = Items.ToList();
             var itemsArray = items.ToArray();
             for (int i = 0; i < itemsArray.Length; i++)
@@ -68,7 +72,7 @@ namespace LiteTube.ViewModels.Search
                    continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new PlaylistNodeViewModel(item));
+                Items.Add(new PlaylistNodeViewModel(item, _getGeDataSource(), menuProvider));
             }
         }
     }

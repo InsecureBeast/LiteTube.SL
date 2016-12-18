@@ -65,7 +65,7 @@ namespace LiteTube.ViewModels
             {
                 if (itemsList.Exists(i => i.Id == item.Id))
                     continue;
-                Items.Add(new ChannelNodeViewModel(item));
+                Items.Add(new ChannelNodeViewModel(item, _getGeDataSource()));
             }
         }
 

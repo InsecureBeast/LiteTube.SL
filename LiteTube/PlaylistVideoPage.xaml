@@ -48,7 +48,7 @@
                 </phone:PivotItem.Header>
 
                 <ContentPresenter Content="{Binding PlaylistVideosViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"
                                   Name="playlistPresenter"/>
             </phone:PivotItem>
 

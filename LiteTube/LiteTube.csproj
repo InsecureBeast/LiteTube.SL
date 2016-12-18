@@ -105,6 +105,7 @@
     <Compile Include="Common\Commands\RelayCommand.cs" />
     <Compile Include="Common\Commands\SubscribeCommand.cs" />
     <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
+    <Compile Include="Common\ContextMenuProvider.cs" />
     <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
     <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />

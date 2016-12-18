@@ -65,12 +65,17 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<ISubscription> items)
         {
+            var menuProvider = new ContextMenuProvider()
+            {
+                CanAddToPlayList = false,
+                CanDelete = false
+            };
             var itemsList = Items.ToList();
             foreach (var item in items)
             {
                 if (itemsList.Exists(i => i.Id == item.ChannelId))
                     continue;
-                Items.Add(new SubscriptionNodeViewModel(item));
+                Items.Add(new SubscriptionNodeViewModel(item, _getGeDataSource()));
             }
         }
     }

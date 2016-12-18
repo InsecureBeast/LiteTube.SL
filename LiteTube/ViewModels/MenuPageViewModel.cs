@@ -291,7 +291,7 @@ namespace LiteTube.ViewModels
             _categories.Clear();
             foreach (var section in sections)
             {
-                _categories.Add(new GuideCategoryNodeViewModel(section));
+                _categories.Add(new GuideCategoryNodeViewModel(section, _getDataSource()));
             }
             _isRequestSend = false;
         }

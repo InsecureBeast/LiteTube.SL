@@ -135,15 +135,20 @@ namespace LiteTube.DataClasses
     {
         public MVideoDetails(Video video)
         {
-            Duration = DurationConverter.Convert(video.ContentDetails.Duration);
             VideoId = video.Id;
             if (video.Snippet != null)
             {
                 Title = video.Snippet.Title;
                 Description = video.Snippet.Description;
             }
-            Definition = video.ContentDetails.Definition;
+
             Statistics = new MVideoStatistics(video.Statistics);
+
+            if (video.ContentDetails == null)
+                return;
+
+            Duration = DurationConverter.Convert(video.ContentDetails.Duration);
+            Definition = video.ContentDetails.Definition;
             IsPaid = video.ContentDetails.RegionRestriction != null;
         }
 
@@ -200,6 +205,9 @@ namespace LiteTube.DataClasses
     {
         public MVideoStatistics(VideoStatistics videoStatistics)
         {
+            if (videoStatistics == null)
+                return;
+
             ViewCount = videoStatistics.ViewCount;
             LikeCount = videoStatistics.LikeCount;
             DislikeCount = videoStatistics.DislikeCount;

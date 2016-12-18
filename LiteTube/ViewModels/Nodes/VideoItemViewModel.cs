@@ -1,5 +1,9 @@
 ﻿using System;
 using LiteTube.DataClasses;
+using MyToolkit.Command;
+using System.Windows.Input;
+using LiteTube.DataModel;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -9,7 +13,7 @@ namespace LiteTube.ViewModels.Nodes
         private readonly string _id;
         private bool _isNowPlaying;
 
-        public VideoItemViewModel(IVideoItem videoItem)
+        public VideoItemViewModel(IVideoItem videoItem, IDataSource dataSource, IContextMenuProvider menuProvider) : base(dataSource, menuProvider)
         {
             VideoItem = videoItem;
             _videoId = videoItem.Details.VideoId;
@@ -57,4 +61,4 @@ namespace LiteTube.ViewModels.Nodes
             return Title;
         }
     }
-}
+ }

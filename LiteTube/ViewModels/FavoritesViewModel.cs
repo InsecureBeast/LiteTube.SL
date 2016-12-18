@@ -38,12 +38,18 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<IPlayListItem> items)
         {
+            var menuProvider = new ContextMenuProvider()
+            {
+                CanAddToPlayList = false,
+                CanDelete = true
+            };
+
             var itemsList = Items.ToList();
             foreach (var item in items)
             {
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
-                Items.Add(new PlayListItemNodeViewModel(item, Delete));
+                Items.Add(new PlayListItemNodeViewModel(item, _getGeDataSource(), Delete, menuProvider));
             }
 
             IsLoading = false;

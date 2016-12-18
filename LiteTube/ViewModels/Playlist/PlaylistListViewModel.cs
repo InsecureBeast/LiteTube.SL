@@ -66,6 +66,12 @@ namespace LiteTube.ViewModels
 
         private void AddPlaylistItems(IEnumerable<IPlaylist> items)
         {
+            var menuProvider = new ContextMenuProvider()
+            {
+                CanAddToPlayList = false,
+                CanDelete = false
+            };
+
             var itemsList = Items.ToList();
             var itemsArray = items.ToArray();
             for (int i = 0; i < itemsArray.Length; i++)
@@ -78,7 +84,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new PlaylistNodeViewModel(item));
+                Items.Add(new PlaylistNodeViewModel(item, _getGeDataSource(), menuProvider));
             }
 
             //var itemsList = Items.ToList();

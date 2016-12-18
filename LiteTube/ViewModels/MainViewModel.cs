@@ -120,7 +120,7 @@ namespace LiteTube.ViewModels
             Items.Clear();
             foreach (var section in sections)
             {
-                Items.Add(new VideoCategoryNodeViewModel(section));
+                Items.Add(new VideoCategoryNodeViewModel(section, _getGeDataSource()));
             }
         }
 
