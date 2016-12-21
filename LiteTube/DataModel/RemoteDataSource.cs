@@ -10,7 +10,7 @@ using LiteTube.Multimedia;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Google;
-using VideoLibrary;
+using YouTube = LiteTube.LibVideo.YouTube;
 
 namespace LiteTube.DataModel
 {
@@ -542,7 +542,7 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
-            var video = await VideoLibrary.YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality));
+            var video = await YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality));
             var url = await video.GetUriAsync();
             return new YouTubeUri() { Uri = new Uri(url) };
         }

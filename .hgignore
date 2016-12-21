@@ -25,3 +25,4 @@ packages/*
 libvideo/obj/*
 LiteTube.LibVideo/Bin/*
 LiteTube.LibVideo/obj/*
+LiteTube.LibVideo/LiteTube.LibVideo.csproj.DotSettings

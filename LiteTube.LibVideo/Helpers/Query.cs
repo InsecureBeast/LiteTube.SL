@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using VideoLibrary.Exceptions;
 
-namespace VideoLibrary.Helpers
+namespace LiteTube.LibVideo.Helpers
 {
     internal partial class Query : IDictionary<string, string>, IReadOnlyDictionary<string, string>
     {

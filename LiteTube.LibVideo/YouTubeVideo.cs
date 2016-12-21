@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VideoLibrary.Helpers;
+﻿using System.Threading.Tasks;
+using LiteTube.LibVideo.Helpers;
 
-namespace VideoLibrary
+namespace LiteTube.LibVideo
 {
     public partial class YouTubeVideo : Video
     {

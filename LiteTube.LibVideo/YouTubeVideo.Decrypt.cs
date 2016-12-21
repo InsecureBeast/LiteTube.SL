@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using VideoLibrary.Helpers;
+using LiteTube.LibVideo.Helpers;
 
-namespace VideoLibrary
+namespace LiteTube.LibVideo
 {
     public partial class YouTubeVideo
     {
@@ -13,7 +10,7 @@ namespace VideoLibrary
 
         private readonly string jsPlayer;
 
-        private async Task<string> DecryptAsync(string uri, Func<DelegatingClient> makeClient = null)
+        private async Task<string> DecryptAsync(string uri)
         {
             var query = new Query(uri);
 

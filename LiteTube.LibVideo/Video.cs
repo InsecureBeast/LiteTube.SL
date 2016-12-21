@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace VideoLibrary
+namespace LiteTube.LibVideo
 {
     public abstract class Video
     {

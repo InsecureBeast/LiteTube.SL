@@ -5,34 +5,39 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using VideoLibrary.Helpers;
+using LiteTube.LibVideo.Helpers;
 
-namespace VideoLibrary
+namespace LiteTube.LibVideo
 {
     public class YouTube
     {
         public static async Task<YouTubeVideo> GetVideoAsync(string videoId, VideoQuality quality)
         {
-            var url = string.Format("https://www.youtube.com/watch?v={0}&nomobile=1", videoId);
+            var url = $"https://www.youtube.com/watch?v={videoId}&nomobile=1";
             if (!TryNormalize(url, out url))
                 throw new ArgumentException("URL is not a valid YouTube URL!");
 
-            string source = await HttpUtils.HttpGetAsync(url, string.Empty);
-            var res = ParseVideos(source).ToList();
+            var source = await HttpUtils.HttpGetAsync(url, string.Empty);
+            var res = await ParseVideosAsync(source);
             var uri = TryFindBestVideoUri(res, VideoQuality.Quality144P, quality);
             return uri;
         }
 
         private static YouTubeVideo TryFindBestVideoUri(IEnumerable<YouTubeVideo> uris, VideoQuality minQuality, VideoQuality maxQuality)
         {
-            var selected = uris.Where(i => i.AudioFormat != AudioFormat.Unknown &&
-                                    i.Resolution != -1 &&
-                                    !i.Is3D &&
-                                    (i.Format == VideoFormat.Mp4 || i.Format == VideoFormat.Mobile) &&
-                                    i.Resolution >= GetResolution(minQuality) &&
-                                    i.Resolution <= GetResolution(maxQuality)).ToList();
+            var selected = uris.Where(i => IsAvailableVideo(i, minQuality, maxQuality)).ToList();
             var ordered = selected.OrderByDescending(u => u.Resolution).ToList();
             return ordered.FirstOrDefault();
+        }
+
+        private static bool IsAvailableVideo(YouTubeVideo video, VideoQuality minQuality, VideoQuality maxQuality)
+        {
+            return video.AudioFormat != AudioFormat.Unknown 
+                && video.Resolution != -1 
+                && !video.Is3D 
+                && (video.Format == VideoFormat.Mp4 || video.Format == VideoFormat.Mobile) 
+                && video.Resolution >= GetResolution(minQuality) 
+                && video.Resolution <= GetResolution(maxQuality);
         }
 
         private static bool TryNormalize(string videoUri, out string normalized)
@@ -61,49 +66,38 @@ namespace VideoLibrary
             return true;
         }
 
-        private static IEnumerable<YouTubeVideo> ParseVideos(string source)
+        private static async Task<IEnumerable<YouTubeVideo>> ParseVideosAsync(string source)
         {
-            string title = Html.GetNode("title", source);
+            var title = Html.GetNode("title", source);
+            var jsPlayer = "http:" + Json.GetKey("js", source).Replace(@"\/", "/");
+            var map = Json.GetKey("url_encoded_fmt_stream_map", source);
+            var queries = map.Split(',').Select(Unscramble).ToArray();
 
-            string jsPlayer = "http:" + Json.GetKey("js", source).Replace(@"\/", "/");
-
-            string map = Json.GetKey("url_encoded_fmt_stream_map", source);
-            var queries = map.Split(',').Select(Unscramble);
-
-            foreach (var query in queries)
-                yield return new YouTubeVideo(title, query, jsPlayer);
-
-            string adaptiveMap = Json.GetKey("adaptive_fmts", source);
+            if (queries.Any())
+                return queries.Select(q => new YouTubeVideo(title, q, jsPlayer));
+            
+            var adaptiveMap = Json.GetKey("adaptive_fmts", source);
 
             // If there is no adaptive_fmts key, then in the file
             // will be dashmpd key containing link to a XML
             // file containing links and other data
-            if (adaptiveMap == String.Empty)
+            if (adaptiveMap == string.Empty)
             {
-                using (HttpClient hc = new HttpClient())
+                using (var hc = new HttpClient())
                 {
-                    string temp = Json.GetKey("dashmpd", source);
+                    var temp = Json.GetKey("dashmpd", source);
                     temp = WebUtility.UrlDecode(temp).Replace(@"\/", "/");
 
-                    var manifest = hc.GetStringAsync(temp)
-                        .GetAwaiter().GetResult()
-                        .Replace(@"\/", "/")
-                        .Replace("%2F", "/");
+                    var manifest = await hc.GetStringAsync(temp);
+                    manifest = manifest.Replace(@"\/", "/").Replace("%2F", "/");
 
                     var uris = Html.GetUrisFromManifest(manifest);
-
-                    foreach (var v in uris)
-                    {
-                        yield return new YouTubeVideo(title,
-                            new UnscrambledQuery(v, false),
-                            jsPlayer, true);
-                    }
+                    return uris.Select(u => new YouTubeVideo(title, new UnscrambledQuery(u, false), jsPlayer, true));
                 }
             }
-            else queries = adaptiveMap.Split(',').Select(Unscramble);
 
-            foreach (var query in queries)
-                yield return new YouTubeVideo(title, query, jsPlayer);
+            queries = adaptiveMap.Split(',').Select(Unscramble).ToArray();
+            return queries.Select(q => new YouTubeVideo(title, q, jsPlayer));
         }
 
         // TODO: Consider making this static...
@@ -136,10 +130,9 @@ namespace VideoLibrary
 
         private static string GetSignatureAndHost(string signature, Query query)
         {
-            string result = "&signature=" + signature;
-
+            var result = "&signature=" + signature;
+            
             string host;
-
             if (query.TryGetValue("fallback_host", out host))
                 result += "&fallback_host=" + host;
 
