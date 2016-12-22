@@ -26,6 +26,7 @@ namespace LiteTube.DataModel
         Task<IEnumerable<IVideoCategory>> GetCategories(string culture);
         Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken);
         Task<IVideoList> GetRecommended(string pageToken);
+        Task<IVideoList> GetWatchLater(string culture, int maxResult, string pageToken);
         Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken);
         Task<IChannel> GetChannel(string channelId);
         Task<IChannel> GetChannelByUsername(string username);
@@ -168,16 +169,7 @@ namespace LiteTube.DataModel
             if (res == null)
                 return MVideoList.Empty;
 
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
-
-            var videos = await GetVideo(videoIds.ToString());
-            videos.NextPageToken = res.NextPageToken;
-            return new MVideoList(videos);
+            return await GetVideoList(res);
         }
 
         private async Task<VideoListResponse> GetVideo(string videoId)
@@ -285,16 +277,8 @@ namespace LiteTube.DataModel
             if (res == null)
                 return MVideoList.Empty;
 
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
+            return await GetVideoList(res);
 
-            var videos = await GetVideo(videoIds.ToString());
-            videos.NextPageToken = res.NextPageToken;
-            return new MVideoList(videos);
             //var request = _youTubeService.Search.List("snippet,id");
             //request.Key = _youTubeServiceControl.ApiKey;
             //request.RelatedToVideoId = videoId;
@@ -467,12 +451,19 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return MVideoList.Empty;
 
+            var res = await _youTubeWeb.GetHistoryVideo(_youTubeServiceControl.OAuthToken, nextPageToken);
+            if (res == null)
+                return MVideoList.Empty;
+
+            return await GetVideoList(res);
+            /*
             if (string.IsNullOrEmpty(_historyPlayListId))
                 return MVideoList.Empty;
 
             var playListItems = await GetPlaylistItems(_historyPlayListId, maxResult, nextPageToken);
             var videoList = await GetVideoList(playListItems);
             return videoList;
+            */
         }
 
         public bool IsSubscribed(string channelId)
@@ -687,6 +678,32 @@ namespace LiteTube.DataModel
 
             var response = await request.ExecuteAsync();
             return new MPlaylistList(response);
+        }
+
+        public async Task<IVideoList> GetWatchLater(string culture, int maxResult, string pageToken)
+        {
+            if (!IsAuthorized)
+                return MVideoList.Empty;
+
+            var res = await _youTubeWeb.GetWatchLater(_youTubeServiceControl.OAuthToken, pageToken);
+            if (res == null)
+                return null;
+
+            return await GetVideoList(res);
+        }
+
+        private async Task<IVideoList> GetVideoList(YouTubeResponce res)
+        {
+            var videoIds = new StringBuilder();
+            foreach (var id in res.Ids)
+            {
+                videoIds.AppendLine(id);
+                videoIds.AppendLine(",");
+            }
+
+            var videos = await GetVideo(videoIds.ToString());
+            videos.NextPageToken = res.NextPageToken;
+            return new MVideoList(videos);
         }
 
         //private void CheckProfile()

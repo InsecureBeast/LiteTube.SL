@@ -570,5 +570,19 @@ namespace LiteTube.DataModel
                 throw;
             }
         }
+
+        public async Task<IVideoList> GetWatchLater(string culture, int maxResult, string pageToken)
+        {
+            try
+            {
+                Debug.WriteLine("GetWatchLater method called");
+                return await _remoteDataSource.GetWatchLater(culture, maxResult, pageToken);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetWatchLater method called with exception " + e.Message);
+                throw;
+            }
+        }
     }
 }

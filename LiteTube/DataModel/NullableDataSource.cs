@@ -106,6 +106,11 @@ namespace LiteTube.DataModel
             return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
+        public Task<IVideoList> GetWatchLater(string pageToken)
+        {
+            return new Task<IVideoList>(() => MVideoList.Empty);
+        }
+
         public bool IsSubscribed(string channelId)
         {
             return false;

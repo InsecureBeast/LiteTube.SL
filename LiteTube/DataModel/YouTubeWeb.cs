@@ -20,10 +20,15 @@ namespace LiteTube.DataModel
     {
         private const string RECOMMENDED_URL = @"https://www.youtube.com/feed/recommended";
         private const string SUBSCRIPTIONS_URL = @"https://www.youtube.com/feed/subscriptions/?app=desktop&persist_app=1";
+        private const string WATCH_LATER_URL = @"https://www.youtube.com/playlist?list=WL&app=desktop&persist_app=1";
+        private const string HISTORY_URL = @"https://www.youtube.com/feed/history";
+
+
         private const string BOT_USER_AGENT1 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
         private const string BOT_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
         private readonly Dictionary<string, IEnumerable<string>> _recommended = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _related = new Dictionary<string, IEnumerable<string>>();
+        private readonly Dictionary<string, IEnumerable<string>> _watchLater = new Dictionary<string, IEnumerable<string>>();
 
 
         public async Task<YouTubeResponce> GetRecommended(string accessToken, string nextPageToken)
@@ -33,7 +38,17 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeResponce> GetActivity(string accessToken, string nextPageToken)
         {
-            return await GetVideos(SUBSCRIPTIONS_URL, _recommended, accessToken, nextPageToken);
+            return await GetVideos(SUBSCRIPTIONS_URL, _watchLater, accessToken, nextPageToken);
+        }
+
+        public async Task<YouTubeResponce> GetWatchLater(string accessToken, string nextPageToken)
+        {
+            return await GetVideos(WATCH_LATER_URL, _recommended, accessToken, nextPageToken);
+        }
+
+        public async Task<YouTubeResponce> GetHistoryVideo(string accessToken, string nextPageToken)
+        {
+            return await GetVideos(HISTORY_URL, _recommended, accessToken, nextPageToken);
         }
 
         public async Task<YouTubeResponce> GetRelatedVideo(string videoId, string accessToken, string nextPageToken)
@@ -123,12 +138,11 @@ namespace LiteTube.DataModel
             if (string.IsNullOrEmpty(nextPageToken))
             {
                 var response = await HttpGetAsync(url, accessToken);
-                var regex = new Regex(@"watch\?v=(.*)");
+                var regex = new Regex(@"watch\?v=([^\""|&amp\;]+)");
                 var colm = regex.Matches(response);
                 foreach (Match match in colm)
                 {
-                    var end = match.Value.IndexOf("\"", StringComparison.Ordinal);
-                    var str = match.Value.Substring(8, end - 8);
+                    var str = match.Value.Substring(8, match.Value.Length - 8);
                     if (!result.Contains(str))
                         result.Add(str);
                 }

@@ -18,6 +18,7 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetActivity(string pageToken);
         Task<IVideoList> GetRecommended(string pageToken);
         Task<IVideoList> GetMostPopular(string pageToken);
+        Task<IVideoList> GetWatchLater(string pageToken);
         Task<IVideoList> GetCategoryVideoList(string categoryId, string pageToken);
         Task<IEnumerable<IVideoCategory>> GetCategories();
         Task<IEnumerable<IGuideCategory>> GetGuideCategories();
@@ -138,6 +139,11 @@ namespace LiteTube.DataModel
         public async Task<IVideoList> GetMostPopular(string pageToken)
         {
             return await _remoteDataSource.GetMostPopular(_region, _maxPageResult, pageToken);
+        }
+
+        public async Task<IVideoList> GetWatchLater(string pageToken)
+        {
+            return await _remoteDataSource.GetWatchLater(_region, _maxPageResult, pageToken);
         }
 
         public async Task<IEnumerable<IVideoCategory>> GetCategories()
