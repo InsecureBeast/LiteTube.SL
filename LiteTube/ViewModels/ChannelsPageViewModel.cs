@@ -46,7 +46,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetChannels(_categoryId, nextPageToken);
+            return await _getDataSource().GetChannels(_categoryId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -65,7 +65,7 @@ namespace LiteTube.ViewModels
             {
                 if (itemsList.Exists(i => i.Id == item.Id))
                     continue;
-                Items.Add(new ChannelNodeViewModel(item));
+                Items.Add(new ChannelNodeViewModel(item, _getDataSource()));
             }
         }
 

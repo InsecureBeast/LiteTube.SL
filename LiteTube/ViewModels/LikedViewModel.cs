@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using LiteTube.ViewModels.Nodes;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels
 {
@@ -17,7 +18,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetLiked(nextPageToken);
+            return await _getDataSource().GetLiked(nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -31,6 +32,12 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<IPlayListItem> items)
         {
+            var menuProvider = new ContextMenuProvider()
+            {
+                CanAddToPlayList = false,
+                CanDelete = false
+            };
+            
             var itemsList = Items.ToList();
             foreach (var item in items)
             {
@@ -40,12 +47,22 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
 
-                Items.Add(new PlayListItemNodeViewModel(item));
+                Items.Add(new PlayListItemNodeViewModel(item, _getDataSource(), Delete, menuProvider));
             }
 
             IsLoading = false;
             if (!Items.Any())
                 IsEmpty = true;
+        }
+
+        private async Task Delete()
+        {
+            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
+            foreach (var item in items)
+            {
+                //await _getGeDataSource().RemoveFromFavorites(item.Id);
+                //Items.Remove(item);
+            }
         }
     }
 }

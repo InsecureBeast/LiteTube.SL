@@ -1,4 +1,5 @@
 ﻿using LiteTube.Common;
+using LiteTube.DataModel;
 using Microsoft.AdMediator.WindowsPhone8;
 using Microsoft.Advertising.Mobile.UI;
 using MyToolkit.Command;
@@ -18,7 +19,7 @@ namespace LiteTube.ViewModels.Nodes
         private bool _isAvailable = true;
         private readonly RelayCommand<AdMediatorControl> _mediatorErrorCommand;
 
-        public AdvNodeViewModel()
+        public AdvNodeViewModel(IDataSource dataSource, IContextMenuProvider menuProvider = null) : base(dataSource, menuProvider)
         {
             _element = GetAdvElement();
             _mediatorErrorCommand = new RelayCommand<AdMediatorControl>(OnMediatorError);

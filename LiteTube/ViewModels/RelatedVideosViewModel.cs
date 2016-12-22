@@ -20,7 +20,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetRelatedVideoList(_videoId, nextPageToken);
+            return await _getDataSource().GetRelatedVideoList(_videoId, nextPageToken);
         }
     }
 }

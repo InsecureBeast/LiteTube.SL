@@ -45,6 +45,13 @@ namespace LiteTube.Common
 
         private static void OnItemTap(object sender, GestureEventArgs e)
         {
+            var border = e.OriginalSource as Border;
+            if (border != null)
+            {
+                if (border.Name == "ToggleBorder")
+                    return;
+            }
+
             var control = sender as Control;
             var command = GetCommand(control);
             //var selected = GetCommandParameter(control);

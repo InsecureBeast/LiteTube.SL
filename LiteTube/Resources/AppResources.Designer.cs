@@ -88,7 +88,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to favorites.
+        ///   Looks up a localized string similar to add to favorites.
         /// </summary>
         public static string AddToFavorites {
             get {
@@ -232,7 +232,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to delete.
         /// </summary>
         public static string Delete {
             get {
@@ -849,6 +849,15 @@ namespace LiteTube.Resources {
         public static string WatchHistory {
             get {
                 return ResourceManager.GetString("WatchHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to watch later.
+        /// </summary>
+        public static string WatchLater {
+            get {
+                return ResourceManager.GetString("WatchLater", resourceCulture);
             }
         }
         

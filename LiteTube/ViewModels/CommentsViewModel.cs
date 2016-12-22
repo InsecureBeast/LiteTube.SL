@@ -32,7 +32,7 @@ namespace LiteTube.ViewModels
 
         public bool IsAuthorized
         {
-            get { return _getGeDataSource().IsAuthorized; }
+            get { return _getDataSource().IsAuthorized; }
         }
 
         public string ProfileImage
@@ -76,7 +76,7 @@ namespace LiteTube.ViewModels
             if (Items.Count > 0)
                 IsLoading = false;
 
-            return await _getGeDataSource().GetComments(_videoId, nextPageToken);
+            return await _getDataSource().GetComments(_videoId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -92,17 +92,17 @@ namespace LiteTube.ViewModels
         {
             foreach (var item in items)
             {
-                Items.Add(new CommentNodeViewModel(item, _getGeDataSource, _connectionListener));
+                Items.Add(new CommentNodeViewModel(item, _getDataSource, _connectionListener));
                 foreach (var replayItem in item.ReplayComments.OrderBy(c => c.PublishedAt))
                 {
-                    Items.Add(new CommentNodeViewModel(replayItem, _getGeDataSource, _connectionListener));
+                    Items.Add(new CommentNodeViewModel(replayItem, _getDataSource, _connectionListener));
                 }
             }
         }
 
         private void LoadProfile()
         {
-            _profile = _getGeDataSource().GetProfile();
+            _profile = _getDataSource().GetProfile();
             NotifyOfPropertyChanged(() => ProfileImage);
         }
         
@@ -112,14 +112,14 @@ namespace LiteTube.ViewModels
             {
                 IsAddingComment = true;
                 var myChannelId = _profile.ChannelId;
-                var myComment = await _getGeDataSource().AddComment(myChannelId, _videoId, CommentText);
+                var myComment = await _getDataSource().AddComment(myChannelId, _videoId, CommentText);
                 if (myComment == null)
                 {
                     IsAddingComment = false;
                     CommentText = string.Empty;
                     return;
                 }
-                Items.Insert(0, new CommentNodeViewModel(myComment, _getGeDataSource, _connectionListener));
+                Items.Insert(0, new CommentNodeViewModel(myComment, _getDataSource, _connectionListener));
                 CommentText = string.Empty;
                 IsAddingComment = false;
                 IsEmpty = false;

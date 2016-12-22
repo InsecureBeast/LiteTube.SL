@@ -740,11 +740,11 @@ namespace LiteTube.DataModel
                 _favoritesPlaylistId == null || _profileInfo == null)
             {
                 var youTubeService = _youTubeServiceControl.GetAuthorizedService();
-                var request = youTubeService.Channels.List("contentDetails,snippet");
+                var request = youTubeService.Channels.List("contentDetails,snippet,ContentOwnerDetails");
                 request.Key = _youTubeServiceControl.ApiKey;
                 request.PageToken = string.Empty;
                 request.Mine = true;
-                //request.OauthToken = _youTubeServiceControl.OAuthToken;
+                request.OauthToken = _youTubeServiceControl.OAuthToken;
 
                 var response = await request.ExecuteAsync();
                 var item = response.Items.FirstOrDefault();
@@ -760,12 +760,51 @@ namespace LiteTube.DataModel
                 _likedPlayListId = item.ContentDetails.RelatedPlaylists.Likes;
                 _favoritesPlaylistId = item.ContentDetails.RelatedPlaylists.Favorites;
 
-                var name = item.Snippet.Title;
-                var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
-                var registered = item.Snippet.PublishedAt;
-                var channelId = item.Id;
-                _profileInfo = new MProfile(channelId, image, name, registered);
+                /*
+                if (item.Id != null)
+                {
+                    var id = item.Id;
+                    var split = item.Id.Split('-');
+                    if (split.Length == 2)
+                    {
+                        id = split[1];
+                    }
+
+
+                    _historyPlayListId = GetPlaylistId(id, item.ContentDetails.RelatedPlaylists.WatchHistory);
+                    _uploadPlayListId = GetPlaylistId(id, item.ContentDetails.RelatedPlaylists.Uploads);
+                    _watchLaterPlayListId = GetPlaylistId(id, item.ContentDetails.RelatedPlaylists.WatchLater);
+                    _likedPlayListId = GetPlaylistId(id, item.ContentDetails.RelatedPlaylists.Likes);
+                    _favoritesPlaylistId = GetPlaylistId(id, item.ContentDetails.RelatedPlaylists.Favorites);
+                }
+                */
+
+                if (item.Snippet != null)
+                {
+                    var name = item.Snippet.Title;
+                    var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
+                    var registered = item.Snippet.PublishedAt;
+                    var channelId = item.Id;
+                    _profileInfo = new MProfile(channelId, image, name, registered);
+                }
             }
+        }
+
+        private string GetPlaylistId(string id, string playlistId)
+        {
+            if (string.IsNullOrEmpty(playlistId))
+                return string.Empty;
+
+            var split = playlistId.Split('-');
+            if (split.Length == 2)
+                return playlistId;
+
+            return string.Format("{0}-{1}", split[0], id);
+        }
+
+        private void GetPlaylistId(string id, string[] split)
+        {
+            
         }
 
         private void ClearProfileInfo()

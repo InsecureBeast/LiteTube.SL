@@ -1,5 +1,7 @@
 ﻿using System;
 using LiteTube.DataClasses;
+using LiteTube.DataModel;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -8,7 +10,7 @@ namespace LiteTube.ViewModels.Nodes
         private readonly IChannel _channel;
         private readonly string _id;
 
-        public ChannelNodeViewModel(IChannel channel)
+        public ChannelNodeViewModel(IChannel channel, IDataSource dataSource, IContextMenuProvider menuProvider = null) : base(dataSource, menuProvider) 
         {
             _channel = channel;
             Title = channel.Title;

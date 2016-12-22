@@ -179,7 +179,20 @@
                                Style="{StaticResource SectionTextBlockStyle}" />
                 </StackPanel>
             </ListBoxItem>
-            
+
+            <ListBoxItem common:ItemClickCommand.Command="{Binding WatchLaterCommand}"
+                          Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ContentPresenter ContentTemplate="{StaticResource WatchLaterIcon}"
+                                      HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.WatchLater, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource SectionTextBlockStyle}" />
+                </StackPanel>
+            </ListBoxItem>
+
             <ListBoxItem common:ItemClickCommand.Command="{Binding FavoritesCommand}"
                           Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="0,0,0,10">

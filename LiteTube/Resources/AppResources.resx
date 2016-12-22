@@ -138,7 +138,7 @@
     <value>Easy-to-use application for Youtube with intuitive user interface.</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
-    <value>Add to favorites</value>
+    <value>add to favorites</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -162,7 +162,7 @@
     <value>copy video link</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>delete</value>
   </data>
   <data name="Details" xml:space="preserve">
     <value>details</value>
@@ -400,5 +400,8 @@
   </data>
   <data name="IsAutoplay" xml:space="preserve">
     <value>Autoplay video</value>
+  </data>
+  <data name="WatchLater" xml:space="preserve">
+    <value>watch later</value>
   </data>
 </root>

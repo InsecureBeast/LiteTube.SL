@@ -27,7 +27,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetCategoryVideoList(_categoryId, nextPageToken);
+            return await _getDataSource().GetCategoryVideoList(_categoryId, nextPageToken);
         }
 
         public override void Notify(ConnectionEventArgs e)

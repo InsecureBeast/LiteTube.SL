@@ -1,5 +1,7 @@
 ﻿using System;
 using LiteTube.DataClasses;
+using LiteTube.DataModel;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -7,7 +9,7 @@ namespace LiteTube.ViewModels.Nodes
     {
         private readonly string _title;
         
-        public VideoCategoryNodeViewModel(IVideoCategory category)
+        public VideoCategoryNodeViewModel(IVideoCategory category, IDataSource dataSource, IContextMenuProvider menuProvider = null) : base(dataSource, menuProvider)
         {
             _title = category.Title;
             CategoryId = category.Id;
