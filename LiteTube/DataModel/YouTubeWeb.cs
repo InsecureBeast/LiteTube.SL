@@ -29,6 +29,7 @@ namespace LiteTube.DataModel
         private readonly Dictionary<string, IEnumerable<string>> _recommended = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _related = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _watchLater = new Dictionary<string, IEnumerable<string>>();
+        private readonly Dictionary<string, IEnumerable<string>> _hystory = new Dictionary<string, IEnumerable<string>>();
 
 
         public async Task<YouTubeResponce> GetRecommended(string accessToken, string nextPageToken)
@@ -38,17 +39,17 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeResponce> GetActivity(string accessToken, string nextPageToken)
         {
-            return await GetVideos(SUBSCRIPTIONS_URL, _watchLater, accessToken, nextPageToken);
+            return await GetVideos(SUBSCRIPTIONS_URL, _recommended, accessToken, nextPageToken);
         }
 
         public async Task<YouTubeResponce> GetWatchLater(string accessToken, string nextPageToken)
         {
-            return await GetVideos(WATCH_LATER_URL, _recommended, accessToken, nextPageToken);
+            return await GetVideos(WATCH_LATER_URL, _watchLater, accessToken, nextPageToken);
         }
 
         public async Task<YouTubeResponce> GetHistoryVideo(string accessToken, string nextPageToken)
         {
-            return await GetVideos(HISTORY_URL, _recommended, accessToken, nextPageToken);
+            return await GetVideos(HISTORY_URL, _hystory, accessToken, nextPageToken);
         }
 
         public async Task<YouTubeResponce> GetRelatedVideo(string videoId, string accessToken, string nextPageToken)
