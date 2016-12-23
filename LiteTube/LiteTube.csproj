@@ -135,6 +135,9 @@
     <Compile Include="DataModel\VideoQualityHelper.cs" />
     <Compile Include="DataModel\YouTube.cs" />
     <Compile Include="Interactivity\HighlightUrlBehavior.cs" />
+    <Compile Include="PlaylistPage.xaml.cs">
+      <DependentUpon>PlaylistPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BugTreckerReporter.cs" />
     <Compile Include="ChannelListPage.xaml.cs">
@@ -261,11 +264,11 @@
     <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PlaylistNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistPageViewModel.cs" />
     <Compile Include="ViewModels\Playlist\MyPlaylistListViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistListViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideosViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideoPageViewModel.cs" />
-    <Compile Include="ViewModels\Playlist\PlaylistWebViewModel.cs" />
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
     <Compile Include="ViewModels\ProgressIndicatorViewModel.cs" />
     <Compile Include="ViewModels\RecommendedSectionViewModel.cs" />
@@ -331,6 +334,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaylistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +435,7 @@
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Find.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Home.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Play.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Refresh.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Save.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />

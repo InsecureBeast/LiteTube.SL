@@ -5,6 +5,7 @@ using LiteTube.Common;
 using LiteTube.DataModel;
 using System.Windows;
 using LiteTube.Common.Helpers;
+using LiteTube.Resources;
 using LiteTube.ViewModels.Playlist;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
@@ -228,8 +229,8 @@ namespace LiteTube.ViewModels
         {
 #if SILVERLIGHT
             var id = _getDataSource().WatchLaterPlaylistId;
-            var view = string.Format("/PlaylistVideoPage.xaml", id);
-            NavigationHelper.Navigate(view, new PlaylistWatchLaterViewModel(_getDataSource, _connectionListener));
+            var view = string.Format("/PlaylistPage.xaml", id);
+            NavigationHelper.Navigate(view, new PlaylistPageViewModel(id, AppResources.WatchLater, _getDataSource, _connectionListener));
 #endif
         }
 
