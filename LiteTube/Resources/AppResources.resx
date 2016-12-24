@@ -404,4 +404,7 @@
   <data name="WatchLater" xml:space="preserve">
     <value>watch later</value>
   </data>
+  <data name="PlayAll" xml:space="preserve">
+    <value>Play all</value>
+  </data>
 </root>

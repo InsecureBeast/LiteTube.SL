@@ -40,9 +40,6 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            if (_playlistId == _getDataSource().WatchLaterPlaylistId)
-                return await _getDataSource().GetWatchLater(nextPageToken);
-
             return await _getDataSource().GetVideoPlaylist(_playlistId, nextPageToken);
         }
 

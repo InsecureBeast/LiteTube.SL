@@ -19,6 +19,11 @@ namespace LiteTube
             InitializeComponent();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            NavigationHelper.OnNavigatedTo(this);
+        }
+
         private void Home_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoHome();

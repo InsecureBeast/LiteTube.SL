@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
+using System.Linq;
+using LiteTube.ViewModels.Nodes;
+using System.Collections.Generic;
 
 namespace LiteTube.ViewModels
 {
@@ -24,14 +28,6 @@ namespace LiteTube.ViewModels
             return Title;
         }
 
-        internal override async Task<IResponceList> GetItems(string nextPageToken)
-        {
-            if (_playlistId == _getDataSource().WatchLaterPlaylistId)
-                return await _getDataSource().GetWatchLater(nextPageToken);
-
-            return await _getDataSource().GetCategoryVideoList(_playlistId, nextPageToken);
-        }
-
         public override void Notify(ConnectionEventArgs e)
         {
             base.Notify(e);
@@ -46,9 +42,56 @@ namespace LiteTube.ViewModels
 
         public void PlayAll()
         {
-            var id = _getDataSource().WatchLaterPlaylistId;
-            var view = string.Format("/PlaylistVideoPage.xaml", id);
-            NavigationHelper.Navigate(view, new PlaylistVideoPageViewModel(id, _getDataSource, _connectionListener));
+            var view = string.Format("/PlaylistVideoPage.xaml", _playlistId);
+            NavigationHelper.Navigate(view, new PlaylistVideoPageViewModel(_playlistId, _getDataSource, _connectionListener));
+        }
+
+        internal override void LoadItems(IResponceList videoList)
+        {
+            var list = videoList as IPlaylistItemList;
+            if (list == null)
+                return;
+
+            AddItems(list.Items);
+        }
+
+        internal void AddItems(IEnumerable<IPlayListItem> items)
+        {
+            var itemsList = Items.ToList();
+            foreach (var item in items)
+            {
+                if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
+                    continue;
+                Items.Add(new PlayListItemNodeViewModel(item, _getDataSource(), Delete, GetContextMenuProvider()));
+            }
+
+            IsLoading = false;
+            if (!Items.Any())
+                IsEmpty = true;
+        }
+
+        internal override async Task<IResponceList> GetItems(string nextPageToken)
+        {
+            return await _getDataSource().GetPlaylistItems(_playlistId, nextPageToken);
+        }
+
+        protected override IContextMenuProvider GetContextMenuProvider()
+        {
+            return new ContextMenuProvider()
+            {
+                CanAddToPlayList = false,
+                CanDelete = true
+            };
+        }
+
+        private async Task Delete()
+        {
+            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
+            foreach (var item in items)
+            {
+                await _getDataSource().RemoveFromFavorites(item.Id);
+                Items.Remove(item);
+            }
         }
     }
 }

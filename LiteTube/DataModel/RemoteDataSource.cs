@@ -26,7 +26,6 @@ namespace LiteTube.DataModel
         Task<IEnumerable<IVideoCategory>> GetCategories(string culture);
         Task<IVideoList> GetActivity(string culture, int maxResult, string pageToken);
         Task<IVideoList> GetRecommended(string pageToken);
-        Task<IVideoList> GetWatchLater(string culture, int maxResult, string pageToken);
         Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken);
         Task<IChannel> GetChannel(string channelId);
         Task<IChannel> GetChannelByUsername(string username);
@@ -51,15 +50,17 @@ namespace LiteTube.DataModel
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
 #region playlists
         Task<IVideoList> GetHistory(int maxResult, string nextPageToken);
-        Task AddToPlaylist(string videoId, string playlistId);
-        Task RemovePlaylistItem(string playlistItemId);
+
+        Task AddItemToPlaylist(string videoId, string playlistId);
+        Task RemoveItemFromPlaylist(string playlistItemId, string playlistId);
+        Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken);
+
         Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
         Task<IResponceList> GetLiked(int maxResult, string nextPageToken);
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken);
         Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken);
-        //Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken);
         Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken);
-#endregion
+        #endregion
     }
 
     class RemoteDataSource : IRemoteDataSource
@@ -238,6 +239,9 @@ namespace LiteTube.DataModel
         {
             if (string.IsNullOrEmpty(playlistId))
                 return MPlaylistItemList.Empty;
+
+            if (playlistId == _watchLaterPlayListId)
+                return await GetWatchLater(maxResult, nextPageToken);
 
             var listRequest = _youTubeService.PlaylistItems.List("snippet,contentDetails");
             listRequest.Key = _youTubeServiceControl.ApiKey;
@@ -538,7 +542,7 @@ namespace LiteTube.DataModel
             return new YouTubeUri() { Uri = new Uri(url) };
         }
 
-        public async Task AddToPlaylist(string videoId, string playlistId)
+        public async Task AddItemToPlaylist(string videoId, string playlistId)
         {
             if (!IsAuthorized)
                 return;
@@ -562,7 +566,7 @@ namespace LiteTube.DataModel
             await request.ExecuteAsync();
         }
 
-        public async Task RemovePlaylistItem(string playlistItemId)
+        public async Task RemoveItemFromPlaylist(string playlistItemId, string playlistId)
         {
             if (!IsAuthorized)
                 return;
@@ -680,16 +684,35 @@ namespace LiteTube.DataModel
             return new MPlaylistList(response);
         }
 
-        public async Task<IVideoList> GetWatchLater(string culture, int maxResult, string pageToken)
+        public async Task<IPlaylistItemList> GetWatchLater(int maxResult, string pageToken)
         {
             if (!IsAuthorized)
-                return MVideoList.Empty;
+                return MPlaylistItemList.Empty;
 
             var res = await _youTubeWeb.GetWatchLater(_youTubeServiceControl.OAuthToken, pageToken);
             if (res == null)
                 return null;
 
-            return await GetVideoList(res);
+            return await GetWebPlaylistItems(res);
+        }
+
+        private async Task<IPlaylistItemList> GetWebPlaylistItems(YouTubeResponce res)
+        {
+            var videoIds = new StringBuilder();
+            foreach (var id in res.Ids)
+            {
+                videoIds.AppendLine(id);
+                videoIds.AppendLine(",");
+            }
+
+            var listRequest = _youTubeService.PlaylistItems.List("snippet,contentDetails");
+            listRequest.Key = _youTubeServiceControl.ApiKey;
+            listRequest.PlaylistId = _watchLaterPlayListId;
+
+            var playlistResponse = await listRequest.ExecuteAsync();
+
+            playlistResponse.NextPageToken = res.NextPageToken;
+            return new MPlaylistItemList(playlistResponse);
         }
 
         private async Task<IVideoList> GetVideoList(YouTubeResponce res)

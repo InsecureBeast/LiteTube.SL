@@ -265,12 +265,6 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<IVideoItem> items)
         {
-            var menuProvider = new ContextMenuProvider()
-            {
-                CanAddToPlayList = true,
-                CanDelete = false
-            };
-
             var itemsList = Items.ToList();
             var itemsArray = items.ToArray();
             for (int i = 0; i < itemsArray.Length; i++)
@@ -283,7 +277,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new VideoItemViewModel(item, _getDataSource(), menuProvider));
+                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider()));
             }
             /*
             foreach (var item in items)
@@ -297,6 +291,15 @@ namespace LiteTube.ViewModels
                 Items.Add(new VideoItemViewModel(item));
             }
             */
+        }
+
+        protected virtual IContextMenuProvider GetContextMenuProvider()
+        {
+            return new ContextMenuProvider()
+            {
+                CanAddToPlayList = true,
+                CanDelete = false
+            };
         }
 
         private async void LoadMore()

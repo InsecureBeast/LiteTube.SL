@@ -58,9 +58,9 @@ namespace LiteTube.ViewModels
                 return;
 
             var id = playlistViewModel.Id;
-            var view = string.Format("/PlaylistVideoPage.xaml", id);
 #if SILVERLIGHT
-            NavigationHelper.Navigate(view, new PlaylistVideoPageViewModel(id, _getDataSource, _connectionListener));
+            var view = string.Format("/PlaylistPage.xaml", id);
+            NavigationHelper.Navigate(view, new PlaylistPageViewModel(id, playlistViewModel.Title, _getDataSource, _connectionListener));
 #endif
         }
 
@@ -98,6 +98,16 @@ namespace LiteTube.ViewModels
 
             //    Items.Add(new PlaylistNodeViewModel(item));
             //}
+        }
+
+        private async Task Delete()
+        {
+            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
+            foreach (var item in items)
+            {
+                await _getDataSource().RemoveFromFavorites(item.Id);
+                Items.Remove(item);
+            }
         }
     }
 }

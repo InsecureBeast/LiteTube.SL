@@ -404,4 +404,7 @@
   <data name="WatchLater" xml:space="preserve">
     <value>посмотреть позже</value>
   </data>
+  <data name="PlayAll" xml:space="preserve">
+    <value>Воспроизвести все</value>
+  </data>
 </root>

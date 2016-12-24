@@ -46,12 +46,12 @@ namespace LiteTube.ViewModels.Nodes
         {
             if (obj.ToString() == "WatchLater")
             {
-                await _dataSource.AddToPlaylist(VideoId, _dataSource.WatchLaterPlaylistId);
+                await _dataSource.AddItemToPlaylist(VideoId, _dataSource.WatchLaterPlaylistId);
             }
 
             if (obj.ToString() == "Favorites")
             {
-                await _dataSource.AddToPlaylist(VideoId, _dataSource.FavoritesPlaylistId);
+                await _dataSource.AddItemToPlaylist(VideoId, _dataSource.FavoritesPlaylistId);
             }
         }
     }

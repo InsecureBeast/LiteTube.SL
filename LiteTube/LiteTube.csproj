@@ -201,7 +201,6 @@
     <Compile Include="DataClasses\IVideoItem.cs" />
     <Compile Include="DataClasses\RatingEnum.cs" />
     <Compile Include="DataModel\Context.cs" />
-    <Compile Include="DataModel\DataSourceExceptionWrapper.cs" />
     <Compile Include="DataModel\IDataSource.cs" />
     <Compile Include="DataModel\IYouTubeService.cs" />
     <Compile Include="DataModel\NullableDataSource.cs" />

@@ -6,7 +6,6 @@ using LiteTube.DataModel;
 using System.Windows;
 using LiteTube.Common.Helpers;
 using LiteTube.Resources;
-using LiteTube.ViewModels.Playlist;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
 #else

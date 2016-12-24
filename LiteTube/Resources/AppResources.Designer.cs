@@ -457,6 +457,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Play all.
+        /// </summary>
+        public static string PlayAll {
+            get {
+                return ResourceManager.GetString("PlayAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Playlist not found..
         /// </summary>
         public static string PlaylistNotFoundErrorMessage {
