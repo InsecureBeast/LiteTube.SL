@@ -251,7 +251,6 @@
     <Compile Include="ViewModels\ChannelPageViewModel.cs" />
     <Compile Include="ViewModels\ChannelsPageViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
-    <Compile Include="ViewModels\FavoritesViewModel.cs" />
     <Compile Include="ViewModels\HistoryPageViewModel.cs" />
     <Compile Include="ViewModels\LikedViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />

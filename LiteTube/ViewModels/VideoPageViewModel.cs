@@ -563,7 +563,8 @@ namespace LiteTube.ViewModels
 
         private async void AddFavorites()
         {
-            await _getDataSource().AddToFavorites(_videoId);
+            var playlistId = _getDataSource().FavoritesPlaylistId;
+            await _getDataSource().AddItemToPlaylist(_videoId, playlistId);
         }
 
         private void InvalidateCommands()

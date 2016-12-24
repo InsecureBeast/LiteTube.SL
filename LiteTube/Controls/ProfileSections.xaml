@@ -180,7 +180,7 @@
                 </StackPanel>
             </ListBoxItem>
 
-            <ListBoxItem common:ItemClickCommand.Command="{Binding WatchLaterCommand}"
+            <!--<ListBoxItem common:ItemClickCommand.Command="{Binding WatchLaterCommand}"
                           Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="0,0,0,10">
                 <StackPanel Orientation="Horizontal" 
@@ -191,9 +191,9 @@
                     <TextBlock Text="{Binding Path=LocalizedResources.WatchLater, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource SectionTextBlockStyle}" />
                 </StackPanel>
-            </ListBoxItem>
+            </ListBoxItem>-->
 
-            <ListBoxItem common:ItemClickCommand.Command="{Binding FavoritesCommand}"
+            <!--<ListBoxItem common:ItemClickCommand.Command="{Binding FavoritesCommand}"
                           Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="0,0,0,10">
                 <StackPanel Orientation="Horizontal" 
@@ -204,7 +204,7 @@
                     <TextBlock Text="{Binding Path=LocalizedResources.Favorites, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource SectionTextBlockStyle}" />
                 </StackPanel>
-            </ListBoxItem>
+            </ListBoxItem>-->
 
             <ListBoxItem common:ItemClickCommand.Command="{Binding LikedCommand}"
                           Visibility="{Binding IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"

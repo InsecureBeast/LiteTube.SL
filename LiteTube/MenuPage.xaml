@@ -83,15 +83,6 @@
                                   ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
             </phone:PivotItem>
 
-            <!--Pivot item four-->
-            <phone:PivotItem Name="FavoritesItem"
-                             Header="{Binding Path=LocalizedResources.Favorites, Source={StaticResource LocalizedStrings}}"
-                             Margin="{StaticResource DefaultListBoxMargin}">
-                <ContentPresenter x:Name="FavoritesList"
-                                  Content="{Binding FavoritesViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
-            </phone:PivotItem>
-
             <!--Pivot item five-->
             <phone:PivotItem Name="LikedItem"
                              Header="{Binding Path=LocalizedResources.LikedVideos, Source={StaticResource LocalizedStrings}}"

@@ -43,15 +43,10 @@ namespace LiteTube.DataModel
         string WatchLaterPlaylistId { get; }
         string UploadedPlaylistId { get; }
 
-        //TODO remove
-        Task AddToFavorites(string videoId);
-        Task RemoveFromFavorites(string playlistItemId);
-        //----
         Task AddItemToPlaylist(string videoId, string playlistId);
-        Task RemoveItemFromPlaylist(string playlistItemId, string playlistId);
+        Task RemoveItemFromPlaylist(string playlistItemId);
         Task<IPlaylistItemList> GetPlaylistItems(string playlistId, string nextPageToken);
         //TODO remove
-        Task<IResponceList> GetFavorites(string nextPageToken);
         Task<IResponceList> GetLiked(string nextPageToken);
         //----
 
@@ -288,35 +283,19 @@ namespace LiteTube.DataModel
             return await _remoteDataSource.GetRecommended(pageToken);
         }
 
-        public async Task AddToFavorites(string videoId)
-        {
-            var playlistId = _remoteDataSource.FavoritesPlaylistId;
-            await _remoteDataSource.AddItemToPlaylist(videoId, playlistId);
-        }
-
-        public async Task RemoveFromFavorites(string playlistItemId)
-        {
-            await _remoteDataSource.RemoveItemFromPlaylist(playlistItemId, string.Empty);
-        }
-
         public async Task AddItemToPlaylist(string videoId, string playlistId)
         {
             await _remoteDataSource.AddItemToPlaylist(videoId, playlistId);
         }
 
-        public async Task RemoveItemFromPlaylist(string playlistItemId, string playlistId)
+        public async Task RemoveItemFromPlaylist(string playlistItemId)
         {
-            await _remoteDataSource.RemoveItemFromPlaylist(playlistItemId, playlistItemId);
+            await _remoteDataSource.RemoveItemFromPlaylist(playlistItemId);
         }
 
         public async Task<IPlaylistItemList> GetPlaylistItems(string playlistId, string nextPageToken)
         {
             return await _remoteDataSource.GetPlaylistItems(playlistId, _maxPageResult, nextPageToken);
-        }
-
-        public async Task<IResponceList> GetFavorites(string nextPageToken)
-        {
-            return await _remoteDataSource.GetFavorites(_maxPageResult, nextPageToken);
         }
 
         public async Task<IResponceList> GetLiked(string nextPageToken)

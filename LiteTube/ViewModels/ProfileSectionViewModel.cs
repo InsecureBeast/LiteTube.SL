@@ -20,11 +20,9 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _historyCommand;
         private readonly RelayCommand<FrameworkElement> _recommendedCommand;
         private readonly RelayCommand<FrameworkElement> _videoCategoryCommand;
-        private readonly RelayCommand<FrameworkElement> _favoritesCommand;
         private readonly RelayCommand<FrameworkElement> _likedCommand;
         private readonly RelayCommand<FrameworkElement> _uploadedCommand;
         private readonly RelayCommand<FrameworkElement> _myPlaylistsCommand;
-        private readonly RelayCommand<FrameworkElement> _watchLaterCommand;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Func<IDataSource> _getDataSource;
@@ -47,11 +45,9 @@ namespace LiteTube.ViewModels
             _historyCommand = new RelayCommand<FrameworkElement>(GetHistory);
             _recommendedCommand = new RelayCommand<FrameworkElement>(Recommended);
             _videoCategoryCommand = new RelayCommand<FrameworkElement>(VideoCategories);
-            _favoritesCommand = new RelayCommand<FrameworkElement>(Favorites);
             _likedCommand = new RelayCommand<FrameworkElement>(Liked);
             _uploadedCommand = new RelayCommand<FrameworkElement>(Uploaded);
             _myPlaylistsCommand = new RelayCommand<FrameworkElement>(MyPlaylists);
-            _watchLaterCommand = new RelayCommand<FrameworkElement>(WatchLater);
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _getDataSource().Subscribe(this);
@@ -79,11 +75,6 @@ namespace LiteTube.ViewModels
             get { return _videoCategoryCommand; }
         }
 
-        public ICommand FavoritesCommand
-        {
-            get { return _favoritesCommand; }
-        }
-
         public ICommand LikedCommand
         {
             get { return _likedCommand; }
@@ -97,11 +88,6 @@ namespace LiteTube.ViewModels
         public ICommand MyPlaylistsCommand
         {
             get { return _myPlaylistsCommand; }
-        }
-
-        public ICommand WatchLaterCommand
-        {
-            get { return _watchLaterCommand; }
         }
 
         public ICommand LoginCommand
@@ -224,33 +210,19 @@ namespace LiteTube.ViewModels
             NavigateTo(3);
         }
 
-        private void WatchLater(FrameworkElement control)
-        {
-#if SILVERLIGHT
-            var id = _getDataSource().WatchLaterPlaylistId;
-            var view = string.Format("/PlaylistPage.xaml", id);
-            NavigationHelper.Navigate(view, new PlaylistPageViewModel(id, AppResources.WatchLater, _getDataSource, _connectionListener));
-#endif
-        }
-
-        private void Favorites(FrameworkElement control)
+        private void Liked(FrameworkElement control)
         {
             NavigateTo(4);
         }
 
-        private void Liked(FrameworkElement control)
+        private void Uploaded(FrameworkElement control)
         {
             NavigateTo(5);
         }
 
-        private void Uploaded(FrameworkElement control)
-        {
-            NavigateTo(6);
-        }
-
         private void GetHistory(FrameworkElement control)
         {
-            NavigateTo(7);
+            NavigateTo(6);
         }
 
         private void NavigateTo(int index)

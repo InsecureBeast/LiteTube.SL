@@ -52,10 +52,9 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetHistory(int maxResult, string nextPageToken);
 
         Task AddItemToPlaylist(string videoId, string playlistId);
-        Task RemoveItemFromPlaylist(string playlistItemId, string playlistId);
+        Task RemoveItemFromPlaylist(string playlistItemId);
         Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken);
 
-        Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
         Task<IResponceList> GetLiked(int maxResult, string nextPageToken);
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken);
         Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken);
@@ -239,9 +238,6 @@ namespace LiteTube.DataModel
         {
             if (string.IsNullOrEmpty(playlistId))
                 return MPlaylistItemList.Empty;
-
-            if (playlistId == _watchLaterPlayListId)
-                return await GetWatchLater(maxResult, nextPageToken);
 
             var listRequest = _youTubeService.PlaylistItems.List("snippet,contentDetails");
             listRequest.Key = _youTubeServiceControl.ApiKey;
@@ -566,7 +562,7 @@ namespace LiteTube.DataModel
             await request.ExecuteAsync();
         }
 
-        public async Task RemoveItemFromPlaylist(string playlistItemId, string playlistId)
+        public async Task RemoveItemFromPlaylist(string playlistItemId)
         {
             if (!IsAuthorized)
                 return;
@@ -577,18 +573,6 @@ namespace LiteTube.DataModel
             //request.OauthToken = _youTubeServiceControl.OAuthToken;
 
             await request.ExecuteAsync();
-        }
-
-        public async Task<IResponceList> GetFavorites(int maxResult, string nextPageToken)
-        {
-            if (!IsAuthorized)
-                return MResponceList.Empty;
-
-            if (string.IsNullOrEmpty(_favoritesPlaylistId))
-                return MResponceList.Empty;
-
-            var playListItems = await GetPlaylistItems(_favoritesPlaylistId, maxResult, nextPageToken);
-            return playListItems;
         }
 
         public async Task<IResponceList> GetLiked(int maxResult, string nextPageToken)
@@ -682,37 +666,6 @@ namespace LiteTube.DataModel
 
             var response = await request.ExecuteAsync();
             return new MPlaylistList(response);
-        }
-
-        public async Task<IPlaylistItemList> GetWatchLater(int maxResult, string pageToken)
-        {
-            if (!IsAuthorized)
-                return MPlaylistItemList.Empty;
-
-            var res = await _youTubeWeb.GetWatchLater(_youTubeServiceControl.OAuthToken, pageToken);
-            if (res == null)
-                return null;
-
-            return await GetWebPlaylistItems(res);
-        }
-
-        private async Task<IPlaylistItemList> GetWebPlaylistItems(YouTubeResponce res)
-        {
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
-
-            var listRequest = _youTubeService.PlaylistItems.List("snippet,contentDetails");
-            listRequest.Key = _youTubeServiceControl.ApiKey;
-            listRequest.PlaylistId = _watchLaterPlayListId;
-
-            var playlistResponse = await listRequest.ExecuteAsync();
-
-            playlistResponse.NextPageToken = res.NextPageToken;
-            return new MPlaylistItemList(playlistResponse);
         }
 
         private async Task<IVideoList> GetVideoList(YouTubeResponce res)

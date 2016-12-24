@@ -166,16 +166,6 @@ namespace LiteTube.DataModel
             get { return string.Empty; }
         }
 
-        public Task AddToFavorites(string videoId)
-        {
-            return Task.Run(() => { });
-        }
-
-        public Task RemoveFromFavorites(string playlistItemId)
-        {
-            return Task.Run(() => { });
-        }
-
         public Task AddItemToPlaylist(string videoId, string playlistId)
         {
             return Task.Run(() => { });
@@ -194,11 +184,6 @@ namespace LiteTube.DataModel
         public Task<IPlaylistItemList> GetPlaylistItems(string playlistId, string nextPageToken)
         {
             return new Task<IPlaylistItemList>(() => MPlaylistItemList.Empty);
-        }
-
-        public Task<IResponceList> GetFavorites(string nextPageToken)
-        {
-            return new Task<IResponceList>(() => MVideoList.Empty);
         }
 
         public Task<IResponceList> GetLiked(string nextPageToken)
