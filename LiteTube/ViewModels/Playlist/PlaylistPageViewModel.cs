@@ -7,6 +7,7 @@ using LiteTube.DataModel;
 using System.Linq;
 using LiteTube.ViewModels.Nodes;
 using System.Collections.Generic;
+using LiteTube.Resources;
 
 namespace LiteTube.ViewModels
 {
@@ -89,7 +90,7 @@ namespace LiteTube.ViewModels
             var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
             foreach (var item in items)
             {
-                //await _getDataSource().RemoveFromFavorites(item.Id);
+                await _getDataSource().RemoveItemFromPlaylist(item.Id);
                 Items.Remove(item);
             }
         }

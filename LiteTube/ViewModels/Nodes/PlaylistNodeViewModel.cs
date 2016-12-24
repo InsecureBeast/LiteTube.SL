@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using LiteTube.Common;
+using LiteTube.Resources;
 
 namespace LiteTube.ViewModels.Nodes
 {

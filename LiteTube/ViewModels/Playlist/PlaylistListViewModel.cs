@@ -99,15 +99,5 @@ namespace LiteTube.ViewModels
             //    Items.Add(new PlaylistNodeViewModel(item));
             //}
         }
-
-        private async Task Delete()
-        {
-            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
-            foreach (var item in items)
-            {
-                //await _getDataSource().RemoveFromFavorites(item.Id);
-                Items.Remove(item);
-            }
-        }
     }
 }

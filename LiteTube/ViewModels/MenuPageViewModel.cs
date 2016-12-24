@@ -203,11 +203,6 @@ namespace LiteTube.ViewModels
                     await MyPlaylistListViewModel.FirstLoad();
                     break;
 
-                //case 4:
-                //    Debug.WriteLine("favorites");
-                //    await FavoritesViewModel.FirstLoad();
-                //    break;
-
                 case 4:
                     Debug.WriteLine("liked");
                     await LikedViewModel.FirstLoad();
@@ -233,15 +228,6 @@ namespace LiteTube.ViewModels
                     Debug.WriteLine("Video categories");
                     await LoadCategories();
                     break;
-                //case 1:
-                //    Debug.WriteLine("subscriptions");
-                //    break;
-
-                //case 2:
-                //    Debug.WriteLine("history");
-                //    break;
-                //case 3:
-                //    break;
             }
         }
 
@@ -265,20 +251,6 @@ namespace LiteTube.ViewModels
             }
             _isRequestSend = false;
         }
-
-        /*
-        private void OnBackPressed(object sender, BackPressedEventArgs e)
-        {
-            if (!_favoritesViewModel.IsItemClickEnabled)
-            {
-                _favoritesViewModel.SetNonSelected();
-                NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
-                e.Handled = true;
-                HardwareButtons.BackPressed -= OnBackPressed;
-                //_navigationHelper.IsCanGoBack = true;
-            }
-        }
-        */
 
         private void CategoryLoad(NavigationObject navObject)
         {

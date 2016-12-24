@@ -286,7 +286,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to favorites.
+        ///   Looks up a localized string similar to Favorites.
         /// </summary>
         public static string Favorites {
             get {

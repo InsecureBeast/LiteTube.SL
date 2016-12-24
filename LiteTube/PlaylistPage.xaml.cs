@@ -9,6 +9,8 @@ using LiteTube.Common.Helpers;
 using LiteTube.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using LiteTube.Common.Tools;
+using LiteTube.Resources;
 
 namespace LiteTube
 {
@@ -17,6 +19,7 @@ namespace LiteTube
         public PlaylistPage()
         {
             InitializeComponent();
+            BuildLocalizedApplicationBar();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -36,6 +39,16 @@ namespace LiteTube
                 return;
 
             model.PlayAll();
+        }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            var appBar = new ApplicationBar();
+            var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
+            appBar.Buttons.Add(homeButton);
+            var playAllButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Play.png", AppResources.PlayAll, Play_Click);
+            appBar.Buttons.Add(playAllButton);
+            ApplicationBar = appBar;
         }
     }
 }

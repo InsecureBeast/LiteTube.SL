@@ -179,11 +179,6 @@
                                                  IsOpen="{Binding ElementName=moreButton, Path=IsChecked, Mode=TwoWay}"
                                                  Style="{StaticResource ContextMenuStyle}"
                                                  IsZoomEnabled="False">
-                                <toolkit:MenuItem Name="AddToWatchLater"  
-                                                  Header="{Binding Path=LocalizedResources.WatchLater, Source={StaticResource LocalizedStrings}}" 
-                                                  Visibility="{Binding MenuProvider.CanAddToPlayList, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                  Command="{Binding AddToPlaylistCommand}"
-                                                  CommandParameter="WatchLater"/>
                                 <toolkit:MenuItem Name="AddToFavorites"  
                                                 Header="{Binding Path=LocalizedResources.AddToFavorites, Source={StaticResource LocalizedStrings}}" 
                                                 Visibility="{Binding MenuProvider.CanAddToPlayList, Converter={StaticResource BooleanToVisibilityConverter}}"
