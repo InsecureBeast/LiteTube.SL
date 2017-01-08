@@ -407,4 +407,10 @@
   <data name="PlayAll" xml:space="preserve">
     <value>Play all</value>
   </data>
+  <data name="AddToPlaylist" xml:space="preserve">
+    <value>add to playlist</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
 </root>

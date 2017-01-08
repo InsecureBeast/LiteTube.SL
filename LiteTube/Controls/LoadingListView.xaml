@@ -188,6 +188,11 @@
                                                 Header="{Binding Path=LocalizedResources.Delete, Source={StaticResource LocalizedStrings}}" 
                                                 Command="{Binding DeleteCommand}"
                                                 Visibility="{Binding MenuProvider.CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <toolkit:MenuItem Name="AddToPlaylist"  
+                                                Header="{Binding Path=LocalizedResources.AddToPlaylist, Source={StaticResource LocalizedStrings}}" 
+                                                Command="{Binding AddToPlaylistCommand}"
+                                                CommandParameter="Playlist"
+                                                Visibility="{Binding MenuProvider.CanAddToPlayList, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                             </toolkit:ContextMenu>
                         </toolkit:ContextMenuService.ContextMenu>
                     </Grid>

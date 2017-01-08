@@ -112,7 +112,11 @@
 
         <controls:NavigationPanel Grid.Row="0" 
                                   DataContext="{Binding NavigationPanelViewModel}"/>
-        
+
+        <controls:PlaylistsContainer DataContext="{Binding PlaylistListViewModel}"
+                                     IsOpen="{Binding IsContainerShown}"
+                                     Grid.RowSpan="2"/>
+
     </Grid>
 
     <!--<phone:PhoneApplicationPage.ApplicationBar>

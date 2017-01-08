@@ -14,9 +14,8 @@ namespace LiteTube.ViewModels.Nodes
         private readonly RelayCommand _deleteCommand;
         private bool _isSelected;
         private Func<Task> _delete;
-        private ContextMenuProvider menuProvider;
 
-        public PlayListItemNodeViewModel(IPlayListItem item, IDataSource dataSource, Func<Task> delete, IContextMenuProvider menuProvider) : base(dataSource, menuProvider)
+        public PlayListItemNodeViewModel(IPlayListItem item, IDataSource dataSource, Func<Task> delete, IContextMenuStrategy menuProvider) : base(dataSource, menuProvider)
         {
             PlayListItem = item;
             _id = item.Id;

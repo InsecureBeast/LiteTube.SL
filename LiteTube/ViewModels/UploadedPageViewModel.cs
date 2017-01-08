@@ -8,7 +8,7 @@ namespace LiteTube.ViewModels
     class UploadedPageViewModel : SectionBaseViewModel
     {
         public UploadedPageViewModel(Func<IDataSource> getGeDataSource,    IConnectionListener connectionListener) 
-            : base(getGeDataSource, connectionListener)
+            : base(getGeDataSource, connectionListener, null)
         {
         }
 

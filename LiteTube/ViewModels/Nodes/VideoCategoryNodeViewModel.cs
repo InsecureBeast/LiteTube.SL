@@ -9,7 +9,7 @@ namespace LiteTube.ViewModels.Nodes
     {
         private readonly string _title;
         
-        public VideoCategoryNodeViewModel(IVideoCategory category, IDataSource dataSource, IContextMenuProvider menuProvider = null) : base(dataSource, menuProvider)
+        public VideoCategoryNodeViewModel(IVideoCategory category, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider)
         {
             _title = category.Title;
             CategoryId = category.Id;

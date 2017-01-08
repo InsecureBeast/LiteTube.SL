@@ -13,7 +13,7 @@ namespace LiteTube.ViewModels
     class SubscriptionChannelsViewModel : SectionBaseViewModel
     {
         public SubscriptionChannelsViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+            : base(geDataSource, connectionListener, null)
         {
         }
 
@@ -65,11 +65,6 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<ISubscription> items)
         {
-            var menuProvider = new ContextMenuProvider()
-            {
-                CanAddToPlayList = false,
-                CanDelete = false
-            };
             var itemsList = Items.ToList();
             foreach (var item in items)
             {

@@ -11,13 +11,13 @@ using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels
 {
-    class PlaylistListViewModel : SectionBaseViewModel
+    public class PlaylistListViewModel : SectionBaseViewModel
     {
         private readonly string _channelId;
 
         public PlaylistListViewModel(string channelId, Func<IDataSource> getGeDataSource, 
             IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null) 
-            : base(getGeDataSource, connectionListener, changeProgressIndicator)
+            : base(getGeDataSource, connectionListener, null, changeProgressIndicator)
         {
             _channelId = channelId;
         }
@@ -66,12 +66,6 @@ namespace LiteTube.ViewModels
 
         private void AddPlaylistItems(IEnumerable<IPlaylist> items)
         {
-            var menuProvider = new ContextMenuProvider()
-            {
-                CanAddToPlayList = false,
-                CanDelete = false
-            };
-
             var itemsList = Items.ToList();
             var itemsArray = items.ToArray();
             for (int i = 0; i < itemsArray.Length; i++)
@@ -84,7 +78,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), menuProvider));
+                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), new NoContextMenuStrategy()));
             }
 
             //var itemsList = Items.ToList();

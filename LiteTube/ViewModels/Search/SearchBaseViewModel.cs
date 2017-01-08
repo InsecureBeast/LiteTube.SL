@@ -14,7 +14,7 @@ namespace LiteTube.ViewModels.Search
         private SearchFilter _searchFilter;
 
         public SearchBaseViewModel(SearchType searchType, Func<IDataSource> geDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator)
-            : base(geDataSource, connectionListener, changeProgressIndicator)
+            : base(geDataSource, connectionListener, null, changeProgressIndicator)
         {
             _searchType = searchType;
             IsLoading = false;

@@ -9,6 +9,7 @@ using LiteTube.DataModel;
 using MyToolkit.Command;
 using LiteTube.Common;
 using System.Threading.Tasks;
+using LiteTube.ViewModels.Playlist;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
 using Windows.Phone.UI.Input;
@@ -16,7 +17,7 @@ using Windows.Phone.UI.Input;
 
 namespace LiteTube.ViewModels
 {
-    class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
+    class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>, IPlaylistsSevice
     {
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
@@ -50,7 +51,7 @@ namespace LiteTube.ViewModels
 
             if (_getDataSource().IsAuthorized)
             {
-                _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener);
+                _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener, this);
                 _subscriptions = new SubscriptionChannelsViewModel(_getDataSource, connectionListener);
                 _history = new HistoryPageViewModel(_getDataSource, connectionListener);
                 _likedViewModel = new LikedViewModel(_getDataSource, connectionListener);
@@ -282,6 +283,11 @@ namespace LiteTube.ViewModels
                 if (Categories.Count > 0)
                     IsConnected = true;
             });
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

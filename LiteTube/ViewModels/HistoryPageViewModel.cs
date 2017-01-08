@@ -8,7 +8,7 @@ namespace LiteTube.ViewModels
     class HistoryPageViewModel : SectionBaseViewModel
     {
         public HistoryPageViewModel(Func<IDataSource> datasource, IConnectionListener connectionListener)
-            : base(datasource, connectionListener)
+            : base(datasource, connectionListener, null)
         {
         }
 

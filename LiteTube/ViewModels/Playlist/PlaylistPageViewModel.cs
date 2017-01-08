@@ -16,7 +16,7 @@ namespace LiteTube.ViewModels
         private readonly string _playlistId;
 
         public PlaylistPageViewModel(string playlistId, string title, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+            : base(geDataSource, connectionListener, null)
         {
             _playlistId = playlistId;
             Title = title;
@@ -76,9 +76,9 @@ namespace LiteTube.ViewModels
             return await _getDataSource().GetPlaylistItems(_playlistId, nextPageToken);
         }
 
-        protected override IContextMenuProvider GetContextMenuProvider()
+        protected override IContextMenuStrategy GetContextMenuProvider()
         {
-            return new ContextMenuProvider()
+            return new ContextMenuStartegy()
             {
                 CanAddToPlayList = false,
                 CanDelete = true

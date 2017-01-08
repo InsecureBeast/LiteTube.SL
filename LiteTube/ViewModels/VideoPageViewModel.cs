@@ -9,10 +9,11 @@ using LiteTube.Common.Helpers;
 using System.Collections.Generic;
 using LiteTube.Controls;
 using System.Linq;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
-    public class VideoPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
+    public class VideoPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>, IPlaylistsSevice
     {
         private Uri _videoUri;
         private readonly Func<IDataSource> _getDataSource;
@@ -523,7 +524,7 @@ namespace LiteTube.ViewModels
 
         private void LoadVideoItem(string videoId)
         {
-            RelatedVideosViewModel = new RelatedVideosViewModel(videoId, _getDataSource, _connectionListener);
+            RelatedVideosViewModel = new RelatedVideosViewModel(videoId, _getDataSource, _connectionListener, this);
             CommentsViewModel = new CommentsViewModel(videoId, _getDataSource, _connectionListener);
 
             LayoutHelper.InvokeFromUiThread(async () =>
@@ -593,6 +594,11 @@ namespace LiteTube.ViewModels
             VideoUri = null;
             SetVideoUri(_videoId, SelectedVideoQualityItem.Quality);
             SettingsHelper.SaveQuality(SelectedVideoQualityItem.QualityName);
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

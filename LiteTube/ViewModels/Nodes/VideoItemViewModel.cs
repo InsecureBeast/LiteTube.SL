@@ -4,16 +4,17 @@ using MyToolkit.Command;
 using System.Windows.Input;
 using LiteTube.DataModel;
 using LiteTube.Common;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels.Nodes
 {
-    public class VideoItemViewModel : NodeViewModelBase
+    class VideoItemViewModel : NodeViewModelBase
     {
         private readonly string _videoId;
         private readonly string _id;
         private bool _isNowPlaying;
 
-        public VideoItemViewModel(IVideoItem videoItem, IDataSource dataSource, IContextMenuProvider menuProvider) : base(dataSource, menuProvider)
+        public VideoItemViewModel(IVideoItem videoItem, IDataSource dataSource, IContextMenuStrategy menuProvider, IPlaylistsSevice playlistService) : base(dataSource, menuProvider, playlistService)
         {
             VideoItem = videoItem;
             _videoId = videoItem.Details.VideoId;
@@ -59,6 +60,25 @@ namespace LiteTube.ViewModels.Nodes
         public override string ToString()
         {
             return Title;
+        }
+    }
+
+    public class PlaylistContainerItem
+    {
+        public PlaylistContainerItem(string id, string title)
+        {
+            Id = id;
+            Title = title;
+        }
+
+        public string Title
+        {
+            get; private set;
+        }
+
+        public string Id
+        {
+            get; private set;
         }
     }
  }

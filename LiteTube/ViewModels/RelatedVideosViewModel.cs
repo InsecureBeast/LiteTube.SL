@@ -2,6 +2,7 @@
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
@@ -9,8 +10,8 @@ namespace LiteTube.ViewModels
     {
         private readonly string _videoId;
 
-        public RelatedVideosViewModel(string videoId, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+        public RelatedVideosViewModel(string videoId, Func<IDataSource> geDataSource, IConnectionListener connectionListener, IPlaylistsSevice playlistService)
+            : base(geDataSource, connectionListener, playlistService)
         {
             if (videoId == null)
                 return;

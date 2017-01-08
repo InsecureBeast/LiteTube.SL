@@ -97,6 +97,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add to playlist.
+        /// </summary>
+        public static string AddToPlaylist {
+            get {
+                return ResourceManager.GetString("AddToPlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advertising post.
         /// </summary>
         public static string AdvertisingPost {
@@ -390,6 +399,15 @@ namespace LiteTube.Resources {
         public static string Long {
             get {
                 return ResourceManager.GetString("Long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Manage {
+            get {
+                return ResourceManager.GetString("Manage", resourceCulture);
             }
         }
         

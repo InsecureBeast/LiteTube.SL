@@ -19,7 +19,7 @@ namespace LiteTube.ViewModels
         private readonly string _categoryId;
 
         public ChannelListPageViewModel(string categoryId, string title, Func<IDataSource> getGeDataSource, IConnectionListener connectionListener)
-            : base(getGeDataSource, connectionListener)
+            : base(getGeDataSource, connectionListener, null)
         {
             _uniqueId = categoryId;
             _categoryId = categoryId;

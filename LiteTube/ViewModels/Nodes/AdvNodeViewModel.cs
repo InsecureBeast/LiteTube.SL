@@ -19,7 +19,7 @@ namespace LiteTube.ViewModels.Nodes
         private bool _isAvailable = true;
         private readonly RelayCommand<AdMediatorControl> _mediatorErrorCommand;
 
-        public AdvNodeViewModel(IDataSource dataSource, IContextMenuProvider menuProvider = null) : base(dataSource, menuProvider)
+        public AdvNodeViewModel(IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider, null)
         {
             _element = GetAdvElement();
             _mediatorErrorCommand = new RelayCommand<AdMediatorControl>(OnMediatorError);

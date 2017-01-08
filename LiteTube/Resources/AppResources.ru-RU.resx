@@ -407,4 +407,10 @@
   <data name="PlayAll" xml:space="preserve">
     <value>Воспроизвести все</value>
   </data>
+  <data name="AddToPlaylist" xml:space="preserve">
+    <value>добавить в плайлист</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Управление</value>
+  </data>
 </root>

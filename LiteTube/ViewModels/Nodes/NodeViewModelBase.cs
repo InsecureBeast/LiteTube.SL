@@ -1,6 +1,7 @@
 ﻿
 using LiteTube.Common;
 using LiteTube.DataModel;
+using LiteTube.ViewModels.Playlist;
 using MyToolkit.Command;
 using System.Windows.Input;
 
@@ -10,22 +11,19 @@ namespace LiteTube.ViewModels.Nodes
     {
         private readonly RelayCommand<object> _addToPlayListCommand;
         protected readonly IDataSource _dataSource;
-        private readonly IContextMenuProvider _menuProvider;
+        private readonly IContextMenuStrategy _menu;
+        private readonly IPlaylistsSevice _playlistService;
 
-        public NodeViewModelBase(IDataSource dataSource, IContextMenuProvider menuProvider)
+        public delegate void ShowPlaylistContainer(bool show);
+
+        public NodeViewModelBase(IDataSource dataSource, IContextMenuStrategy menu, IPlaylistsSevice playlistService = null)
         {
-            _dataSource = dataSource;
+            if (menu == null)
+                _menu = new NoContextMenuStrategy();
 
-            _menuProvider = menuProvider;
-            if (menuProvider == null)
-            {
-                _menuProvider = new ContextMenuProvider()
-                {
-                    CanAddToPlayList = false,
-                    CanDelete = false
-                };
-            }
-           
+            _dataSource = dataSource;
+            _menu = menu;
+            _playlistService = playlistService;
             _addToPlayListCommand = new RelayCommand<object>(AddToPlayList);
         }
 
@@ -37,9 +35,9 @@ namespace LiteTube.ViewModels.Nodes
             get { return _addToPlayListCommand; }
         }
 
-        public IContextMenuProvider MenuProvider
+        public IContextMenuStrategy MenuProvider
         {
-            get { return _menuProvider; }
+            get { return _menu; }
         }
 
         protected virtual async void AddToPlayList(object obj)
@@ -52,6 +50,12 @@ namespace LiteTube.ViewModels.Nodes
             if (obj.ToString() == "Favorites")
             {
                 await _dataSource.AddItemToPlaylist(VideoId, _dataSource.FavoritesPlaylistId);
+            }
+
+            if (obj.ToString() == "Playlist")
+            {
+                if (_playlistService != null)
+                    _playlistService.ShowContainer(true, VideoId);
             }
         }
     }

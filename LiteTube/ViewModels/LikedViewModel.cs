@@ -12,7 +12,7 @@ namespace LiteTube.ViewModels
     class LikedViewModel : SectionBaseViewModel
     {
         public LikedViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener) 
-            : base(getGeDataSource, connectionListener)
+            : base(getGeDataSource, connectionListener, null)
         {
         }
 
@@ -32,12 +32,6 @@ namespace LiteTube.ViewModels
 
         internal void AddItems(IEnumerable<IPlayListItem> items)
         {
-            var menuProvider = new ContextMenuProvider()
-            {
-                CanAddToPlayList = false,
-                CanDelete = false
-            };
-            
             var itemsList = Items.ToList();
             foreach (var item in items)
             {
@@ -47,7 +41,7 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(i => i.Id == item.ContentDetails.VideoId))
                     continue;
 
-                Items.Add(new PlayListItemNodeViewModel(item, _getDataSource(), Delete, menuProvider));
+                Items.Add(new PlayListItemNodeViewModel(item, _getDataSource(), Delete, new NoContextMenuStrategy()));
             }
 
             IsLoading = false;

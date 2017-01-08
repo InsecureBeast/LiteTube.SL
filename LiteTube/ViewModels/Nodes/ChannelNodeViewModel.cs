@@ -10,7 +10,7 @@ namespace LiteTube.ViewModels.Nodes
         private readonly IChannel _channel;
         private readonly string _id;
 
-        public ChannelNodeViewModel(IChannel channel, IDataSource dataSource, IContextMenuProvider menuProvider = null) : base(dataSource, menuProvider) 
+        public ChannelNodeViewModel(IChannel channel, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider) 
         {
             _channel = channel;
             Title = channel.Title;

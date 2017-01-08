@@ -20,7 +20,7 @@ namespace LiteTube.ViewModels
         private bool _isAddingComment;
 
         public CommentsViewModel(string videoId, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+            : base(geDataSource, connectionListener, null)
         {
             if (string.IsNullOrEmpty(videoId))
                 return;

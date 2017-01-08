@@ -7,7 +7,7 @@ using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube.ViewModels
 {
-    public class PlaylistVideoPageViewModel : PropertyChangedBase
+    class PlaylistVideoPageViewModel : PropertyChangedBase
     {
         public event EventHandler PlaylistItemChanged;
 

@@ -5,7 +5,7 @@ using LiteTube.DataModel;
 
 namespace LiteTube.ViewModels
 {
-    class MyPlaylistListViewModel : PlaylistListViewModel
+    public class MyPlaylistListViewModel : PlaylistListViewModel
     {
         public MyPlaylistListViewModel(Func<IDataSource> getGeDataSource, 
             IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null)

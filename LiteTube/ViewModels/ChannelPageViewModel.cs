@@ -24,7 +24,7 @@ namespace LiteTube.ViewModels
         private int _selectedIndex;
 
         public ChannelPageViewModel(string channelId, string username, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
-            : base(getDataSource, connectionListener)
+            : base(getDataSource, connectionListener, null)
         {
             _channelId = channelId;
             ShowAdv = SettingsHelper.IsAdvVisible;

@@ -8,13 +8,13 @@ using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube.ViewModels
 {
-    public class PlaylistVideosViewModel : SectionBaseViewModel
+    class PlaylistVideosViewModel : SectionBaseViewModel
     {
         private readonly string _playlistId;
         private Action<NavigationObject> _itemTap;
 
         public PlaylistVideosViewModel(string playlistId, Func<IDataSource> geDataSource, IConnectionListener connectionListener, Action<NavigationObject> itemTap)
-            : base(geDataSource, connectionListener)
+            : base(geDataSource, connectionListener, null)
         {
             if (playlistId == null)
                 return;

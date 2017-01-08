@@ -11,7 +11,6 @@ using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
-using Google;
 using LiteTube.Common.Exceptions;
 using System.Xml;
 using System.Threading;
@@ -478,11 +477,17 @@ namespace LiteTube
         private void BuildLocalizedApplicationBar()
         {
             // Set the page's AplipcationBar to a new instance of ApplicationBar.
-            var appBar = Application.Current.Resources["GlobalAppBar"] as ApplicationBar;
+            ApplicationBar appBar;
+            if (!Application.Current.Resources.Contains("GlobalAppBar"))
+            {
+                appBar = new ApplicationBar();
+            }
+            else
+            {
+                appBar = Application.Current.Resources["GlobalAppBar"] as ApplicationBar;
+            }
+
             var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
-            if (appBar == null) 
-                return;
-            
             appBar.Buttons.Clear();
             appBar.MenuItems.Clear();
             appBar.Buttons.Add(homeButton);

@@ -247,5 +247,9 @@ namespace LiteTube.DataModel
         {
             return new Task<IPlaylistList>(() => MPlaylistList.Empty);
         }
+
+        public async Task AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
+        {
+        }
     }
 }

@@ -10,6 +10,7 @@ using LiteTube.ViewModels.Nodes;
 using MyToolkit.Command;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+using LiteTube.ViewModels.Playlist;
 #if SILVERLIGHT
 using System.Windows.Controls;
 #else
@@ -43,8 +44,14 @@ namespace LiteTube.ViewModels
         //private ListViewSelectionMode _selectionMode;
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
         private bool _isConnected = true;
-        
-        public SectionBaseViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null)
+        private readonly IPlaylistsSevice _playlistService;
+
+
+        public SectionBaseViewModel(
+            Func<IDataSource> getGeDataSource, 
+            IConnectionListener connectionListener,
+            IPlaylistsSevice playlistService, 
+            Action<bool> changeProgressIndicator = null)
             :base(getGeDataSource, connectionListener, changeProgressIndicator)
         {
             if (getGeDataSource == null)
@@ -55,19 +62,18 @@ namespace LiteTube.ViewModels
             _getDataSource = getGeDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
+            _playlistService = playlistService;
 
             _hasItems = true;
-            Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
             _selectCommand = new Common.RelayCommand(SelectItems);
             _deleteCommand = new Common.RelayCommand(DeleteItems);
-
-            //SelectionMode = ListViewSelectionMode.None;
-            IsItemClickEnabled = true;
             _selectedItems = new ObservableCollection<NodeViewModelBase>();
-
             _isConnected = connectionListener.CheckNetworkAvailability();
+
+            Items = new ObservableCollection<NodeViewModelBase>();
+            IsItemClickEnabled = true;
         }
 
         public string UniqueId 
@@ -116,16 +122,6 @@ namespace LiteTube.ViewModels
                 NotifyOfPropertyChanged(() => IsLoading);
             }
         }
-
-        //public ListViewSelectionMode SelectionMode
-        //{
-        //    get { return _selectionMode; }
-        //    protected set
-        //    {
-        //        _selectionMode = value;
-        //        NotifyOfPropertyChanged(() => SelectionMode);
-        //    }
-        //}
 
         public ObservableCollection<NodeViewModelBase> SelectedItems
         {
@@ -277,7 +273,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider()));
+                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider(), _playlistService));
             }
             /*
             foreach (var item in items)
@@ -293,9 +289,9 @@ namespace LiteTube.ViewModels
             */
         }
 
-        protected virtual IContextMenuProvider GetContextMenuProvider()
+        protected virtual IContextMenuStrategy GetContextMenuProvider()
         {
-            return new ContextMenuProvider()
+            return new ContextMenuStartegy()
             {
                 CanAddToPlayList = true,
                 CanDelete = false
