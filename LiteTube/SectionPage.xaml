@@ -38,6 +38,11 @@
                           Margin="{StaticResource DefaultListBoxMargin}"
                           Content="{Binding}"
                           ContentTemplate="{StaticResource LoadingListView}"/>
+
+        <controls:PlaylistsContainer DataContext="{Binding PlaylistListViewModel}"
+                                     IsOpen="{Binding IsContainerShown}"
+                                     Grid.RowSpan="3"/>
+
     </Grid>
 
 </phone:PhoneApplicationPage>

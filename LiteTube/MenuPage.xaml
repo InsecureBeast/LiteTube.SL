@@ -115,6 +115,9 @@
         <!--Before shipping remove this XAML and the image itself.-->
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
+        <controls:PlaylistsContainer DataContext="{Binding PlaylistListViewModel}"
+                                     IsOpen="{Binding IsContainerShown}"
+                                     Grid.RowSpan="2"/>
     </Grid>
     
 </phone:PhoneApplicationPage>

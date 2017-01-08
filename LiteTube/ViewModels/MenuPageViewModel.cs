@@ -285,9 +285,19 @@ namespace LiteTube.ViewModels
             });
         }
 
+        public PlaylistsContainerViewModel PlaylistListViewModel
+        {
+            get { return App.ViewModel.PlaylistListViewModel; }
+        }
+
         public void ShowContainer(bool show, string videoId)
         {
-            throw new NotImplementedException();
+            PlaylistListViewModel.IsContainerShown = true;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                PlaylistListViewModel.SetVideoId(videoId);
+                await PlaylistListViewModel.FirstLoad();
+            });
         }
     }
 }

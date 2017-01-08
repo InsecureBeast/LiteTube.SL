@@ -44,7 +44,7 @@ namespace LiteTube.ViewModels
         //private ListViewSelectionMode _selectionMode;
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
         private bool _isConnected = true;
-        private readonly IPlaylistsSevice _playlistService;
+        protected IPlaylistsSevice _playlistService;
 
 
         public SectionBaseViewModel(

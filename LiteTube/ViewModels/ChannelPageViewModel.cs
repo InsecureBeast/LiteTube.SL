@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using System.Diagnostics;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
-    class ChannelPageViewModel : SectionBaseViewModel
+    class ChannelPageViewModel : SectionBaseViewModel, IPlaylistsSevice
     {
         private IChannel _channel;
         private readonly string _channelId;
@@ -31,6 +32,8 @@ namespace LiteTube.ViewModels
             InitializeCommands();
             _playlistListViewModel = new PlaylistListViewModel(channelId, getDataSource, connectionListener);
             _playlistListViewModel.ShowAdv = SettingsHelper.IsAdvVisible;
+
+            _playlistService = this;
 
             LayoutHelper.InvokeFromUiThread(async() => 
             {
@@ -118,6 +121,21 @@ namespace LiteTube.ViewModels
         public PlaylistListViewModel PlaylistListViewModel
         {
             get { return _playlistListViewModel; }
+        }
+
+        public PlaylistsContainerViewModel PlaylistContainerListViewModel
+        {
+            get { return App.ViewModel.PlaylistListViewModel; }
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            PlaylistContainerListViewModel.IsContainerShown = true;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                PlaylistContainerListViewModel.SetVideoId(videoId);
+                await PlaylistContainerListViewModel.FirstLoad();
+            });
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
