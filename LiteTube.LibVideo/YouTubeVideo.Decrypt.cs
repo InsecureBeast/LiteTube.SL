@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LiteTube.LibVideo.Helpers;
 
@@ -19,8 +20,8 @@ namespace LiteTube.LibVideo
                 return uri;
 
             string js = await HttpUtils.HttpGetAsync(jsPlayer);
-
-            query["signature"] = DecryptedSignature(signature, js);
+            query["signature"] = YouTubeDecipherer.Decipher(signature, js);
+            //query["signature"] = DecryptedSignature(signature, js);
             return query.ToString();
         }
 
@@ -231,6 +232,8 @@ namespace LiteTube.LibVideo
             // fs.yy(a,16);fs.cK(a,75);return a.join("")}
             // 
             // Our goal here is to find "yy", "Q2", and "cK".
+            if (string.IsNullOrEmpty(line))
+                return line;
 
             int start = line.IndexOf('.') + 1;
             int end = line.IndexOf('(', start);

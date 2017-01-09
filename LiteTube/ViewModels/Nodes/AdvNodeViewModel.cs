@@ -1,6 +1,5 @@
 ﻿using LiteTube.Common;
 using Microsoft.AdMediator.WindowsPhone8;
-using Microsoft.Advertising.Mobile.UI;
 using MyToolkit.Command;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ namespace LiteTube.ViewModels.Nodes
 
         public AdvNodeViewModel()
         {
-            _element = GetAdvElement();
             _mediatorErrorCommand = new RelayCommand<AdMediatorControl>(OnMediatorError);
         }
 
@@ -62,26 +60,6 @@ namespace LiteTube.ViewModels.Nodes
         private void OnMediatorError(AdMediatorControl adMediator)
         {
 
-        }
-
-        private FrameworkElement GetAdvElement()
-        {
-            var adv = new AdControl()
-            {
-                AdUnitId = "11626916",
-                ApplicationId = "a5239a3d-fa0b-4995-9c19-0f7a998b83c3",
-                Height = 80,
-                Width = 480,
-            };
-
-            adv.ErrorOccurred += Adv_ErrorOccurred;
-            return adv;
-        }
-
-        private void Adv_ErrorOccurred(object sender, Microsoft.Advertising.AdErrorEventArgs e)
-        {
-            //TODO Change advControl tu duplex or smaato
-            //IsAvailable = false;
         }
     }
 }
