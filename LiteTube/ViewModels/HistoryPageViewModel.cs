@@ -8,7 +8,7 @@ namespace LiteTube.ViewModels
     class HistoryPageViewModel : SectionBaseViewModel
     {
         public HistoryPageViewModel(Func<IDataSource> datasource, IConnectionListener connectionListener)
-            : base(datasource, connectionListener)
+            : base(datasource, connectionListener, null)
         {
         }
 
@@ -19,7 +19,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetHistory(nextPageToken);
+            return await _getDataSource().GetHistory(nextPageToken);
         }
     }
 }

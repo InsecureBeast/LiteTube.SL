@@ -1,0 +1,103 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="LiteTube.PlaylistsManagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:LiteTube.Controls"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" 
+    Orientation="Portrait"
+    mc:Ignorable="d"
+    Style="{StaticResource PageThemeStyle}"
+    shell:SystemTray.ProgressIndicator="{Binding ProgressIndicator}"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:NavigationPanel Grid.Row="0" 
+                                  x:Name="NavControl"
+                                  DataContext="{Binding NavigationPanelViewModel}"/>
+
+        <TextBlock Text="{Binding Path=LocalizedResources.ManagePlaylist, Source={StaticResource LocalizedStrings}}"
+                   Grid.Row="1"
+                   Style="{StaticResource TitleTextBlockStyle}"/>
+
+        <ContentPresenter Grid.Row="2"
+                          Margin="{StaticResource DefaultListBoxMargin}"
+                          Content="{Binding PlaylistListViewModel}"
+                          ContentTemplate="{StaticResource LoadingListView}"/>
+
+        <Grid Background="Black"
+              Grid.Row="0"
+              Visibility="{Binding ElementName=NewPlaylistLayout, Path=Visibility}"
+              Grid.RowSpan="3"
+              Opacity="0.7"/>
+        
+        <Grid Grid.Row="1"
+              Grid.RowSpan="2"
+              Name="NewPlaylistLayout"
+              VerticalAlignment="Center"
+              Margin="40,0,40,0"
+              Background="{StaticResource PhoneBackgroundBrush}">
+            
+            <StackPanel Margin="30">
+                <TextBlock Text="Playlist title"/>
+                <TextBox Text="{Binding PlaylistTitle}"
+                         Margin="{StaticResource DefaultControlMargin}"/>
+                <TextBlock Text="Playlist description"
+                           Margin="{StaticResource DefaultTextBlockMargin}"/>
+                <TextBox Text="{Binding PlaylistDescription}"
+                         Height="150"
+                         Margin="{StaticResource DefaultControlMargin}"/>
+                <TextBlock Text="Access"
+                           Margin="{StaticResource DefaultTextBlockMargin}"/>
+                <controls:ComboBox ItemsSource="{Binding AccessItems}"
+                                   SelectedItem="{Binding SelectedAccess, Mode=TwoWay}" 
+                                   FontWeight="Light"/>
+                
+                <Grid Height="80"
+                      Margin="{StaticResource DefaultControlMargin}">
+                    
+                    <Button Content="{Binding Path=LocalizedResources.Create, Source={StaticResource LocalizedStrings}}"
+                            BorderThickness="1"
+                            FontWeight="Light"
+                            HorizontalAlignment="Left"
+                            Width="150"
+                            Margin="-13,0,0,0"
+                            Command="{Binding CreateCommand}"
+                            Click="ButtonOnClick"
+                            Background="{StaticResource PhoneSecondaryBackgroundBrush}"/>
+
+                    <Button Content="{Binding Path=LocalizedResources.Cancel, Source={StaticResource LocalizedStrings}}"
+                            FontWeight="Light"
+                            Width="150"
+                            Margin="0,0,-14,0"
+                            HorizontalAlignment="Right"
+                            BorderThickness="1"
+                            Command="{Binding CloseCommand}"
+                            Click="ButtonOnClick"
+                            Background="{StaticResource PhoneSecondaryBackgroundBrush}"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Home.png" Text="Home" Click="Home_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Add.png" Text="Create" Click="Create_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

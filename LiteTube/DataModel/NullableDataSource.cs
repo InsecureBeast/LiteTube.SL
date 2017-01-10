@@ -106,6 +106,11 @@ namespace LiteTube.DataModel
             return new Task<IVideoList>(() => MVideoList.Empty);
         }
 
+        public Task<IVideoList> GetWatchLater(string pageToken)
+        {
+            return new Task<IVideoList>(() => MVideoList.Empty);
+        }
+
         public bool IsSubscribed(string channelId)
         {
             return false;
@@ -161,29 +166,24 @@ namespace LiteTube.DataModel
             get { return string.Empty; }
         }
 
-        public Task AddToFavorites(string videoId)
+        public Task AddItemToPlaylist(string videoId, string playlistId)
         {
             return Task.Run(() => { });
         }
 
-        public Task RemoveFromFavorites(string playlistItemId)
+        public Task RemoveItemFromPlaylist(string playlistItemId)
         {
             return Task.Run(() => { });
         }
 
-        public Task AddToPlaylist(string videoId, string playlistId)
+        public Task RemoveItemFromPlaylist(string playlistItemId, string playlistId)
         {
             return Task.Run(() => { });
         }
 
-        public Task RemovePlaylistItem(string playlistItemId)
+        public Task<IPlaylistItemList> GetPlaylistItems(string playlistId, string nextPageToken)
         {
-            return Task.Run(() => { });
-        }
-
-        public Task<IResponceList> GetFavorites(string nextPageToken)
-        {
-            return new Task<IResponceList>(() => MVideoList.Empty);
+            return new Task<IPlaylistItemList>(() => MPlaylistItemList.Empty);
         }
 
         public Task<IResponceList> GetLiked(string nextPageToken)
@@ -246,6 +246,10 @@ namespace LiteTube.DataModel
         public Task<IPlaylistList> GetMyPlaylistList(string nextPageToken)
         {
             return new Task<IPlaylistList>(() => MPlaylistList.Empty);
+        }
+
+        public async Task AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
+        {
         }
     }
 }

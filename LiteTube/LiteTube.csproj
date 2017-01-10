@@ -105,6 +105,7 @@
     <Compile Include="Common\Commands\RelayCommand.cs" />
     <Compile Include="Common\Commands\SubscribeCommand.cs" />
     <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
+    <Compile Include="Common\ContextMenuStrategy.cs" />
     <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
     <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
@@ -119,7 +120,13 @@
       <DependentUpon>ComboBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ListBoxTemplateSelector.cs" />
+    <Compile Include="Controls\ListViewItem.xaml.cs">
+      <DependentUpon>ListViewItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LiteTubePlayer.cs" />
+    <Compile Include="Controls\PlaylistsContainer.xaml.cs">
+      <DependentUpon>PlaylistsContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
@@ -131,9 +138,16 @@
     <Compile Include="DataClasses\SearchFilter.cs" />
     <Compile Include="DataClasses\MActivityList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
+    <Compile Include="DataModel\PrivacyStatus.cs" />
     <Compile Include="DataModel\VideoQualityHelper.cs" />
     <Compile Include="DataModel\YouTube.cs" />
     <Compile Include="Interactivity\HighlightUrlBehavior.cs" />
+    <Compile Include="PlaylistPage.xaml.cs">
+      <DependentUpon>PlaylistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlaylistsManagePage.xaml.cs">
+      <DependentUpon>PlaylistsManagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BugTreckerReporter.cs" />
     <Compile Include="ChannelListPage.xaml.cs">
@@ -197,7 +211,6 @@
     <Compile Include="DataClasses\IVideoItem.cs" />
     <Compile Include="DataClasses\RatingEnum.cs" />
     <Compile Include="DataModel\Context.cs" />
-    <Compile Include="DataModel\DataSourceExceptionWrapper.cs" />
     <Compile Include="DataModel\IDataSource.cs" />
     <Compile Include="DataModel\IYouTubeService.cs" />
     <Compile Include="DataModel\NullableDataSource.cs" />
@@ -248,7 +261,6 @@
     <Compile Include="ViewModels\ChannelPageViewModel.cs" />
     <Compile Include="ViewModels\ChannelsPageViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
-    <Compile Include="ViewModels\FavoritesViewModel.cs" />
     <Compile Include="ViewModels\HistoryPageViewModel.cs" />
     <Compile Include="ViewModels\LikedViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
@@ -260,8 +272,12 @@
     <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PlaylistNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistsManagePageViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\IPlaylistsSevice.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistPageViewModel.cs" />
     <Compile Include="ViewModels\Playlist\MyPlaylistListViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistListViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistsContainerViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideosViewModel.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistVideoPageViewModel.cs" />
     <Compile Include="ViewModels\ProfileSectionViewModel.cs" />
@@ -312,6 +328,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ListViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\NavigationButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -324,11 +344,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\PlaylistsContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaylistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaylistsManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -426,6 +458,7 @@
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Find.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Home.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Play.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Refresh.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Save.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
@@ -479,28 +512,28 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Google.Apis, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Apis.1.11.1\lib\wp8\Google.Apis.dll</HintPath>
+    <Reference Include="Google.Apis, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.20.0\lib\wp8\Google.Apis.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.Auth, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Apis.Auth.1.11.1\lib\wp8\Google.Apis.Auth.dll</HintPath>
+    <Reference Include="Google.Apis.Auth, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.20.0\lib\wp8\Google.Apis.Auth.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Apis.Auth.1.11.1\lib\wp8\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.20.0\lib\wp8\Google.Apis.Auth.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.Core, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Apis.Core.1.11.1\lib\portable-net45+sl50+netcore45+wpa81+wp8\Google.Apis.Core.dll</HintPath>
+    <Reference Include="Google.Apis.Core, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.20.0\lib\portable-net45+sl50+netcore45+wpa81+wp8\Google.Apis.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.PlatformServices, Version=1.11.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Apis.1.11.1\lib\wp8\Google.Apis.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.20.0\lib\wp8\Google.Apis.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.YouTube.v3, Version=1.12.0.417, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Apis.YouTube.v3.1.12.0.417\lib\portable-net45+netcore45+wpa81+wp8\Google.Apis.YouTube.v3.dll</HintPath>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.20.0.701, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.20.0.701\lib\portable-net45+netcore45+wpa81+wp8\Google.Apis.YouTube.v3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AdMediator.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL" />

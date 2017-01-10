@@ -1,9 +1,9 @@
 ﻿using LiteTube.Common;
 using LiteTube.DataClasses;
-using System.Globalization;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using System;
+using LiteTube.DataModel;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -11,16 +11,11 @@ namespace LiteTube.ViewModels.Nodes
     {
         private readonly string _videoId;
         private readonly string _id;
-        private readonly Func<Task> _deleteFunc;
         private readonly RelayCommand _deleteCommand;
         private bool _isSelected;
+        private Func<Task> _delete;
 
-        public PlayListItemNodeViewModel(IPlayListItem item, Func<Task> deleteFunc) : this(item)
-        {
-            _deleteFunc = deleteFunc;
-        }
-
-        public PlayListItemNodeViewModel(IPlayListItem item)
+        public PlayListItemNodeViewModel(IPlayListItem item, IDataSource dataSource, Func<Task> delete, IContextMenuStrategy menuProvider) : base(dataSource, menuProvider)
         {
             PlayListItem = item;
             _id = item.Id;
@@ -30,6 +25,7 @@ namespace LiteTube.ViewModels.Nodes
             ImagePath = item.Snippet.Thumbnails.GetThumbnailUrl();
             PublishedAt = item.Snippet.PublishedAt;
             Duration = null;
+            _delete = delete;
             _deleteCommand = new RelayCommand(Delete);
         }
 
@@ -73,9 +69,9 @@ namespace LiteTube.ViewModels.Nodes
         private async void Delete()
         {
             IsSelected = true;
-            if (_deleteFunc == null)
+            if (_delete == null)
                 return;
-            await _deleteFunc();
+            await _delete();
         }
     }
 }

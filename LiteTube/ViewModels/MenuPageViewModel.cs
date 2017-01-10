@@ -9,6 +9,7 @@ using LiteTube.DataModel;
 using MyToolkit.Command;
 using LiteTube.Common;
 using System.Threading.Tasks;
+using LiteTube.ViewModels.Playlist;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
 using Windows.Phone.UI.Input;
@@ -16,7 +17,7 @@ using Windows.Phone.UI.Input;
 
 namespace LiteTube.ViewModels
 {
-    class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
+    class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>, IPlaylistsSevice
     {
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
@@ -24,14 +25,11 @@ namespace LiteTube.ViewModels
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private readonly SubscriptionChannelsViewModel _subscriptions;
         private readonly HistoryPageViewModel _history;
-        private readonly FavoritesViewModel _favoritesViewModel;
         private readonly LikedViewModel _likedViewModel;
         private readonly UploadedPageViewModel _uploadedPageViewModel;
         private readonly MyPlaylistListViewModel _myPlaylistListViewModel;
         private readonly ObservableCollection<GuideCategoryNodeViewModel> _categories;
 
-        private readonly Common.RelayCommand _selectCommand;
-        private readonly Common.RelayCommand _deleteCommand;
         private readonly RelayCommand<NavigationObject> _categoryCommand;
 
         private int _selectedIndex;
@@ -53,18 +51,14 @@ namespace LiteTube.ViewModels
 
             if (_getDataSource().IsAuthorized)
             {
-                _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener);
+                _recommendedSectionViewModel = new RecommendedSectionViewModel(_getDataSource, connectionListener, this);
                 _subscriptions = new SubscriptionChannelsViewModel(_getDataSource, connectionListener);
                 _history = new HistoryPageViewModel(_getDataSource, connectionListener);
-                _favoritesViewModel = new FavoritesViewModel(_getDataSource, connectionListener);
-                _favoritesViewModel.SelectedItems.CollectionChanged += SelectedItemsCollectionChanged;
                 _likedViewModel = new LikedViewModel(_getDataSource, connectionListener);
                 _uploadedPageViewModel = new UploadedPageViewModel(_getDataSource, connectionListener);
                 _myPlaylistListViewModel = new MyPlaylistListViewModel(_getDataSource, connectionListener);
             }
             
-            _selectCommand = new Common.RelayCommand(SelectItems);
-            _deleteCommand = new Common.RelayCommand(DeleteItems, CanDelete);
             _categoryCommand = new RelayCommand<NavigationObject>(CategoryLoad);
 
             SelectedIndex = index;
@@ -101,11 +95,6 @@ namespace LiteTube.ViewModels
             get { return _history; }
         }
 
-        public FavoritesViewModel FavoritesViewModel
-        {
-            get { return _favoritesViewModel; }
-        }
-
         public LikedViewModel LikedViewModel
         {
             get { return _likedViewModel; }
@@ -119,16 +108,6 @@ namespace LiteTube.ViewModels
         public MyPlaylistListViewModel MyPlaylistListViewModel
         {
             get { return _myPlaylistListViewModel; }
-        }
-
-        public ICommand SelectCommand
-        {
-            get { return _selectCommand; }
-        }
-
-        public ICommand DeleteCommand
-        {
-            get { return _deleteCommand; }
         }
 
         public ICommand CategoryCommand
@@ -172,11 +151,6 @@ namespace LiteTube.ViewModels
             get { return false; }
         }
 
-        public bool IsFavoritesSelectedVisible
-        {
-            get { return _favoritesViewModel.IsItemClickEnabled && _selectedIndex == 2; }
-        }
-
 #if SILVERLIGHT
         public ProgressIndicator ProgressIndicator
         {
@@ -196,7 +170,6 @@ namespace LiteTube.ViewModels
         {
             if (IsAuthorized)
             {
-                _favoritesViewModel.SetNonSelected();
                 SetAuthorizedSelection(index);
                 return;
             }
@@ -232,27 +205,20 @@ namespace LiteTube.ViewModels
                     break;
 
                 case 4:
-                    Debug.WriteLine("favorites");
-                    await FavoritesViewModel.FirstLoad();
-                    break;
-
-                case 5:
                     Debug.WriteLine("liked");
                     await LikedViewModel.FirstLoad();
                     break;
 
-                case 6:
+                case 5:
                     Debug.WriteLine("uploaded");
                     await UploadedPageViewModel.FirstLoad();
                     break;
 
-                case 7:
+                case 6:
                     Debug.WriteLine("history");
                     await HistoryPageViewModel.FirstLoad();
                     break;
             }
-
-            NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
         }
 
         private async void SetSelection(int index)
@@ -263,15 +229,6 @@ namespace LiteTube.ViewModels
                     Debug.WriteLine("Video categories");
                     await LoadCategories();
                     break;
-                //case 1:
-                //    Debug.WriteLine("subscriptions");
-                //    break;
-
-                //case 2:
-                //    Debug.WriteLine("history");
-                //    break;
-                //case 3:
-                //    break;
             }
         }
 
@@ -291,54 +248,9 @@ namespace LiteTube.ViewModels
             _categories.Clear();
             foreach (var section in sections)
             {
-                _categories.Add(new GuideCategoryNodeViewModel(section));
+                _categories.Add(new GuideCategoryNodeViewModel(section, _getDataSource()));
             }
             _isRequestSend = false;
-        }
-
-        private async void DeleteItems()
-        {
-            _favoritesViewModel.SetNonSelected();
-            NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
-            //_navigationHelper.IsCanGoBack = true;
-            var items = _favoritesViewModel.SelectedItems;
-            foreach (var item in items)
-            {
-                await _getDataSource().RemoveFromFavorites(item.Id);
-                _favoritesViewModel.Items.Remove(item);
-            }
-        }
-
-        private bool CanDelete()
-        {
-            return _favoritesViewModel.SelectedItems.Any();
-        }
-
-        private void SelectItems()
-        {
-            _favoritesViewModel.SetSelected();
-            NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
-            //_navigationHelper.IsCanGoBack = false;
-            //HardwareButtons.BackPressed += OnBackPressed;
-        }
-        
-        /*
-        private void OnBackPressed(object sender, BackPressedEventArgs e)
-        {
-            if (!_favoritesViewModel.IsItemClickEnabled)
-            {
-                _favoritesViewModel.SetNonSelected();
-                NotifyOfPropertyChanged(() => IsFavoritesSelectedVisible);
-                e.Handled = true;
-                HardwareButtons.BackPressed -= OnBackPressed;
-                //_navigationHelper.IsCanGoBack = true;
-            }
-        }
-        */
-
-        private void SelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            _deleteCommand.RaiseCanExecuteChanged();
         }
 
         private void CategoryLoad(NavigationObject navObject)
@@ -370,6 +282,21 @@ namespace LiteTube.ViewModels
 
                 if (Categories.Count > 0)
                     IsConnected = true;
+            });
+        }
+
+        public PlaylistsContainerViewModel PlaylistListViewModel
+        {
+            get { return App.ViewModel.PlaylistListViewModel; }
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            PlaylistListViewModel.IsContainerShown = true;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                PlaylistListViewModel.SetVideoId(videoId);
+                await PlaylistListViewModel.FirstLoad();
             });
         }
     }

@@ -138,7 +138,7 @@
     <value>Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может воспроизводить только видео, не поддерживает загрузки или кеширование. Пожалуйста, обратите внимание, что загрузка не допускается политикой YouTube.</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
-    <value>Добавить в избранное</value>
+    <value>добавить в избранное</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
@@ -165,7 +165,7 @@
     <value>Элементы не найдены</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>избранное</value>
+    <value>Избранное</value>
   </data>
   <data name="Feedback" xml:space="preserve">
     <value>обратная связь</value>
@@ -255,7 +255,7 @@
     <value>о канале</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Удалить</value>
+    <value>удалить</value>
   </data>
   <data name="SignInTooltip" xml:space="preserve">
     <value>Войдите в свой аккаунт, чтобы использовать все возможности приложения</value>
@@ -400,5 +400,23 @@
   </data>
   <data name="IsAutoplay" xml:space="preserve">
     <value>Автовоспроизведение видео</value>
+  </data>
+  <data name="WatchLater" xml:space="preserve">
+    <value>посмотреть позже</value>
+  </data>
+  <data name="PlayAll" xml:space="preserve">
+    <value>Воспроизвести все</value>
+  </data>
+  <data name="AddToPlaylist" xml:space="preserve">
+    <value>добавить в плайлист</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Управление</value>
+  </data>
+  <data name="ManagePlaylist" xml:space="preserve">
+    <value>Управление плейлистами</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
   </data>
 </root>

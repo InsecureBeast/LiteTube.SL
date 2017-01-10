@@ -138,7 +138,7 @@
     <value>Easy-to-use application for Youtube with intuitive user interface.</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
-    <value>Add to favorites</value>
+    <value>add to favorites</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -162,7 +162,7 @@
     <value>copy video link</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>delete</value>
   </data>
   <data name="Details" xml:space="preserve">
     <value>details</value>
@@ -171,7 +171,7 @@
     <value>Items not found</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>favorites</value>
+    <value>Favorites</value>
   </data>
   <data name="Feedback" xml:space="preserve">
     <value>feedback</value>
@@ -400,5 +400,23 @@
   </data>
   <data name="IsAutoplay" xml:space="preserve">
     <value>Autoplay video</value>
+  </data>
+  <data name="WatchLater" xml:space="preserve">
+    <value>watch later</value>
+  </data>
+  <data name="PlayAll" xml:space="preserve">
+    <value>Play all</value>
+  </data>
+  <data name="AddToPlaylist" xml:space="preserve">
+    <value>add to playlist</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="ManagePlaylist" xml:space="preserve">
+    <value>Manage playlists</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
   </data>
 </root>

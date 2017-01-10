@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LiteTube.DataClasses;
+using LiteTube.DataModel;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels.Nodes
 {
     class PlaylistNodeViewModel : NodeViewModelBase
     {
         private string _id;
-
-        public PlaylistNodeViewModel(IPlaylist item)
+        
+        public PlaylistNodeViewModel(IPlaylist item, IDataSource dataSource, IContextMenuStrategy menu) : base(dataSource, menu)
         {
             _id = item.Id;
             if (item.Snippet != null)

@@ -5,7 +5,7 @@ using LiteTube.DataModel;
 
 namespace LiteTube.ViewModels
 {
-    class MyPlaylistListViewModel : PlaylistListViewModel
+    public class MyPlaylistListViewModel : PlaylistListViewModel
     {
         public MyPlaylistListViewModel(Func<IDataSource> getGeDataSource, 
             IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null)
@@ -15,7 +15,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetMyPlaylistList(nextPageToken);
+            return await _getDataSource().GetMyPlaylistList(nextPageToken);
         }
     }
 }

@@ -47,7 +47,6 @@ namespace LiteTube
                 Pivot.Items.Remove(RecommendedItem);
                 Pivot.Items.Remove(SubscribtionsItem);
                 Pivot.Items.Remove(HistoryItem);
-                Pivot.Items.Remove(FavoritesItem);
                 Pivot.Items.Remove(LikedItem);
             }
 
