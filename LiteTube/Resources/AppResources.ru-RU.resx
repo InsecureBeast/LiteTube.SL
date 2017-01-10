@@ -413,4 +413,10 @@
   <data name="Manage" xml:space="preserve">
     <value>Управление</value>
   </data>
+  <data name="ManagePlaylist" xml:space="preserve">
+    <value>Управление плейлистами</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
 </root>

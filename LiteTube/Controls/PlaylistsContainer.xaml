@@ -102,7 +102,7 @@
     <Grid x:Name="LayoutRoot"
           Visibility="Collapsed">
         
-        <Grid Background="{StaticResource PhoneBackgroundBrush}"
+        <Grid Background="Black"
               Opacity="0.7"/>
 
         <Grid Margin="40" >
@@ -130,7 +130,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Content="{Binding Path=LocalizedResources.Manage, Source={StaticResource LocalizedStrings}}"
-                        BorderThickness="0"
+                        BorderThickness="1"
                         Margin="0"
                         FontWeight="Light"
                         Command="{Binding ManageCommand}"
@@ -140,7 +140,7 @@
                         FontWeight="Light"
                         Grid.Column="1"
                         Margin="0"
-                        BorderThickness="0"
+                        BorderThickness="1"
                         Command="{Binding CloseCommand}"
                         Background="{StaticResource PhoneSecondaryBackgroundBrush}"/>
             </Grid>

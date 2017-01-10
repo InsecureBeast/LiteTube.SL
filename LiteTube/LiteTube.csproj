@@ -145,6 +145,9 @@
     <Compile Include="PlaylistPage.xaml.cs">
       <DependentUpon>PlaylistPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlaylistsManagePage.xaml.cs">
+      <DependentUpon>PlaylistsManagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BugTreckerReporter.cs" />
     <Compile Include="ChannelListPage.xaml.cs">
@@ -269,6 +272,7 @@
     <Compile Include="ViewModels\Nodes\PlayListItemNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PlaylistNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SubscriptionNodeViewModel.cs" />
+    <Compile Include="ViewModels\Playlist\PlaylistsManagePageViewModel.cs" />
     <Compile Include="ViewModels\Playlist\IPlaylistsSevice.cs" />
     <Compile Include="ViewModels\Playlist\PlaylistPageViewModel.cs" />
     <Compile Include="ViewModels\Playlist\MyPlaylistListViewModel.cs" />
@@ -353,6 +357,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PlaylistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaylistsManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

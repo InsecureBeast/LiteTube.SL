@@ -223,6 +223,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} days ago.
         /// </summary>
         public static string Days5Ago {
@@ -408,6 +417,15 @@ namespace LiteTube.Resources {
         public static string Manage {
             get {
                 return ResourceManager.GetString("Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage playlists.
+        /// </summary>
+        public static string ManagePlaylist {
+            get {
+                return ResourceManager.GetString("ManagePlaylist", resourceCulture);
             }
         }
         

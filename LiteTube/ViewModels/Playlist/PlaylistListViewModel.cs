@@ -8,6 +8,7 @@ using LiteTube.DataClasses;
 using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {

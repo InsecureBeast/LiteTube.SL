@@ -7,6 +7,7 @@ using LiteTube.DataModel;
 using LiteTube.Common;
 using LiteTube.DataClasses;
 using System.Windows.Input;
+using LiteTube.Common.Helpers;
 using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube.ViewModels.Playlist
@@ -68,7 +69,8 @@ namespace LiteTube.ViewModels.Playlist
         private void Manage()
         {
             IsContainerShown = false;
-            throw new NotImplementedException();
+            var view = string.Format("/PlaylistsManagePage.xaml");
+            NavigationHelper.Navigate(view, new PlaylistsManagePageViewModel(_getDataSource, _connectionListener));
         }
 
         internal void SetVideoId(string videoId)

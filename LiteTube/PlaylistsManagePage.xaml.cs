@@ -6,18 +6,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using LiteTube.Common.Helpers;
-using LiteTube.ViewModels;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using LiteTube.Common.Tools;
 using LiteTube.Resources;
 using LiteTube.ViewModels.Playlist;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 
 namespace LiteTube
 {
-    public partial class PlaylistPage : PhoneApplicationPage
+    public partial class PlaylistsManagePage : PhoneApplicationPage
     {
-        public PlaylistPage()
+        public PlaylistsManagePage()
         {
             InitializeComponent();
             BuildLocalizedApplicationBar();
@@ -33,23 +32,27 @@ namespace LiteTube
             NavigationHelper.GoHome();
         }
 
-        private void Play_Click(object sender, EventArgs e)
-        {
-            var model = DataContext as PlaylistPageViewModel;
-            if (model == null)
-                return;
-
-            model.PlayAll();
-        }
-
         private void BuildLocalizedApplicationBar()
         {
             var appBar = new ApplicationBar();
             var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
             appBar.Buttons.Add(homeButton);
-            var playAllButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Play.png", AppResources.PlayAll, Play_Click);
-            appBar.Buttons.Add(playAllButton);
+            var addButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Add.png", AppResources.Create, Create_Click);
+            appBar.Buttons.Add(addButton);
             ApplicationBar = appBar;
+        }
+
+        private void Create_Click(object sender, EventArgs e)
+        {
+            if (NewPlaylistLayout.Visibility == Visibility.Collapsed)
+                NewPlaylistLayout.Visibility = Visibility.Visible;
+            else
+                NewPlaylistLayout.Visibility = Visibility.Collapsed;
+        }
+
+        private void ButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            NewPlaylistLayout.Visibility = Visibility.Collapsed;
         }
     }
 }

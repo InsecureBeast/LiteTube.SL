@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
-using System.Linq;
 using LiteTube.ViewModels.Nodes;
-using System.Collections.Generic;
-using LiteTube.Resources;
 
-namespace LiteTube.ViewModels
+namespace LiteTube.ViewModels.Playlist
 {
     class PlaylistPageViewModel: SectionBaseViewModel
     {

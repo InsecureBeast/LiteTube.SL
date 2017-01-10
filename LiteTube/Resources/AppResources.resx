@@ -413,4 +413,10 @@
   <data name="Manage" xml:space="preserve">
     <value>Manage</value>
   </data>
+  <data name="ManagePlaylist" xml:space="preserve">
+    <value>Manage playlists</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
 </root>
