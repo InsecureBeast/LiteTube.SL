@@ -77,5 +77,13 @@ namespace LiteTube.Common.Helpers
                    orientation == PageOrientation.LandscapeRight ||
                    orientation == PageOrientation.Landscape;
         }
+
+        public static void AddToPlaylist(VideoPageViewModel viewModel)
+        {
+            if (viewModel == null)
+                return;
+
+            viewModel.ShowContainer(viewModel.PlaylistListViewModel.IsContainerShown, viewModel.VideoId);
+        }
     }
 }

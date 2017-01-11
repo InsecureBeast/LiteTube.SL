@@ -28,6 +28,7 @@ namespace LiteTube
         private readonly IApplicationBar _sendApplicationBar;
         private readonly ApplicationBarIconButton _sendApplicationBarButton;
         private readonly ApplicationBarIconButton _favoritesApplicationBarButton;
+        private readonly ApplicationBarIconButton _addToPlaylistApplicationBarButton;
         private MediaState _playerState;
         private bool _resumed;
         private TimeSpan _playerPosition;
@@ -64,6 +65,7 @@ namespace LiteTube
             _currentApplicationBar.MenuItems.Add(ApplicationBarHelper.CreateAApplicationBarMenuItem(AppResources.CopyVideoLink, CopyVideoUrl_Click));
 
             _favoritesApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.StarAdd.png", AppResources.AddToFavorites, AddToFavorites_Click);
+            _addToPlaylistApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Add.png", AppResources.AddToPlaylist, AddToPlaylist_Click);
 
             ApplicationBar = _currentApplicationBar;
         }
@@ -161,6 +163,10 @@ namespace LiteTube
                 if (_currentApplicationBar.Buttons.Contains(_favoritesApplicationBarButton))
                     return;
                 _currentApplicationBar.Buttons.Add(_favoritesApplicationBarButton);
+
+                if (_currentApplicationBar.Buttons.Contains(_addToPlaylistApplicationBarButton))
+                    return;
+                _currentApplicationBar.Buttons.Add(_addToPlaylistApplicationBarButton);
             }
             catch (Exception)
             {
@@ -314,6 +320,11 @@ namespace LiteTube
         private void AddToFavorites_Click(object sender, EventArgs e)
         {
             VideoPageViewHelper.AddToFavorites(DataContext as VideoPageViewModel);
+        }
+
+        private void AddToPlaylist_Click(object sender, EventArgs e)
+        {
+            VideoPageViewHelper.AddToPlaylist(DataContext as VideoPageViewModel);
         }
 
         private void CopyVideoUrl_Click(object sender, EventArgs eventArgs)

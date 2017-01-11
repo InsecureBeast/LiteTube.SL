@@ -212,6 +212,11 @@ namespace LiteTube.ViewModels
             get { return _navigatioPanelViewModel; }
         }
 
+        public PlaylistsContainerViewModel PlaylistListViewModel
+        {
+            get { return App.ViewModel.PlaylistListViewModel; }
+        }
+
         public Uri VideoUri 
         {
             get { return _videoUri; }
@@ -390,9 +395,7 @@ namespace LiteTube.ViewModels
                 if (value == null)
                     return;
 
-                var firstLoad = true;
-                if (_selectedVideoQualityItem != null)
-                    firstLoad = false;
+                var firstLoad = _selectedVideoQualityItem == null;
 
                 _selectedVideoQualityItem = value;
                 NotifyOfPropertyChanged(() => SelectedVideoQualityItem);
@@ -598,7 +601,12 @@ namespace LiteTube.ViewModels
 
         public void ShowContainer(bool show, string videoId)
         {
-            throw new NotImplementedException();
+            PlaylistListViewModel.IsContainerShown = show;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                PlaylistListViewModel.SetVideoId(videoId);
+                await PlaylistListViewModel.FirstLoad();
+            });
         }
     }
 }
