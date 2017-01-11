@@ -30,7 +30,7 @@ namespace LiteTube.ViewModels
             _channelId = channelId;
             ShowAdv = SettingsHelper.IsAdvVisible;
             InitializeCommands();
-            _playlistListViewModel = new PlaylistListViewModel(channelId, getDataSource, connectionListener);
+            _playlistListViewModel = new PlaylistListViewModel(channelId, getDataSource, connectionListener, new NoContextMenuStrategy());
             _playlistListViewModel.ShowAdv = SettingsHelper.IsAdvVisible;
 
             _playlistService = this;

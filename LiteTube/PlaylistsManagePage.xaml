@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:LiteTube.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -48,23 +49,26 @@
               Grid.RowSpan="2"
               Name="NewPlaylistLayout"
               VerticalAlignment="Center"
+              Visibility="Collapsed"
               Margin="40,0,40,0"
               Background="{StaticResource PhoneBackgroundBrush}">
             
             <StackPanel Margin="30">
-                <TextBlock Text="Playlist title"/>
-                <TextBox Text="{Binding PlaylistTitle}"
+                <TextBlock Text="{Binding Path=LocalizedResources.Title, Source={StaticResource LocalizedStrings}}"/>
+                <TextBox Text="{Binding PlaylistTitle, Mode=TwoWay}"
                          Margin="{StaticResource DefaultControlMargin}"/>
-                <TextBlock Text="Playlist description"
+                <TextBlock Text="{Binding Path=LocalizedResources.Description, Source={StaticResource LocalizedStrings}}"
                            Margin="{StaticResource DefaultTextBlockMargin}"/>
-                <TextBox Text="{Binding PlaylistDescription}"
+                <TextBox Text="{Binding PlaylistDescription, Mode=TwoWay}"
                          Height="150"
                          Margin="{StaticResource DefaultControlMargin}"/>
-                <TextBlock Text="Access"
+                <TextBlock Text="{Binding Path=LocalizedResources.Access, Source={StaticResource LocalizedStrings}}"
                            Margin="{StaticResource DefaultTextBlockMargin}"/>
-                <controls:ComboBox ItemsSource="{Binding AccessItems}"
-                                   SelectedItem="{Binding SelectedAccess, Mode=TwoWay}" 
-                                   FontWeight="Light"/>
+                <toolkit:ListPicker ItemsSource="{Binding AccessItems}"
+                                    SelectedItem="{Binding SelectedAccess, Mode=TwoWay}" 
+                                    Margin="0"
+                                    BorderThickness="1"
+                                    FontWeight="Light"/>
                 
                 <Grid Height="80"
                       Margin="{StaticResource DefaultControlMargin}">
@@ -85,7 +89,6 @@
                             Margin="0,0,-14,0"
                             HorizontalAlignment="Right"
                             BorderThickness="1"
-                            Command="{Binding CloseCommand}"
                             Click="ButtonOnClick"
                             Background="{StaticResource PhoneSecondaryBackgroundBrush}"/>
                 </Grid>

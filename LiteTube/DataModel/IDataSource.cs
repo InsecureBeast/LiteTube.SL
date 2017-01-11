@@ -55,7 +55,8 @@ namespace LiteTube.DataModel
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, string nextPageToken);
         Task<IVideoList> GetVideoPlaylist(string playListId, string nextPageToken);
         Task<IPlaylistList> GetMyPlaylistList(string nextPageToken);
-        Task AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus);
+        Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus);
+        Task RemovePlaylist(string playlistId);
         #endregion
 
         Task<IVideoItem> GetVideoItem(string videoId);
@@ -74,7 +75,7 @@ namespace LiteTube.DataModel
         private readonly IRemoteDataSource _remoteDataSource;
         private readonly IList<IVideoCategory> _categories;
         private readonly VideoQuality _qualityHelper;
-        private IList<IGuideCategory> _guideCategories;
+        private readonly IList<IGuideCategory> _guideCategories;
         private readonly List<IChannel> _channels;
         private string _region;
         private readonly int _maxPageResult;
@@ -311,6 +312,11 @@ namespace LiteTube.DataModel
             throw new NotImplementedException();
         }
 
+        public async Task RemovePlaylist(string playlistId)
+        {
+            await _remoteDataSource.RemovePlaylist(playlistId);
+        }
+
         public async Task<IVideoItem> GetVideoItem(string videoId)
         {
             return await _remoteDataSource.GetVideoItem(videoId);
@@ -366,9 +372,9 @@ namespace LiteTube.DataModel
             return await _remoteDataSource.GetMyPlaylistList(_maxPageResult, nextPageToken);
         }
 
-        public async Task AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
+        public async Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
         {
-            await _remoteDataSource.AddNewPlaylist(title, description, privacyStatus);
+            return await _remoteDataSource.AddNewPlaylist(title, description, privacyStatus);
         }
     }
 }

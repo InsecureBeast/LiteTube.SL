@@ -138,7 +138,7 @@
     <value>Товарный знак YouTube и логотип являются зарегистрированными товарными знаками компании Google, Inc. Все права защищены. Это приложение может воспроизводить только видео, не поддерживает загрузки или кеширование. Пожалуйста, обратите внимание, что загрузка не допускается политикой YouTube.</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
-    <value>добавить в избранное</value>
+    <value>в избранное</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
@@ -408,7 +408,7 @@
     <value>Воспроизвести все</value>
   </data>
   <data name="AddToPlaylist" xml:space="preserve">
-    <value>добавить в плайлист</value>
+    <value>в плайлист</value>
   </data>
   <data name="Manage" xml:space="preserve">
     <value>Управление</value>
@@ -418,5 +418,20 @@
   </data>
   <data name="Create" xml:space="preserve">
     <value>Создать</value>
+  </data>
+  <data name="StatusPrivate" xml:space="preserve">
+    <value>Ограниченный</value>
+  </data>
+  <data name="StatusPublic" xml:space="preserve">
+    <value>Публичный</value>
+  </data>
+  <data name="Access" xml:space="preserve">
+    <value>Доступ</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Наименование</value>
   </data>
 </root>

@@ -67,8 +67,13 @@ namespace LiteTube.ViewModels.Search
                    continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), new NoContextMenuStrategy()));
+                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), new NoContextMenuStrategy(), Delete));
             }
+        }
+
+        private Task Delete(string playlistId)
+        {
+            return null;
         }
     }
 }

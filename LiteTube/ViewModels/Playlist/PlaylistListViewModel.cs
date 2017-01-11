@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using LiteTube.DataModel;
-using LiteTube.DataClasses;
-using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
-using LiteTube.ViewModels.Playlist;
+using LiteTube.DataClasses;
+using LiteTube.DataModel;
+using LiteTube.ViewModels.Nodes;
 
-namespace LiteTube.ViewModels
+namespace LiteTube.ViewModels.Playlist
 {
     public class PlaylistListViewModel : SectionBaseViewModel
     {
         private readonly string _channelId;
+        private readonly IContextMenuStrategy _contextMenuStrategy;
 
         public PlaylistListViewModel(string channelId, Func<IDataSource> getGeDataSource, 
-            IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null) 
+            IConnectionListener connectionListener, IContextMenuStrategy contextMenuStrategy, Action<bool> changeProgressIndicator = null) 
             : base(getGeDataSource, connectionListener, null, changeProgressIndicator)
         {
             _channelId = channelId;
+            _contextMenuStrategy = contextMenuStrategy;
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
@@ -79,7 +79,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), new NoContextMenuStrategy()));
+                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), _contextMenuStrategy, Delete));
             }
 
             //var itemsList = Items.ToList();
@@ -93,6 +93,10 @@ namespace LiteTube.ViewModels
 
             //    Items.Add(new PlaylistNodeViewModel(item));
             //}
+        }
+
+        protected virtual async Task Delete(string playlistId)
+        {
         }
     }
 }

@@ -58,7 +58,8 @@ namespace LiteTube.DataModel
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken);
         Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken);
         Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken);
-        Task AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus);
+        Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus);
+        Task RemovePlaylist(string playlistId);
         #endregion
     }
 
@@ -670,16 +671,39 @@ namespace LiteTube.DataModel
             return new MPlaylistList(response);
         }
 
-        public async Task AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
+        public async Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
         {
             // Create a new, private playlist in the authorized user's channel.
-            var newPlaylist = new Playlist();
-            newPlaylist.Snippet = new PlaylistSnippet();
-            newPlaylist.Snippet.Title = title;
-            newPlaylist.Snippet.Description = description;
-            newPlaylist.Status = new PlaylistStatus();
-            newPlaylist.Status.PrivacyStatus = privacyStatus.ToString().ToLower();// "public";
-            newPlaylist = await _youTubeService.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
+            if (string.IsNullOrEmpty(title))
+                return null;
+
+            try
+            {
+                var newPlaylist = new Playlist();
+                newPlaylist.Snippet = new PlaylistSnippet();
+                newPlaylist.Snippet.Title = title;
+                newPlaylist.Snippet.Description = description;
+                newPlaylist.Status = new PlaylistStatus();
+                newPlaylist.Status.PrivacyStatus = privacyStatus.ToString().ToLower();// "public";
+                newPlaylist = await _youTubeService.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
+                return new MPlaylist(newPlaylist);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task RemovePlaylist(string playlistId)
+        {
+            try
+            {
+                await _youTubeService.Playlists.Delete(playlistId).ExecuteAsync();
+            }
+            catch (Exception)
+            {
+                
+            }
         }
 
         #region Private methods

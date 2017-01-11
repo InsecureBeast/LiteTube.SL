@@ -56,7 +56,7 @@ namespace LiteTube.ViewModels
                 _history = new HistoryPageViewModel(_getDataSource, connectionListener);
                 _likedViewModel = new LikedViewModel(_getDataSource, connectionListener);
                 _uploadedPageViewModel = new UploadedPageViewModel(_getDataSource, connectionListener);
-                _myPlaylistListViewModel = new MyPlaylistListViewModel(_getDataSource, connectionListener);
+                _myPlaylistListViewModel = new MyPlaylistListViewModel(_getDataSource, connectionListener, new NoContextMenuStrategy());
             }
             
             _categoryCommand = new RelayCommand<NavigationObject>(CategoryLoad);

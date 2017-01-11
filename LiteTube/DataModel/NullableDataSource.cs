@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Google.Apis.YouTube.v3.Data;
 using LiteTube.Common;
 using LiteTube.DataClasses;
 using LiteTube.Multimedia;
@@ -196,6 +197,11 @@ namespace LiteTube.DataModel
             return Task.Run(() => MPlaylistList.Empty);
         }
 
+        public async Task RemovePlaylist(string playlistId)
+        {
+            
+        }
+
         public Task<IVideoItem> GetVideoItem(string videoId)
         {
             return new Task<IVideoItem>(() => MVideoItem.Empty);
@@ -248,8 +254,9 @@ namespace LiteTube.DataModel
             return new Task<IPlaylistList>(() => MPlaylistList.Empty);
         }
 
-        public async Task AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
+        public Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
         {
+            return new Task<IPlaylist>(() => MPlaylist.Empty);
         }
     }
 }

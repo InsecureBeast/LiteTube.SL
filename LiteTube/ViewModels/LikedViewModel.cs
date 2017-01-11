@@ -51,12 +51,12 @@ namespace LiteTube.ViewModels
 
         private async Task Delete()
         {
-            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
-            foreach (var item in items)
-            {
+            //var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
+            //foreach (var item in items)
+            //{
                 //await _getGeDataSource().RemoveFromFavorites(item.Id);
                 //Items.Remove(item);
-            }
+            //}
         }
     }
 }

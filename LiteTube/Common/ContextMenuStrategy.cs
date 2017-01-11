@@ -43,4 +43,25 @@ namespace LiteTube.Common
             get; private set;
         }
     }
+
+    class DeleteContextMenuStrategy : IContextMenuStrategy
+    {
+        public DeleteContextMenuStrategy()
+        {
+            CanAddToPlayList = false;
+            CanDelete = true;
+        }
+
+        public bool CanAddToPlayList
+        {
+            get;
+            private set;
+        }
+
+        public bool CanDelete
+        {
+            get;
+            private set;
+        }
+    }
 }
