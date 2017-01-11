@@ -17,14 +17,11 @@ namespace LiteTube
     public partial class MenuPage : PhoneApplicationPage
     {
         private int _selectedIndex = 0;
-        private readonly ApplicationBarIconButton _playlistsManagerButton;
 
         public MenuPage()
         {
             InitializeComponent();
-            _playlistsManagerButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Manage.png", AppResources.Manage, PlaylistManage_Click);
             Pivot.SelectionChanged += Pivot_SelectionChanged;
-            ApplicationBar.Mode = ApplicationBarMode.Default;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -59,26 +56,43 @@ namespace LiteTube
             }
 
             Pivot.SelectedIndex = _selectedIndex;
+            BuildApplicationBar(_selectedIndex);
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _selectedIndex = Pivot.SelectedIndex;
-            if (_selectedIndex == 3)
-            {
-                if (!ApplicationBar.Buttons.Contains(_playlistsManagerButton))
-                    ApplicationBar.Buttons.Add(_playlistsManagerButton);
-            }
-            else
-            {
-                if (ApplicationBar.Buttons.Contains(_playlistsManagerButton))
-                    ApplicationBar.Buttons.Remove(_playlistsManagerButton);
-            }
+            BuildApplicationBar(_selectedIndex);
         }
 
         private void PlaylistManage_Click(object sender, EventArgs e)
         {
             NavigationHelper.GoToPLaylistMangePage();
+        }
+
+        private void Home_Click(object sender, EventArgs e)
+        {
+            NavigationHelper.GoHome();
+        }
+
+        private void BuildApplicationBar(int selectedIndex)
+        {
+            var appBar = new ApplicationBar
+            {
+                Mode = ApplicationBarMode.Default
+            };
+
+            var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
+            var managePlaylistsButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Manage.png", AppResources.Manage, PlaylistManage_Click);
+
+            appBar.Buttons.Add(homeButton);
+
+            if (selectedIndex == 3)
+            {
+                appBar.Buttons.Add(managePlaylistsButton);
+            }
+
+            ApplicationBar = appBar;
         }
     }
 }
