@@ -5,6 +5,7 @@ using System.Windows.Input;
 using LiteTube.Common;
 using LiteTube.DataModel;
 using LiteTube.Resources;
+using LiteTube.ViewModels.Nodes;
 using RelayCommand = MyToolkit.Command.RelayCommand;
 
 namespace LiteTube.ViewModels.Playlist
@@ -13,7 +14,7 @@ namespace LiteTube.ViewModels.Playlist
     {
         private readonly Func<IDataSource> _getGeDataSource;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
-        private readonly PlaylistListViewModel _playlistListViewModel;
+        private readonly MyPlaylistListViewModel _playlistListViewModel;
         private readonly RelayCommand _createCommand;
         private string _playlistTitle;
         private string _playlistDescription;
@@ -41,7 +42,7 @@ namespace LiteTube.ViewModels.Playlist
             get { return _navigatioPanelViewModel; }
         }
 
-        public PlaylistListViewModel PlaylistListViewModel
+        public MyPlaylistListViewModel PlaylistListViewModel
         {
             get { return _playlistListViewModel; }
         }
@@ -90,10 +91,16 @@ namespace LiteTube.ViewModels.Playlist
         private async void CreatePlaylist()
         {
             var newPlaylist = await _getGeDataSource().AddNewPlaylist(PlaylistTitle, PlaylistDescription, _selectedAccess.Status);
-            //PlaylistListViewModel.Items.Add(new PlaylistNodeViewModel(newPlaylist,_getGeDataSource(), new ContextMenuStartegy()));
-            App.ViewModel.PlaylistListViewModel.Items.Clear();
-            PlaylistListViewModel.Items.Clear();
-            await PlaylistListViewModel.FirstLoad();
+            if (newPlaylist != null)
+            {
+                App.ViewModel.PlaylistListViewModel.Items.Clear();
+                PlaylistListViewModel.Items.Add(new PlaylistNodeViewModel(newPlaylist, _getGeDataSource(), new DeleteContextMenuStrategy(), PlaylistListViewModel.Delete));
+                //await PlaylistListViewModel.FirstLoad();
+            }
+            //Clear data
+            PlaylistTitle = string.Empty;
+            PlaylistDescription = string.Empty;
+            SelectedAccess = AccessItems.First();
         }
     }
 

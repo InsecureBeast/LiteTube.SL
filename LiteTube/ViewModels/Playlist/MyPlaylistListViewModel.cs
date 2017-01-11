@@ -20,7 +20,7 @@ namespace LiteTube.ViewModels.Playlist
             return await _getDataSource().GetMyPlaylistList(nextPageToken);
         }
 
-        protected override async Task Delete(string playlistId)
+        protected internal override async Task Delete(string playlistId)
         {
             await _getDataSource().RemovePlaylist(playlistId);
             var item = Items.FirstOrDefault(i => i.Id == playlistId);
@@ -28,6 +28,7 @@ namespace LiteTube.ViewModels.Playlist
                 return;
 
             Items.Remove(item);
+            App.ViewModel.PlaylistListViewModel.Items.Remove(item);
         }
     }
 }

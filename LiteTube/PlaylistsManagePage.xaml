@@ -56,11 +56,13 @@
             <StackPanel Margin="30">
                 <TextBlock Text="{Binding Path=LocalizedResources.Title, Source={StaticResource LocalizedStrings}}"/>
                 <TextBox Text="{Binding PlaylistTitle, Mode=TwoWay}"
+                         FontWeight="Light"
                          Margin="{StaticResource DefaultControlMargin}"/>
                 <TextBlock Text="{Binding Path=LocalizedResources.Description, Source={StaticResource LocalizedStrings}}"
                            Margin="{StaticResource DefaultTextBlockMargin}"/>
                 <TextBox Text="{Binding PlaylistDescription, Mode=TwoWay}"
                          Height="150"
+                         FontWeight="Light"
                          Margin="{StaticResource DefaultControlMargin}"/>
                 <TextBlock Text="{Binding Path=LocalizedResources.Access, Source={StaticResource LocalizedStrings}}"
                            Margin="{StaticResource DefaultTextBlockMargin}"/>

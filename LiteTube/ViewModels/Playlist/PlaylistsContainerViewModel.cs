@@ -54,6 +54,10 @@ namespace LiteTube.ViewModels.Playlist
         internal override void NavigateTo(NavigationObject navObject)
         {
             IsContainerShown = false;
+
+            if (navObject == null)
+                return;
+
             var nodePlaylist = navObject.ViewModel as PlaylistNodeViewModel;
             if (nodePlaylist == null)
                 return;

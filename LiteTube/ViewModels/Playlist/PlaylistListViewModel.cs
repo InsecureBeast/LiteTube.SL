@@ -95,7 +95,7 @@ namespace LiteTube.ViewModels.Playlist
             //}
         }
 
-        protected virtual async Task Delete(string playlistId)
+        protected internal virtual async Task Delete(string playlistId)
         {
         }
     }

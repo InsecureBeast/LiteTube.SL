@@ -685,12 +685,12 @@ namespace LiteTube.DataModel
                 newPlaylist.Snippet.Description = description;
                 newPlaylist.Status = new PlaylistStatus();
                 newPlaylist.Status.PrivacyStatus = privacyStatus.ToString().ToLower();// "public";
-                newPlaylist = await _youTubeService.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
+                newPlaylist = await _youTubeService.Playlists.Insert(newPlaylist, "snippet,status,contentDetails,id").ExecuteAsync();
                 return new MPlaylist(newPlaylist);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                throw new LiteTubeException(e);
             }
         }
 
@@ -700,9 +700,9 @@ namespace LiteTube.DataModel
             {
                 await _youTubeService.Playlists.Delete(playlistId).ExecuteAsync();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                
+                throw new LiteTubeException(e);
             }
         }
 
