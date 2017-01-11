@@ -83,7 +83,7 @@ namespace LiteTube.Common.Helpers
             if (viewModel == null)
                 return;
 
-            viewModel.ShowContainer(viewModel.PlaylistListViewModel.IsContainerShown, viewModel.VideoId);
+            viewModel.ShowContainer(!viewModel.PlaylistListViewModel.IsContainerShown, viewModel.VideoId);
         }
     }
 }

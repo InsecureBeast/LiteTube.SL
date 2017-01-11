@@ -28,7 +28,7 @@ namespace LiteTube.ViewModels.Playlist
                 return;
 
             Items.Remove(item);
-            App.ViewModel.PlaylistListViewModel.Items.Remove(item);
+            App.ViewModel.PlaylistListViewModel.Items.Clear();
         }
     }
 }

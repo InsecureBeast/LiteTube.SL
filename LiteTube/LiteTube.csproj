@@ -458,6 +458,7 @@
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Find.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Home.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Manage.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Play.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Refresh.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Save.png" />

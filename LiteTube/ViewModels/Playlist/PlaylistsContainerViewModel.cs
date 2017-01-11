@@ -73,8 +73,7 @@ namespace LiteTube.ViewModels.Playlist
         private void Manage()
         {
             IsContainerShown = false;
-            var view = string.Format("/PlaylistsManagePage.xaml");
-            NavigationHelper.Navigate(view, new PlaylistsManagePageViewModel(_getDataSource, _connectionListener));
+            NavigationHelper.GoToPLaylistMangePage();
         }
 
         internal void SetVideoId(string videoId)

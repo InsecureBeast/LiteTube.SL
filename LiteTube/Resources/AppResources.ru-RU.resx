@@ -321,7 +321,7 @@
     <value>вчера</value>
   </data>
   <data name="Playlists" xml:space="preserve">
-    <value>плэйлисты</value>
+    <value>плейлисты</value>
   </data>
   <data name="PlaylistNotFoundErrorMessage" xml:space="preserve">
     <value>Плейлист не существует.</value>
@@ -408,7 +408,7 @@
     <value>Воспроизвести все</value>
   </data>
   <data name="AddToPlaylist" xml:space="preserve">
-    <value>в плайлист</value>
+    <value>в плейлист</value>
   </data>
   <data name="Manage" xml:space="preserve">
     <value>Управление</value>
