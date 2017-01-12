@@ -4,6 +4,7 @@ using LiteTube.DataModel;
 using LiteTube.Common.Helpers;
 using LiteTube.Common;
 using LiteTube.ViewModels.Nodes;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
@@ -24,7 +25,7 @@ namespace LiteTube.ViewModels
 
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
             _videoViewModel = new VideoPageViewModel();
-            _playlistVideosViewModel = new PlaylistVideosViewModel(playlistId, getDataSource, connectionListener, (s) => { PlaylistVideoItemClick(s); });
+            _playlistVideosViewModel = new PlaylistVideosViewModel(playlistId, getDataSource, connectionListener, PlaylistVideoItemClick);
             LoadPlaylistVideos(playlistId);
         }
 
