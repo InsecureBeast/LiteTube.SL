@@ -14,6 +14,7 @@ using Windows.ApplicationModel.Activation;
 using LiteTube.Common.Exceptions;
 using System.Xml;
 using System.Threading;
+using Google;
 
 namespace LiteTube
 {

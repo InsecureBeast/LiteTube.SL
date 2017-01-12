@@ -206,7 +206,7 @@ namespace LiteTube.DataModel
 
         public async Task<IResponceList> Search(string searchString, string nextPageToken, SearchType serachType, SearchFilter searchFilter)
         {
-            return await _remoteDataSource.Search(searchString, _maxPageResult, _region, nextPageToken, serachType, searchFilter);
+            return await _remoteDataSource.Search(searchString, _maxPageResult, nextPageToken, _region, serachType, searchFilter);
         }
 
         public async Task<ICommentList> GetComments(string videoId, string nextPageToken)
