@@ -17,7 +17,7 @@ using Windows.Phone.UI.Input;
 
 namespace LiteTube.ViewModels
 {
-    class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>, IPlaylistsSevice
+    class MenuPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>, IPlaylistsSevice, IPlaylistsChangeHandler
     {
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
@@ -56,7 +56,7 @@ namespace LiteTube.ViewModels
                 _history = new HistoryPageViewModel(_getDataSource, connectionListener);
                 _likedViewModel = new LikedViewModel(_getDataSource, connectionListener);
                 _uploadedPageViewModel = new UploadedPageViewModel(_getDataSource, connectionListener);
-                _myPlaylistListViewModel = new MyPlaylistListViewModel(_getDataSource, connectionListener, new NoContextMenuStrategy());
+                _myPlaylistListViewModel = new MyPlaylistListViewModel(_getDataSource, connectionListener, new NoContextMenuStrategy(), this);
             }
             
             _categoryCommand = new RelayCommand<NavigationObject>(CategoryLoad);
@@ -298,6 +298,12 @@ namespace LiteTube.ViewModels
                 PlaylistListViewModel.SetVideoId(videoId);
                 await PlaylistListViewModel.FirstLoad();
             });
+        }
+
+        public async void UpdatePlaylists()
+        {
+            MyPlaylistListViewModel.Items.Clear();
+            await MyPlaylistListViewModel.FirstLoad();
         }
     }
 }

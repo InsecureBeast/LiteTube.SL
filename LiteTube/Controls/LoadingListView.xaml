@@ -267,6 +267,48 @@
         </local:ListBoxTemplateSelector>
     </DataTemplate>
 
+    <DataTemplate x:Key="LoadingMenuPlaylistsViewItem">
+        <local:ListBoxTemplateSelector Content="{Binding}" 
+                                       HorizontalContentAlignment="Stretch">
+            <local:ListBoxTemplateSelector.Normal>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentPresenter Content="{Binding}"
+                                        ContentTemplate="{StaticResource LoadingPlaylistListViewItem}"/>
+
+                        <ToggleButton Grid.Column="1"
+                                      Style="{StaticResource MoreButtonStyle}"
+                                      x:Name="moreButton">
+                            <ContentPresenter ContentTemplate="{StaticResource MoreIcon}" />
+                        </ToggleButton>
+                            
+                        <toolkit:ContextMenuService.ContextMenu>
+                            <toolkit:ContextMenu Name="ContextMenu"
+                                                 IsOpen="{Binding ElementName=moreButton, Path=IsChecked, Mode=TwoWay}"
+                                                 Style="{StaticResource ContextMenuStyle}"
+                                                 IsZoomEnabled="False">
+                                <toolkit:MenuItem Name="Delete"  
+                                                Header="{Binding Path=LocalizedResources.Delete, Source={StaticResource LocalizedStrings}}" 
+                                                Command="{Binding DeleteCommand}"
+                                                Visibility="{Binding MenuProvider.CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </toolkit:ContextMenu>
+                        </toolkit:ContextMenuService.ContextMenu>
+                    </Grid>
+                </DataTemplate>
+            </local:ListBoxTemplateSelector.Normal>
+            <local:ListBoxTemplateSelector.Adv>
+                <DataTemplate>
+                    <ContentPresenter ContentTemplate="{StaticResource AdvItemDatatemplate}"/>
+                </DataTemplate>
+            </local:ListBoxTemplateSelector.Adv>
+        </local:ListBoxTemplateSelector>
+    </DataTemplate>
+
     <DataTemplate x:Key="LoadingListView" >
         <Grid x:Name="ContentRoot">
             <Grid>
@@ -324,6 +366,30 @@
                          common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
                          ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"
                          ItemTemplate="{StaticResource LoadingPlaylistListViewItem}"/>
+
+                <Grid x:Name="BlockMulti" 
+                      Width="50" 
+                      Background="Transparent" 
+                      HorizontalAlignment="Left" 
+                      Visibility="Visible"/>
+            </Grid>
+
+            <ContentPresenter Content="{Binding}"
+                              ContentTemplate="{StaticResource LoadingTextBlockDataTemplate}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="LoadingMenuPlaylistsView" >
+        <Grid x:Name="ContentRoot">
+            <Grid>
+                <ListBox Margin="0" 
+                         Name="PLaylistLisBox"
+                         ItemsSource="{Binding Items}"
+                         toolkit:TiltEffect.IsTiltEnabled="True" 
+                         common:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                         common:ScrollViewerMonitor.LoadMoreCommand="{Binding LoadMoreCommand}"
+                         ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}"
+                         ItemTemplate="{StaticResource LoadingMenuPlaylistsViewItem}"/>
 
                 <Grid x:Name="BlockMulti" 
                       Width="50" 

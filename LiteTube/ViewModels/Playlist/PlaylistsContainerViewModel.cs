@@ -12,7 +12,7 @@ using LiteTube.ViewModels.Nodes;
 
 namespace LiteTube.ViewModels.Playlist
 {
-    public class PlaylistsContainerViewModel : PlaylistListViewModel
+    public class PlaylistsContainerViewModel : PlaylistListViewModel, IPlaylistsChangeHandler
     {
         private bool _isContainerShown;
         private readonly RelayCommand _manageCommand;
@@ -73,12 +73,17 @@ namespace LiteTube.ViewModels.Playlist
         private void Manage()
         {
             IsContainerShown = false;
-            NavigationHelper.GoToPLaylistMangePage();
+            NavigationHelper.GoToPLaylistMangePage(this);
         }
 
         internal void SetVideoId(string videoId)
         {
             _videoId = videoId;
+        }
+
+        public void UpdatePlaylists()
+        {
+            Items.Clear();
         }
     }
 }

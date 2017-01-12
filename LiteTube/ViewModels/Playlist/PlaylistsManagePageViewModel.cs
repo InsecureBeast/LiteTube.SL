@@ -10,9 +10,15 @@ using RelayCommand = MyToolkit.Command.RelayCommand;
 
 namespace LiteTube.ViewModels.Playlist
 {
+    public interface IPlaylistsChangeHandler
+    {
+        void UpdatePlaylists();
+    }
+
     class PlaylistsManagePageViewModel : PropertyChangedBase
     {
         private readonly Func<IDataSource> _getGeDataSource;
+        private readonly IPlaylistsChangeHandler _playlistsChangeHandler;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private readonly MyPlaylistListViewModel _playlistListViewModel;
         private readonly RelayCommand _createCommand;
@@ -21,11 +27,12 @@ namespace LiteTube.ViewModels.Playlist
         private readonly List<AccessItem> _accessItems;
         private AccessItem _selectedAccess;
 
-        public PlaylistsManagePageViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener)
+        public PlaylistsManagePageViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, IPlaylistsChangeHandler playlistsChangeHandler)
         {
             _getGeDataSource = getGeDataSource;
+            _playlistsChangeHandler = playlistsChangeHandler;
             _navigatioPanelViewModel = new NavigationPanelViewModel(getGeDataSource, connectionListener);
-            _playlistListViewModel = new MyPlaylistListViewModel(_getGeDataSource, connectionListener, new DeleteContextMenuStrategy());
+            _playlistListViewModel = new MyPlaylistListViewModel(_getGeDataSource, connectionListener, new DeleteContextMenuStrategy(), playlistsChangeHandler);
             _playlistListViewModel.FirstLoad();
             _createCommand = new RelayCommand(CreatePlaylist, CanCreateNewPlaylist);
             _accessItems = new List<AccessItem>() { new AccessItem(PrivacyStatus.Public), new AccessItem(PrivacyStatus.Private) };
@@ -93,9 +100,8 @@ namespace LiteTube.ViewModels.Playlist
             var newPlaylist = await _getGeDataSource().AddNewPlaylist(PlaylistTitle, PlaylistDescription, _selectedAccess.Status);
             if (newPlaylist != null)
             {
-                App.ViewModel.PlaylistListViewModel.Items.Clear();
                 PlaylistListViewModel.Items.Add(new PlaylistNodeViewModel(newPlaylist, _getGeDataSource(), new DeleteContextMenuStrategy(), PlaylistListViewModel.Delete));
-                //await PlaylistListViewModel.FirstLoad();
+                _playlistsChangeHandler.UpdatePlaylists();
             }
             //Clear data
             PlaylistTitle = string.Empty;

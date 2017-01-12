@@ -37,7 +37,7 @@
         <ContentPresenter Grid.Row="2"
                           Margin="{StaticResource DefaultListBoxMargin}"
                           Content="{Binding PlaylistListViewModel}"
-                          ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+                          ContentTemplate="{StaticResource LoadingMenuPlaylistsView}"/>
 
         <Grid Background="Black"
               Grid.Row="0"

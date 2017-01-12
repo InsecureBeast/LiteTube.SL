@@ -67,7 +67,7 @@ namespace LiteTube
 
         private void PlaylistManage_Click(object sender, EventArgs e)
         {
-            NavigationHelper.GoToPLaylistMangePage();
+            NavigationHelper.GoToPLaylistMangePage(DataContext as MenuPageViewModel);
         }
 
         private void Home_Click(object sender, EventArgs e)

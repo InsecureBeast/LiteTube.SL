@@ -72,11 +72,11 @@ namespace LiteTube.Common.Helpers
             NavigationHelper.Navigate("/ChannelPage.xaml?channelId=" + channelId, new ChannelPageViewModel(channelId, username, datasource, connectionListener));
         }
 
-        public static void GoToPLaylistMangePage()
+        public static void GoToPLaylistMangePage(IPlaylistsChangeHandler playlistsChangeHandler)
         {
             var datasource = App.ViewModel.GetDataSource;
             var connectionListener = App.ViewModel.ConnectionListener;
-            NavigationHelper.Navigate("/PlaylistsManagePage.xaml", new PlaylistsManagePageViewModel(datasource, connectionListener));
+            NavigationHelper.Navigate("/PlaylistsManagePage.xaml", new PlaylistsManagePageViewModel(datasource, connectionListener, playlistsChangeHandler));
         }
     }
 }

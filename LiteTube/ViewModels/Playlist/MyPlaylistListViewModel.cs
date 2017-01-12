@@ -9,10 +9,13 @@ namespace LiteTube.ViewModels.Playlist
 {
     public class MyPlaylistListViewModel : PlaylistListViewModel
     {
+        private readonly IPlaylistsChangeHandler _playlistsChangeHandler;
+
         public MyPlaylistListViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, 
-            IContextMenuStrategy contextMenuStrategy, Action<bool> changeProgressIndicator = null)
+            IContextMenuStrategy contextMenuStrategy, IPlaylistsChangeHandler playlistsChangeHandler, Action<bool> changeProgressIndicator = null)
             : base(null, getGeDataSource, connectionListener, contextMenuStrategy, changeProgressIndicator)
         {
+            _playlistsChangeHandler = playlistsChangeHandler;
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
@@ -29,6 +32,7 @@ namespace LiteTube.ViewModels.Playlist
 
             Items.Remove(item);
             App.ViewModel.PlaylistListViewModel.Items.Clear();
+            _playlistsChangeHandler.UpdatePlaylists();
         }
     }
 }
