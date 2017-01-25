@@ -59,10 +59,11 @@ namespace LiteTube.ViewModels.Playlist
                 return;
 
             var id = playlistViewModel.Id;
-#if SILVERLIGHT
             var view = string.Format("/PlaylistPage.xaml", id);
-            NavigationHelper.Navigate(view, new PlaylistPageViewModel(id, playlistViewModel.Title, _getDataSource, _connectionListener));
-#endif
+            if (string.IsNullOrEmpty(_channelId))
+                NavigationHelper.Navigate(view, new PlaylistPageViewModel(id, playlistViewModel.Title, _getDataSource, _connectionListener));
+            else
+                NavigationHelper.Navigate(view, new ChannelPlaylistPageViewModel(id, playlistViewModel.Title, _getDataSource, _connectionListener));
         }
 
         private void AddPlaylistItems(IEnumerable<IPlaylist> items)

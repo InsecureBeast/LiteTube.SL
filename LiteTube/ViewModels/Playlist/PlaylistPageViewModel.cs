@@ -94,4 +94,18 @@ namespace LiteTube.ViewModels.Playlist
             }
         }
     }
+
+    class ChannelPlaylistPageViewModel : PlaylistPageViewModel
+    {
+        public ChannelPlaylistPageViewModel(string playlistId, string title, 
+            Func<IDataSource> geDataSource, IConnectionListener connectionListener) 
+            : base(playlistId, title, geDataSource, connectionListener)
+        {
+        }
+
+        protected override IContextMenuStrategy GetContextMenuProvider()
+        {
+            return new NoContextMenuStrategy();
+        }
+    }
 }

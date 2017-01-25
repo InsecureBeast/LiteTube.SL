@@ -14,8 +14,11 @@ namespace LiteTube.ViewModels.Nodes
         private readonly RelayCommand _deleteCommand;
         private bool _isSelected;
         private readonly Func<Task> _delete;
+        private bool _isContextMenu;
 
-        public PlayListItemNodeViewModel(IPlayListItem item, IDataSource dataSource, Func<Task> delete, IContextMenuStrategy menuProvider) : base(dataSource, menuProvider)
+        public PlayListItemNodeViewModel(IPlayListItem item, IDataSource dataSource, 
+            Func<Task> delete, IContextMenuStrategy menuProvider) 
+            : base(dataSource, menuProvider)
         {
             PlayListItem = item;
             _id = item.Id;
@@ -27,6 +30,7 @@ namespace LiteTube.ViewModels.Nodes
             Duration = null;
             _delete = delete;
             _deleteCommand = new RelayCommand(Delete);
+            IsContexMenu = !(menuProvider is NoContextMenuStrategy);
         }
 
         public ICommand DeleteCommand
@@ -49,6 +53,16 @@ namespace LiteTube.ViewModels.Nodes
         public override string VideoId
         {
             get { return _videoId; }
+        }
+        
+        public bool IsContexMenu
+        {
+            get { return _isContextMenu; }
+            set
+            {
+                _isContextMenu = value;
+                NotifyOfPropertyChanged(() => IsContexMenu);
+            }
         }
 
         public bool IsSelected

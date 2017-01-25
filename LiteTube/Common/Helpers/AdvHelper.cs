@@ -12,7 +12,7 @@ namespace LiteTube.Common.Helpers
             if (!showAdv)
                 return;
 
-            if (items.Count == AdvCount || items.Count == AdvCount * 4)
+            if (items.Count == AdvCount)
             {
                 items.Add(new AdvNodeViewModel(null));
             }

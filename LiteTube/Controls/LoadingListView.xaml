@@ -169,6 +169,7 @@
                                           ContentTemplate="{StaticResource LoadingListViewItemNoMenu}"/>
 
                         <ToggleButton Grid.Column="1"
+                                      Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       Style="{StaticResource MoreButtonStyle}"
                                       x:Name="moreButton">
                             <ContentPresenter ContentTemplate="{StaticResource MoreIcon}" />
@@ -176,6 +177,7 @@
 
                         <toolkit:ContextMenuService.ContextMenu>
                             <toolkit:ContextMenu Name="ContextMenu"
+                                                 Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                  IsOpen="{Binding ElementName=moreButton, Path=IsChecked, Mode=TwoWay}"
                                                  Style="{StaticResource ContextMenuStyle}"
                                                  IsZoomEnabled="False">
@@ -282,6 +284,7 @@
                                         ContentTemplate="{StaticResource LoadingPlaylistListViewItem}"/>
 
                         <ToggleButton Grid.Column="1"
+                                      Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       Style="{StaticResource MoreButtonStyle}"
                                       x:Name="moreButton">
                             <ContentPresenter ContentTemplate="{StaticResource MoreIcon}" />
@@ -289,6 +292,7 @@
                             
                         <toolkit:ContextMenuService.ContextMenu>
                             <toolkit:ContextMenu Name="ContextMenu"
+                                                 Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                  IsOpen="{Binding ElementName=moreButton, Path=IsChecked, Mode=TwoWay}"
                                                  Style="{StaticResource ContextMenuStyle}"
                                                  IsZoomEnabled="False">
