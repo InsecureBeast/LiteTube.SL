@@ -53,21 +53,20 @@
               Margin="40,0,40,0"
               Background="{StaticResource PhoneBackgroundBrush}">
             
-            <StackPanel Margin="30">
-                <TextBlock Text="{Binding Path=LocalizedResources.Title, Source={StaticResource LocalizedStrings}}"/>
+            <StackPanel Margin="30,20,30,30">
+                <TextBlock Text="{Binding Path=LocalizedResources.Title, Source={StaticResource LocalizedStrings}}"
+                           Margin="{StaticResource DefaultTextBlockMargin}"/>
                 <TextBox Text="{Binding PlaylistTitle, Mode=TwoWay}"
-                         FontWeight="Light"
-                         Margin="{StaticResource DefaultControlMargin}"/>
+                         FontWeight="Light"/>
                 <TextBlock Text="{Binding Path=LocalizedResources.Description, Source={StaticResource LocalizedStrings}}"
                            Margin="{StaticResource DefaultTextBlockMargin}"/>
                 <TextBox Text="{Binding PlaylistDescription, Mode=TwoWay}"
                          Height="150"
-                         FontWeight="Light"
-                         Margin="{StaticResource DefaultControlMargin}"/>
+                         FontWeight="Light"/>
                 <TextBlock Text="{Binding Path=LocalizedResources.Access, Source={StaticResource LocalizedStrings}}"
-                           Margin="{StaticResource DefaultTextBlockMargin}"/>
+                           Margin="{StaticResource DefaultControlMargin}"/>
                 <toolkit:ListPicker ItemsSource="{Binding AccessItems}"
-                                    SelectedItem="{Binding SelectedAccess, Mode=TwoWay}" 
+                                    SelectedItem="{Binding SelectedAccess, Mode=TwoWay}"
                                     Margin="0"
                                     BorderThickness="1"
                                     FontWeight="Light"/>
