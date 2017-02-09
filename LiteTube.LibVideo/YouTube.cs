@@ -69,7 +69,7 @@ namespace LiteTube.LibVideo
         private static async Task<IEnumerable<YouTubeVideo>> ParseVideosAsync(string source)
         {
             var title = Html.GetNode("title", source);
-            var jsPlayer = "http:" + Json.GetKey("js", source).Replace(@"\/", "/");
+            var jsPlayer = "https://www.youtube.com" + Json.GetKey("js", source).Replace(@"\/", "/");
             var map = Json.GetKey("url_encoded_fmt_stream_map", source);
             var queries = map.Split(',').Select(Unscramble).ToArray();
 
