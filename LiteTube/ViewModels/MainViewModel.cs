@@ -5,6 +5,7 @@ using LiteTube.DataModel;
 using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+using LiteTube.ViewModels.Playlist;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
 using LiteTube.Resources;
@@ -12,24 +13,26 @@ using LiteTube.Resources;
 
 namespace LiteTube.ViewModels
 {
-    public class MainViewModel : SectionBaseViewModel, IListener<UpdateContextEventArgs>, IListener<UpdateSettingsEventArgs>
+    public class MainViewModel : SectionBaseViewModel, IListener<UpdateContextEventArgs>, IListener<UpdateSettingsEventArgs>, IPlaylistsSevice
     {
         private readonly MostPopularViewModel _mostPopularViewModel;
         private readonly ProfileSectionViewModel _profileSectionViewModel;
         private readonly ActivitySectionViewModel _activitySectionViewModel;
+        private readonly PlaylistsContainerViewModel _playlistViewModel;
 #if SILVERLIGHT
         private readonly ProgressIndicatorHolder _indicatorHolder;
 #endif
 
         public MainViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+            : base(geDataSource, connectionListener, null)
         {
 #if SILVERLIGHT
             _indicatorHolder = new ProgressIndicatorHolder();
 #endif
-            _mostPopularViewModel = new MostPopularViewModel(_getGeDataSource, _connectionListener);
-            _profileSectionViewModel = new ProfileSectionViewModel(_getGeDataSource, connectionListener);
-            _activitySectionViewModel = new ActivitySectionViewModel(_getGeDataSource, _connectionListener);
+            _mostPopularViewModel = new MostPopularViewModel(_getDataSource, _connectionListener, this);
+            _profileSectionViewModel = new ProfileSectionViewModel(_getDataSource, connectionListener);
+            _activitySectionViewModel = new ActivitySectionViewModel(_getDataSource, _connectionListener, this);
+            _playlistViewModel = new PlaylistsContainerViewModel(_getDataSource, _connectionListener);
 
             geDataSource().Subscribe((IListener<UpdateSettingsEventArgs>)this);
             geDataSource().Subscribe((IListener<UpdateContextEventArgs>)this);
@@ -79,6 +82,11 @@ namespace LiteTube.ViewModels
         }
 #endif
 
+        public PlaylistsContainerViewModel PlaylistListViewModel
+        {
+            get { return _playlistViewModel; }
+        }
+
         /// <summary>
         /// Creates and adds a few VideoItemViewModel objects into the Items collection.
         /// </summary>
@@ -91,7 +99,7 @@ namespace LiteTube.ViewModels
             IsEmpty = false;
 
             _mostPopularViewModel.Items.Clear();
-            if (_getGeDataSource().IsAuthorized)
+            if (_getDataSource().IsAuthorized)
             {
                 _activitySectionViewModel.Items.Clear();
                 _activitySectionViewModel.FirstLoad();
@@ -113,14 +121,14 @@ namespace LiteTube.ViewModels
 
         private async Task LoadGuideCategories()
         {
-            var sections = await _getGeDataSource().GetCategories();
+            var sections = await _getDataSource().GetCategories();
             if (sections == null)
                 return;
 
             Items.Clear();
             foreach (var section in sections)
             {
-                Items.Add(new VideoCategoryNodeViewModel(section));
+                Items.Add(new VideoCategoryNodeViewModel(section, _getDataSource()));
             }
         }
 
@@ -136,7 +144,7 @@ namespace LiteTube.ViewModels
             var categoryId = viewModel.CategoryId;
             var title = viewModel.Title;
 #if SILVERLIGHT
-            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _getGeDataSource, _connectionListener);
+            PhoneApplicationService.Current.State["model"] = new VideoCategorySectionViewModel(categoryId, title, _getDataSource, _connectionListener);
             App.NavigateTo("/SectionPage.xaml");
 #endif
         }
@@ -179,6 +187,16 @@ namespace LiteTube.ViewModels
 
                 if (Items.Count > 0)
                     IsConnected = true;
+            });
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            _playlistViewModel.IsContainerShown = show;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                _playlistViewModel.SetVideoId(videoId);
+                await _playlistViewModel.FirstLoad();
             });
         }
     }

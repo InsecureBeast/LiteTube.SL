@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using LiteTube.DataModel;
-using LiteTube.DataClasses;
-using LiteTube.ViewModels.Nodes;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+using LiteTube.DataClasses;
+using LiteTube.DataModel;
+using LiteTube.ViewModels.Nodes;
 
-namespace LiteTube.ViewModels
+namespace LiteTube.ViewModels.Playlist
 {
-    class PlaylistListViewModel : SectionBaseViewModel
+    public class PlaylistListViewModel : SectionBaseViewModel
     {
         private readonly string _channelId;
+        private readonly IContextMenuStrategy _contextMenuStrategy;
 
         public PlaylistListViewModel(string channelId, Func<IDataSource> getGeDataSource, 
-            IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null) 
-            : base(getGeDataSource, connectionListener, changeProgressIndicator)
+            IConnectionListener connectionListener, IContextMenuStrategy contextMenuStrategy, Action<bool> changeProgressIndicator = null) 
+            : base(getGeDataSource, connectionListener, null, changeProgressIndicator)
         {
             _channelId = channelId;
+            _contextMenuStrategy = contextMenuStrategy;
         }
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
@@ -27,7 +28,7 @@ namespace LiteTube.ViewModels
             if (string.IsNullOrEmpty(_channelId))
                 return MResponceList.Empty;
 
-            return await _getGeDataSource().GetChannelPlaylistList(_channelId, nextPageToken);
+            return await _getDataSource().GetChannelPlaylistList(_channelId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -58,10 +59,11 @@ namespace LiteTube.ViewModels
                 return;
 
             var id = playlistViewModel.Id;
-            var view = string.Format("/PlaylistVideoPage.xaml", id);
-#if SILVERLIGHT
-            NavigationHelper.Navigate(view, new PlaylistVideoPageViewModel(id, _getGeDataSource, _connectionListener));
-#endif
+            var view = string.Format("/PlaylistPage.xaml", id);
+            if (string.IsNullOrEmpty(_channelId))
+                NavigationHelper.Navigate(view, new PlaylistPageViewModel(id, playlistViewModel.Title, _getDataSource, _connectionListener));
+            else
+                NavigationHelper.Navigate(view, new ChannelPlaylistPageViewModel(id, playlistViewModel.Title, _getDataSource, _connectionListener));
         }
 
         private void AddPlaylistItems(IEnumerable<IPlaylist> items)
@@ -78,7 +80,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new PlaylistNodeViewModel(item));
+                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), _contextMenuStrategy, Delete));
             }
 
             //var itemsList = Items.ToList();
@@ -92,6 +94,10 @@ namespace LiteTube.ViewModels
 
             //    Items.Add(new PlaylistNodeViewModel(item));
             //}
+        }
+
+        protected internal virtual async Task Delete(string playlistId)
+        {
         }
     }
 }

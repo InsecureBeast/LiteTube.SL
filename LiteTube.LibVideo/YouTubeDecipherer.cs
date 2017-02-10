@@ -11,8 +11,9 @@ namespace LiteTube.LibVideo
         public static string Decipher(string cipher, string javaScript)
         {
             //Find "C" in this: var A = B.sig||C (B.s)
-            string functNamePattern = @"\.sig\s*\|\|([a-zA-Z0-9\$]+)\("; //Regex Formed To Find Word or DollarSign
-
+            //string functNamePattern = @"\.sig\s*\|\|([a-zA-Z0-9\$]+)\("; //Regex Formed To Find Word or DollarSign
+            //Find "Um" in this: a.set("signature",Um(c))
+            string functNamePattern = "\"signature\",([a-zA-Z0-9\\$]+)";
             var funcName = Regex.Match(javaScript, functNamePattern).Groups[1].Value;
 
             if (funcName.Contains("$"))

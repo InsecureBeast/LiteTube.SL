@@ -79,6 +79,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access.
+        /// </summary>
+        public static string Access {
+            get {
+                return ResourceManager.GetString("Access", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activity.
         /// </summary>
         public static string Activity {
@@ -88,11 +97,20 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to favorites.
+        ///   Looks up a localized string similar to to favorites.
         /// </summary>
         public static string AddToFavorites {
             get {
                 return ResourceManager.GetString("AddToFavorites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to playlist.
+        /// </summary>
+        public static string AddToPlaylist {
+            get {
+                return ResourceManager.GetString("AddToPlaylist", resourceCulture);
             }
         }
         
@@ -214,6 +232,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} days ago.
         /// </summary>
         public static string Days5Ago {
@@ -232,11 +259,29 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to delete.
         /// </summary>
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting....
+        /// </summary>
+        public static string Deleting {
+            get {
+                return ResourceManager.GetString("Deleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
@@ -286,7 +331,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to favorites.
+        ///   Looks up a localized string similar to Favorites.
         /// </summary>
         public static string Favorites {
             get {
@@ -394,6 +439,24 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Manage {
+            get {
+                return ResourceManager.GetString("Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage playlists.
+        /// </summary>
+        public static string ManagePlaylist {
+            get {
+                return ResourceManager.GetString("ManagePlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to medium.
         /// </summary>
         public static string Medium {
@@ -453,6 +516,15 @@ namespace LiteTube.Resources {
         public static string NoMatchVideo {
             get {
                 return ResourceManager.GetString("NoMatchVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play all.
+        /// </summary>
+        public static string PlayAll {
+            get {
+                return ResourceManager.GetString("PlayAll", resourceCulture);
             }
         }
         
@@ -673,6 +745,24 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Private.
+        /// </summary>
+        public static string StatusPrivate {
+            get {
+                return ResourceManager.GetString("StatusPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        public static string StatusPublic {
+            get {
+                return ResourceManager.GetString("StatusPublic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subscribe.
         /// </summary>
         public static string Subscribe {
@@ -732,6 +822,15 @@ namespace LiteTube.Resources {
         public static string ThisYear {
             get {
                 return ResourceManager.GetString("ThisYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
@@ -849,6 +948,15 @@ namespace LiteTube.Resources {
         public static string WatchHistory {
             get {
                 return ResourceManager.GetString("WatchHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to watch later.
+        /// </summary>
+        public static string WatchLater {
+            get {
+                return ResourceManager.GetString("WatchLater", resourceCulture);
             }
         }
         

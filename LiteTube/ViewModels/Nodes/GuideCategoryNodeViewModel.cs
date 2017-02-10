@@ -1,12 +1,14 @@
 ﻿using System;
 using LiteTube.DataClasses;
 using LiteTube.ViewModels.Nodes;
+using LiteTube.DataModel;
+using LiteTube.Common;
 
 namespace LiteTube.ViewModels
 {
     class GuideCategoryNodeViewModel : NodeViewModelBase
     {
-        public GuideCategoryNodeViewModel(IGuideCategory category)
+        public GuideCategoryNodeViewModel(IGuideCategory category, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider)
         {
             Title = category.Title;
             CategoryId = category.Id;

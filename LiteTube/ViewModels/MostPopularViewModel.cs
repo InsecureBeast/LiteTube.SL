@@ -3,6 +3,7 @@ using LiteTube.DataClasses;
 using LiteTube.DataModel;
 using System.Threading.Tasks;
 using LiteTube.Common.Helpers;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
@@ -10,16 +11,16 @@ namespace LiteTube.ViewModels
     {
         private readonly IVideoList _videoList;
 
-        public MostPopularViewModel(IVideoList videoList, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+        public MostPopularViewModel(IVideoList videoList, Func<IDataSource> geDataSource, IConnectionListener connectionListener, IPlaylistsSevice playlistService)
+            : base(geDataSource, connectionListener, playlistService)
         {
             _videoList = videoList;
             _uniqueId = videoList.GetHashCode().ToString();
             ShowAdv = SettingsHelper.IsAdvVisible;
         }
 
-        public MostPopularViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+        public MostPopularViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener, IPlaylistsSevice playlistService)
+            : base(geDataSource, connectionListener, playlistService)
         {
             ShowAdv = SettingsHelper.IsAdvVisible;
         }
@@ -44,7 +45,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetMostPopular(nextPageToken);
+            return await _getDataSource().GetMostPopular(nextPageToken);
         }
     }
 }

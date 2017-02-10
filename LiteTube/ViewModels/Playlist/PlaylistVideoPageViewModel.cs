@@ -4,17 +4,18 @@ using LiteTube.DataModel;
 using LiteTube.Common.Helpers;
 using LiteTube.Common;
 using LiteTube.ViewModels.Nodes;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
-    public class PlaylistVideoPageViewModel : PropertyChangedBase
+    class PlaylistVideoPageViewModel : PropertyChangedBase
     {
         public event EventHandler PlaylistItemChanged;
 
         private VideoPageViewModel _videoViewModel;
         private readonly IConnectionListener _connectionListener;
         private readonly Func<IDataSource> _getDataSource;
-        private readonly PlaylistVideosViewModel _playlistVideosViewModel;
+        protected PlaylistVideosViewModel _playlistVideosViewModel;
         private readonly NavigationPanelViewModel _navigatioPanelViewModel;
 
         public PlaylistVideoPageViewModel(string playlistId, Func<IDataSource> getDataSource, IConnectionListener connectionListener) 
@@ -24,7 +25,7 @@ namespace LiteTube.ViewModels
 
             _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
             _videoViewModel = new VideoPageViewModel();
-            _playlistVideosViewModel = new PlaylistVideosViewModel(playlistId, getDataSource, connectionListener, (s) => { PlaylistVideoItemClick(s); });
+            _playlistVideosViewModel = new PlaylistVideosViewModel(playlistId, getDataSource, connectionListener, PlaylistVideoItemClick);
             LoadPlaylistVideos(playlistId);
         }
 
@@ -87,7 +88,7 @@ namespace LiteTube.ViewModels
             });
         }
 
-        private void PlaylistVideoItemClick(NavigationObject navObject)
+        protected void PlaylistVideoItemClick(NavigationObject navObject)
         {
             if (navObject == null)
                 return;

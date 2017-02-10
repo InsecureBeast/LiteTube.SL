@@ -3,9 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
 
+    <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="#FFA5A5A5" />
+
+    <Style x:Key="ContextMenuStyle" TargetType="toolkit:ContextMenu">
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ContextMenuBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ContextMenuBackgroundBrush}" />
+    </Style>
+
     <Style TargetType="toolkit:MenuItem">
         <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}" />
     </Style>
 
-    
 </ResourceDictionary>

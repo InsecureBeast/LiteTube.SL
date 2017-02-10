@@ -4,13 +4,14 @@ using LiteTube.DataModel;
 using System;
 using System.Threading.Tasks;
 using LiteTube.Common.Helpers;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
     public class ActivitySectionViewModel : SectionBaseViewModel
     {
-        public ActivitySectionViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener)
-            : base(geDataSource, connectionListener)
+        public ActivitySectionViewModel(Func<IDataSource> geDataSource, IConnectionListener connectionListener, IPlaylistsSevice playlistService)
+            : base(geDataSource, connectionListener, playlistService)
         {
             ShowAdv = SettingsHelper.IsAdvVisible;
         }
@@ -35,7 +36,7 @@ namespace LiteTube.ViewModels
 
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetActivity(nextPageToken);
+            return await _getDataSource().GetActivity(nextPageToken);
         }
     }
 }

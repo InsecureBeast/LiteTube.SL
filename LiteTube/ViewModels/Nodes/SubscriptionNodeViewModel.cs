@@ -1,4 +1,6 @@
-﻿using LiteTube.DataClasses;
+﻿using LiteTube.Common;
+using LiteTube.DataClasses;
+using LiteTube.DataModel;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -7,7 +9,7 @@ namespace LiteTube.ViewModels.Nodes
         private readonly ISubscription _subscription;
         private readonly string _id;
 
-        public SubscriptionNodeViewModel(ISubscription subscription)
+        public SubscriptionNodeViewModel(ISubscription subscription, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider)
         {
             _subscription = subscription;
             Title = subscription.Title;

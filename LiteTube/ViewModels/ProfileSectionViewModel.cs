@@ -4,6 +4,8 @@ using System;
 using LiteTube.Common;
 using LiteTube.DataModel;
 using System.Windows;
+using LiteTube.Common.Helpers;
+using LiteTube.Resources;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
 #else
@@ -18,7 +20,6 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _historyCommand;
         private readonly RelayCommand<FrameworkElement> _recommendedCommand;
         private readonly RelayCommand<FrameworkElement> _videoCategoryCommand;
-        private readonly RelayCommand<FrameworkElement> _favoritesCommand;
         private readonly RelayCommand<FrameworkElement> _likedCommand;
         private readonly RelayCommand<FrameworkElement> _uploadedCommand;
         private readonly RelayCommand<FrameworkElement> _myPlaylistsCommand;
@@ -44,7 +45,6 @@ namespace LiteTube.ViewModels
             _historyCommand = new RelayCommand<FrameworkElement>(GetHistory);
             _recommendedCommand = new RelayCommand<FrameworkElement>(Recommended);
             _videoCategoryCommand = new RelayCommand<FrameworkElement>(VideoCategories);
-            _favoritesCommand = new RelayCommand<FrameworkElement>(Favorites);
             _likedCommand = new RelayCommand<FrameworkElement>(Liked);
             _uploadedCommand = new RelayCommand<FrameworkElement>(Uploaded);
             _myPlaylistsCommand = new RelayCommand<FrameworkElement>(MyPlaylists);
@@ -73,11 +73,6 @@ namespace LiteTube.ViewModels
         public ICommand VideoCategoryCommand
         {
             get { return _videoCategoryCommand; }
-        }
-
-        public ICommand FavoritesCommand
-        {
-            get { return _favoritesCommand; }
         }
 
         public ICommand LikedCommand
@@ -215,24 +210,19 @@ namespace LiteTube.ViewModels
             NavigateTo(3);
         }
 
-        private void Favorites(FrameworkElement control)
+        private void Liked(FrameworkElement control)
         {
             NavigateTo(4);
         }
 
-        private void Liked(FrameworkElement control)
+        private void Uploaded(FrameworkElement control)
         {
             NavigateTo(5);
         }
 
-        private void Uploaded(FrameworkElement control)
-        {
-            NavigateTo(6);
-        }
-
         private void GetHistory(FrameworkElement control)
         {
-            NavigateTo(7);
+            NavigateTo(6);
         }
 
         private void NavigateTo(int index)

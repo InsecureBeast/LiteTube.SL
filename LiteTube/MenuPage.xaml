@@ -83,22 +83,13 @@
                                   ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
             </phone:PivotItem>
 
-            <!--Pivot item four-->
-            <phone:PivotItem Name="FavoritesItem"
-                             Header="{Binding Path=LocalizedResources.Favorites, Source={StaticResource LocalizedStrings}}"
-                             Margin="{StaticResource DefaultListBoxMargin}">
-                <ContentPresenter x:Name="FavoritesList"
-                                  Content="{Binding FavoritesViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListViewContextMenu}"/>
-            </phone:PivotItem>
-
             <!--Pivot item five-->
             <phone:PivotItem Name="LikedItem"
                              Header="{Binding Path=LocalizedResources.LikedVideos, Source={StaticResource LocalizedStrings}}"
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="LikedList"
                                   Content="{Binding LikedViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"/>
             </phone:PivotItem>
 
             <!--Pivot item six-->
@@ -107,7 +98,7 @@
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="UploadedList"
                                   Content="{Binding UploadedPageViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"/>
 
             </phone:PivotItem>
             
@@ -117,13 +108,16 @@
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"/>
             </phone:PivotItem>
         </phone:Pivot>
 
         <!--Before shipping remove this XAML and the image itself.-->
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
+        <controls:PlaylistsContainer DataContext="{Binding PlaylistListViewModel}"
+                                     IsOpen="{Binding IsContainerShown}"
+                                     Grid.RowSpan="2"/>
     </Grid>
     
 </phone:PhoneApplicationPage>
