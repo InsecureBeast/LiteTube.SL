@@ -63,6 +63,8 @@
                            Margin="{StaticResource DefaultTextBlockMargin}"/>
                 <TextBox Text="{Binding PlaylistDescription, Mode=TwoWay}"
                          Height="150"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
                          FontWeight="Light"/>
                 <TextBlock Text="{Binding Path=LocalizedResources.Access, Source={StaticResource LocalizedStrings}}"
                            Margin="{StaticResource DefaultControlMargin}"/>
