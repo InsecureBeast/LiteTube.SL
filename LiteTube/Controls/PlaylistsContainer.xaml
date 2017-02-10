@@ -131,7 +131,7 @@
 
                 <Button Content="{Binding Path=LocalizedResources.Manage, Source={StaticResource LocalizedStrings}}"
                         BorderThickness="1"
-                        Margin="0"
+                        Margin="-8,0,0,0"
                         FontWeight="Light"
                         Command="{Binding ManageCommand}"
                         Background="{StaticResource PhoneSecondaryBackgroundBrush}"/>
@@ -139,7 +139,7 @@
                 <Button Content="{Binding Path=LocalizedResources.Close, Source={StaticResource LocalizedStrings}}"
                         FontWeight="Light"
                         Grid.Column="1"
-                        Margin="0"
+                        Margin="0,0,-8,0"
                         BorderThickness="1"
                         Command="{Binding CloseCommand}"
                         Background="{StaticResource PhoneSecondaryBackgroundBrush}"/>
