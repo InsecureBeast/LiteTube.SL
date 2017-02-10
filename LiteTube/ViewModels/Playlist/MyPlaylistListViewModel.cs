@@ -36,16 +36,26 @@ namespace LiteTube.ViewModels.Playlist
 
         protected internal override async Task Delete(string playlistId)
         {
-            IsDeleting = true;
-            await _getDataSource().RemovePlaylist(playlistId);
-            var item = Items.FirstOrDefault(i => i.Id == playlistId);
-            if (item == null)
-                return;
+            try
+            {
+                IsDeleting = true;
+                await _getDataSource().RemovePlaylist(playlistId);
+                var item = Items.FirstOrDefault(i => i.Id == playlistId);
+                if (item == null)
+                    return;
 
-            Items.Remove(item);
-            App.ViewModel.PlaylistListViewModel.Items.Clear();
-            _playlistsChangeHandler.UpdatePlaylists();
-            IsDeleting = false;
+                Items.Remove(item);
+                App.ViewModel.PlaylistListViewModel.Items.Clear();
+                _playlistsChangeHandler.UpdatePlaylists();
+            }
+            catch (Exception e)
+            {
+                throw new LiteTubeException(e);
+            }
+            finally
+            {
+                IsDeleting = false;
+            }
         }
     }
 }

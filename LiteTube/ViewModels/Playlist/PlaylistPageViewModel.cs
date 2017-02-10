@@ -97,14 +97,24 @@ namespace LiteTube.ViewModels.Playlist
 
         private async Task Delete()
         {
-            IsDeleting = true;
-            var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
-            foreach (var item in items)
+            try
             {
-                await _getDataSource().RemoveItemFromPlaylist(item.Id);
-                Items.Remove(item);
+                IsDeleting = true;
+                var items = Items.Where(i => ((PlayListItemNodeViewModel) i).IsSelected).ToList();
+                foreach (var item in items)
+                {
+                    await _getDataSource().RemoveItemFromPlaylist(item.Id);
+                    Items.Remove(item);
+                }
             }
-            IsDeleting = false;
+            catch (Exception e)
+            {
+                throw new LiteTubeException(e);
+            }
+            finally
+            {
+                IsDeleting = false;
+            }
         }
     }
 
