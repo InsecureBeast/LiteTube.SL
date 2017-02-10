@@ -13,6 +13,7 @@ namespace LiteTube.ViewModels.Playlist
     class PlaylistPageViewModel: SectionBaseViewModel
     {
         private readonly string _playlistId;
+        private bool _isDeleting = false;
 
         public PlaylistPageViewModel(string playlistId, string title, Func<IDataSource> geDataSource, IConnectionListener connectionListener)
             : base(geDataSource, connectionListener, null)
@@ -21,6 +22,16 @@ namespace LiteTube.ViewModels.Playlist
             Title = title;
             ShowAdv = SettingsHelper.IsAdvVisible;
             LayoutHelper.InvokeFromUiThread(async() => await FirstLoad());
+        }
+
+        public bool IsDeleting
+        {
+            get { return _isDeleting; }
+            set
+            {
+                _isDeleting = value;
+                NotifyOfPropertyChanged(() => IsDeleting);
+            }
         }
 
         public override string ToString()
@@ -86,12 +97,14 @@ namespace LiteTube.ViewModels.Playlist
 
         private async Task Delete()
         {
+            IsDeleting = true;
             var items = Items.Where(i => ((PlayListItemNodeViewModel)i).IsSelected).ToList();
             foreach (var item in items)
             {
                 await _getDataSource().RemoveItemFromPlaylist(item.Id);
                 Items.Remove(item);
             }
+            IsDeleting = false;
         }
     }
 

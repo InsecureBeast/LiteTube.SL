@@ -119,6 +119,9 @@
     <Compile Include="Controls\ComboBox.xaml.cs">
       <DependentUpon>ComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeletingBlockControl.xaml.cs">
+      <DependentUpon>DeletingBlockControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ListBoxTemplateSelector.cs" />
     <Compile Include="Controls\ListViewItem.xaml.cs">
       <DependentUpon>ListViewItem.xaml</DependentUpon>
@@ -325,6 +328,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DeletingBlockControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="LiteTube.Controls.DeletingBlockControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+    
+    <Grid x:Name="LayoutRoot">
+        <!--IsBusy block control-->
+        <Grid Background="Black"
+              Grid.Row="0"
+              Visibility="{Binding ElementName=DeletingGrid, Path=Visibility}"
+              Opacity="0.7"/>
+
+        <Grid Name="DeletingGrid"
+              Visibility="{Binding IsDeleting, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding Path=LocalizedResources.Deleting, Source={StaticResource LocalizedStrings}}"
+                       Foreground="White"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"/>
+            <ProgressBar IsIndeterminate="True"
+                         Margin="{StaticResource DefaultControlMargin}"
+                         Grid.Row="2"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</UserControl>

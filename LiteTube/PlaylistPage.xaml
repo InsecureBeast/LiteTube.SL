@@ -37,6 +37,10 @@
                           Margin="{StaticResource DefaultListBoxMargin}"
                           Content="{Binding}"
                           ContentTemplate="{StaticResource LoadingListView}"/>
+
+        <!--Deleting block control-->
+        <controls:DeletingBlockControl Grid.Row="0"
+                                       Grid.RowSpan="3"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
