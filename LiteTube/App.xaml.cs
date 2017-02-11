@@ -11,10 +11,12 @@ using Microsoft.Phone.Shell;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
 using Windows.ApplicationModel.Activation;
-using Google;
 using LiteTube.Common.Exceptions;
 using System.Xml;
 using System.Threading;
+using Google;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace LiteTube
 {
@@ -52,6 +54,9 @@ namespace LiteTube
 
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
+
+            // Task
+            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
 
             // Standard XAML initialization
             InitializeComponent();
@@ -230,6 +235,17 @@ namespace LiteTube
             if (e.ExceptionObject.InnerException is System.Net.WebException)
                 return;
 
+            if (e.ExceptionObject is OperationCanceledException)
+                return;
+
+            if (e.ExceptionObject is TargetInvocationException)
+            {
+                if (e.ExceptionObject.InnerException == null)
+                    return;
+
+                _container.DialogService.ShowException(e.ExceptionObject.InnerException);
+                return;
+            }
 #if DEBUG
 #else
             if (e.ExceptionObject is GoogleApiException)
@@ -278,6 +294,15 @@ namespace LiteTube
             }
 
             return false;
+        }
+
+        private void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            if (e.Exception.InnerException == null)
+                return;
+
+            _container.DialogService.ShowException(e.Exception.InnerException);
+            e.SetObserved();
         }
 
         #region Phone application initialization
@@ -478,11 +503,17 @@ namespace LiteTube
         private void BuildLocalizedApplicationBar()
         {
             // Set the page's AplipcationBar to a new instance of ApplicationBar.
-            var appBar = Application.Current.Resources["GlobalAppBar"] as ApplicationBar;
+            ApplicationBar appBar;
+            if (!Application.Current.Resources.Contains("GlobalAppBar"))
+            {
+                appBar = new ApplicationBar();
+            }
+            else
+            {
+                appBar = Application.Current.Resources["GlobalAppBar"] as ApplicationBar;
+            }
+
             var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
-            if (appBar == null) 
-                return;
-            
             appBar.Buttons.Clear();
             appBar.MenuItems.Clear();
             appBar.Buttons.Add(homeButton);

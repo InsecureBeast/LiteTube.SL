@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using System.Diagnostics;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
-    class ChannelPageViewModel : SectionBaseViewModel
+    class ChannelPageViewModel : SectionBaseViewModel, IPlaylistsSevice
     {
         private IChannel _channel;
         private readonly string _channelId;
@@ -24,13 +25,15 @@ namespace LiteTube.ViewModels
         private int _selectedIndex;
 
         public ChannelPageViewModel(string channelId, string username, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
-            : base(getDataSource, connectionListener)
+            : base(getDataSource, connectionListener, null)
         {
             _channelId = channelId;
             ShowAdv = SettingsHelper.IsAdvVisible;
             InitializeCommands();
-            _playlistListViewModel = new PlaylistListViewModel(channelId, getDataSource, connectionListener);
+            _playlistListViewModel = new PlaylistListViewModel(channelId, getDataSource, connectionListener, new NoContextMenuStrategy());
             _playlistListViewModel.ShowAdv = SettingsHelper.IsAdvVisible;
+
+            _playlistService = this;
 
             LayoutHelper.InvokeFromUiThread(async() => 
             {
@@ -120,9 +123,24 @@ namespace LiteTube.ViewModels
             get { return _playlistListViewModel; }
         }
 
+        public PlaylistsContainerViewModel PlaylistContainerListViewModel
+        {
+            get { return App.ViewModel.PlaylistListViewModel; }
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            PlaylistContainerListViewModel.IsContainerShown = true;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                PlaylistContainerListViewModel.SetVideoId(videoId);
+                await PlaylistContainerListViewModel.FirstLoad();
+            });
+        }
+
         internal override async Task<IResponceList> GetItems(string nextPageToken)
         {
-            return await _getGeDataSource().GetChannelVideoList(_channelId, nextPageToken);
+            return await _getDataSource().GetChannelVideoList(_channelId, nextPageToken);
         }
 
         internal override void LoadItems(IResponceList videoList)
@@ -141,17 +159,17 @@ namespace LiteTube.ViewModels
 
         private void InitializeCommands()
         {
-            _subscribeCommand = new SubscribeCommand(_getGeDataSource, () => _channelId, InvalidateCommands);
-            _unsubscribeCommand = new UnsubscribeCommand(_getGeDataSource, () => _channelId, InvalidateCommands);
+            _subscribeCommand = new SubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
+            _unsubscribeCommand = new UnsubscribeCommand(_getDataSource, () => _channelId, InvalidateCommands);
         }
 
         private async Task LoadChannel(string channelId, string username)
         {
             IChannel ch;
             if (string.IsNullOrEmpty(username))
-                ch = await _getGeDataSource().GetChannel(channelId);
+                ch = await _getDataSource().GetChannel(channelId);
             else
-                ch = await _getGeDataSource().GetChannelByUsername(username);
+                ch = await _getDataSource().GetChannelByUsername(username);
 
             _uniqueId = ch.Id;
             Title = ch.Title;
@@ -161,12 +179,12 @@ namespace LiteTube.ViewModels
             ChannelImage = ch.Thumbnails.GetThumbnailUrl();
             Image = ch.Image;
             _channel = ch;
-            IsSubscribed = _getGeDataSource().IsSubscribed(channelId);
+            IsSubscribed = _getDataSource().IsSubscribed(channelId);
         }
 
         private void InvalidateCommands()
         {
-            IsSubscribed = _getGeDataSource().IsSubscribed(_channelId);
+            IsSubscribed = _getDataSource().IsSubscribed(_channelId);
         }
 
         private async void OnSelectedIndexChanged(int index)

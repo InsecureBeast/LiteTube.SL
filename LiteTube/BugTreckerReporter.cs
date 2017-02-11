@@ -49,7 +49,7 @@ namespace LiteTube
 
         private static async Task Send(Exception exception, string addInfo)
         {
-            const string url = "https://bitbucket.org/api/1.0/repositories/insecureBeast/litetubesl/issues/";
+            const string url = "https://bitbucket.org/api/1.0/repositories/insecureBeast/litetube.sl/issues/";
             var request = WebRequest.Create(url) as HttpWebRequest;
 
             string credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes("insecureBeast" + ":" + "GM9d3Lqw"));

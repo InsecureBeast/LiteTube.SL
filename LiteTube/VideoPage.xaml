@@ -325,6 +325,10 @@
                            Style="{StaticResource PhoneTextNormalStyle}"/>
             </Border>
         </Grid>
+
+        <controls:PlaylistsContainer DataContext="{Binding PlaylistListViewModel}"
+                                     IsOpen="{Binding IsContainerShown}"
+                                     Grid.RowSpan="3"/>
     </Grid>
 
     <!--<phone:PhoneApplicationPage.ApplicationBar>

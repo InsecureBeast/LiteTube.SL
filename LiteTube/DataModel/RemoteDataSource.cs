@@ -48,17 +48,19 @@ namespace LiteTube.DataModel
         IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
         Task<IEnumerable<string>> GetAutoCompleteSearchItems(string query);
-#region playlists
+        
+        #region playlists
         Task<IVideoList> GetHistory(int maxResult, string nextPageToken);
-        Task AddToPlaylist(string videoId, string playlistId);
-        Task RemovePlaylistItem(string playlistItemId);
-        Task<IResponceList> GetFavorites(int maxResult, string nextPageToken);
+        Task AddItemToPlaylist(string videoId, string playlistId);
+        Task RemoveItemFromPlaylist(string playlistItemId);
+        Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken);
         Task<IResponceList> GetLiked(int maxResult, string nextPageToken);
         Task<IPlaylistList> GetChannelPlaylistList(string channelId, int maxResult, string nextPageToken);
         Task<IPlaylistList> GetMyPlaylistList(int maxResult, string nextPageToken);
-        //Task<IPlaylistItemList> GetPlaylistItems(string playlistId, int maxResult, string nextPageToken);
         Task<IVideoList> GetVideoPlaylist(string playListId, int maxResult, string nextPageToken);
-#endregion
+        Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus);
+        Task RemovePlaylist(string playlistId);
+        #endregion
     }
 
     class RemoteDataSource : IRemoteDataSource
@@ -168,16 +170,7 @@ namespace LiteTube.DataModel
             if (res == null)
                 return MVideoList.Empty;
 
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
-
-            var videos = await GetVideo(videoIds.ToString());
-            videos.NextPageToken = res.NextPageToken;
-            return new MVideoList(videos);
+            return await GetVideoList(res);
         }
 
         private async Task<VideoListResponse> GetVideo(string videoId)
@@ -285,16 +278,8 @@ namespace LiteTube.DataModel
             if (res == null)
                 return MVideoList.Empty;
 
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
+            return await GetVideoList(res);
 
-            var videos = await GetVideo(videoIds.ToString());
-            videos.NextPageToken = res.NextPageToken;
-            return new MVideoList(videos);
             //var request = _youTubeService.Search.List("snippet,id");
             //request.Key = _youTubeServiceControl.ApiKey;
             //request.RelatedToVideoId = videoId;
@@ -467,12 +452,19 @@ namespace LiteTube.DataModel
             if (!IsAuthorized)
                 return MVideoList.Empty;
 
+            var res = await _youTubeWeb.GetHistoryVideo(_youTubeServiceControl.OAuthToken, nextPageToken);
+            if (res == null)
+                return MVideoList.Empty;
+
+            return await GetVideoList(res);
+            /*
             if (string.IsNullOrEmpty(_historyPlayListId))
                 return MVideoList.Empty;
 
             var playListItems = await GetPlaylistItems(_historyPlayListId, maxResult, nextPageToken);
             var videoList = await GetVideoList(playListItems);
             return videoList;
+            */
         }
 
         public bool IsSubscribed(string channelId)
@@ -549,7 +541,7 @@ namespace LiteTube.DataModel
             return new YouTubeUri() { Uri = new Uri(url) };
         }
 
-        public async Task AddToPlaylist(string videoId, string playlistId)
+        public async Task AddItemToPlaylist(string videoId, string playlistId)
         {
             if (!IsAuthorized)
                 return;
@@ -573,7 +565,7 @@ namespace LiteTube.DataModel
             await request.ExecuteAsync();
         }
 
-        public async Task RemovePlaylistItem(string playlistItemId)
+        public async Task RemoveItemFromPlaylist(string playlistItemId)
         {
             if (!IsAuthorized)
                 return;
@@ -584,18 +576,6 @@ namespace LiteTube.DataModel
             //request.OauthToken = _youTubeServiceControl.OAuthToken;
 
             await request.ExecuteAsync();
-        }
-
-        public async Task<IResponceList> GetFavorites(int maxResult, string nextPageToken)
-        {
-            if (!IsAuthorized)
-                return MResponceList.Empty;
-
-            if (string.IsNullOrEmpty(_favoritesPlaylistId))
-                return MResponceList.Empty;
-
-            var playListItems = await GetPlaylistItems(_favoritesPlaylistId, maxResult, nextPageToken);
-            return playListItems;
         }
 
         public async Task<IResponceList> GetLiked(int maxResult, string nextPageToken)
@@ -691,6 +671,56 @@ namespace LiteTube.DataModel
             return new MPlaylistList(response);
         }
 
+        public async Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
+        {
+            // Create a new, private playlist in the authorized user's channel.
+            if (string.IsNullOrEmpty(title))
+                return null;
+
+            try
+            {
+                var newPlaylist = new Playlist();
+                newPlaylist.Snippet = new PlaylistSnippet();
+                newPlaylist.Snippet.Title = title;
+                newPlaylist.Snippet.Description = description;
+                newPlaylist.Status = new PlaylistStatus();
+                newPlaylist.Status.PrivacyStatus = privacyStatus.ToString().ToLower();// "public";
+                newPlaylist = await _youTubeService.Playlists.Insert(newPlaylist, "snippet,status,contentDetails,id").ExecuteAsync();
+                return new MPlaylist(newPlaylist);
+            }
+            catch (Exception e)
+            {
+                throw new LiteTubeException(e);
+            }
+        }
+
+        public async Task RemovePlaylist(string playlistId)
+        {
+            try
+            {
+                await _youTubeService.Playlists.Delete(playlistId).ExecuteAsync();
+            }
+            catch (Exception e)
+            {
+                throw new LiteTubeException(e);
+            }
+        }
+
+        #region Private methods
+        private async Task<IVideoList> GetVideoList(YouTubeResponce res)
+        {
+            var videoIds = new StringBuilder();
+            foreach (var id in res.Ids)
+            {
+                videoIds.AppendLine(id);
+                videoIds.AppendLine(",");
+            }
+
+            var videos = await GetVideo(videoIds.ToString());
+            videos.NextPageToken = res.NextPageToken;
+            return new MVideoList(videos);
+        }
+
         //private void CheckProfile()
         //{
         //    if (!_youTubeServiceControl.IsAuthorized)
@@ -742,11 +772,11 @@ namespace LiteTube.DataModel
                 _favoritesPlaylistId == null || _profileInfo == null)
             {
                 var youTubeService = _youTubeServiceControl.GetAuthorizedService();
-                var request = youTubeService.Channels.List("contentDetails,snippet");
+                var request = youTubeService.Channels.List("contentDetails,snippet,ContentOwnerDetails");
                 request.Key = _youTubeServiceControl.ApiKey;
                 request.PageToken = string.Empty;
                 request.Mine = true;
-                //request.OauthToken = _youTubeServiceControl.OAuthToken;
+                request.OauthToken = _youTubeServiceControl.OAuthToken;
 
                 var response = await request.ExecuteAsync();
                 var item = response.Items.FirstOrDefault();
@@ -762,12 +792,32 @@ namespace LiteTube.DataModel
                 _likedPlayListId = item.ContentDetails.RelatedPlaylists.Likes;
                 _favoritesPlaylistId = item.ContentDetails.RelatedPlaylists.Favorites;
 
-                var name = item.Snippet.Title;
-                var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
-                var registered = item.Snippet.PublishedAt;
-                var channelId = item.Id;
-                _profileInfo = new MProfile(channelId, image, name, registered);
+                if (item.Snippet != null)
+                {
+                    var name = item.Snippet.Title;
+                    var image = new MThumbnailDetails(item.Snippet.Thumbnails).GetThumbnailUrl();
+                    var registered = item.Snippet.PublishedAt;
+                    var channelId = item.Id;
+                    _profileInfo = new MProfile(channelId, image, name, registered);
+                }
             }
+        }
+
+        private string GetPlaylistId(string id, string playlistId)
+        {
+            if (string.IsNullOrEmpty(playlistId))
+                return string.Empty;
+
+            var split = playlistId.Split('-');
+            if (split.Length == 2)
+                return playlistId;
+
+            return string.Format("{0}-{1}", split[0], id);
+        }
+
+        private void GetPlaylistId(string id, string[] split)
+        {
+            
         }
 
         private void ClearProfileInfo()
@@ -853,5 +903,6 @@ namespace LiteTube.DataModel
             response.NextPageToken = nextPageToken;
             return new MPlaylistList(response);
         }
+        #endregion
     }
 }

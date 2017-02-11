@@ -10,6 +10,7 @@ using LiteTube.ViewModels.Nodes;
 using MyToolkit.Command;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
+using LiteTube.ViewModels.Playlist;
 #if SILVERLIGHT
 using System.Windows.Controls;
 #else
@@ -27,7 +28,7 @@ namespace LiteTube.ViewModels
         protected string _uniqueId;
         protected string _title;
         private string _description;
-        protected readonly Func<IDataSource> _getGeDataSource;
+        protected readonly Func<IDataSource> _getDataSource;
         protected readonly IConnectionListener _connectionListener;
         protected Frame _frame;
         protected bool _hasItems;
@@ -43,8 +44,14 @@ namespace LiteTube.ViewModels
         //private ListViewSelectionMode _selectionMode;
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
         private bool _isConnected = true;
-        
-        public SectionBaseViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator = null)
+        protected IPlaylistsSevice _playlistService;
+
+
+        public SectionBaseViewModel(
+            Func<IDataSource> getGeDataSource, 
+            IConnectionListener connectionListener,
+            IPlaylistsSevice playlistService, 
+            Action<bool> changeProgressIndicator = null)
             :base(getGeDataSource, connectionListener, changeProgressIndicator)
         {
             if (getGeDataSource == null)
@@ -52,22 +59,21 @@ namespace LiteTube.ViewModels
             if (connectionListener == null) 
                 throw new ArgumentNullException("connectionListener");
 
-            _getGeDataSource = getGeDataSource;
+            _getDataSource = getGeDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
+            _playlistService = playlistService;
 
             _hasItems = true;
-            Items = new ObservableCollection<NodeViewModelBase>();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
             _selectCommand = new Common.RelayCommand(SelectItems);
             _deleteCommand = new Common.RelayCommand(DeleteItems);
-
-            //SelectionMode = ListViewSelectionMode.None;
-            IsItemClickEnabled = true;
             _selectedItems = new ObservableCollection<NodeViewModelBase>();
-
             _isConnected = connectionListener.CheckNetworkAvailability();
+
+            Items = new ObservableCollection<NodeViewModelBase>();
+            IsItemClickEnabled = true;
         }
 
         public string UniqueId 
@@ -101,7 +107,7 @@ namespace LiteTube.ViewModels
 
         public Func<IDataSource> GetDataSource
         {
-            get { return _getGeDataSource; }
+            get { return _getDataSource; }
         }
 
         public bool IsLoading
@@ -116,16 +122,6 @@ namespace LiteTube.ViewModels
                 NotifyOfPropertyChanged(() => IsLoading);
             }
         }
-
-        //public ListViewSelectionMode SelectionMode
-        //{
-        //    get { return _selectionMode; }
-        //    protected set
-        //    {
-        //        _selectionMode = value;
-        //        NotifyOfPropertyChanged(() => SelectionMode);
-        //    }
-        //}
 
         public ObservableCollection<NodeViewModelBase> SelectedItems
         {
@@ -277,7 +273,7 @@ namespace LiteTube.ViewModels
                     continue;
 
                 AdvHelper.AddAdv(Items, ShowAdv);
-                Items.Add(new VideoItemViewModel(item));
+                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider(), _playlistService));
             }
             /*
             foreach (var item in items)
@@ -291,6 +287,15 @@ namespace LiteTube.ViewModels
                 Items.Add(new VideoItemViewModel(item));
             }
             */
+        }
+
+        protected virtual IContextMenuStrategy GetContextMenuProvider()
+        {
+            return new ContextMenuStartegy()
+            {
+                CanAddToPlayList = true,
+                CanDelete = false
+            };
         }
 
         private async void LoadMore()
@@ -349,7 +354,7 @@ namespace LiteTube.ViewModels
             var id = navObject.ViewModel.VideoId;
             var view = string.Format("/VideoPage.xaml?videoId={0}", id);
 #if SILVERLIGHT
-            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getGeDataSource, _connectionListener));
+            NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getDataSource, _connectionListener));
 #endif
         }
 

@@ -9,10 +9,11 @@ using LiteTube.Common.Helpers;
 using System.Collections.Generic;
 using LiteTube.Controls;
 using System.Linq;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
 {
-    public class VideoPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>
+    public class VideoPageViewModel : PropertyChangedBase, IListener<ConnectionEventArgs>, IPlaylistsSevice
     {
         private Uri _videoUri;
         private readonly Func<IDataSource> _getDataSource;
@@ -211,6 +212,11 @@ namespace LiteTube.ViewModels
             get { return _navigatioPanelViewModel; }
         }
 
+        public PlaylistsContainerViewModel PlaylistListViewModel
+        {
+            get { return App.ViewModel.PlaylistListViewModel; }
+        }
+
         public Uri VideoUri 
         {
             get { return _videoUri; }
@@ -389,9 +395,7 @@ namespace LiteTube.ViewModels
                 if (value == null)
                     return;
 
-                var firstLoad = true;
-                if (_selectedVideoQualityItem != null)
-                    firstLoad = false;
+                var firstLoad = _selectedVideoQualityItem == null;
 
                 _selectedVideoQualityItem = value;
                 NotifyOfPropertyChanged(() => SelectedVideoQualityItem);
@@ -523,7 +527,7 @@ namespace LiteTube.ViewModels
 
         private void LoadVideoItem(string videoId)
         {
-            RelatedVideosViewModel = new RelatedVideosViewModel(videoId, _getDataSource, _connectionListener);
+            RelatedVideosViewModel = new RelatedVideosViewModel(videoId, _getDataSource, _connectionListener, this);
             CommentsViewModel = new CommentsViewModel(videoId, _getDataSource, _connectionListener);
 
             LayoutHelper.InvokeFromUiThread(async () =>
@@ -563,7 +567,8 @@ namespace LiteTube.ViewModels
 
         private async void AddFavorites()
         {
-            await _getDataSource().AddToFavorites(_videoId);
+            var playlistId = _getDataSource().FavoritesPlaylistId;
+            await _getDataSource().AddItemToPlaylist(_videoId, playlistId);
         }
 
         private void InvalidateCommands()
@@ -592,6 +597,16 @@ namespace LiteTube.ViewModels
             VideoUri = null;
             SetVideoUri(_videoId, SelectedVideoQualityItem.Quality);
             SettingsHelper.SaveQuality(SelectedVideoQualityItem.QualityName);
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            PlaylistListViewModel.IsContainerShown = show;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                PlaylistListViewModel.SetVideoId(videoId);
+                await PlaylistListViewModel.FirstLoad();
+            });
         }
     }
 }

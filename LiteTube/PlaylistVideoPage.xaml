@@ -48,7 +48,7 @@
                 </phone:PivotItem.Header>
 
                 <ContentPresenter Content="{Binding PlaylistVideosViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"
+                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"
                                   Name="playlistPresenter"/>
             </phone:PivotItem>
 
@@ -258,11 +258,23 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+
+                        <Ellipse Width="45"
+                                 Height="45"
+                                 VerticalAlignment="Top">
+                            <Ellipse.Fill>
+                                <ImageBrush>
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="{Binding CommentsViewModel.ProfileImage}" />
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
                         
-                        <Image Source="{Binding CommentsViewModel.ProfileImage}"
+                        <!--<Image Source="{Binding CommentsViewModel.ProfileImage}"
                                Width="45"
                                Height="45"
-                               VerticalAlignment="Top"/>
+                               VerticalAlignment="Top"/>-->
                         <TextBox AcceptsReturn="True"
                                  Grid.Column="1"
                                  MaxHeight="150"

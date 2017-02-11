@@ -193,6 +193,9 @@
             </phone:PivotItem>
         </phone:Pivot>
 
+        <controls:PlaylistsContainer DataContext="{Binding PlaylistContainerListViewModel}"
+                                     IsOpen="{Binding IsContainerShown}"
+                                     Grid.RowSpan="3"/>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">

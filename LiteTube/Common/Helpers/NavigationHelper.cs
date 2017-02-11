@@ -3,6 +3,7 @@ using LiteTube.ViewModels;
 using Microsoft.Phone.Shell;
 using System.Linq;
 using System.Windows.Controls;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.Common.Helpers
 {
@@ -69,6 +70,13 @@ namespace LiteTube.Common.Helpers
             var datasource = App.ViewModel.GetDataSource;
             var connectionListener = App.ViewModel.ConnectionListener;
             NavigationHelper.Navigate("/ChannelPage.xaml?channelId=" + channelId, new ChannelPageViewModel(channelId, username, datasource, connectionListener));
+        }
+
+        public static void GoToPLaylistMangePage(IPlaylistsChangeHandler playlistsChangeHandler)
+        {
+            var datasource = App.ViewModel.GetDataSource;
+            var connectionListener = App.ViewModel.ConnectionListener;
+            NavigationHelper.Navigate("/PlaylistsManagePage.xaml", new PlaylistsManagePageViewModel(datasource, connectionListener, playlistsChangeHandler));
         }
     }
 }

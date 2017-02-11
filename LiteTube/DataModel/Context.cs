@@ -31,8 +31,7 @@ namespace LiteTube.DataModel
             }
 
             _remoteDataSource = new RemoteDataSource(youTubeService);
-            var remoteExceptionWrapper = new DataSourceExceptionWrapper(_remoteDataSource);
-            _dataSource = new DataSource(remoteExceptionWrapper, region, maxPageResult, quality);
+            _dataSource = new DataSource(_remoteDataSource, region, maxPageResult, quality);
         }
 
         internal IDataSource DataSource

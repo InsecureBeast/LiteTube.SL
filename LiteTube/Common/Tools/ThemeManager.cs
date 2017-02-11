@@ -63,6 +63,10 @@ namespace LiteTube.Common.Tools
             if (playlistSelectedBrush != null)
                 playlistSelectedBrush.Color = Color.FromArgb(255, 200, 200, 200);
 
+            var contextMenuBackgroundBrush = Application.Current.Resources["ContextMenuBackgroundBrush"] as SolidColorBrush;
+            if (contextMenuBackgroundBrush != null)
+                contextMenuBackgroundBrush.Color = Color.FromArgb(255, 225, 225, 225);
+
             Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
             if (darkBackgroundVisibility == Visibility.Visible)
             {
@@ -141,7 +145,7 @@ namespace LiteTube.Common.Tools
 
             var secondaryBackgroundBrush = Application.Current.Resources["PhoneSecondaryBackgroundBrush"] as SolidColorBrush;
             if (secondaryBackgroundBrush != null)
-                secondaryBackgroundBrush.Color = Color.FromArgb(25, 255, 255, 255);
+                secondaryBackgroundBrush.Color = Color.FromArgb(255, 52, 52, 52);
 
             var disabledBackgroundBrush = Application.Current.Resources["PhoneDisabledBrush"] as SolidColorBrush;
             if (disabledBackgroundBrush != null)
@@ -157,7 +161,11 @@ namespace LiteTube.Common.Tools
 
             var playlistSelectedBrush = Application.Current.Resources["PlaylistSelectedBrush"] as SolidColorBrush;
             if (playlistSelectedBrush != null)
-                playlistSelectedBrush.Color = Color.FromArgb(255, 58, 58, 58);
+                playlistSelectedBrush.Color = Color.FromArgb(255, 70, 70, 70);
+
+            var contextMenuBackgroundBrush = Application.Current.Resources["ContextMenuBackgroundBrush"] as SolidColorBrush;
+            if (contextMenuBackgroundBrush != null)
+                contextMenuBackgroundBrush.Color = Color.FromArgb(255, 38, 38, 38);
 
             Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
             if (darkBackgroundVisibility == Visibility.Visible)

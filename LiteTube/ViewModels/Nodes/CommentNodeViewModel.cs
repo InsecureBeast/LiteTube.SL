@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using LiteTube.Common;
 #if SILVERLIGHT
 using Microsoft.Phone.Shell;
 #endif
@@ -17,7 +18,7 @@ namespace LiteTube.ViewModels.Nodes
         private readonly Func<IDataSource> _getDatasource;
         private readonly IConnectionListener _connectionListener;
 
-        public CommentNodeViewModel(IComment comment, Func<IDataSource> getDatasource, IConnectionListener connectionListener)
+        public CommentNodeViewModel(IComment comment, Func<IDataSource> getDatasource, IConnectionListener connectionListener, IContextMenuStrategy menuProvider = null) : base(getDatasource(), menuProvider)
         {
             TextDisplay = comment.TextDisplay;
             AuthorDisplayName = comment.AuthorDisplayName;
@@ -26,7 +27,7 @@ namespace LiteTube.ViewModels.Nodes
             LikeCount = comment.LikeCount;
             PublishedAt = comment.PublishedAt;
             PublishedAtRaw = comment.PublishedAtRaw;
-            ReplayComments = comment.ReplayComments.Select(c => new CommentNodeViewModel(c, getDatasource, _connectionListener));
+            ReplayComments = comment.ReplayComments.Select(c => new CommentNodeViewModel(c, getDatasource, _connectionListener, menuProvider));
             IsReplay = comment.IsReplay;
 
             _getDatasource = getDatasource;
@@ -69,5 +70,6 @@ namespace LiteTube.ViewModels.Nodes
             App.NavigateTo("/ChannelPage.xaml?channel=" + channelId);
 #endif
         }
+
     }
 }
