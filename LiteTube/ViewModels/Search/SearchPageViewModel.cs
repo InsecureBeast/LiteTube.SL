@@ -1,7 +1,9 @@
 ﻿using Google.Apis.YouTube.v3;
 using LiteTube.Common;
+using LiteTube.Common.Helpers;
 using LiteTube.DataModel;
 using LiteTube.Resources;
+using LiteTube.ViewModels.Playlist;
 using LiteTube.ViewModels.Search;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Windows.Input;
 
 namespace LiteTube.ViewModels
 {
-    class SearchPageViewModel : ProgressIndicatorViewModel
+    class SearchPageViewModel : ProgressIndicatorViewModel, IPlaylistsSevice
     {
         private readonly SearchVideoViewModel _searchVideoViewModel;
         private readonly SearchChannelsViewModel _searchChannelsViewModel;
@@ -33,7 +35,7 @@ namespace LiteTube.ViewModels
         public SearchPageViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener)
             : base(getDataSource, connectionListener, null)
         {
-            _searchVideoViewModel = new SearchVideoViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
+            _searchVideoViewModel = new SearchVideoViewModel(getDataSource, connectionListener, ChangeProgressIndicator, this);
             _searchChannelsViewModel = new SearchChannelsViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
             _searchPlaylistsViewModel = new SearchPlaylistsViewModel(getDataSource, connectionListener, ChangeProgressIndicator);
             _searchSettingCommand = new RelayCommand(SearchSettings);
@@ -54,6 +56,11 @@ namespace LiteTube.ViewModels
         public SearchPlaylistsViewModel SearchPlaylistsViewModel
         {
             get { return _searchPlaylistsViewModel; }
+        }
+
+        public PlaylistsContainerViewModel PlaylistContainerListViewModel
+        {
+            get { return App.ViewModel.PlaylistListViewModel; }
         }
 
         public ICommand SearchSettingCommand
@@ -155,6 +162,16 @@ namespace LiteTube.ViewModels
                 Search(_selectedIndex);
                 NotifyOfPropertyChanged(() => SelectedDefinitionItem);
             }
+        }
+
+        public void ShowContainer(bool show, string videoId)
+        {
+            PlaylistContainerListViewModel.IsContainerShown = true;
+            LayoutHelper.InvokeFromUiThread(async () =>
+            {
+                PlaylistContainerListViewModel.SetVideoId(videoId);
+                await PlaylistContainerListViewModel.FirstLoad();
+            });
         }
 
         internal async Task Search(int selectedIndex)
