@@ -13,8 +13,10 @@ namespace LiteTube.ViewModels.Nodes
         private readonly string _videoId;
         private readonly string _id;
         private bool _isNowPlaying;
+        private bool _isContextMenu;
 
-        public VideoItemViewModel(IVideoItem videoItem, IDataSource dataSource, IContextMenuStrategy menuProvider, IPlaylistsSevice playlistService) : base(dataSource, menuProvider, playlistService)
+        public VideoItemViewModel(IVideoItem videoItem, IDataSource dataSource, 
+            IContextMenuStrategy menuProvider, IPlaylistsSevice playlistService) : base(dataSource, menuProvider, playlistService)
         {
             VideoItem = videoItem;
             _videoId = videoItem.Details.VideoId;
@@ -26,6 +28,7 @@ namespace LiteTube.ViewModels.Nodes
             Duration = videoItem.Details.Duration;
             ViewCount = videoItem.Details.Statistics.ViewCount;
             PublishedAt = videoItem.PublishedAt;
+            IsContexMenu = dataSource.IsAuthorized;
         }
 
         public IVideoItem VideoItem { get; private set; }
@@ -60,6 +63,16 @@ namespace LiteTube.ViewModels.Nodes
         public override string ToString()
         {
             return Title;
+        }
+
+        public bool IsContexMenu
+        {
+            get { return _isContextMenu; }
+            set
+            {
+                _isContextMenu = value;
+                NotifyOfPropertyChanged(() => IsContexMenu);
+            }
         }
     }
 
