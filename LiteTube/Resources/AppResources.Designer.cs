@@ -214,7 +214,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright © 2016. All right reserved..
+        ///   Looks up a localized string similar to Copyright © 2017. All right reserved..
         /// </summary>
         public static string Copyright {
             get {
