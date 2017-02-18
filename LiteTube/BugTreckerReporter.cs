@@ -77,6 +77,8 @@ namespace LiteTube
             builder.AppendLine();
             builder.AppendLine("Exception mesage: " + exception.Message);
             builder.AppendLine();
+            builder.AppendLine("Exception type: " + exception.GetType());
+            builder.AppendLine();
             builder.AppendLine("Stack trace : " + exception.StackTrace);
             while (exception.InnerException != null)
             {
