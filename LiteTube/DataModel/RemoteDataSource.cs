@@ -98,10 +98,18 @@ namespace LiteTube.DataModel
 
         public async Task LoginSilently(string username)
         {
-            await _youTubeServiceControl.RefreshToken(username);
-            await _subscriptionsHolder.Init();
-            _youTubeService = _youTubeServiceControl.GetAuthorizedService();
-            await LoadProfileInfo();
+            try
+            {
+                await _youTubeServiceControl.RefreshToken(username);
+                await _subscriptionsHolder.Init();
+                _youTubeService = _youTubeServiceControl.GetAuthorizedService();
+                await LoadProfileInfo();
+
+            }
+            catch (Exception)
+            {
+                _youTubeServiceControl.Logout();
+            }
         }
 
         public void Logout()
