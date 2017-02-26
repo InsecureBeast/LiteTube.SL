@@ -66,10 +66,6 @@ namespace LiteTube.DataModel
 
         public void Logout()
         {
-            if (_credential == null) 
-                return;
-            
-            //await _credential.RevokeTokenAsync(new CancellationToken());
             _credential = null;
             SettingsHelper.SaveUserRefreshToken(string.Empty);
             SettingsHelper.SaveUserAccessToken(string.Empty);

@@ -142,6 +142,7 @@
     <Compile Include="DataClasses\MActivityList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
     <Compile Include="DataModel\PrivacyStatus.cs" />
+    <Compile Include="DataModel\RemoteDataSourceWeb.cs" />
     <Compile Include="DataModel\VideoQualityHelper.cs" />
     <Compile Include="DataModel\YouTube.cs" />
     <Compile Include="Interactivity\HighlightUrlBehavior.cs" />
@@ -629,9 +630,6 @@
       <Project>{e41b56a9-9c1c-4289-b9d2-2bbcedbb2567}</Project>
       <Name>LiteTube.LibVideo</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

@@ -19,6 +19,7 @@ namespace LiteTube.DataModel
     class YouTubeWeb
     {
         private const string RECOMMENDED_URL = @"https://www.youtube.com/feed/recommended";
+        private const string MOST_POPULAR_URL = @"https://www.youtube.com/feed/trending//?gl=";
         private const string SUBSCRIPTIONS_URL = @"https://www.youtube.com/feed/subscriptions/?app=desktop&persist_app=1";
         private const string WATCH_LATER_URL = @"https://www.youtube.com/playlist?list=WL&app=desktop&persist_app=1";
         private const string HISTORY_URL = @"https://www.youtube.com/feed/history";
@@ -30,6 +31,8 @@ namespace LiteTube.DataModel
         private readonly Dictionary<string, IEnumerable<string>> _related = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _watchLater = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _hystory = new Dictionary<string, IEnumerable<string>>();
+        private readonly Dictionary<string, IEnumerable<string>> _mostPopular = new Dictionary<string, IEnumerable<string>>();
+
 
 
         public async Task<YouTubeResponce> GetRecommended(string accessToken, string nextPageToken)
@@ -50,6 +53,11 @@ namespace LiteTube.DataModel
         public async Task<YouTubeResponce> GetHistoryVideo(string accessToken, string nextPageToken)
         {
             return await GetVideos(HISTORY_URL, _hystory, accessToken, nextPageToken);
+        }
+
+        public async Task<YouTubeResponce> GetMostPopular(string culture, string nextPageToken)
+        {
+            return await GetVideos(MOST_POPULAR_URL + culture, _mostPopular, null, nextPageToken);
         }
 
         public async Task<YouTubeResponce> GetRelatedVideo(string videoId, string accessToken, string nextPageToken)

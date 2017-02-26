@@ -11,6 +11,7 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Google;
 using YouTube = LiteTube.LibVideo.YouTube;
+using System.Net.Http;
 
 namespace LiteTube.DataModel
 {
@@ -63,7 +64,7 @@ namespace LiteTube.DataModel
         #endregion
     }
 
-    class RemoteDataSource : IRemoteDataSource
+    partial class RemoteDataSource : IRemoteDataSource
     {
         private readonly IYouTubeService _youTubeServiceControl;
         private YouTubeService _youTubeService;
@@ -97,10 +98,18 @@ namespace LiteTube.DataModel
 
         public async Task LoginSilently(string username)
         {
-            await _youTubeServiceControl.RefreshToken(username);
-            await _subscriptionsHolder.Init();
-            _youTubeService = _youTubeServiceControl.GetAuthorizedService();
-            await LoadProfileInfo();
+            try
+            {
+                await _youTubeServiceControl.RefreshToken(username);
+                await _subscriptionsHolder.Init();
+                _youTubeService = _youTubeServiceControl.GetAuthorizedService();
+                await LoadProfileInfo();
+
+            }
+            catch (Exception)
+            {
+                _youTubeServiceControl.Logout();
+            }
         }
 
         public void Logout()
@@ -186,16 +195,23 @@ namespace LiteTube.DataModel
 
         public async Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken)
         {
-            var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics");
-            videoRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
-            videoRequest.Chart = VideosResource.ListRequest.ChartEnum.MostPopular;
-            videoRequest.Hl = I18nLanguages.GetHl(culture); ;
-            videoRequest.Key = _youTubeServiceControl.ApiKey;
-            videoRequest.MaxResults = maxResult;
-            videoRequest.PageToken = pageToken;
+            try
+            {
+                var videoRequest = _youTubeService.Videos.List("snippet,contentDetails,statistics");
+                videoRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
+                videoRequest.Chart = VideosResource.ListRequest.ChartEnum.MostPopular;
+                videoRequest.Hl = I18nLanguages.GetHl(culture); ;
+                videoRequest.Key = _youTubeServiceControl.ApiKey;
+                videoRequest.MaxResults = maxResult;
+                videoRequest.PageToken = pageToken;
 
-            var videoResponse = await videoRequest.ExecuteAsync();
-            return new MVideoList(videoResponse);
+                var videoResponse = await videoRequest.ExecuteAsync();
+                return new MVideoList(videoResponse);
+            }
+            catch (Exception)
+            {
+                return await GetMostPopularWeb(I18nLanguages.GetRegionCode(culture), maxResult, pageToken);
+            }
         }
 
         public IEnumerable<IPlaylistList> Playlists
