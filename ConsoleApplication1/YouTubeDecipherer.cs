@@ -16,7 +16,7 @@ namespace LiteTube.LibVideo
             //string funcNamePattern = "\"signature\",([a-zA-Z0-9\\$]+)";
             //string funcNamePattern = "\"signature\",[a-zA-Z0-9]+\\([a-zA-Z0-9.]+\\)";
             string funcNamePattern = "\"signature\",([a-zA-Z0-9]+)\\(";
-            var r = Regex.Match(javaScript, funcNamePattern).Groups;
+            var r = Regex.Match(javaScript, funcNamePattern);
             var funcName = Regex.Match(javaScript, funcNamePattern).Groups[1].Value;
 
             if (funcName.Contains("$"))
