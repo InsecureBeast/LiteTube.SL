@@ -51,9 +51,12 @@ namespace LiteTube
             PhoneApplicationService.Current.Deactivated += Current_Deactivated;
             PhoneApplicationService.Current.Activated += Current_Activated;
             LayoutRoot.SizeChanged += OnLayoutRootSizeChanged;
+
+            var t = Windows.Devices.Sensors.OrientationSensor.GetDefault();
+            var r = t.GetCurrentReading();
             
             _sensor = SimpleOrientationSensor.GetDefault();
-
+            
             _sendApplicationBar = new ApplicationBar();
             _sendApplicationBarButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Send.png", AppResources.Send, Send_Click);
             _sendApplicationBar.Buttons.Add(_sendApplicationBarButton);

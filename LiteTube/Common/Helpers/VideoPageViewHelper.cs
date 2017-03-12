@@ -12,6 +12,8 @@ namespace LiteTube.Common.Helpers
         {
             LayoutHelper.InvokeFromUiThread(() =>
             {
+                LiteTube.Tools.Tools.IsRotationOn();
+                
                 if (args.Orientation == SimpleOrientation.Rotated90DegreesCounterclockwise)
                 {
                     page.SupportedOrientations = SupportedPageOrientation.Landscape;

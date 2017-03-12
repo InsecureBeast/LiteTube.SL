@@ -630,6 +630,10 @@
       <Project>{e41b56a9-9c1c-4289-b9d2-2bbcedbb2567}</Project>
       <Name>LiteTube.LibVideo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LiteTube.Tools\LiteTube.Tools.csproj">
+      <Project>{26b0210a-c33e-45d5-82b6-31f219329fb4}</Project>
+      <Name>LiteTube.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
