@@ -626,6 +626,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LiteTube.Windows10\LiteTube.Core\LiteTube.Core.csproj">
+      <Project>{f90bb14c-338b-4370-8aff-596826263bca}</Project>
+      <Name>LiteTube.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LiteTube.LibVideo\LiteTube.LibVideo.csproj">
       <Project>{e41b56a9-9c1c-4289-b9d2-2bbcedbb2567}</Project>
       <Name>LiteTube.LibVideo</Name>
