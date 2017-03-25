@@ -437,4 +437,10 @@
   <data name="Deleting" xml:space="preserve">
     <value>Удаление...</value>
   </data>
+  <data name="Localization" xml:space="preserve">
+    <value>Локализация</value>
+  </data>
+  <data name="LocalizationThanks" xml:space="preserve">
+    <value>Спасибо Jotta Maciel за перевод на португальский (Бразилия) язык.</value>
+  </data>
 </root>

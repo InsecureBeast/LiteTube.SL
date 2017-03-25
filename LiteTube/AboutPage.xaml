@@ -39,6 +39,16 @@
                            Foreground="{StaticResource PhoneSubtleBrush}"
                            Margin="{StaticResource DefaultTextBlockMargin}"
                            TextWrapping="Wrap"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.Localization, Source={StaticResource LocalizedStrings}}"
+                           Style="{StaticResource TitleTextBlockStyle}"
+                           Margin="0"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.LocalizationThanks, Source={StaticResource LocalizedStrings}}"
+                           Foreground="{StaticResource PhoneSubtleBrush}"
+                           Margin="{StaticResource DefaultTextBlockMargin}"
+                           TextWrapping="Wrap"/>
+
                 
                 <TextBlock Text="{Binding Path=LocalizedResources.UsingSoftware, Source={StaticResource LocalizedStrings}}"
                            Style="{StaticResource TitleTextBlockStyle}"
@@ -46,12 +56,12 @@
                 <HyperlinkButton Content="MyToolkit Extended" 
                                  NavigateUri="https://mytoolkit.codeplex.com/license" TargetName="_blank"
                                  HorizontalAlignment="Left"
-                                 Margin="{StaticResource DefaultTextBlockMargin}"/>
+                                 Margin="-10,12,0,0"/>
 
                 <HyperlinkButton Content="Microsoft Player Framework" 
                                  NavigateUri="https://playerframework.codeplex.com/license" TargetName="_blank"
                                  HorizontalAlignment="Left"
-                                 Margin="{StaticResource DefaultTextBlockMargin}"/>
+                                 Margin="-10,12,0,0"/>
                 
             </StackPanel>
         </Grid>

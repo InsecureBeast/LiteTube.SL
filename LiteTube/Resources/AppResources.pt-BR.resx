@@ -129,7 +129,7 @@
     <value>LightTube</value>
   </data>
   <data name="Activity" xml:space="preserve">
-    <value>Actividades Recentes</value>
+    <value>Actividades recentes</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>Sobre</value>
@@ -436,5 +436,11 @@
   </data>
   <data name="Deleting" xml:space="preserve">
     <value>Deletando...</value>
+  </data>
+  <data name="Localization" xml:space="preserve">
+    <value>Localização</value>
+  </data>
+  <data name="LocalizationThanks" xml:space="preserve">
+    <value>Obrigado Jotta Maciel para Português (Brasil) localização</value>
   </data>
 </root>
