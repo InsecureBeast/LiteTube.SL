@@ -107,6 +107,20 @@ namespace LiteTube
             }
         }
 
+        private static NavigationPanelViewModel _navigationPanelViewModel;
+        public static NavigationPanelViewModel NavigationPanelViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (_navigationPanelViewModel == null)
+                {
+                    _navigationPanelViewModel = new NavigationPanelViewModel(() => _container.GetDataSource(), _container.ConnectionListener);
+                }
+                return _navigationPanelViewModel;
+            }
+        }
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>

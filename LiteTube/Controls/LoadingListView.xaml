@@ -117,8 +117,11 @@
                 Width="153"
                 Margin="2">
 
-                <Image Source="{Binding ImagePath}" 
-                       Stretch="UniformToFill" />
+                <Image Stretch="UniformToFill">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding ImagePath}" CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
 
                 <Border Margin="2"
                         VerticalAlignment="Bottom"
@@ -227,8 +230,11 @@
                               Height="100"
                               Width="153">
 
-                            <Image Source="{Binding ImagePath}" 
-                                   Stretch="UniformToFill" />
+                            <Image Stretch="UniformToFill">
+                                <Image.Source>
+                                    <BitmapImage UriSource="{Binding ImagePath}" CreateOptions="BackgroundCreation"/>
+                                </Image.Source>
+                            </Image>
 
                             <Border VerticalAlignment="Stretch"
                                     HorizontalAlignment="Right"

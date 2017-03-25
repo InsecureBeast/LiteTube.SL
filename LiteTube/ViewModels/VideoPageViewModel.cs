@@ -18,7 +18,6 @@ namespace LiteTube.ViewModels
         private Uri _videoUri;
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
-        private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private RelatedVideosViewModel _relatedViewModel;
         private CommentsViewModel _commentsViewModel;
         private string _channelImage;
@@ -73,7 +72,6 @@ namespace LiteTube.ViewModels
             _videoQualityCommand = new RelayCommand(ChangeVideoQuality);
 
             LoadVideoQualities();
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
             LoadVideoItem(videoId);
         }
 
@@ -209,7 +207,7 @@ namespace LiteTube.ViewModels
 
         public NavigationPanelViewModel NavigationPanelViewModel
         {
-            get { return _navigatioPanelViewModel; }
+            get { return App.NavigationPanelViewModel; }
         }
 
         public PlaylistsContainerViewModel PlaylistListViewModel

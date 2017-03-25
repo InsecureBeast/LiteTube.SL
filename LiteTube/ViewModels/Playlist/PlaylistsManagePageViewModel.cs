@@ -19,7 +19,6 @@ namespace LiteTube.ViewModels.Playlist
     {
         private readonly Func<IDataSource> _getGeDataSource;
         private readonly IPlaylistsChangeHandler _playlistsChangeHandler;
-        private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private readonly MyPlaylistListViewModel _playlistListViewModel;
         private readonly RelayCommand _createCommand;
         private string _playlistTitle;
@@ -31,7 +30,6 @@ namespace LiteTube.ViewModels.Playlist
         {
             _getGeDataSource = getGeDataSource;
             _playlistsChangeHandler = playlistsChangeHandler;
-            _navigatioPanelViewModel = new NavigationPanelViewModel(getGeDataSource, connectionListener);
             _playlistListViewModel = new MyPlaylistListViewModel(_getGeDataSource, connectionListener, new DeleteContextMenuStrategy(), playlistsChangeHandler);
             _playlistListViewModel.FirstLoad();
             _createCommand = new RelayCommand(CreatePlaylist, CanCreateNewPlaylist);
@@ -46,7 +44,7 @@ namespace LiteTube.ViewModels.Playlist
 
         public NavigationPanelViewModel NavigationPanelViewModel
         {
-            get { return _navigatioPanelViewModel; }
+            get { return App.NavigationPanelViewModel; }
         }
 
         public MyPlaylistListViewModel PlaylistListViewModel

@@ -16,14 +16,12 @@ namespace LiteTube.ViewModels
         private readonly IConnectionListener _connectionListener;
         private readonly Func<IDataSource> _getDataSource;
         protected PlaylistVideosViewModel _playlistVideosViewModel;
-        private readonly NavigationPanelViewModel _navigatioPanelViewModel;
 
         public PlaylistVideoPageViewModel(string playlistId, Func<IDataSource> getDataSource, IConnectionListener connectionListener) 
         {
             _connectionListener = connectionListener;
             _getDataSource = getDataSource;
 
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
             _videoViewModel = new VideoPageViewModel();
             _playlistVideosViewModel = new PlaylistVideosViewModel(playlistId, getDataSource, connectionListener, PlaylistVideoItemClick);
             LoadPlaylistVideos(playlistId);
@@ -47,7 +45,7 @@ namespace LiteTube.ViewModels
 
         public NavigationPanelViewModel NavigationPanelViewModel
         {
-            get { return _navigatioPanelViewModel; }
+            get { return App.NavigationPanelViewModel; }
         }
 
         public void SkipNext()

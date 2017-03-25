@@ -4,6 +4,7 @@ using LiteTube.Common;
 using LiteTube.DataModel;
 using MyToolkit.Command;
 using LiteTube.Common.Helpers;
+using System.Threading;
 
 namespace LiteTube.ViewModels
 {
@@ -26,6 +27,7 @@ namespace LiteTube.ViewModels
         private string _profileRegistered;
         private string _profileSecondDisplayName;
         private string _profileChannelId;
+        private Timer _timer;
 
         public NavigationPanelViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener)
         {
@@ -37,6 +39,14 @@ namespace LiteTube.ViewModels
             _settingsCommand = new Common.RelayCommand(Settings, CanSettings);
             _searchCommand = new Common.RelayCommand(Search);
             _channelCommand = new RelayCommand<string>(LoadChannel);
+
+            //_timer = new System.Threading.Timer(Callback);
+            //_timer.Change(0, 1000);
+        }
+
+        private void Callback(object state)
+        {
+            LayoutHelper.InvokeFromUiThread(() => NotifyOfPropertyChanged(() => Memory));
         }
 
         public ICommand LoginCommand
@@ -162,6 +172,24 @@ namespace LiteTube.ViewModels
             {
                 NotifyOfPropertyChanged(() => ProfileChannelId);
                 _profileChannelId = value;
+            }
+        }
+
+        public string Memory
+        {
+            get
+            {
+                var mem = Windows.System.MemoryManager.AppMemoryUsage / 1024 / 1024;
+                return mem.ToString();
+            }
+        }
+
+        public string TotalMemory
+        {
+            get
+            {
+                var mem = Windows.System.MemoryManager.AppMemoryUsageLimit / 1024 / 1024;
+                return mem.ToString();
             }
         }
 

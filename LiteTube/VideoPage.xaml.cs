@@ -180,6 +180,7 @@ namespace LiteTube
             {
                 _playerState = player.GetMediaState();
                 _sensor.OrientationChanged -= Sensor_OrientationChanged;
+                player.Dispose();
 
                 base.OnNavigatedFrom(e);
             }

@@ -22,7 +22,6 @@ namespace LiteTube.ViewModels
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
         private readonly RecommendedSectionViewModel _recommendedSectionViewModel;
-        private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private readonly SubscriptionChannelsViewModel _subscriptions;
         private readonly HistoryPageViewModel _history;
         private readonly LikedViewModel _likedViewModel;
@@ -46,7 +45,6 @@ namespace LiteTube.ViewModels
             _getDataSource = getGetDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
             _categories = new ObservableCollection<GuideCategoryNodeViewModel>();
 
             if (_getDataSource().IsAuthorized)
@@ -77,7 +75,7 @@ namespace LiteTube.ViewModels
 
         public NavigationPanelViewModel NavigationPanelViewModel
         {
-            get { return _navigatioPanelViewModel; }
+            get { return App.NavigationPanelViewModel; }
         }
 
         public RecommendedSectionViewModel RecommendedSectionViewModel
