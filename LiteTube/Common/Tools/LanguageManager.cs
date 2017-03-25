@@ -12,9 +12,11 @@ namespace LiteTube.Common.Tools
     {
         private static readonly CultureInfo _ru = new CultureInfo("ru-RU");
         private static readonly CultureInfo _en = new CultureInfo("en-US");
+        private static readonly CultureInfo _ptBR = new CultureInfo("pt-BR");
 
         private static string RUSSIAN = _ru.DisplayName;
         private static string ENGLISH = _en.DisplayName;
+        private static string PORTUGUESE_BR = _ptBR.DisplayName;
 
         public static CultureInfo Ru
         {
@@ -26,9 +28,14 @@ namespace LiteTube.Common.Tools
             get { return _en; }
         }
 
+        public static CultureInfo PtBr
+        {
+            get { return _ptBR; }
+        }
+
         public static List<string> GetSupportedLanguages()
         {
-            return new List<string> { ENGLISH, RUSSIAN };
+            return new List<string> { ENGLISH, RUSSIAN, PORTUGUESE_BR };
         }
 
         public static void ChangeLanguage(string culture)
@@ -37,6 +44,11 @@ namespace LiteTube.Common.Tools
             {
                 Thread.CurrentThread.CurrentUICulture = _ru;
                 Thread.CurrentThread.CurrentCulture = _ru;
+            }
+            else if (culture == PORTUGUESE_BR)
+            {
+                Thread.CurrentThread.CurrentUICulture = _ptBR;
+                Thread.CurrentThread.CurrentCulture = _ptBR;
             }
             else
             {

@@ -18,6 +18,7 @@
     <SilverlightApplication>true</SilverlightApplication>
     <SupportedCultures>
 	ru-RU;
+	pt-BR;
     </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
@@ -235,6 +236,11 @@
     </Compile>
     <Compile Include="MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AppResources.pt-BR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResources.pt-BR.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\AppResources.ru-RU.Designer.cs">
       <DependentUpon>AppResources.ru-RU.resx</DependentUpon>
@@ -504,6 +510,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\AppResources.pt-BR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.pt-BR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\AppResources.ru-RU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.ru-RU.Designer.cs</LastGenOutput>

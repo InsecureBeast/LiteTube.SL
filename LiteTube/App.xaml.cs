@@ -40,6 +40,13 @@ namespace LiteTube
         /// </summary>
         public App()
         {
+            // Global handler for uncaught exceptions.
+            UnhandledException += Application_UnhandledException;
+
+            // Task
+            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
+
+
             var culture = SettingsHelper.GetLanguage();
             if (!string.IsNullOrEmpty(culture))
                 LanguageManager.ChangeLanguage(SettingsHelper.GetLanguage());
@@ -52,11 +59,6 @@ namespace LiteTube
                     SettingsHelper.SaveLanguage(LanguageManager.En.DisplayName);
             }
 
-            // Global handler for uncaught exceptions.
-            UnhandledException += Application_UnhandledException;
-
-            // Task
-            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
 
             // Standard XAML initialization
             InitializeComponent();
