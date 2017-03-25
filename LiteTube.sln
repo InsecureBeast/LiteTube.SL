@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube", "LiteTube\LiteTu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube.LibVideo", "LiteTube.LibVideo\LiteTube.LibVideo.csproj", "{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube.Core", "..\LiteTube.Windows10\LiteTube.Core\LiteTube.Core.csproj", "{F90BB14C-338B-4370-8AFF-596826263BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,18 +49,18 @@ Global
 		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|ARM.Build.0 = Release|ARM
 		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|x86.ActiveCfg = Release|x86
 		{E41B56A9-9C1C-4289-B9D2-2BBCEDBB2567}.Release|x86.Build.0 = Release|x86
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Debug|ARM.Build.0 = Debug|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Debug|x86.Build.0 = Debug|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Release|ARM.ActiveCfg = Release|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Release|ARM.Build.0 = Release|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Release|x86.ActiveCfg = Release|Any CPU
-		{F90BB14C-338B-4370-8AFF-596826263BCA}.Release|x86.Build.0 = Release|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Release|ARM.Build.0 = Release|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{A0F4B85D-11AF-45BF-BB09-46D37D3417AB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

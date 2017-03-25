@@ -353,7 +353,7 @@ namespace LiteTube.DataModel
             categoriesListRequest.RegionCode = I18nLanguages.GetRegionCode(culture);
             categoriesListRequest.Hl = I18nLanguages.GetHl(culture); ;
 
-            var categoriesListResponse = await categoriesListRequest.ExecuteAsync();
+            GuideCategoryListResponse categoriesListResponse = await categoriesListRequest.ExecuteAsync();
             return categoriesListResponse.Items.Select(category => new MGuideCategory(category)).Cast<IGuideCategory>().ToList();
         }
 
