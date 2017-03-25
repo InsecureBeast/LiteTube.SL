@@ -464,6 +464,7 @@ namespace LiteTube.ViewModels
             {
                 IsSubscribed = _getDataSource().IsSubscribed(channelId);
                 ChannelTitle = channelInfo.Title;
+                ChannelId = channelId;
 
                 if (channelInfo.Thumbnails != null)
                     ChannelImage = channelInfo.Thumbnails.GetThumbnailUrl();
@@ -543,8 +544,7 @@ namespace LiteTube.ViewModels
             if (videoItem == null)
                 return;
 
-            _channelId = videoItem.ChannelId;
-            SetChannelInfo(_channelId);
+            SetChannelInfo(videoItem.ChannelId);
 
             LayoutHelper.InvokeFromUiThread(() =>
             {
