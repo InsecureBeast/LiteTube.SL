@@ -235,8 +235,12 @@ namespace LiteTube
 
                 case 2:
                     Debug.WriteLine("comments");
-                    if (!viewModel.CommentsViewModel.IsEmpty)
-                        await viewModel.CommentsViewModel.FirstLoad();
+                    var commentsViewModel = viewModel.CommentsViewModel;
+                    if (commentsViewModel == null)
+                        return;
+
+                    if (!commentsViewModel.IsEmpty)
+                        await commentsViewModel.FirstLoad();
                     break;
             }
         }

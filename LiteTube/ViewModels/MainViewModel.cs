@@ -98,14 +98,8 @@ namespace LiteTube.ViewModels
             IsLoading = true;
             IsEmpty = false;
 
-            _mostPopularViewModel.Items.Clear();
-            if (_getDataSource().IsAuthorized)
-            {
-                _activitySectionViewModel.Items.Clear();
-                _activitySectionViewModel.FirstLoad();
-            }
-
-            _mostPopularViewModel.FirstLoad();
+            LoadActivities();
+            LoadMostPopular();
             await LoadGuideCategories();
 
             IsDataLoaded = true;
@@ -130,6 +124,21 @@ namespace LiteTube.ViewModels
             {
                 Items.Add(new VideoCategoryNodeViewModel(section, _getDataSource()));
             }
+        }
+
+        private async void LoadActivities()
+        {
+            if (!_getDataSource().IsAuthorized)
+                return;
+
+            _activitySectionViewModel.Items.Clear();
+            await _activitySectionViewModel.FirstLoad();
+        }
+
+        private async void LoadMostPopular()
+        {
+            _mostPopularViewModel.Items.Clear();
+            await _mostPopularViewModel.FirstLoad();
         }
 
         internal override void NavigateTo(NavigationObject navObject)
