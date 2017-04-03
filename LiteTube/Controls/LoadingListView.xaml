@@ -145,7 +145,7 @@
                                Foreground="White"
                                FontSize="14">
                         <Run Text="&#xE890;"
-                             FontFamily="Segoe MDL2 Assets"/>
+                             FontFamily="Segoe MDL2 Assets" FontSize="12"/>
                         <Run Text="{Binding ViewCount}" />
                     </TextBlock>
                 </Border>

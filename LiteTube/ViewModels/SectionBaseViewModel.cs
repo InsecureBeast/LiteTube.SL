@@ -207,29 +207,23 @@ namespace LiteTube.ViewModels
                 IsLoading = true;
 
                 var responseList = await GetItems(string.Empty);
-                if (responseList == null || responseList.PageInfo == null)
-                {
-                    IsLoading = false;
-                    IsEmpty = !Items.Any();
-                    HideProgressIndicator();
+                if (responseList?.PageInfo == null)
                     return;
-                }
 
                 LoadItems(responseList);
                 _pageToken = responseList.NextPageToken;
                 _hasItems = !string.IsNullOrEmpty(_pageToken);
-
-                IsLoading = false;
-                IsEmpty = !Items.Any();
-                HideProgressIndicator();
             }
             catch (Exception)
             {
                 IsConnected = true;
-                IsLoading = false;
-                IsEmpty = !Items.Any();
-                HideProgressIndicator();
                 throw;
+            }
+            finally
+            {
+                HideProgressIndicator();
+                IsEmpty = !Items.Any();
+                IsLoading = false;
             }
         }
 

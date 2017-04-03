@@ -90,6 +90,11 @@
                         </TextBlock>
                         <TextBlock TextWrapping="NoWrap"
                                    TextTrimming="WordEllipsis">
+                                <Run Text="{Binding ChannelViewCount}"/>
+                                <Run Text="{Binding Path=LocalizedResources.Views, Source={StaticResource LocalizedStrings}}"/>
+                        </TextBlock>
+                        <TextBlock TextWrapping="NoWrap"
+                                   TextTrimming="WordEllipsis">
                                 <Run Text="{Binding ChannelVideoCount}"/>
                                 <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
