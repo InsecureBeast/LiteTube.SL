@@ -138,6 +138,7 @@ namespace LiteTube.DataModel
             //activityRequest.Home = true; //deprecated from 12 sept 2016
             activityRequest.Key = _youTubeServiceControl.ApiKey;
             activityRequest.PublishedAfter = DateTime.Today;
+            activityRequest.ChannelId = "UCIi2Tk2POJkRgWHD7HGBa7Q,UCQeaXcwLUDeRoNVThZXLkmw";
             //activityRequest.OauthToken = _youTubeServiceControl.OAuthToken;
 
             var activityResponse = await activityRequest.ExecuteAsync();
@@ -150,24 +151,6 @@ namespace LiteTube.DataModel
             }
             var videos = await GetVideo(videoIds.ToString());
             return new MActivityList(activityResponse, videos);
-        }
-
-        private async Task<IVideoList> GetActivityWeb(string culture, int maxResult, string pageToken)
-        {
-            var res = await _youTubeWeb.GetActivity(_youTubeServiceControl.OAuthToken, pageToken);
-            if (res == null)
-                return null;
-
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
-
-            var videos = await GetVideo(videoIds.ToString());
-            videos.NextPageToken = res.NextPageToken;
-            return new MVideoList(videos);
         }
 
         public async Task<IVideoList> GetRecommended(string pageToken)
@@ -868,24 +851,6 @@ namespace LiteTube.DataModel
             newPlaylistItem = await request.ExecuteAsync();
         }
 
-        private async Task<IVideoList> GetChannelVideosWeb(string channelId, string nextPageToken)
-        {
-            var res = await _youTubeWeb.GetChannelVideos(channelId, _youTubeServiceControl.OAuthToken, nextPageToken);
-            if (res == null)
-                return MVideoList.Empty;
-
-            var videoIds = new StringBuilder();
-            foreach (var id in res.Ids)
-            {
-                videoIds.AppendLine(id);
-                videoIds.AppendLine(",");
-            }
-
-            var videos = await GetVideo(videoIds.ToString());
-            videos.NextPageToken = res.NextPageToken;
-            return new MVideoList(videos);
-        }
-
         private async Task<IVideoList> GetChannelVideosApi(string channelId, int maxPageResult, string nextPageToken)
         {
             var request = _youTubeService.Search.List("snippet");
@@ -903,6 +868,12 @@ namespace LiteTube.DataModel
                 ids.AppendLine(item.Id.VideoId);
                 ids.AppendLine(",");
             }
+
+            if (response.Items.Count == 0)
+            {
+                return new MVideoList(response, new List<IVideoDetails>());
+            }
+
             var videoDetails = await GetVideoDetails(ids.ToString());
             return new MVideoList(response, videoDetails);
         }
