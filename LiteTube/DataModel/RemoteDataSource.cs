@@ -108,7 +108,7 @@ namespace LiteTube.DataModel
             }
             catch (Exception)
             {
-                _youTubeServiceControl.Logout();
+                //_youTubeServiceControl.Logout();
             }
         }
 
