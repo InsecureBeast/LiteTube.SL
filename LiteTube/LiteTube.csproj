@@ -131,6 +131,7 @@
     <Compile Include="Controls\PlaylistsContainer.xaml.cs">
       <DependentUpon>PlaylistsContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\NumberToStringConverter.cs" />
     <Compile Include="Converters\ColumnSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToDispalyStringConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />

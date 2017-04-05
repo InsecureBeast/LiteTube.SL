@@ -85,17 +85,17 @@
                     <StackPanel>
                         <TextBlock TextWrapping="NoWrap"
                                    HorizontalAlignment="Left">
-                                <Run Text="{Binding ChannelSubscribers}" />
+                                <Run Text="{Binding ChannelSubscribers, Converter={StaticResource NumberToStringConverter}}" />
                                 <Run Text="{Binding Path=LocalizedResources.Subscribers, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
                         <TextBlock TextWrapping="NoWrap"
                                    TextTrimming="WordEllipsis">
-                                <Run Text="{Binding ChannelViewCount}"/>
+                                <Run Text="{Binding ChannelViewCount, Converter={StaticResource NumberToStringConverter}}"/>
                                 <Run Text="{Binding Path=LocalizedResources.Views, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
                         <TextBlock TextWrapping="NoWrap"
                                    TextTrimming="WordEllipsis">
-                                <Run Text="{Binding ChannelVideoCount}"/>
+                                <Run Text="{Binding ChannelVideoCount, Converter={StaticResource NumberToStringConverter}}"/>
                                 <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                         </TextBlock>
                         <RichTextBox IsReadOnly="True"
