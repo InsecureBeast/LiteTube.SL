@@ -103,7 +103,7 @@
                                                Height="30"
                                                FontSize="20"/>
                                 </ToggleButton>
-                                <TextBlock Text="{Binding Likes}"
+                                <TextBlock Text="{Binding Likes, Converter={StaticResource NumberToStringConverter}}"
                                            Style ="{StaticResource PhoneTextSmallStyle}"
                                            VerticalAlignment="Center"/>
                             </StackPanel>
@@ -120,7 +120,7 @@
                                                Height="30"
                                                FontSize="20"/>
                                 </ToggleButton>
-                                <TextBlock Text="{Binding Dislikes}"
+                                <TextBlock Text="{Binding Dislikes, Converter={StaticResource NumberToStringConverter}}"
                                            Style ="{StaticResource PhoneTextSmallStyle}"
                                            VerticalAlignment="Center"/>
                             </StackPanel>
@@ -129,7 +129,7 @@
                                        Grid.Row="1" 
                                        Style ="{StaticResource PhoneTextSmallStyle}"
                                        VerticalAlignment="Center">
-                                <Run Text="{Binding ViewCount}" />
+                                <Run Text="{Binding ViewCount, Converter={StaticResource NumberToStringConverter}}" />
                                 <Run Text="{Binding Path=LocalizedResources.Views, Source={StaticResource LocalizedStrings}}"/>
                             </TextBlock>
                         </Grid>
@@ -168,14 +168,14 @@
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            TextTrimming="WordEllipsis"
                                            HorizontalAlignment="Left">
-                                    <Run Text="{Binding ChannelSubscribers}" />
+                                    <Run Text="{Binding ChannelSubscribers, Converter={StaticResource NumberToStringConverter}}" />
                                     <Run Text="{Binding Path=LocalizedResources.Subscribers, Source={StaticResource LocalizedStrings}}"/>
                                 </TextBlock>
                                 <TextBlock TextWrapping="NoWrap"
                                            TextTrimming="WordEllipsis"
                                            Style="{StaticResource PhoneTextSmallStyle}"
                                            HorizontalAlignment="Left">
-                                <Run Text="{Binding ChannelVideoCount}" />
+                                <Run Text="{Binding ChannelVideoCount, Converter={StaticResource NumberToStringConverter}}" />
                                 <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                                 </TextBlock>
                             </StackPanel>

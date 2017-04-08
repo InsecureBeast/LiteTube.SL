@@ -17,6 +17,8 @@ using System.Threading;
 using Google;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net;
 
 namespace LiteTube
 {
@@ -40,6 +42,13 @@ namespace LiteTube
         /// </summary>
         public App()
         {
+            // Global handler for uncaught exceptions.
+            UnhandledException += Application_UnhandledException;
+
+            // Task
+            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
+
+
             var culture = SettingsHelper.GetLanguage();
             if (!string.IsNullOrEmpty(culture))
                 LanguageManager.ChangeLanguage(SettingsHelper.GetLanguage());
@@ -52,11 +61,6 @@ namespace LiteTube
                     SettingsHelper.SaveLanguage(LanguageManager.En.DisplayName);
             }
 
-            // Global handler for uncaught exceptions.
-            UnhandledException += Application_UnhandledException;
-
-            // Task
-            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
 
             // Standard XAML initialization
             InitializeComponent();
@@ -104,6 +108,20 @@ namespace LiteTube
                 }
 
                 return _viewModel;
+            }
+        }
+
+        private static NavigationPanelViewModel _navigationPanelViewModel;
+        public static NavigationPanelViewModel NavigationPanelViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (_navigationPanelViewModel == null)
+                {
+                    _navigationPanelViewModel = new NavigationPanelViewModel(() => _container.GetDataSource(), _container.ConnectionListener);
+                }
+                return _navigationPanelViewModel;
             }
         }
 
@@ -219,6 +237,18 @@ namespace LiteTube
             }
 
             e.Handled = true;
+
+            if (e.ExceptionObject is HttpRequestException)
+            {
+                _container.DialogService.ShowError(AppResources.ErrorMessage);
+                return;
+            }
+
+            if (e.ExceptionObject is WebException)
+            {
+                _container.DialogService.ShowError(AppResources.ErrorMessage);
+                return;
+            }
 
             if (e.ExceptionObject is LiteTubeException)
             {

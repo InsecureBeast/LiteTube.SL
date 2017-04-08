@@ -13,17 +13,15 @@ namespace LiteTube.ViewModels
         private ProgressIndicator _progressIndicator;
 #endif
         private readonly Action<bool> _changeProgressIndicator;
-        protected readonly NavigationPanelViewModel _navigatioPanelViewModel;
-
+        
         public ProgressIndicatorViewModel(Func<IDataSource> getGeDataSource, IConnectionListener connectionListener, Action<bool> changeProgressIndicator)
         {
             _changeProgressIndicator = changeProgressIndicator;
-            _navigatioPanelViewModel = new NavigationPanelViewModel(getGeDataSource, connectionListener);
         }
 
         public NavigationPanelViewModel NavigationPanelViewModel
         {
-            get { return _navigatioPanelViewModel; }
+            get { return App.NavigationPanelViewModel; }
         }
 
 #if SILVERLIGHT

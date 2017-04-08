@@ -430,6 +430,24 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Localization.
+        /// </summary>
+        public static string Localization {
+            get {
+                return ResourceManager.GetString("Localization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you Jotta Maciel to Portuguese (Brazil) localization.
+        /// </summary>
+        public static string LocalizationThanks {
+            get {
+                return ResourceManager.GetString("LocalizationThanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to long.
         /// </summary>
         public static string Long {
@@ -484,7 +502,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} month ago.
+        ///   Looks up a localized string similar to {0} months ago.
         /// </summary>
         public static string Months4Ago {
             get {
@@ -493,7 +511,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} month ago.
+        ///   Looks up a localized string similar to {0} months ago.
         /// </summary>
         public static string MonthsAgo {
             get {

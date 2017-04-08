@@ -114,22 +114,40 @@
                 HorizontalAlignment="Left"
                 Background="{StaticResource PhoneSecondaryBackgroundBrush}"
                 Height="100"
-                Width="153"
+                Width="165"
                 Margin="2">
 
-                <Image Source="{Binding ImagePath}" 
-                       Stretch="UniformToFill" />
+                <Image Stretch="UniformToFill">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding ImagePath}" CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
 
                 <Border Margin="2"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
                         Visibility="{Binding Duration, Converter={StaticResource ResourceKey=ObjectToVisibilityConverter}}"
-                        Background="Black"
+                        Background="#88000000"
                         Padding="4,0,4,0">
                     <TextBlock Text="{Binding Duration, Converter={StaticResource ResourceKey=TimeSpanFormatConverter}}" 
                                 TextWrapping="NoWrap" 
                                 Foreground="White"
                                 FontSize="14"/>
+                </Border>
+
+                <Border Margin="2"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Visibility="{Binding Duration, Converter={StaticResource ResourceKey=ObjectToVisibilityConverter}}"
+                        Background="#88000000"
+                        Padding="4,0,4,0">
+                    <TextBlock TextWrapping="NoWrap"
+                               Foreground="White"
+                               FontSize="14">
+                        <Run Text="&#xE890;"
+                             FontFamily="Segoe MDL2 Assets" FontSize="12"/>
+                        <Run Text="{Binding ViewCount, Converter={StaticResource NumberToStringConverter}}" />
+                    </TextBlock>
                 </Border>
             </Grid>
 
@@ -143,12 +161,12 @@
                             Style="{StaticResource PhoneTextSmallStyle}"
                             TextWrapping="NoWrap"/>
                 <TextBlock TextWrapping="NoWrap"
-                            Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
-                            Style="{StaticResource PhoneTextSmallStyle}" 
-                            FontSize="18">
-                            <!--Foreground="#FF67217A">-->
-                    <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
-                    <Run Text="{Binding PublishedAt}" />
+                               Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
+                               Style="{StaticResource PhoneTextSmallStyle}" 
+                               FontSize="18">
+                               <!--Foreground="#FF67217A">-->
+                        <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
+                        <Run Text="{Binding PublishedAt}" />
                 </TextBlock>
             </StackPanel>
         </Grid>
@@ -160,20 +178,20 @@
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
                     <Grid Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
-                        <Grid.ColumnDefinitions>
+                        <!--<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions>-->
             
                         <ContentPresenter Content="{Binding}"
                                           ContentTemplate="{StaticResource LoadingListViewItemNoMenu}"/>
 
-                        <ToggleButton Grid.Column="1"
+                        <!--<ToggleButton Grid.Column="1"
                                       Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       Style="{StaticResource MoreButtonStyle}"
                                       x:Name="moreButton">
                             <ContentPresenter ContentTemplate="{StaticResource MoreIcon}" />
-                        </ToggleButton>
+                        </ToggleButton>-->
 
                         <toolkit:ContextMenuService.ContextMenu>
                             <toolkit:ContextMenu Name="ContextMenu"
@@ -225,10 +243,13 @@
                               HorizontalAlignment="Left"
                               Background="{StaticResource PhoneSecondaryBackgroundBrush}"
                               Height="100"
-                              Width="153">
+                              Width="165">
 
-                            <Image Source="{Binding ImagePath}" 
-                                   Stretch="UniformToFill" />
+                            <Image Stretch="UniformToFill">
+                                <Image.Source>
+                                    <BitmapImage UriSource="{Binding ImagePath}" CreateOptions="BackgroundCreation"/>
+                                </Image.Source>
+                            </Image>
 
                             <Border VerticalAlignment="Stretch"
                                     HorizontalAlignment="Right"
@@ -247,7 +268,7 @@
                                        MaxHeight="54"/>
                             <TextBlock Style="{StaticResource PhoneTextSmallStyle}"
                                        TextWrapping="NoWrap">
-                                <Run Text="{Binding ItemsCount}" />
+                                <Run Text="{Binding ItemsCount, Converter={StaticResource NumberToStringConverter}}" />
                                 <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
                             </TextBlock>
                             <TextBlock TextWrapping="NoWrap"
@@ -275,20 +296,20 @@
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
                     <Grid Margin="0,0,0,5">
-                        <Grid.ColumnDefinitions>
+                        <!--<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions>-->
 
                         <ContentPresenter Content="{Binding}"
                                         ContentTemplate="{StaticResource LoadingPlaylistListViewItem}"/>
 
-                        <ToggleButton Grid.Column="1"
+                        <!--<ToggleButton Grid.Column="1"
                                       Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       Style="{StaticResource MoreButtonStyle}"
                                       x:Name="moreButton">
                             <ContentPresenter ContentTemplate="{StaticResource MoreIcon}" />
-                        </ToggleButton>
+                        </ToggleButton>-->
                             
                         <toolkit:ContextMenuService.ContextMenu>
                             <toolkit:ContextMenu Name="ContextMenu"

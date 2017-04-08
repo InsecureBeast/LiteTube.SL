@@ -71,6 +71,7 @@ namespace LiteTube.LibVideo
             var title = Html.GetNode("title", source);
             var jsPlayer = "https://www.youtube.com" + Json.GetKey("js", source).Replace(@"\/", "/");
             var map = Json.GetKey("url_encoded_fmt_stream_map", source);
+            //var map = "url=" + Json.GetKey("dashmpd", source);
             var queries = map.Split(',').Select(Unscramble).ToArray();
 
             if (queries.Any())
@@ -105,7 +106,11 @@ namespace LiteTube.LibVideo
         {
             queryString = queryString.Replace(@"\u0026", "&");
             var query = new Query(queryString);
-            string uri = query["url"];
+            string uri = "";
+            if (query.Keys.Count == 0)
+                uri = query.BaseUri;
+            else
+                uri = query["url"];
 
             bool encrypted = false;
             string signature;

@@ -23,6 +23,7 @@ namespace LiteTube.ViewModels
         private bool _isSubscribed;
         private PlaylistListViewModel _playlistListViewModel;
         private int _selectedIndex;
+        private ulong? _channelViewCount;
 
         public ChannelPageViewModel(string channelId, string username, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
             : base(getDataSource, connectionListener, null)
@@ -85,6 +86,16 @@ namespace LiteTube.ViewModels
             {
                 _channelVideoCount = value;
                 NotifyOfPropertyChanged(() => ChannelVideoCount);
+            }
+        }
+
+        public ulong? ChannelViewCount
+        {
+            get { return _channelViewCount; }
+            private set
+            {
+                _channelViewCount = value;
+                NotifyOfPropertyChanged(() => ChannelViewCount);
             }
         }
 
@@ -176,6 +187,7 @@ namespace LiteTube.ViewModels
             Description = ch.Description;
             ChannelSubscribers = ch.Statistics.SubscriberCount;
             ChannelVideoCount = ch.Statistics.VideoCount;
+            ChannelViewCount = ch.Statistics.ViewCount;
             ChannelImage = ch.Thumbnails.GetThumbnailUrl();
             Image = ch.Image;
             _channel = ch;

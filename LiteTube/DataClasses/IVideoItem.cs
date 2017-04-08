@@ -258,6 +258,9 @@ namespace LiteTube.DataClasses
             if (video == null)
                 return;
 
+            if (video.Snippet == null)
+                return;
+
             ChannelId = video.Snippet.ChannelId;
             ChannelTitle = video.Snippet.ChannelTitle;
             Thumbnails = new MThumbnailDetails(video.Snippet.Thumbnails);

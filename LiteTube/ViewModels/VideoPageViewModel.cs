@@ -18,7 +18,6 @@ namespace LiteTube.ViewModels
         private Uri _videoUri;
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
-        private readonly NavigationPanelViewModel _navigatioPanelViewModel;
         private RelatedVideosViewModel _relatedViewModel;
         private CommentsViewModel _commentsViewModel;
         private string _channelImage;
@@ -73,7 +72,6 @@ namespace LiteTube.ViewModels
             _videoQualityCommand = new RelayCommand(ChangeVideoQuality);
 
             LoadVideoQualities();
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, _connectionListener);
             LoadVideoItem(videoId);
         }
 
@@ -209,7 +207,7 @@ namespace LiteTube.ViewModels
 
         public NavigationPanelViewModel NavigationPanelViewModel
         {
-            get { return _navigatioPanelViewModel; }
+            get { return App.NavigationPanelViewModel; }
         }
 
         public PlaylistsContainerViewModel PlaylistListViewModel
@@ -421,26 +419,29 @@ namespace LiteTube.ViewModels
             LoadVideoItem(_videoId);
         }
 
-        private void SetVideoUri(string videoId, YouTubeQuality quality)
+        private async void SetVideoUri(string videoId, YouTubeQuality quality)
         {
-            LayoutHelper.InvokeFromUiThread(async () =>
+            try
             {
-                try
+                var url = await _getDataSource().GetVideoUriAsync(videoId, quality);
+                LayoutHelper.InvokeFromUiThread(() =>
                 {
                     IsPaid = false;
-                    var url = await _getDataSource().GetVideoUriAsync(videoId, quality);
+                    if (url == null)
+                        return;
+
                     VideoUri = url.Uri;
-                }
-                //Todo разделить исключения по типу и добавить соответсвующий баннер
-                catch(YouTubeUriNotFoundException)
-                {
-                    IsPaid = true;
-                }
-                catch (Exception)
-                {
-                    IsPaid = true;
-                }
-            });
+                });
+            }
+            //Todo разделить исключения по типу и добавить соответсвующий баннер
+            catch (YouTubeUriNotFoundException)
+            {
+                IsPaid = true;
+            }
+            catch (Exception)
+            {
+                IsPaid = true;
+            }
         }
 
         private void SetLikesAndDislikes(IVideoStatistics statistics)
@@ -453,29 +454,38 @@ namespace LiteTube.ViewModels
                 Dislikes = dislike.Value;
         }
 
-        private void SetChannelInfo(string channelId)
+        private async void SetChannelInfo(string channelId)
         {
-            LayoutHelper.InvokeFromUiThread(async () =>
-            {
-                var channelInfo = await _getDataSource().GetChannel(channelId);
-                if (channelInfo == null)
-                    return;
+            var channelInfo = await _getDataSource().GetChannel(channelId);
+            if (channelInfo == null)
+                return;
 
-                ChannelImage = channelInfo.Thumbnails.GetThumbnailUrl();
-                ChannelSubscribers = channelInfo.Statistics.SubscriberCount;
-                ChannelVideoCount = channelInfo.Statistics.VideoCount;
-                IsSubscribed = _getDataSource().IsSubscribed(_channelId);
+            LayoutHelper.InvokeFromUiThread(() =>
+            {
+                IsSubscribed = _getDataSource().IsSubscribed(channelId);
+                ChannelTitle = channelInfo.Title;
+                ChannelId = channelId;
+
+                if (channelInfo.Thumbnails != null)
+                    ChannelImage = channelInfo.Thumbnails.GetThumbnailUrl();
+
+                if (channelInfo.Statistics != null)
+                {
+                    ChannelSubscribers = channelInfo.Statistics.SubscriberCount;
+                    ChannelVideoCount = channelInfo.Statistics.VideoCount;
+                }
             });
         }
 
-        private void SetVideoRating(string videoId)
+        private async void SetVideoRating(string videoId)
         {
             if (!_getDataSource().IsAuthorized)
                 return;
 
-            LayoutHelper.InvokeFromUiThread(async () =>
+            var rating = await _getDataSource().GetRating(videoId);
+
+            LayoutHelper.InvokeFromUiThread(() =>
             {
-                var rating = await _getDataSource().GetRating(videoId);
                 if (rating == RatingEnum.Dislike)
                 {
                     IsDisliked = true;
@@ -525,22 +535,21 @@ namespace LiteTube.ViewModels
             await _getDataSource().SetRating(VideoId, rating);
         }
 
-        private void LoadVideoItem(string videoId)
+        private async void LoadVideoItem(string videoId)
         {
             RelatedVideosViewModel = new RelatedVideosViewModel(videoId, _getDataSource, _connectionListener, this);
             CommentsViewModel = new CommentsViewModel(videoId, _getDataSource, _connectionListener);
 
-            LayoutHelper.InvokeFromUiThread(async () =>
+            var videoItem = await _getDataSource().GetVideoItem(videoId);
+            if (videoItem == null)
+                return;
+
+            SetChannelInfo(videoItem.ChannelId);
+
+            LayoutHelper.InvokeFromUiThread(() =>
             {
                 if (!_connectionListener.CheckNetworkAvailability())
                     return;
-
-                var videoItem = await _getDataSource().GetVideoItem(videoId);
-                if (videoItem == null)
-                    return;
-
-                ChannelTitle = videoItem.ChannelTitle;
-                ChannelId = videoItem.ChannelId;
 
                 if (videoItem.Details != null)
                 {
@@ -557,7 +566,6 @@ namespace LiteTube.ViewModels
                 if (videoItem.PublishedAt != null) 
                     PublishedAt = videoItem.PublishedAt.Value.ToString("D");
                 
-                SetChannelInfo(_channelId);
                 SetVideoRating(videoId);
                 var defaultQuality = SettingsHelper.GetQuality();
                 var quality = _qualityConverter.GetQualityEnum(defaultQuality);

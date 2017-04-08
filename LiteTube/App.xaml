@@ -39,6 +39,7 @@
             <converters:DateTimeToDisplayStringConverter x:Key="DateTimeToDisplayStringConverter"/>
             <converters:ColorValueConverter x:Key="BorderColorValueConverter" FalseValue="#00000000" TrueValue="{StaticResource PhoneAccentBrush}"/>
             <converters:ColorValueConverter x:Key="ColorValueConverter" FalseValue="{StaticResource PhoneBackgroundBrush}" TrueValue="{StaticResource PlaylistSelectedBrush}"/>
+            <converters:NumberToStringConverter x:Key="NumberToStringConverter"/>
 
             <sys:Double x:Key="PanoramaItemHeaderMiddleFontSize">36</sys:Double>
 

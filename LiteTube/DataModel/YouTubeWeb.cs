@@ -20,7 +20,7 @@ namespace LiteTube.DataModel
     {
         private const string RECOMMENDED_URL = @"https://www.youtube.com/feed/recommended";
         private const string MOST_POPULAR_URL = @"https://www.youtube.com/feed/trending//?gl=";
-        private const string SUBSCRIPTIONS_URL = @"https://www.youtube.com/feed/subscriptions/?app=desktop&persist_app=1";
+        private const string SUBSCRIPTIONS_URL = @"https://www.youtube.com/feed/subscriptions/?app=desktop&persist_app=1&flow=2";
         private const string WATCH_LATER_URL = @"https://www.youtube.com/playlist?list=WL&app=desktop&persist_app=1";
         private const string HISTORY_URL = @"https://www.youtube.com/feed/history";
 
@@ -80,8 +80,18 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeResponce> GetChannelVideos(string channelId, string accessToken, string nextPageToken)
         {
-            var url = string.Format("https://www.youtube.com/channel/{0}/videos", channelId);
+            //var liveChannelId = "UC4R8DWoMoI7CAwX8_LjQHig";
+            //if (channelId == liveChannelId)
+            //    url = $"https://www.youtube.com/playlist?list=PLU12uITxBEPFb0yuTkLH2tu8j5SVx1YaA";
+
+            var url = $"https://www.youtube.com/channel/{channelId}/videos";
             var videos = new Dictionary<string, IEnumerable<string>>();
+            var list = await GetVideos(url, videos, accessToken, nextPageToken);
+
+            if (list != null)
+                return list;
+
+            url = $"https://www.youtube.com/channel/{channelId}";
             return await GetVideos(url, videos, accessToken, nextPageToken);
         }
 

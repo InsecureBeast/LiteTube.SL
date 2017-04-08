@@ -33,7 +33,7 @@ namespace LiteTube
         private bool _isFullScreen = false;
         private const string RelatedListBoxName = "RelatedListBox";
         private bool _isPaused = false;
-        private bool _autoPlay = true;
+        private readonly bool _autoPlay = true;
 
         public PlaylistVideoPage()
         {
@@ -238,6 +238,7 @@ namespace LiteTube
             {
                 _playerState = player.GetMediaState();
                 _sensor.OrientationChanged -= Sensor_OrientationChanged;
+                player.Dispose();
                 base.OnNavigatedFrom(e);
             }
             catch (Exception)
@@ -286,14 +287,16 @@ namespace LiteTube
 
                 case 1:
                     Debug.WriteLine("details");
-                    //await LoadRelatedItems();
-                    //TODO load info
                     break;
 
                 case 2:
                     Debug.WriteLine("comments");
-                    if (!viewModel.VideoViewModel.CommentsViewModel.IsEmpty)
-                        await viewModel.VideoViewModel.CommentsViewModel.FirstLoad();
+                    var commentsViewModel = viewModel.VideoViewModel.CommentsViewModel;
+                    if (commentsViewModel == null)
+                        return;
+
+                    if (!commentsViewModel.IsEmpty)
+                        await commentsViewModel.FirstLoad();
                     break;
             }
         }
