@@ -17,6 +17,8 @@ using System.Threading;
 using Google;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net;
 
 namespace LiteTube
 {
@@ -235,6 +237,18 @@ namespace LiteTube
             }
 
             e.Handled = true;
+
+            if (e.ExceptionObject is HttpRequestException)
+            {
+                _container.DialogService.ShowError(AppResources.ErrorMessage);
+                return;
+            }
+
+            if (e.ExceptionObject is WebException)
+            {
+                _container.DialogService.ShowError(AppResources.ErrorMessage);
+                return;
+            }
 
             if (e.ExceptionObject is LiteTubeException)
             {
