@@ -307,6 +307,12 @@ namespace LiteTube
                     e.Handled = true;
                     return true;
                 }
+                else if (exception is BadImageFormatException)
+                {
+                    Debug.WriteLine("Handled BadImageFormatException exception for AddMediator {0}", exception);
+                    e.Handled = true;
+                    return true;
+                }
             }
 
             return false;
