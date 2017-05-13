@@ -110,6 +110,7 @@
     <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
     <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
+    <Compile Include="Common\Purchase.cs" />
     <Compile Include="Common\SessionType.cs" />
     <Compile Include="Common\Tools\LanguageManager.cs" />
     <Compile Include="Common\Tools\LastRequest.cs" />
@@ -147,6 +148,9 @@
     <Compile Include="DataModel\RemoteDataSourceWeb.cs" />
     <Compile Include="DataModel\VideoQualityHelper.cs" />
     <Compile Include="DataModel\YouTube.cs" />
+    <Compile Include="Donate.xaml.cs">
+      <DependentUpon>Donate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interactivity\HighlightUrlBehavior.cs" />
     <Compile Include="PlaylistPage.xaml.cs">
       <DependentUpon>PlaylistPage.xaml</DependentUpon>
@@ -272,6 +276,7 @@
     <Compile Include="ViewModels\ChannelPageViewModel.cs" />
     <Compile Include="ViewModels\ChannelsPageViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\DonateViewModel.cs" />
     <Compile Include="ViewModels\HistoryPageViewModel.cs" />
     <Compile Include="ViewModels\LikedViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
@@ -360,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PlaylistsContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Donate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -641,6 +650,9 @@
       <Project>{e41b56a9-9c1c-4289-b9d2-2bbcedbb2567}</Project>
       <Name>LiteTube.LibVideo</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

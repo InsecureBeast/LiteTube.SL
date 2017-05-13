@@ -443,4 +443,7 @@
   <data name="LocalizationThanks" xml:space="preserve">
     <value>Obrigado Jotta Maciel para Português (Brasil) localização</value>
   </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Donate</value>
+  </data>
 </root>
