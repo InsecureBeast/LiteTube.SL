@@ -38,7 +38,7 @@
                              common:ItemClickCommand.Command="{Binding Donate1Command}"
                              Padding="20"
                              Name="Th1">
-                    <TextBlock Text="Thank you 60" />
+                    <TextBlock Text="{Binding Test}" />
                 </ListBoxItem>
                 <ListBoxItem VerticalContentAlignment="Center"
                              common:ItemClickCommand.Command="{Binding Donate2Command}"

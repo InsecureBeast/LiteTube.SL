@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using LiteTube.Common.Helpers;
+using LiteTube.ViewModels;
 
 namespace LiteTube
 {
@@ -20,6 +21,11 @@ namespace LiteTube
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationHelper.OnNavigatedTo(this);
+            var model = DataContext as DonateViewModel;
+            if (model == null)
+                return;
+
+            model.Init();
         }
     }
 }

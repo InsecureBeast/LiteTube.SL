@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace LiteTube.ViewModels
 {
-    class DonateViewModel
+    class DonateViewModel : PropertyChangedBase
     {
         private readonly RelayCommand<FrameworkElement> _donate1Command;
         private readonly RelayCommand<FrameworkElement> _donate2Command;
@@ -23,9 +23,23 @@ namespace LiteTube.ViewModels
             _donate2Command = new RelayCommand<FrameworkElement>(Donate2);
             _donate3Command = new RelayCommand<FrameworkElement>(Donate3);
             _donate4Command = new RelayCommand<FrameworkElement>(Donate4);
+        }
 
+        public async void Init()
+        {
             var purchase = new Purchase();
-            purchase.Init();
+            await purchase.Init();
+            var test = purchase.GetProductInfo("donate1");
+            if (test == null)
+                return;
+
+            Test = test.Name + test.FormattedPrice;
+            NotifyOfPropertyChanged(() => Test);
+        }
+
+        public string Test
+        {
+            get;set;
         }
 
         public ICommand Donate1Command

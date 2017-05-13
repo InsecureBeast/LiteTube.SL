@@ -11,7 +11,7 @@ namespace LiteTube.Common
     {
         private ListingInformation _listing;
 
-        public async void Init()
+        public async Task Init()
         {
             // Initialize the license info for use in the app that is uploaded to the Store.
             // Uncomment the following line in the release version of your app.
