@@ -3,6 +3,7 @@ using MyToolkit.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,32 +16,38 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _donate1Command;
         private readonly RelayCommand<FrameworkElement> _donate2Command;
         private readonly RelayCommand<FrameworkElement> _donate3Command;
-        private readonly RelayCommand<FrameworkElement> _donate4Command;
 
         public DonateViewModel()
         {
             _donate1Command = new RelayCommand<FrameworkElement>(Donate1);
             _donate2Command = new RelayCommand<FrameworkElement>(Donate2);
             _donate3Command = new RelayCommand<FrameworkElement>(Donate3);
-            _donate4Command = new RelayCommand<FrameworkElement>(Donate4);
         }
 
         public async void Init()
         {
             var purchase = new Purchase();
             await purchase.Init();
-            var test = purchase.GetProductInfo("donate1");
-            if (test == null)
-                return;
-
-            Test = test.Name + test.FormattedPrice;
-            NotifyOfPropertyChanged(() => Test);
+            Small = GetProductDisplayName(purchase, "donate1");
+            NotifyOfPropertyChanged(() => Small);
+            Medium = GetProductDisplayName(purchase, "donateMedium");
+            NotifyOfPropertyChanged(() => Medium);
+            Large = GetProductDisplayName(purchase, "donateLarge");
+            NotifyOfPropertyChanged(() => Large);
         }
 
-        public string Test
+        private string GetProductDisplayName(Purchase purchase, string productId)
         {
-            get;set;
+            var product = purchase.GetProductInfo(productId);
+            if (product == null)
+                return string.Empty;
+
+            return $"{product.Name} ({product.FormattedPrice})";
         }
+
+        public string Small { get; set; }
+        public string Medium { get; set; }
+        public string Large { get; set; }
 
         public ICommand Donate1Command
         {
@@ -57,11 +64,6 @@ namespace LiteTube.ViewModels
             get { return _donate3Command; }
         }
 
-        public ICommand Donate4Command
-        {
-            get { return _donate4Command; }
-        }
-
         private void Donate1(FrameworkElement obj)
         {
             Donate(60);
@@ -75,11 +77,6 @@ namespace LiteTube.ViewModels
         private void Donate3(FrameworkElement obj)
         {
             Donate(180);
-        }
-
-        private void Donate4(FrameworkElement obj)
-        {
-            Donate(240);
         }
 
         private void Donate(int sum)

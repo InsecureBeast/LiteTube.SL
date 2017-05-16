@@ -36,27 +36,18 @@
             <ListBox toolkit:TiltEffect.IsTiltEnabled="True" >
                 <ListBoxItem VerticalContentAlignment="Center"
                              common:ItemClickCommand.Command="{Binding Donate1Command}"
-                             Padding="20"
-                             Name="Th1">
-                    <TextBlock Text="{Binding Test}" />
+                             Padding="20">
+                    <TextBlock Text="{Binding Small}" />
                 </ListBoxItem>
                 <ListBoxItem VerticalContentAlignment="Center"
                              common:ItemClickCommand.Command="{Binding Donate2Command}"
-                             Padding="20"
-                             Name="Th2">
-                    <TextBlock Text="Thank you 120" />
+                             Padding="20">
+                    <TextBlock Text="{Binding Medium}" />
                 </ListBoxItem>
                 <ListBoxItem VerticalContentAlignment="Center"
                              common:ItemClickCommand.Command="{Binding Donate3Command}"
-                             Padding="20"
-                             Name="Th3">
-                    <TextBlock Text="Thank you 180" />
-                </ListBoxItem>
-                <ListBoxItem VerticalContentAlignment="Center"
-                             common:ItemClickCommand.Command="{Binding Donate4Command}"
-                             Padding="20"
-                             Name="Th4">
-                    <TextBlock Text="Thank you 240" />
+                             Padding="20">
+                    <TextBlock Text="{Binding Large}" />
                 </ListBoxItem>
             </ListBox>
         </Grid>
