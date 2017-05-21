@@ -119,7 +119,9 @@ namespace LiteTube
                 // Delay creation of the view model until necessary
                 if (_navigationPanelViewModel == null)
                 {
-                    _navigationPanelViewModel = new NavigationPanelViewModel(() => _container.GetDataSource(), _container.ConnectionListener);
+                    var purchese = _container.Purchase;
+                    var connectListener = _container.ConnectionListener;
+                    _navigationPanelViewModel = new NavigationPanelViewModel(() => _container.GetDataSource(), connectListener, purchese);
                 }
                 return _navigationPanelViewModel;
             }

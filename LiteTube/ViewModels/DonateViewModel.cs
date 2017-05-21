@@ -16,25 +16,25 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _donate1Command;
         private readonly RelayCommand<FrameworkElement> _donate2Command;
         private readonly RelayCommand<FrameworkElement> _donate3Command;
-        private readonly Purchase _purchase;
+        private readonly IPurchase _purchase;
 
         private const string PRODUCT_ID_SMALL = "donate1";
         private const string PRODUCT_ID_MEDIUM = "donateMedium";
         private const string PRODUCT_ID_LARGE = "donateLarge";
 
-        public DonateViewModel()
+        public DonateViewModel(IPurchase purchase)
         {
+            _purchase = purchase;
+
             _donate1Command = new RelayCommand<FrameworkElement>(Donate1);
             _donate2Command = new RelayCommand<FrameworkElement>(Donate2);
             _donate3Command = new RelayCommand<FrameworkElement>(Donate3);
-
-            //TODO Вынести как зависимость
-            _purchase = new Purchase();
         }
 
         public async void Init()
         {
             await _purchase.Init();
+
             Small = GetProductDisplayName(_purchase, PRODUCT_ID_SMALL);
             NotifyOfPropertyChanged(() => Small);
             Medium = GetProductDisplayName(_purchase, PRODUCT_ID_MEDIUM);
@@ -82,7 +82,7 @@ namespace LiteTube.ViewModels
             await _purchase.BuyProductAsync(productId, productName);
         }
 
-        private string GetProductDisplayName(Purchase purchase, string productId)
+        private string GetProductDisplayName(IPurchase purchase, string productId)
         {
             var product = purchase.GetProductInfo(productId);
             if (product == null)

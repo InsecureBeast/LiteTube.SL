@@ -12,11 +12,13 @@ namespace LiteTube.ViewModels
     {
         private readonly Func<IDataSource> _getDataSource;
         private readonly IConnectionListener _connectionListener;
+        private readonly IPurchase _purchase;
         private readonly Common.RelayCommand _loginCommand;
         private readonly Common.RelayCommand _logoutCommand;
         private readonly Common.RelayCommand _homeCommand;
         private readonly Common.RelayCommand _settingsCommand;
         private readonly Common.RelayCommand _searchCommand;
+        private readonly Common.RelayCommand _donateCommand;
         private readonly RelayCommand<string> _channelCommand;
         private bool _isMenuSelected = false;
         private bool _isSettingsSelected = false;
@@ -27,26 +29,19 @@ namespace LiteTube.ViewModels
         private string _profileRegistered;
         private string _profileSecondDisplayName;
         private string _profileChannelId;
-        private Timer _timer;
 
-        public NavigationPanelViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener)
+        public NavigationPanelViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener, IPurchase purchase)
         {
             _getDataSource = getDataSource;
             _connectionListener = connectionListener;
+            _purchase = purchase;
             _loginCommand = new Common.RelayCommand(Login);
             _logoutCommand = new Common.RelayCommand(Logout);
             _homeCommand = new Common.RelayCommand(Home);
             _settingsCommand = new Common.RelayCommand(Settings, CanSettings);
             _searchCommand = new Common.RelayCommand(Search);
             _channelCommand = new RelayCommand<string>(LoadChannel);
-
-            //_timer = new System.Threading.Timer(Callback);
-            //_timer.Change(0, 1000);
-        }
-
-        private void Callback(object state)
-        {
-            LayoutHelper.InvokeFromUiThread(() => NotifyOfPropertyChanged(() => Memory));
+            _donateCommand = new Common.RelayCommand(ViewDonate);
         }
 
         public ICommand LoginCommand
@@ -77,6 +72,11 @@ namespace LiteTube.ViewModels
         public ICommand ChannelCommand
         {
             get { return _channelCommand; }
+        }
+
+        public ICommand DonateCommand
+        {
+            get { return _donateCommand; }
         }
 
         public bool IsMenuSelected
@@ -215,7 +215,7 @@ namespace LiteTube.ViewModels
         private void Settings()
         {
 #if SILVERLIGHT
-            NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_getDataSource, _connectionListener));
+            NavigationHelper.Navigate("/SettingsPage.xaml", new SettingsViewModel(_getDataSource, _connectionListener, _purchase));
 #endif
         }
 
@@ -241,6 +241,16 @@ namespace LiteTube.ViewModels
         public void Notify(UpdateContextEventArgs e)
         {
             NotifyOfPropertyChanged(() => IsAuthorized);
+        }
+
+        private void ViewDonate()
+        {
+            NavigationHelper.Navigate("/Donate.xaml", new DonateViewModel(_purchase));
+        }
+
+        private void Callback(object state)
+        {
+            LayoutHelper.InvokeFromUiThread(() => NotifyOfPropertyChanged(() => Memory));
         }
     }
 }

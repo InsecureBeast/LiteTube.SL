@@ -11,6 +11,7 @@ using LiteTube.Common.Helpers;
 using Microsoft.Phone.Tasks;
 using LiteTube.Resources;
 using LiteTube.ViewModels;
+using LiteTube.Common;
 
 namespace LiteTube.Controls
 {
@@ -58,11 +59,6 @@ namespace LiteTube.Controls
         private void BackgroundPopup_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             MainMenuButton.IsChecked = false;
-        }
-
-        private void Donate_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationHelper.Navigate("/Donate.xaml", new DonateViewModel());
         }
     }
 }

@@ -11,7 +11,7 @@ using Windows.ApplicationModel.Store;
 
 namespace LiteTube.Common
 {
-    class Purchase
+    class Purchase : IPurchase
     {
         private ListingInformation _listing;
 

@@ -111,8 +111,10 @@
     <Compile Include="Common\Exceptions\PurchaseException.cs" />
     <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
-    <Compile Include="Common\Purchase.cs" />
+    <Compile Include="Common\Purchase\IPurchase.cs" />
+    <Compile Include="Common\Purchase\Purchase.cs" />
     <Compile Include="Common\SessionType.cs" />
+    <Compile Include="Common\ToastNotifier.cs" />
     <Compile Include="Common\Tools\LanguageManager.cs" />
     <Compile Include="Common\Tools\LastRequest.cs" />
     <Compile Include="Common\Tools\Theme.cs" />
@@ -655,6 +657,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

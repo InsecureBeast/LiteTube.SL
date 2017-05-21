@@ -26,7 +26,7 @@ namespace LiteTube.ViewModels
         private string _currentLanguage;
         private bool _isAutoplayVideo = true;
 
-        public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener)
+        public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener, IPurchase purchase)
         {
             _getDataSource = getGetDataSource;
             _regions = new ObservableCollection<string>(I18nLanguages.Languages);
@@ -36,7 +36,7 @@ namespace LiteTube.ViewModels
             _applicationThemes = new ObservableCollection<ApplicationTheme>(ThemeManager.GetSupportedThemes());
             _applicationLanguages = new ObservableCollection<string>(LanguageManager.GetSupportedLanguages());
 
-            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener);
+            _navigatioPanelViewModel = new NavigationPanelViewModel(_getDataSource, connectionListener, purchase);
             _navigatioPanelViewModel.IsSettingsSelected = true;
             _selectedRegion = SettingsHelper.GetRegionName();
             _selectedQuality = SettingsHelper.GetQuality();

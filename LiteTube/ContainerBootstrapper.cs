@@ -7,12 +7,14 @@ namespace LiteTube
     {
         private IDialogService _dialogService;
         private Context _context;
+        private IPurchase _purchese;
 
         public void Build()
         {
             _context = new Context();
             _context.BuidContext();
             _dialogService = new DialogService();
+            _purchese = new Purchase();
         }
 
         internal IDataSource GetDataSource()
@@ -28,6 +30,11 @@ namespace LiteTube
         internal IConnectionListener ConnectionListener
         {
             get { return _context.ConnectionListener; }
+        }
+
+        internal IPurchase Purchase
+        {
+            get { return _purchese; }
         }
     }
 }
