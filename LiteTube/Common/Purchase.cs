@@ -1,8 +1,12 @@
-﻿using System;
+﻿using LiteTube.Common.Exceptions;
+using LiteTube.Common.Helpers;
+using LiteTube.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Windows.ApplicationModel.Store;
 
 namespace LiteTube.Common
@@ -44,27 +48,30 @@ namespace LiteTube.Common
             LicenseInformation licenseInformation = CurrentApp.LicenseInformation;
             if (!licenseInformation.ProductLicenses[productId].IsActive)
             {
-                //rootPage.NotifyUser("Buying " + productName + "...", NotifyType.StatusMessage);
                 try
                 {
                     await CurrentApp.RequestProductPurchaseAsync(productId);
                     if (licenseInformation.ProductLicenses[productId].IsActive)
                     {
-                        //rootPage.NotifyUser("You bought " + productName + ".", NotifyType.StatusMessage);
+                        LayoutHelper.InvokeFromUiThread(() => 
+                        {
+                            MessageBox.Show($"{AppResources.YouBought} {productName}.");
+                        });
                     }
                     else
                     {
+                        throw new PurchaseException($"{AppResources.UnableToBuy} {productName}.");
                         //rootPage.NotifyUser(productName + " was not purchased.", NotifyType.StatusMessage);
                     }
                 }
                 catch (Exception)
                 {
-                    //rootPage.NotifyUser("Unable to buy " + productName + ".", NotifyType.ErrorMessage);
+                    throw new PurchaseException($"{AppResources.UnableToBuy} {productName}.");
                 }
             }
             else
             {
-                //rootPage.NotifyUser("You already own " + productName + ".", NotifyType.ErrorMessage);
+                throw new PurchaseException($"{AppResources.YouAlreadyOwn} {productName}.");
             }
         }
     }

@@ -889,6 +889,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to buy.
+        /// </summary>
+        public static string UnableToBuy {
+            get {
+                return ResourceManager.GetString("UnableToBuy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unsubscribe.
         /// </summary>
         public static string Unsubscribe {
@@ -1047,6 +1056,24 @@ namespace LiteTube.Resources {
         public static string Yesterday {
             get {
                 return ResourceManager.GetString("Yesterday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You already own.
+        /// </summary>
+        public static string YouAlreadyOwn {
+            get {
+                return ResourceManager.GetString("YouAlreadyOwn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You bought.
+        /// </summary>
+        public static string YouBought {
+            get {
+                return ResourceManager.GetString("YouBought", resourceCulture);
             }
         }
     }

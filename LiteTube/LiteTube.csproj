@@ -108,6 +108,7 @@
     <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
     <Compile Include="Common\ContextMenuStrategy.cs" />
     <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
+    <Compile Include="Common\Exceptions\PurchaseException.cs" />
     <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
     <Compile Include="Common\Purchase.cs" />

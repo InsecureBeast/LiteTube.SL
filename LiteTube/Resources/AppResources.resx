@@ -449,4 +449,13 @@
   <data name="DonationDescription" xml:space="preserve">
     <value>Donation are welcom but not mandatory. If you are enjoing LightTube, please feel free to donate! These donations help support the continued development of LighTube.</value>
   </data>
+  <data name="UnableToBuy" xml:space="preserve">
+    <value>Unable to buy</value>
+  </data>
+  <data name="YouAlreadyOwn" xml:space="preserve">
+    <value>You already own</value>
+  </data>
+  <data name="YouBought" xml:space="preserve">
+    <value>You bought</value>
+  </data>
 </root>

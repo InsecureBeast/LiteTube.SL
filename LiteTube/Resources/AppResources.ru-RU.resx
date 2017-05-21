@@ -449,4 +449,13 @@
   <data name="DonationDescription" xml:space="preserve">
     <value>Помощь проекту приветствуются, но не обязательна. Эти пожертвования помогают поддерживать дальнейшее развитие LighTube.</value>
   </data>
+  <data name="UnableToBuy" xml:space="preserve">
+    <value>Не удалось преобрести</value>
+  </data>
+  <data name="YouAlreadyOwn" xml:space="preserve">
+    <value>Вы уже приобрели</value>
+  </data>
+  <data name="YouBought" xml:space="preserve">
+    <value>Вы приобрели</value>
+  </data>
 </root>

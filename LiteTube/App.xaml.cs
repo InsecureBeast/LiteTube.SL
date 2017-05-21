@@ -256,6 +256,12 @@ namespace LiteTube
                 return;
             }
 
+            if (e.ExceptionObject is PurchaseException)
+            {
+                _container.DialogService.ShowError(e.ExceptionObject.Message);
+                return;
+            }
+
             if (e.ExceptionObject is PlaylistNotFoundException)
             {
                 _container.DialogService.ShowError(AppResources.PlaylistNotFoundErrorMessage);
