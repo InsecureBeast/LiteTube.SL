@@ -444,6 +444,9 @@
     <value>Obrigado Jotta Maciel para Português (Brasil) localização</value>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Help the project</value>
+  </data>
+  <data name="DonationDescription" xml:space="preserve">
+    <value>Donation are welcom but not mandatory. If you are enjoing LightTube, please feel free to donate! These donations help support the continued development of LighTube.</value>
   </data>
 </root>

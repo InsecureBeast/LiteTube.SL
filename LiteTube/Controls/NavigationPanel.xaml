@@ -102,9 +102,9 @@
                 <controls:NavigationButton Text="{Binding Path=LocalizedResources.About, Source={StaticResource LocalizedStrings}, Converter={StaticResource LowerCaseConverter}}"
                                            Width="{StaticResource MenuWidth}"
                                            Click="About_Click"/>
-                <!--<controls:NavigationButton Text="{Binding Path=LocalizedResources.Donate, Source={StaticResource LocalizedStrings}, Converter={StaticResource LowerCaseConverter}}"
+                <controls:NavigationButton Text="{Binding Path=LocalizedResources.Donate, Source={StaticResource LocalizedStrings}, Converter={StaticResource LowerCaseConverter}}"
                                            Width="{StaticResource MenuWidth}"
-                                           Click="Donate_Click"/>-->
+                                           Click="Donate_Click"/>
                 <Rectangle Height="1"
                            Width="{StaticResource MenuWidth}"
                            Fill="{StaticResource NavigationPanelButtonPressedBackgroundBrush}"/>

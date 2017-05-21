@@ -295,11 +295,20 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Donate.
+        ///   Looks up a localized string similar to Donations.
         /// </summary>
         public static string Donate {
             get {
                 return ResourceManager.GetString("Donate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donation are welcom but not mandatory. If you are enjoing LightTube, please feel free to donate! These donations help support the continued development of LighTube..
+        /// </summary>
+        public static string DonationDescription {
+            get {
+                return ResourceManager.GetString("DonationDescription", resourceCulture);
             }
         }
         
