@@ -129,6 +129,7 @@ namespace LiteTube.DataModel
                 var str = match.Value.Replace("[", "");
                 str = str.Replace("\"", "");
                 str = str.Replace(",0]", "");
+                str = Regex.Replace(str, @"[\\u0000-\\u007F]+", string.Empty);
                 if (!list.Contains(str))
                     list.Add(str);
             }
