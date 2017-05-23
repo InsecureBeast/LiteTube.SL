@@ -21,7 +21,8 @@
     </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" 
-          Background="{StaticResource PhoneBackgroundBrush}">
+          Background="{StaticResource PhoneBackgroundBrush}"
+          Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -31,27 +32,33 @@
         <!--TitlePanel contains the name of the application and page title-->
         <TextBlock Text="{Binding Path=LocalizedResources.Donate, Source={StaticResource LocalizedStrings}}" 
                    Style="{StaticResource TitleTextBlockStyle}" 
-                   Margin="12,0,12,0"/>
+                   Margin="11,0,12,0"/>
 
         <!-- Description contains the name of the application and page title-->
         <TextBlock Text="{Binding Path=LocalizedResources.DonationDescription, Source={StaticResource LocalizedStrings}}" 
-                   Style="{StaticResource PhoneTextSmallStyle}" 
                    Margin="12,12,12,0"
+                   Style="{StaticResource SettingsTextBlockStyle}" 
+                   Foreground="{StaticResource PhoneSecondaryForegroundBrush}"
+                   TextWrapping="Wrap"
                    Grid.Row="1"/>
 
         <!--ContentPanel - place additional content here-->
         <StackPanel Orientation="Vertical"
                     Margin="{StaticResource DefaultControlMargin}"
+                    Visibility="{Binding IsLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Grid.Row="2">
 
             <Button Content="{Binding Small}"
-                    Command="{Binding Donate1Command}"/>
+                    Command="{Binding Donate1Command}"
+                    HorizontalContentAlignment="Left"/>
 
             <Button Content="{Binding Medium}"
-                    Command="{Binding Donate2Command}"/>
+                    Command="{Binding Donate2Command}"
+                    HorizontalContentAlignment="Left"/>
 
             <Button Content="{Binding Large}"
-                    Command="{Binding Donate3Command}"/>
+                    Command="{Binding Donate3Command}"
+                    HorizontalContentAlignment="Left"/>
 
         </StackPanel>
         <!--<Grid x:Name="ContentPanel" 

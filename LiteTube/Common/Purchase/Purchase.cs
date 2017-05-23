@@ -19,7 +19,7 @@ namespace LiteTube.Common
         {
             // Initialize the license info for use in the app that is uploaded to the Store.
             // Uncomment the following line in the release version of your app.
-            var licenseInformation = CurrentApp.LicenseInformation;
+            //var licenseInformation = CurrentApp.LicenseInformation;
 
             // Initialize the license info for testing.
             // Comment the following line in the release version of your app.
@@ -27,14 +27,22 @@ namespace LiteTube.Common
 
             _listing = await CurrentApp.LoadListingInformationAsync();
             //_listing = await CurrentApp.LoadListingInformationByProductIdsAsync(new string[] { "donate1"});
-            var product1 = _listing.ProductListings.Count;
+            //var product1 = _listing.ProductListings.Count;
         }
 
-        public ProductListing GetProductInfo(string name)
+        public IProductListing GetProductInfo(string name)
         {
             try
             {
-                return _listing.ProductListings[name];
+                var listing = _listing.ProductListings[name];
+                var res = new ProductListingImpl
+                {
+                    ProductId = listing.ProductId,
+                    Name = listing.Name,
+                    FormattedPrice = listing.FormattedPrice
+                };
+
+                return res;
             }
             catch (Exception)
             {

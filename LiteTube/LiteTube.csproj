@@ -112,6 +112,7 @@
     <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
     <Compile Include="Common\Purchase\IPurchase.cs" />
+    <Compile Include="Common\Purchase\ProductListingImpl.cs" />
     <Compile Include="Common\Purchase\Purchase.cs" />
     <Compile Include="Common\SessionType.cs" />
     <Compile Include="Common\ToastNotifier.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Purchase\PurchaseMock.cs" />
     <Compile Include="Resources\AppResources.pt-BR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

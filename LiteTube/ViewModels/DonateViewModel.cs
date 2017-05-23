@@ -17,6 +17,7 @@ namespace LiteTube.ViewModels
         private readonly RelayCommand<FrameworkElement> _donate2Command;
         private readonly RelayCommand<FrameworkElement> _donate3Command;
         private readonly IPurchase _purchase;
+        private bool _isLoaded;
 
         private const string PRODUCT_ID_SMALL = "donate1";
         private const string PRODUCT_ID_MEDIUM = "donateMedium";
@@ -29,38 +30,50 @@ namespace LiteTube.ViewModels
             _donate1Command = new RelayCommand<FrameworkElement>(Donate1);
             _donate2Command = new RelayCommand<FrameworkElement>(Donate2);
             _donate3Command = new RelayCommand<FrameworkElement>(Donate3);
+
+            IsLoaded = false;
         }
 
         public async void Init()
         {
-            await _purchase.Init();
+            try
+            {
+                await _purchase.Init();
 
-            Small = GetProductDisplayName(_purchase, PRODUCT_ID_SMALL);
-            NotifyOfPropertyChanged(() => Small);
-            Medium = GetProductDisplayName(_purchase, PRODUCT_ID_MEDIUM);
-            NotifyOfPropertyChanged(() => Medium);
-            Large = GetProductDisplayName(_purchase, PRODUCT_ID_LARGE);
-            NotifyOfPropertyChanged(() => Large);
+                Small = GetProductDisplayName(_purchase, PRODUCT_ID_SMALL);
+                NotifyOfPropertyChanged(() => Small);
+                Medium = GetProductDisplayName(_purchase, PRODUCT_ID_MEDIUM);
+                NotifyOfPropertyChanged(() => Medium);
+                Large = GetProductDisplayName(_purchase, PRODUCT_ID_LARGE);
+                NotifyOfPropertyChanged(() => Large);
+
+                IsLoaded = true;
+            }
+            catch (Exception)
+            {
+                IsLoaded = false;
+            }
         }
 
         public string Small { get; set; }
         public string Medium { get; set; }
         public string Large { get; set; }
 
-        public ICommand Donate1Command
+        public bool IsLoaded
         {
-            get { return _donate1Command; }
+            get { return _isLoaded; }
+            set
+            {
+                _isLoaded = value;
+                NotifyOfPropertyChanged(() => IsLoaded);
+            }
         }
 
-        public ICommand Donate2Command
-        {
-            get { return _donate2Command; }
-        }
+        public ICommand Donate1Command => _donate1Command;
 
-        public ICommand Donate3Command
-        {
-            get { return _donate3Command; }
-        }
+        public ICommand Donate2Command => _donate2Command;
+
+        public ICommand Donate3Command => _donate3Command;
 
         private void Donate1(FrameworkElement obj)
         {

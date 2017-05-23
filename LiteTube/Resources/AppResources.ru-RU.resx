@@ -447,7 +447,7 @@
     <value>Помощь проекту</value>
   </data>
   <data name="DonationDescription" xml:space="preserve">
-    <value>Помощь проекту приветствуются, но не обязательна. Эти пожертвования помогают поддерживать дальнейшее развитие LighTube.</value>
+    <value>Помощь проекту приветствуется, но не обязательна. Эти пожертвования помогают поддерживать дальнейшее развитие LightTube.</value>
   </data>
   <data name="UnableToBuy" xml:space="preserve">
     <value>Не удалось преобрести</value>
