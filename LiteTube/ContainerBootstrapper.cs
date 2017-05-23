@@ -14,8 +14,8 @@ namespace LiteTube
             _context = new Context();
             _context.BuidContext();
             _dialogService = new DialogService();
-            //_purchase = new Purchase();
-            _purchase = new PurchaseMock();
+            _purchase = new Purchase();
+            //_purchase = new PurchaseMock();
         }
 
         internal IDataSource GetDataSource()

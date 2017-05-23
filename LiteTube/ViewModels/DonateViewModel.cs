@@ -22,6 +22,7 @@ namespace LiteTube.ViewModels
         private const string PRODUCT_ID_SMALL = "donate1";
         private const string PRODUCT_ID_MEDIUM = "donateMedium";
         private const string PRODUCT_ID_LARGE = "donateLarge";
+        private string _error;
 
         public DonateViewModel(IPurchase purchase)
         {
@@ -49,9 +50,10 @@ namespace LiteTube.ViewModels
 
                 IsLoaded = true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 IsLoaded = false;
+                Error = e.Message;
             }
         }
 
@@ -66,6 +68,16 @@ namespace LiteTube.ViewModels
             {
                 _isLoaded = value;
                 NotifyOfPropertyChanged(() => IsLoaded);
+            }
+        }
+
+        public string Error
+        {
+            get { return _error; }
+            set
+            {
+                _error = value;
+                NotifyOfPropertyChanged(() => Error);
             }
         }
 

@@ -61,26 +61,13 @@
                     HorizontalContentAlignment="Left"/>
 
         </StackPanel>
-        <!--<Grid x:Name="ContentPanel" 
-              Grid.Row="2">
-            <ListBox toolkit:TiltEffect.IsTiltEnabled="True" >
-                <ListBoxItem VerticalContentAlignment="Center"
-                             common:ItemClickCommand.Command="{Binding Donate1Command}"
-                             Padding="20">
-                    <TextBlock Text="{Binding Small}" />
-                </ListBoxItem>
-                <ListBoxItem VerticalContentAlignment="Center"
-                             common:ItemClickCommand.Command="{Binding Donate2Command}"
-                             Padding="20">
-                    <TextBlock Text="{Binding Medium}" />
-                </ListBoxItem>
-                <ListBoxItem VerticalContentAlignment="Center"
-                             common:ItemClickCommand.Command="{Binding Donate3Command}"
-                             Padding="20">
-                    <TextBlock Text="{Binding Large}" />
-                </ListBoxItem>
-            </ListBox>
-        </Grid>-->
+       
+        <TextBlock Text="{Binding Error}"
+                   Grid.Row="2"
+                   HorizontalAlignment="Center"
+                   Visibility="{Binding Error, Converter={StaticResource StringToVisibilityConverter}}"
+                   Style="{StaticResource SettingsTextBlockStyle}" 
+                   TextWrapping="Wrap"/>
     </Grid>
 
 </phone:PhoneApplicationPage>
