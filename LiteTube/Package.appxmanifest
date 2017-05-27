@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="431942A1E79CE.LightTube" Publisher="CN=C0AA424B-F412-4BA9-ACD7-E493FDF61DE4" Version="2.0.5.473" />
+  <Identity Name="431942A1E79CE.LightTube" Publisher="CN=C0AA424B-F412-4BA9-ACD7-E493FDF61DE4" Version="2.0.6.483" />
   <mp:PhoneIdentity PhoneProductId="a6dc8489-f102-4558-95b0-3fc6b3abbab0" PhonePublisherId="31d81e4d-e90c-4228-a973-2be6dfd53362" />
   <Properties>
     <DisplayName>LightTube</DisplayName>
