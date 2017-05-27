@@ -18,9 +18,9 @@ namespace LiteTube.Controls
             //AdMediator_F3EEB8.AdSdkOptionalParameters["Smaato"]["Height"] = 50d;
 
             //var p = AdMediator_F3EEB8.AdSdkOptionalParameters;
-            AdMediator_F3EEB8.AdMediatorError += AdMediator_F3EEB8_AdMediatorError;
-            AdMediator_F3EEB8.AdMediatorFilled += AdMediator_F3EEB8_AdMediatorFilled;
-            AdMediator_F3EEB8.AdSdkError += AdMediator_F3EEB8_AdSdkError;
+            AdMediator_All.AdMediatorError += AdMediator_F3EEB8_AdMediatorError;
+            AdMediator_All.AdMediatorFilled += AdMediator_F3EEB8_AdMediatorFilled;
+            AdMediator_All.AdSdkError += AdMediator_F3EEB8_AdSdkError;
         }
 
         private void AdMediator_F3EEB8_AdSdkError(object sender, AdFailedEventArgs e)

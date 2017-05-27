@@ -11,9 +11,9 @@
              d:DesignHeight="80" 
              d:DesignWidth="480">
 
-    <adv:AdMediatorControl x:Name="AdMediator_F3EEB8" 
+    <adv:AdMediatorControl x:Name="AdMediator_All" 
                            Height="50" 
-                           Id="AdMediator-Id-C5047D00-4321-4095-A379-3B9EA68B22A6"
+                           Id="AdMediator-Id-CD5E3AAB-D49E-4967-BD9F-F9D88102700A"
                            Width="320">
     </adv:AdMediatorControl>
     <!--<ContentPresenter Content="{Binding Element}"
