@@ -455,7 +455,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdMediator.config" />
     <None Include="app.config" />
     <None Include="Properties\AssemblyInfo.cs.tmpl" />
     <None Include="DataModel\client_secrets.json" />
