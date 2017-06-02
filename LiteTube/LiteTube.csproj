@@ -109,7 +109,6 @@
     <Compile Include="Common\ContextMenuStrategy.cs" />
     <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
     <Compile Include="Common\Exceptions\PurchaseException.cs" />
-    <Compile Include="Common\Helpers\AdvHelper.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />
     <Compile Include="Common\Purchase\IPurchase.cs" />
     <Compile Include="Common\Purchase\ProductListingImpl.cs" />
@@ -119,9 +118,6 @@
     <Compile Include="Common\Tools\LanguageManager.cs" />
     <Compile Include="Common\Tools\LastRequest.cs" />
     <Compile Include="Common\Tools\Theme.cs" />
-    <Compile Include="Controls\AdControl.xaml.cs">
-      <DependentUpon>AdControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ComboBox.xaml.cs">
       <DependentUpon>ComboBox.xaml</DependentUpon>
     </Compile>
@@ -285,7 +281,6 @@
     <Compile Include="ViewModels\HistoryPageViewModel.cs" />
     <Compile Include="ViewModels\LikedViewModel.cs" />
     <Compile Include="ViewModels\NavigationPanelViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\AdvNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\ChannelNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\CommentNodeViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
@@ -338,10 +333,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChannelPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\AdControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

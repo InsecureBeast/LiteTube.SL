@@ -41,9 +41,6 @@ namespace LiteTube.Controls
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is AdvNodeViewModel)
-                return Adv;
-
             return Normal;
         }
     }
