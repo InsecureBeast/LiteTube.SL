@@ -266,7 +266,6 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(c => c.Id == item.Details.VideoId))
                     continue;
 
-                AdvHelper.AddAdv(Items, ShowAdv);
                 Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider(), _playlistService));
             }
             /*
@@ -340,9 +339,6 @@ namespace LiteTube.ViewModels
                 return;
 
             if (navObject.ViewModel == null)
-                return;
-
-            if (navObject.ViewModel is AdvNodeViewModel)
                 return;
 
             var id = navObject.ViewModel.VideoId;

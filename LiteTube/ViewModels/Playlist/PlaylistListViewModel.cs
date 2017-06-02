@@ -79,7 +79,6 @@ namespace LiteTube.ViewModels.Playlist
                 if (itemsList.Exists(c => c.Id == item.Id))
                     continue;
 
-                AdvHelper.AddAdv(Items, ShowAdv);
                 Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), _contextMenuStrategy, Delete));
             }
 
