@@ -233,7 +233,7 @@
                 </phone:PivotItem.Header>
 
                 <ContentPresenter Content="{Binding RelatedVideosViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListView}"/>
+                                  ContentTemplate="{StaticResource LoadingListViewSmall}"/>
             </phone:PivotItem>
 
             <!--Pivot item three-->

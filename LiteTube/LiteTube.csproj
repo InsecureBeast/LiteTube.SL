@@ -128,6 +128,7 @@
     <Compile Include="Controls\ListViewItem.xaml.cs">
       <DependentUpon>ListViewItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ListViewItemTemplateSelector.cs" />
     <Compile Include="Controls\LiteTubePlayer.cs" />
     <Compile Include="Controls\PlaylistsContainer.xaml.cs">
       <DependentUpon>PlaylistsContainer.xaml</DependentUpon>
@@ -347,6 +348,10 @@
     <Page Include="Controls\ListViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoadingListViewLarge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\NavigationButton.xaml">
       <Generator>MSBuild:Compile</Generator>

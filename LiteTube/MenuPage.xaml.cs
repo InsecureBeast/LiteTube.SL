@@ -79,7 +79,7 @@ namespace LiteTube
         {
             var appBar = new ApplicationBar
             {
-                Mode = ApplicationBarMode.Default
+                Mode = ApplicationBarMode.Minimized
             };
 
             var homeButton = ApplicationBarHelper.CreateApplicationBarIconButton("/Toolkit.Content/ApplicationBar.Home.png", AppResources.Home, Home_Click);
