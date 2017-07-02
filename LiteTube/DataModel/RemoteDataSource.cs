@@ -64,7 +64,7 @@ namespace LiteTube.DataModel
         #endregion
     }
 
-    partial class RemoteDataSource : IRemoteDataSource
+    public partial class RemoteDataSource : IRemoteDataSource
     {
         private readonly IYouTubeService _youTubeServiceControl;
         private YouTubeService _youTubeService;

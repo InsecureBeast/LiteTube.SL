@@ -1,5 +1,4 @@
-﻿using LiteTube.DataClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,6 +6,8 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
+using ConsoleApplication1.WEB;
 
 namespace LiteTube.DataModel
 {
@@ -23,6 +24,7 @@ namespace LiteTube.DataModel
         private const string SUBSCRIPTIONS_URL = @"https://www.youtube.com/feed/subscriptions/?app=desktop&persist_app=1&flow=2";
         private const string WATCH_LATER_URL = @"https://www.youtube.com/playlist?list=WL&app=desktop&persist_app=1";
         private const string HISTORY_URL = @"https://www.youtube.com/feed/history";
+        private const string FEED_URL_FORMAT = @"https://www.youtube.com/feeds/videos.xml?channel_id={0}";
 
 
         private const string BOT_USER_AGENT1 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
@@ -43,6 +45,28 @@ namespace LiteTube.DataModel
         public async Task<YouTubeResponce> GetActivity(string accessToken, string nextPageToken)
         {
             return await GetVideos(SUBSCRIPTIONS_URL, _recommended, accessToken, nextPageToken);
+        }
+
+        internal async Task<IEnumerable<WebVideo>> GetSubscriptionsVideo(IEnumerable<string> subscriptions, string accessToken, string nextPageToken)
+        {
+            var tasks = new List<Task<object>>();
+            foreach (var subscription in subscriptions)
+            {
+                var task = Task<object>.Factory.StartNew(() =>
+                {
+                    var url = string.Format(FEED_URL_FORMAT, subscription);
+                    var response = HttpGetAsync(url, accessToken).Result;
+                    Console.WriteLine("Add response");
+                    return response;
+                }, TaskCreationOptions.LongRunning);
+
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks.ToArray());
+            Console.WriteLine("End wait tasks");
+            var res = tasks.Select(task => new WebVideo(task.Result.ToString()));
+            return res;
         }
 
         public async Task<YouTubeResponce> GetWatchLater(string accessToken, string nextPageToken)
