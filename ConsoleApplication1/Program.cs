@@ -19,9 +19,9 @@ namespace ConsoleApplication1
                 var source = new YouTubeWeb();
                 var subs = new List<string>()
                 {
-                    "UCt7sv-NKh44rHAEb-qCCxvA",
-                   /* "UCovLyuOCfHLOPP8Jwc3aZoA",
-                    "UCKc2vTLJM0Zt6fPuxvTl9pw",
+                    //"UCt7sv-NKh44rHAEb-qCCxvA",
+                    "UCovLyuOCfHLOPP8Jwc3aZoA",
+                   /* "UCKc2vTLJM0Zt6fPuxvTl9pw",
                     "UCpfefG1t0k2FJ8mevWHhp0g",
                     "UC1c3-bhBuf9brQW-XMUxjnw",
                     "UCf31Gf5nCU8J6eUlr7QSU0w",
@@ -64,16 +64,21 @@ namespace ConsoleApplication1
                 Console.WriteLine(video.Count());
                 foreach (var o in video.ToList())
                 {
-                    foreach (var item in o.Items)
-                    {
+                    //foreach (var item in o.Feed)
+                    //{
+                    var item = o.Feed;
                         Console.WriteLine("Channel ID = " + item.ChannelId);
                         Console.WriteLine("Channel title = " + item.ChannelTitle);
                         foreach (var entry in item.Entries)
                         {
                             Console.WriteLine("VideoID = " + entry.VideoId);
                             Console.WriteLine("Video title = " + entry.Title);
+                            Console.WriteLine("Video published = " + entry.Published);
+                            Console.WriteLine("Video updated = " + entry.Updated);
+                        Console.WriteLine("Image = " + entry.Media.Thumbnail.url);
+                            Console.WriteLine("Views = " + entry.Media.Community.Statistics.Views);
                         }
-                    }
+                    //}
                 }
             });
             

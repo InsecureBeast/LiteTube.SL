@@ -14,16 +14,14 @@ namespace ConsoleApplication1.WEB
     {
         public WebVideo(string xml)
         {
-            Items = new List<Feed>();
             XmlSerializer serializer = new XmlSerializer(typeof(Feed));
             using (var reader = new StringReader(xml))
             {
-                var result = (Feed)serializer.Deserialize(reader);
-                Items.Add(result);
+                Feed = (Feed)serializer.Deserialize(reader);
             }
         }
 
-        public List<Feed> Items { get; } 
+        public Feed Feed { get; } 
 
         private string str = @"<?xml version=""1.0"" encoding=""UTF-8""?>
                                <feed xmlns:yt=""http://www.youtube.com/xml/schemas/2015"" 
@@ -42,7 +40,7 @@ namespace ConsoleApplication1.WEB
         [XmlElement("link")]
         public string Link { get; set; }
 
-        [XmlElement("yt:channelId", Namespace = "")]
+        [XmlElement("channelId", Namespace = "http://www.youtube.com/xml/schemas/2015")]
         public string ChannelId { get; set; }
 
         [XmlElement("title")]
@@ -57,10 +55,10 @@ namespace ConsoleApplication1.WEB
         [XmlElement("id")]
         public string Id { get; set; }
 
-        [XmlElement("yt:videoId")]
+        [XmlElement("videoId", Namespace = "http://www.youtube.com/xml/schemas/2015")]
         public string VideoId { get; set; }
 
-        [XmlElement("yt:channelId")]
+        [XmlElement("channelId", Namespace = "http://www.youtube.com/xml/schemas/2015")]
         public string ChannelId { get; set; }
 
         [XmlElement("title")]
@@ -68,6 +66,39 @@ namespace ConsoleApplication1.WEB
 
         [XmlElement("published")]
         public string Published { get; set; }
+
+        [XmlElement("updated")]
+        public string Updated { get; set; }
+
+        [XmlElement("group", Namespace = "http://search.yahoo.com/mrss/")]
+        public Media Media { get; set; }
+    }
+
+    public class Media
+    {
+        [XmlElement("thumbnail", Namespace = "http://search.yahoo.com/mrss/")]
+        public Thumbnail Thumbnail { get; set; }
+
+        [XmlElement("community", Namespace = "http://search.yahoo.com/mrss/")]
+        public Community Community { get; set; }
+    }
+
+    public class Thumbnail
+    {
+        [XmlAttributeAttribute("url", Namespace = "http://search.yahoo.com/mrss/")]
+        public string url { get; set; }
+    }
+
+    public class Community
+    {
+        [XmlElement("statistics", Namespace = "http://search.yahoo.com/mrss/")]
+        public Statistics Statistics { get; set; }
+    }
+
+    public class Statistics
+    {
+        [XmlAttributeAttribute("views")]
+        public string Views { get; set; }
     }
 
     /*
