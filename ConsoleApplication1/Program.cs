@@ -59,6 +59,7 @@ namespace ConsoleApplication1
                 }; //Wilsa, Room Factory
                 var startTime = DateTime.Now;
                 Console.WriteLine(startTime);
+                var subs1 = await source.GetSubscriptions(string.Empty);
                 var video = await source.GetSubscriptionsVideo(subs, String.Empty, String.Empty);
                 Console.WriteLine(DateTime.Now - startTime);
                 /*

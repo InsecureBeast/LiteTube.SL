@@ -42,8 +42,9 @@ namespace LiteTube.DataModel
             return await GetVideos(RECOMMENDED_URL, _recommended, accessToken, nextPageToken);
         }
 
-        public async Task<YouTubeResponce> GetActivity(string accessToken, string nextPageToken)
+        public async Task<YouTubeResponce> GetActivity(IEnumerable<string> subscriptions,  string accessToken, string nextPageToken)
         {
+            /*
             var subs = new List<string>()
                 {
                     "UCt7sv-NKh44rHAEb-qCCxvA",
@@ -84,8 +85,8 @@ namespace LiteTube.DataModel
                     "UCTSuE3PvfJ4AWLxuMY2nAbg"
                    
                 };
-
-            return await GetSubscriptionsVideo(subs, accessToken, nextPageToken);
+                */
+            return await GetSubscriptionsVideo(subscriptions, accessToken, nextPageToken);
             //return await GetVideos(SUBSCRIPTIONS_URL, _recommended, accessToken, nextPageToken);
         }
 
@@ -125,6 +126,26 @@ namespace LiteTube.DataModel
             }
 
             return GetNextItemsFromDictionary(_activity, nextPageToken);
+        }
+
+        public async Task<IEnumerable<string>> GetSubscriptions(string accessToken)
+        {
+            var result = new List<string>();
+            var url = "https://www.youtube.com/subscription_manager?action_takeout=1";
+            var response = await HttpGetAsync(url, accessToken);
+            var regex = new Regex(@"channel_id=([^\""]+)");
+            var colm = regex.Matches(response);
+            foreach (Match match in colm)
+            {
+                var str = match.Value.Substring(11, match.Value.Length - 11);
+                if (!result.Contains(str))
+                    result.Add(str);
+            }
+
+            if (result.Count == 0)
+                return null;
+
+            return result;
         }
 
         public async Task<YouTubeResponce> GetWatchLater(string accessToken, string nextPageToken)
