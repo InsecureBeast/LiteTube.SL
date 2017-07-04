@@ -61,6 +61,7 @@ namespace ConsoleApplication1
                 Console.WriteLine(startTime);
                 var video = await source.GetSubscriptionsVideo(subs, String.Empty, String.Empty);
                 Console.WriteLine(DateTime.Now - startTime);
+                /*
                 Console.WriteLine(video.Count());
                 foreach (var o in video.ToList())
                 {
@@ -80,6 +81,7 @@ namespace ConsoleApplication1
                         }
                     //}
                 }
+                */
             });
             
             

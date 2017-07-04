@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\LiteTube\DataClasses\WebVideo.cs">
+      <Link>WEB\WebVideo.cs</Link>
+    </Compile>
     <Compile Include="..\LiteTube\DataModel\YouTubeWeb.cs">
       <Link>WEB\YouTubeWeb.cs</Link>
     </Compile>
@@ -63,7 +66,6 @@
     <Compile Include="ValueCollection.cs" />
     <Compile Include="Video.cs" />
     <Compile Include="VideoFormat.cs" />
-    <Compile Include="WEB\WebVideo.cs" />
     <Compile Include="YouTube.cs" />
     <Compile Include="YouTubeDecipherer.cs" />
     <Compile Include="YouTubeVideo.cs" />

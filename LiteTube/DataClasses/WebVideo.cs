@@ -1,34 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace ConsoleApplication1.WEB
+namespace LiteTube.DataClasses
 {
     class WebVideo
     {
         public WebVideo(string xml)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Feed));
+            XmlSerializer serializer = new XmlSerializer(typeof (Feed));
             using (var reader = new StringReader(xml))
             {
-                Feed = (Feed)serializer.Deserialize(reader);
+                Feed = (Feed) serializer.Deserialize(reader);
             }
         }
 
-        public Feed Feed { get; } 
+        public Feed Feed { get; }
 
-        private string str = @"<?xml version=""1.0"" encoding=""UTF-8""?>
-                               <feed xmlns:yt=""http://www.youtube.com/xml/schemas/2015"" 
-                                     xmlns:media=""http://search.yahoo.com/mrss/"" 
-                                     xmlns=""http://www.w3.org/2005/Atom"">
-                               </feed>
-                                ";
         /*<?xml version="1.0" encoding="utf-16"?>
          * <feed xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          *       xmlns:xsd="http://www.w3.org/2001/XMLSchema" />*/
@@ -76,18 +66,18 @@ namespace ConsoleApplication1.WEB
 
     public class Media
     {
-        [XmlElement("thumbnail", Namespace = "http://search.yahoo.com/mrss/")]
-        public Thumbnail Thumbnail { get; set; }
+        //[XmlElement("thumbnail", Namespace = "http://search.yahoo.com/mrss/")]
+        //public Thumbnail Thumbnail { get; set; }
 
         [XmlElement("community", Namespace = "http://search.yahoo.com/mrss/")]
         public Community Community { get; set; }
     }
 
-    public class Thumbnail
-    {
-        [XmlAttributeAttribute("url", Namespace = "http://search.yahoo.com/mrss/")]
-        public string url { get; set; }
-    }
+    //public class Thumbnail
+    //{
+    //    [XmlAttribute("url", Namespace = "http://search.yahoo.com/mrss/")]
+    //    public string url { get; set; }
+    //}
 
     public class Community
     {
@@ -97,7 +87,7 @@ namespace ConsoleApplication1.WEB
 
     public class Statistics
     {
-        [XmlAttributeAttribute("views")]
+        [XmlAttribute("views")]
         public string Views { get; set; }
     }
 
@@ -146,4 +136,45 @@ namespace ConsoleApplication1.WEB
         </entry>
         
     */
+
+
+    public class EntryComparer : IComparer<Entry>, IComparer
+    {
+        public int Compare(Entry entry1, Entry entry2)
+        {
+            return DoCompare(entry1, entry2);
+        }
+
+        public int Compare(object x, object y)
+        {
+            var entry1 = x as Entry;
+            var entry2 = y as Entry;
+            return DoCompare(entry1, entry2);
+        }
+
+        private int DoCompare(Entry entry1, Entry entry2)
+        {
+            if (entry1 == null && entry2 == null)
+                return 0;
+            if (entry1 == null)
+                return 1;
+            if (entry2 == null)
+                return -1;
+
+            DateTime date1;
+            DateTime.TryParse(entry1.Published, out date1);
+
+            DateTime date2;
+            DateTime.TryParse(entry2.Published, out date2);
+
+            if (date1 == DateTime.MinValue && date2 == DateTime.MinValue)
+                return 0;
+            if (date1 == DateTime.MinValue)
+                return 1;
+            if (date2 == DateTime.MinValue)
+                return -1;
+
+            return date2.CompareTo(date1);
+        }
+    }
 }

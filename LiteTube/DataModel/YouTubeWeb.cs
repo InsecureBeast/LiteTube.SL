@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using ConsoleApplication1.WEB;
+using LiteTube.DataClasses;
 
 namespace LiteTube.DataModel
 {
@@ -34,7 +34,7 @@ namespace LiteTube.DataModel
         private readonly Dictionary<string, IEnumerable<string>> _watchLater = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _hystory = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _mostPopular = new Dictionary<string, IEnumerable<string>>();
-
+        private readonly Dictionary<string, IEnumerable<string>> _activity = new Dictionary<string, IEnumerable<string>>();
 
 
         public async Task<YouTubeResponce> GetRecommended(string accessToken, string nextPageToken)
@@ -44,29 +44,87 @@ namespace LiteTube.DataModel
 
         public async Task<YouTubeResponce> GetActivity(string accessToken, string nextPageToken)
         {
-            return await GetVideos(SUBSCRIPTIONS_URL, _recommended, accessToken, nextPageToken);
+            var subs = new List<string>()
+                {
+                    "UCt7sv-NKh44rHAEb-qCCxvA",
+                    "UCovLyuOCfHLOPP8Jwc3aZoA",
+                    "UCKc2vTLJM0Zt6fPuxvTl9pw",
+                    "UCpfefG1t0k2FJ8mevWHhp0g",
+                    "UC1c3-bhBuf9brQW-XMUxjnw",
+                    "UCf31Gf5nCU8J6eUlr7QSU0w",
+                    "UCOOC9ar-ZUCNvWAqr9iAAkg",
+                    "UC-iIrGcOLkRcnu5ozK5fYOg",
+                    "UCLlSts9lJLf90vFFNx7le4w",
+                    "UCwd0QUcZSa5iGjt-v8z5w2g",
+                    "UCNb2BkmQu3IfQVcaPExHkvQ",
+                    "UCY03gpyR__MuJtBpoSyIGnw",
+                    "UCiHkdT46IUqmUgHH0Pxt8aA",
+                    "UCgA-kOOYE0W2BY1BZf83cBg",
+                    "UC1a2rnuwCw6rEbAxclIHkng",
+                    "UCbaxk35aRh1DfXILkdPGukw",
+                    "UC5XPnUk8Vvv_pWslhwom6Og",
+                    "UCIi2Tk2POJkRgWHD7HGBa7Q",
+                    "UCGJLJ7p4jWNwWDY4j9OY8QA",
+                    "UC_Q1vhf7wcR_zGlc5ahAg0A",
+                    "UCZfYlIsllUFyfmLodIpzU0g",
+                    "UCtFbE0nu4pYL8XTZOVC6X7A",
+                    "UCPDis9pjXuqyI7RYLJ-TTSA",
+                    "UCqU8dYH2dacLT_orXi_nZ2Q",
+                    "UCWw6msvCpTDGBKpcPGMDmjA",
+                    "UCqYiHHUrS3dm_gE8dy2VMwg",
+                    "UCtO0TzSAoIOzTnTsQeywSSw",
+                    "UCvNby-vCYhCZEp7gGFGNtBg",
+                    "UCbirjI1K3MGu0-Y1gTBNR5w",
+                    "UCQBEHg0j6baNS1Lya-L4BJw",
+                    "UCVPBbw8E9Kj16mSqE5xi2aQ",
+                    "UCDaIW2zPRWhzQ9Hj7a0QP1w",
+                    "UC-27_Szq7BtHDoC0R2U0zxA",
+                    "UCUZLQoU0DDMhO5CNIUStfug",
+                    "UCQeaXcwLUDeRoNVThZXLkmw",
+                    "UCTSuE3PvfJ4AWLxuMY2nAbg"
+                   
+                };
+
+            return await GetSubscriptionsVideo(subs, accessToken, nextPageToken);
+            //return await GetVideos(SUBSCRIPTIONS_URL, _recommended, accessToken, nextPageToken);
         }
 
-        internal async Task<IEnumerable<WebVideo>> GetSubscriptionsVideo(IEnumerable<string> subscriptions, string accessToken, string nextPageToken)
+        public async Task<YouTubeResponce> GetSubscriptionsVideo(IEnumerable<string> subscriptions, string accessToken, string nextPageToken)
         {
-            var tasks = new List<Task<object>>();
-            foreach (var subscription in subscriptions)
+            if (string.IsNullOrEmpty(nextPageToken))
             {
-                var task = Task<object>.Factory.StartNew(() =>
+                var tasks = new List<Task<object>>();
+                foreach (var subscription in subscriptions)
                 {
-                    var url = string.Format(FEED_URL_FORMAT, subscription);
-                    var response = HttpGetAsync(url, accessToken).Result;
-                    Console.WriteLine("Add response");
-                    return response;
-                }, TaskCreationOptions.LongRunning);
+                    var task = Task<object>.Factory.StartNew(() =>
+                    {
+                        var url = string.Format(FEED_URL_FORMAT, subscription);
+                        var response = HttpGetAsync(url, accessToken).Result;
+                        return response;
+                    }, TaskCreationOptions.LongRunning);
 
-                tasks.Add(task);
+                    tasks.Add(task);
+                }
+
+                await Task.WhenAll(tasks.ToArray());
+                var result = tasks.Select(task => new WebVideo(task.Result.ToString())).ToList();
+
+                if (result.Count == 0)
+                    return null;
+
+                var entries = new List<Entry>();
+                foreach (var webVideo in result)
+                {
+                    entries.AddRange(webVideo.Feed.Entries);
+                }
+
+                //Сортировка по дате
+                entries.Sort(new EntryComparer());
+                var ids = entries.Select(e => e.VideoId);
+                return GetFirstTimeItems(ids, _activity);
             }
 
-            await Task.WhenAll(tasks.ToArray());
-            Console.WriteLine("End wait tasks");
-            var res = tasks.Select(task => new WebVideo(task.Result.ToString()));
-            return res;
+            return GetNextItemsFromDictionary(_activity, nextPageToken);
         }
 
         public async Task<YouTubeResponce> GetWatchLater(string accessToken, string nextPageToken)
@@ -194,32 +252,41 @@ namespace LiteTube.DataModel
                 if (result.Count == 0)
                     return null;
 
-                var splitted = Split(result);
-                for (int i = 0; i < splitted.Count; i++)
-                {
-                    //var pageToken = i + 1;
-                    dic[i.ToString()] = splitted[i];
-                }
-
-                var yt = new YouTubeResponce() { Ids = dic.Values.First(), NextPageToken = "1" };
+                var yt = GetFirstTimeItems(result, dic);
                 return yt;
             }
 
+            return GetNextItemsFromDictionary(dic, nextPageToken);
+        }
+
+        private YouTubeResponce GetNextItemsFromDictionary(IReadOnlyDictionary<string, IEnumerable<string>> dic, string nextPageToken)
+        {
             IEnumerable<string> value = null;
-            if (dic.TryGetValue(nextPageToken, out value))
+            if (!dic.TryGetValue(nextPageToken, out value))
+                return null;
+
+            var ids = dic[nextPageToken];
+            int pageToken = 0;
+            if (int.Parse(nextPageToken) < dic.Count)
             {
-                var ids = dic[nextPageToken];
-                int pageToken = 0;
-                if (int.Parse(nextPageToken) < dic.Count)
-                {
-                    pageToken = int.Parse(nextPageToken);
-                    pageToken++;
-                }
-                var yt = new YouTubeResponce() { Ids = ids, NextPageToken = pageToken.ToString() };
-                return yt;
+                pageToken = int.Parse(nextPageToken);
+                pageToken++;
+            }
+            var yt = new YouTubeResponce() {Ids = ids, NextPageToken = pageToken.ToString()};
+            return yt;
+        }
+
+        private YouTubeResponce GetFirstTimeItems(IEnumerable<string> values, Dictionary<string, IEnumerable<string>> dic)
+        {
+            var splitted = Split(values);
+            for (var i = 0; i < splitted.Count; i++)
+            {
+                //var pageToken = i + 1;
+                dic[i.ToString()] = splitted[i];
             }
 
-            return null;
+            var yt = new YouTubeResponce() { Ids = dic.Values.First(), NextPageToken = "1" };
+            return yt;
         }
     }
 }
