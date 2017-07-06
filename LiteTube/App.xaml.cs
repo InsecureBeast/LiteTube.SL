@@ -240,6 +240,16 @@ namespace LiteTube
 
             e.Handled = true;
 
+            if (e.ExceptionObject is GoogleApiException)
+                return;
+
+            if (e.ExceptionObject.InnerException is GoogleApiException)
+                return;
+
+            //убирем у пользователей, но оставим в дебаг
+            if (e.ExceptionObject is UnauthorizedAccessException)
+                return;
+
             if (e.ExceptionObject is HttpRequestException)
             {
                 _container.DialogService.ShowError(AppResources.ErrorMessage);
@@ -270,7 +280,7 @@ namespace LiteTube
                 return;
             }
 
-            if (e.ExceptionObject.InnerException is System.Net.WebException)
+            if (e.ExceptionObject.InnerException is WebException)
                 return;
 
             if (e.ExceptionObject is OperationCanceledException)
@@ -284,19 +294,7 @@ namespace LiteTube
                 _container.DialogService.ShowException(e.ExceptionObject.InnerException);
                 return;
             }
-#if DEBUG
-#else
-            if (e.ExceptionObject is GoogleApiException)
-                return;
 
-            if (e.ExceptionObject.InnerException is GoogleApiException)
-                return;
-
-            //убирем у пользователей, но оставим в дебаг
-            if (e.ExceptionObject is UnauthorizedAccessException)
-                return;
-            
-#endif
             _container.DialogService.ShowException(e.ExceptionObject);
         }
 

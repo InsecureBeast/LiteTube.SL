@@ -535,7 +535,7 @@ namespace LiteTube.DataModel
         {
             //var video = await LiteTube.Multimedia.YouTube.GetVideoUriAsync(videoId, quality);//VideoQualityHelper.GetVideoQuality(quality));
             //return video;
-            var video = await YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality));
+            var video = await YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality), _youTubeServiceControl.OAuthToken);
             var url = await video.GetUriAsync();
             return new YouTubeUri() { Uri = new Uri(url) };
         }
