@@ -3,10 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:common="clr-namespace:LiteTube.Common"
-    xmlns:converters="clr-namespace:LiteTube.Converters"
-    xmlns:nodes="clr-namespace:LiteTube.ViewModels.Nodes"
-    xmlns:local="clr-namespace:LiteTube.Controls"
-    xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
+    xmlns:local="clr-namespace:LiteTube.Controls">
 
     <DataTemplate x:Key="LoadingTextBlockDataTemplate">
         <Grid>
@@ -25,7 +22,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="CategoryItemTemplate">
-        <Grid Margin="0,0,0,5"
+        <Grid Margin="0,0,0,15"
               Background="{StaticResource PhoneSecondaryBackgroundBrush}"
               Height="100">
             <Grid.ColumnDefinitions>
@@ -69,7 +66,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="LoadingListViewItemNoMenu">
-        <Grid Margin="0,0,0,5" 
+        <Grid Margin="0,0,0,15" 
               Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -193,7 +190,7 @@
                                        HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5">
+                    <Grid Margin="0,0,0,15">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -255,7 +252,7 @@
                                        HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5">
+                    <Grid Margin="0,0,0,0">
                         <!--<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>

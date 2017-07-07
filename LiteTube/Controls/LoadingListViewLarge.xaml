@@ -3,13 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:common="clr-namespace:LiteTube.Common"
-    xmlns:converters="clr-namespace:LiteTube.Converters"
-    xmlns:nodes="clr-namespace:LiteTube.ViewModels.Nodes"
-    xmlns:local="clr-namespace:LiteTube.Controls"
-    xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
+    xmlns:local="clr-namespace:LiteTube.Controls">
 
     <DataTemplate x:Key="LoadingListViewItemNoMenuLarge">
-        <Grid Margin="0,0,0,10" 
+        <Grid Margin="0,0,0,20" 
               Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -121,7 +118,7 @@
                                        HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5">
+                    <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -183,7 +180,7 @@
                                        HorizontalContentAlignment="Stretch">
             <local:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5">
+                    <Grid Margin="0,0,0,0">
                         <!--<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>

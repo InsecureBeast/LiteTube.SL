@@ -22,16 +22,11 @@ namespace LiteTube.ViewModels
             base.Notify(e);
             LayoutHelper.InvokeFromUiThread(async () =>
             {
-                IsConnected = e.IsConnected;
-
-                if (e.IsConnected)
+                NotifyOfPropertyChanged(() => IsConnected);
+                if (IsConnected)
                 {
                     await FirstLoad();
-                    return;
                 }
-
-                if (Items.Count > 0)
-                    IsConnected = true;
             });
         }
 

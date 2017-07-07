@@ -75,7 +75,7 @@ namespace LiteTube.LibVideo.Helpers
                         return pair.Value;
                 }
 
-                throw new KeyNotFoundException();
+                return string.Empty;
             }
 
             set
@@ -90,7 +90,7 @@ namespace LiteTube.LibVideo.Helpers
                     }
                 }
 
-                throw new KeyNotFoundException();
+                //throw new KeyNotFoundException();
             }
         }
 

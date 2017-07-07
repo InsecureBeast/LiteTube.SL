@@ -14,7 +14,7 @@ using LiteTube.Resources;
 
 namespace LiteTube.DataModel
 {
-    class YouTubeServiceControl : IYouTubeService
+    public class YouTubeServiceControl : IYouTubeService
     {
         private const string SECRET = "OWnSxF8rkgle-KhsKNCI8yNF";
         private const string API_KEY = "AIzaSyDWezZRg-dUvNumjTow51ShtIgLA642whM";

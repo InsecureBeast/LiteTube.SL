@@ -145,6 +145,7 @@
     <Compile Include="DataClasses\SearchFilter.cs" />
     <Compile Include="DataClasses\MActivityList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />
+    <Compile Include="DataClasses\WebVideo.cs" />
     <Compile Include="DataModel\PrivacyStatus.cs" />
     <Compile Include="DataModel\RemoteDataSourceWeb.cs" />
     <Compile Include="DataModel\VideoQualityHelper.cs" />

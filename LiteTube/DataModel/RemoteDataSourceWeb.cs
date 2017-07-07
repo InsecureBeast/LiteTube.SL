@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LiteTube.DataModel
 {
-    partial class RemoteDataSource
+    public partial class RemoteDataSource
     {
         private async Task<IVideoList> GetMostPopularWeb(string culture, int maxResult, string pageToken)
         {
@@ -22,7 +22,8 @@ namespace LiteTube.DataModel
 
         private async Task<IVideoList> GetActivityWeb(string culture, int maxResult, string pageToken)
         {
-            var res = await _youTubeWeb.GetActivity(_youTubeServiceControl.OAuthToken, pageToken);
+            var subs = await _youTubeWeb.GetSubscriptions(_youTubeServiceControl.OAuthToken);
+            var res = await _youTubeWeb.GetActivity(subs, _youTubeServiceControl.OAuthToken, pageToken);
             if (res == null)
                 return null;
 
@@ -54,6 +55,15 @@ namespace LiteTube.DataModel
             var videos = await GetVideo(videoIds.ToString());
             videos.NextPageToken = res.NextPageToken;
             return new MVideoList(videos);
+        }
+
+        public async Task<IVideoList> GetSubscriptionsVideoWeb(IEnumerable<string> subscriptions,  int maxResult, string pageToken)
+        {
+            var res = await _youTubeWeb.GetSubscriptionsVideo(subscriptions, _youTubeServiceControl.OAuthToken, pageToken);
+            if (res == null)
+                return MVideoList.Empty;
+
+            return await GetVideoList(res);
         }
     }
 }
