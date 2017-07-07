@@ -108,7 +108,9 @@ namespace LiteTube.DataModel
                 }
 
                 await Task.WhenAll(tasks.ToArray());
-                var result = tasks.Select(task => new WebVideo(task.Result.ToString())).ToList();
+                var result = tasks.Where(x => !string.IsNullOrEmpty(x.Result.ToString()))
+                                  .Select(task => new WebVideo(task.Result.ToString()))
+                                  .ToList();
 
                 if (result.Count == 0)
                     return null;
