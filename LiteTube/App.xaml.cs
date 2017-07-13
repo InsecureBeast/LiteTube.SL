@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
@@ -104,6 +105,7 @@ namespace LiteTube
                 if (_viewModel == null)
                 {
                     _container.Build();
+                    //_container.Purchase.Init();
                     _viewModel = new MainViewModel(() => _container.GetDataSource(), _container.ConnectionListener);
                 }
 
@@ -244,6 +246,9 @@ namespace LiteTube
                 return;
 
             if (e.ExceptionObject.InnerException is GoogleApiException)
+                return;
+
+            if (e.ExceptionObject is KeyNotFoundException) //TODO разобраться, что с ним не так при активации приложения
                 return;
 
             //убирем у пользователей, но оставим в дебаг

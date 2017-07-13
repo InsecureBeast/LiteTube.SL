@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
+using Microsoft.Devices;
 
 namespace LiteTube.DataClasses
 {
@@ -13,7 +15,14 @@ namespace LiteTube.DataClasses
             XmlSerializer serializer = new XmlSerializer(typeof (Feed));
             using (var reader = new StringReader(xml))
             {
-                Feed = (Feed) serializer.Deserialize(reader);
+                try
+                {
+                    Feed = (Feed)serializer.Deserialize(reader);
+                }
+                catch (XmlException)
+                {
+                    Feed = new Feed();
+                }
             }
         }
 
@@ -27,6 +36,11 @@ namespace LiteTube.DataClasses
     [XmlRoot("feed", Namespace = "http://www.w3.org/2005/Atom")]
     public class Feed
     {
+        public Feed()
+        {
+            Entries = new List<Entry>();    
+        }
+
         [XmlElement("link")]
         public string Link { get; set; }
 
@@ -42,6 +56,11 @@ namespace LiteTube.DataClasses
 
     public class Entry
     {
+        public Entry()
+        {
+            Media = new Media();    
+        }
+
         [XmlElement("id")]
         public string Id { get; set; }
 
@@ -66,6 +85,11 @@ namespace LiteTube.DataClasses
 
     public class Media
     {
+        public Media()
+        {
+            Community = new Community();    
+        }
+
         //[XmlElement("thumbnail", Namespace = "http://search.yahoo.com/mrss/")]
         //public Thumbnail Thumbnail { get; set; }
 
@@ -81,6 +105,11 @@ namespace LiteTube.DataClasses
 
     public class Community
     {
+        public Community()
+        {
+            Statistics = new Statistics();    
+        }
+
         [XmlElement("statistics", Namespace = "http://search.yahoo.com/mrss/")]
         public Statistics Statistics { get; set; }
     }
