@@ -46,6 +46,7 @@ namespace LiteTube.ViewModels
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
         //private bool _isConnected = true;
         protected IPlaylistsSevice _playlistService;
+        protected bool _isLargeItems;
 
 
         public SectionBaseViewModel(
@@ -66,6 +67,7 @@ namespace LiteTube.ViewModels
             _playlistService = playlistService;
 
             _hasItems = true;
+            _isLargeItems = SettingsHelper.GetIsLargeItems();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
             _selectCommand = new Common.RelayCommand(SelectItems);
@@ -208,6 +210,7 @@ namespace LiteTube.ViewModels
                 if (Items.Count > 0)
                     return;
 
+                _isLargeItems = SettingsHelper.GetIsLargeItems();
                 ShowProgressIndicator();
                 IsLoading = true;
 
@@ -266,7 +269,7 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(c => c.Id == item.Details.VideoId))
                     continue;
 
-                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider(), _playlistService));
+                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider(), _playlistService, _isLargeItems));
             }
             /*
             foreach (var item in items)

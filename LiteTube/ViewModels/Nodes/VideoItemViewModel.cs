@@ -1,7 +1,5 @@
 ﻿using System;
 using LiteTube.DataClasses;
-using MyToolkit.Command;
-using System.Windows.Input;
 using LiteTube.DataModel;
 using LiteTube.Common;
 using LiteTube.ViewModels.Playlist;
@@ -16,7 +14,7 @@ namespace LiteTube.ViewModels.Nodes
         private bool _isContextMenu;
 
         public VideoItemViewModel(IVideoItem videoItem, IDataSource dataSource, 
-            IContextMenuStrategy menuProvider, IPlaylistsSevice playlistService) : base(dataSource, menuProvider, playlistService)
+            IContextMenuStrategy menuProvider, IPlaylistsSevice playlistService, bool isLargeItems) : base(dataSource, menuProvider, isLargeItems, playlistService)
         {
             VideoItem = videoItem;
             _videoId = videoItem.Details.VideoId;

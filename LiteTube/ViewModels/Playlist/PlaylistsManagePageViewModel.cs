@@ -98,7 +98,7 @@ namespace LiteTube.ViewModels.Playlist
             var newPlaylist = await _getGeDataSource().AddNewPlaylist(PlaylistTitle, PlaylistDescription, _selectedAccess.Status);
             if (newPlaylist != null)
             {
-                PlaylistListViewModel.Items.Insert(0, new PlaylistNodeViewModel(newPlaylist, _getGeDataSource(), new DeleteContextMenuStrategy(), PlaylistListViewModel.Delete));
+                PlaylistListViewModel.Items.Insert(0, new PlaylistNodeViewModel(newPlaylist, _getGeDataSource(), new DeleteContextMenuStrategy(), PlaylistListViewModel.Delete, false));
                 _playlistsChangeHandler.UpdatePlaylists();
             }
             //Clear data

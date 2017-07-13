@@ -73,7 +73,7 @@
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter Content="{Binding PlaylistListViewModel}"
-                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+                                  ContentTemplate="{StaticResource LoadingPlaylstListViewSmall}"/>
             </phone:PivotItem>
 
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">

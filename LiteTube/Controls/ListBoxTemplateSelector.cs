@@ -39,9 +39,22 @@ namespace LiteTube.Controls
             set;
         }
 
+        public DataTemplate Large
+        {
+            get;
+            set;
+        }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            return Normal;
+            //if (item is Adv)
+            //    return Adv;
+
+            var model = item as NodeViewModelBase;
+            if (model == null)
+                return Normal;
+
+            return model.IsLargeItems ? Large : Normal;
         }
     }
 }

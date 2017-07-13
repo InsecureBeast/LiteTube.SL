@@ -18,8 +18,8 @@ namespace LiteTube.ViewModels.Nodes
         
         public delegate Task DeleteDelegate(string playlistId);
 
-        public PlaylistNodeViewModel(IPlaylist item, IDataSource dataSource, IContextMenuStrategy menu, DeleteDelegate delete)
-            : base(dataSource, menu)
+        public PlaylistNodeViewModel(IPlaylist item, IDataSource dataSource, IContextMenuStrategy menu, DeleteDelegate delete, bool isLargeItems)
+            : base(dataSource, menu, isLargeItems)
         {
             _delete = delete;
             _deleteCommand = new RelayCommand(Delete);

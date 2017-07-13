@@ -9,7 +9,7 @@ namespace LiteTube.ViewModels.Nodes
         private readonly ISubscription _subscription;
         private readonly string _id;
 
-        public SubscriptionNodeViewModel(ISubscription subscription, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider)
+        public SubscriptionNodeViewModel(ISubscription subscription, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider, false)
         {
             _subscription = subscription;
             Title = subscription.Title;

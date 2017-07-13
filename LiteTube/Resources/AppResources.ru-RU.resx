@@ -458,4 +458,7 @@
   <data name="YouBought" xml:space="preserve">
     <value>Вы приобрели</value>
   </data>
+  <data name="LargeItems" xml:space="preserve">
+    <value>Крупные изображения</value>
+  </data>
 </root>

@@ -80,7 +80,7 @@
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="MyPlaylistList"
                                   Content="{Binding MyPlaylistListViewModel}"
-                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+                                  ContentTemplate="{StaticResource LoadingPlaylstListViewSmall}"/>
             </phone:PivotItem>
 
             <!--Pivot item five-->
@@ -89,7 +89,7 @@
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="LikedList"
                                   Content="{Binding LikedViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
 
             <!--Pivot item six-->
@@ -98,7 +98,7 @@
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="UploadedList"
                                   Content="{Binding UploadedPageViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
 
             </phone:PivotItem>
             
@@ -108,7 +108,7 @@
                              Margin="{StaticResource DefaultListBoxMargin}">
                 <ContentPresenter x:Name="HistoryList"
                                   Content="{Binding HistoryPageViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListViewNoMenu}"/>
+                                  ContentTemplate="{StaticResource LoadingListView}"/>
             </phone:PivotItem>
         </phone:Pivot>
 

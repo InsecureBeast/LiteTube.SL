@@ -189,7 +189,7 @@
                 <ContentPresenter Grid.Row="2"
                                   Name="SearchPlaylistsList"
                                   Content="{Binding SearchPlaylistsViewModel}"
-                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+                                  ContentTemplate="{StaticResource LoadingPlaylstListViewSmall}"/>
             </phone:PivotItem>
         </phone:Pivot>
 

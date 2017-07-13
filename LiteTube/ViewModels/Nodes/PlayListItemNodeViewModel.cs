@@ -17,8 +17,8 @@ namespace LiteTube.ViewModels.Nodes
         private bool _isContextMenu;
 
         public PlayListItemNodeViewModel(IPlayListItem item, IDataSource dataSource, 
-            Func<Task> delete, IContextMenuStrategy menuProvider) 
-            : base(dataSource, menuProvider)
+            Func<Task> delete, IContextMenuStrategy menuProvider, bool isLargeItems) 
+            : base(dataSource, menuProvider, isLargeItems)
         {
             PlayListItem = item;
             _id = item.Id;

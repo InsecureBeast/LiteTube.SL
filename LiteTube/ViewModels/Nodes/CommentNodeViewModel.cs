@@ -18,7 +18,7 @@ namespace LiteTube.ViewModels.Nodes
         private readonly Func<IDataSource> _getDatasource;
         private readonly IConnectionListener _connectionListener;
 
-        public CommentNodeViewModel(IComment comment, Func<IDataSource> getDatasource, IConnectionListener connectionListener, IContextMenuStrategy menuProvider = null) : base(getDatasource(), menuProvider)
+        public CommentNodeViewModel(IComment comment, Func<IDataSource> getDatasource, IConnectionListener connectionListener, IContextMenuStrategy menuProvider = null) : base(getDatasource(), menuProvider, false)
         {
             TextDisplay = comment.TextDisplay;
             AuthorDisplayName = comment.AuthorDisplayName;

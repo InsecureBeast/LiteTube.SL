@@ -1,5 +1,4 @@
-﻿
-using LiteTube.Common;
+﻿using LiteTube.Common;
 using LiteTube.DataModel;
 using LiteTube.ViewModels.Playlist;
 using MyToolkit.Command;
@@ -16,7 +15,7 @@ namespace LiteTube.ViewModels.Nodes
 
         public delegate void ShowPlaylistContainer(bool show);
 
-        public NodeViewModelBase(IDataSource dataSource, IContextMenuStrategy menu, IPlaylistsSevice playlistService = null)
+        public NodeViewModelBase(IDataSource dataSource, IContextMenuStrategy menu, bool isLargeItems, IPlaylistsSevice playlistService = null)
         {
             if (menu == null)
                 _menu = new NoContextMenuStrategy();
@@ -25,10 +24,13 @@ namespace LiteTube.ViewModels.Nodes
             _menu = menu;
             _playlistService = playlistService;
             _addToPlayListCommand = new RelayCommand<object>(AddToPlayList);
+
+            IsLargeItems = isLargeItems;
         }
 
         public abstract string Id { get; }
         public abstract string VideoId { get; }
+        public bool IsLargeItems { get; set; }
 
         public ICommand AddToPlaylistCommand
         {

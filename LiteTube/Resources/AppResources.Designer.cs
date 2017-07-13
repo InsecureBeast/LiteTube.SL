@@ -421,6 +421,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large images.
+        /// </summary>
+        public static string LargeItems {
+            get {
+                return ResourceManager.GetString("LargeItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to last hour.
         /// </summary>
         public static string LastHour {

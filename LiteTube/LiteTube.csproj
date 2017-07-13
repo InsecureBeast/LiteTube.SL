@@ -125,10 +125,6 @@
       <DependentUpon>DeletingBlockControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ListBoxTemplateSelector.cs" />
-    <Compile Include="Controls\ListViewItem.xaml.cs">
-      <DependentUpon>ListViewItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListViewItemTemplateSelector.cs" />
     <Compile Include="Controls\LiteTubePlayer.cs" />
     <Compile Include="Controls\PlaylistsContainer.xaml.cs">
       <DependentUpon>PlaylistsContainer.xaml</DependentUpon>
@@ -346,11 +342,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ListViewItem.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Controls\LoadingListView\PlayListViewItem.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\LoadingListViewLarge.xaml">
+    <Page Include="Controls\LoadingListView\PlayListViewItemNoMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LoadingListView\ListViewItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LoadingListView\ListViewItemNoMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -358,7 +362,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\LoadingListView.xaml">
+    <Page Include="Controls\LoadingListView\LoadingListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
