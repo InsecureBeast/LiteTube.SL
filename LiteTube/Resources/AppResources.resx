@@ -461,4 +461,7 @@
   <data name="LargeItems" xml:space="preserve">
     <value>Large images</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

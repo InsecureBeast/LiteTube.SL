@@ -29,15 +29,22 @@
                                   x:Name="NavControl"
                                   DataContext="{Binding NavigationPanelViewModel}"/>
 
-        <TextBlock Text="{Binding Title}"
-                   Grid.Row="1"
-                   Style="{StaticResource TitleTextBlockStyle}" />
+        <StackPanel Grid.Row="0"
+                    Margin="65,0,65,0"
+                    Background="{StaticResource NavigationPanelBrush}">
+            <TextBlock Text="{Binding Title}"
+                       Margin="0,8,0,0"
+                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                       FontSize="28"
+                       FontWeight="ExtraLight"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
 
         <ContentPresenter Grid.Row="2"
                           x:Name="ChannelList"
                           Content="{Binding}"
                           ContentTemplate="{StaticResource CategoryLoadingListView}"
-                          Margin="{StaticResource DefaultListBoxMargin}"/>
+                          Margin="{StaticResource DefaultContentMargin}"/>
     </Grid>
 
 </phone:PhoneApplicationPage>

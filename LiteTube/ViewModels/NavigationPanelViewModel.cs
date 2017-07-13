@@ -5,6 +5,7 @@ using LiteTube.DataModel;
 using MyToolkit.Command;
 using LiteTube.Common.Helpers;
 using System.Threading;
+using LiteTube.Resources;
 
 namespace LiteTube.ViewModels
 {
@@ -29,6 +30,7 @@ namespace LiteTube.ViewModels
         private string _profileRegistered;
         private string _profileSecondDisplayName;
         private string _profileChannelId;
+        private string _title;
 
         public NavigationPanelViewModel(Func<IDataSource> getDataSource, IConnectionListener connectionListener, IPurchase purchase)
         {
@@ -42,6 +44,7 @@ namespace LiteTube.ViewModels
             _searchCommand = new Common.RelayCommand(Search);
             _channelCommand = new RelayCommand<string>(LoadChannel);
             _donateCommand = new Common.RelayCommand(ViewDonate);
+            Title = AppResources.ApplicationTitle;
         }
 
         public ICommand LoginCommand
@@ -77,6 +80,16 @@ namespace LiteTube.ViewModels
         public ICommand DonateCommand
         {
             get { return _donateCommand; }
+        }
+
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                NotifyOfPropertyChanged(() => Title);
+                _title = value;
+            }
         }
 
         public bool IsMenuSelected
