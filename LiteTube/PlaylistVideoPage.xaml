@@ -308,9 +308,13 @@
                                          SelectedVideoQualityItem="{Binding VideoViewModel.SelectedVideoQualityItem, Mode=TwoWay, UpdateSourceTrigger=Default}"
                                          IsFullScreenVisible="True"
                                          IsFullScreenEnabled="True"
+                                         
+                                         SkipBackInterval="0:0:10"
+                                         SkipAheadInterval="0:0:10"
                                          VerticalAlignment="Center"
-                                         IsSkipAheadVisible="False"
-                                         IsSkipBackVisible="False"
+                                         IsSkipAheadVisible="True"
+                                         IsSkipBackVisible="True"
+                                         
                                          IsSkipNextVisible="True"
                                          IsSkipPreviousVisible="True"
                                          AllowMediaStartingDeferrals="False"

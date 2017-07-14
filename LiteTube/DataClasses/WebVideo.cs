@@ -12,8 +12,15 @@ namespace LiteTube.DataClasses
     {
         public WebVideo(string xml)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof (Feed));
-            using (var reader = new StringReader(xml))
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Parse	Ignore,
+                XmlResolver = null
+            };
+
+            var serializer = new XmlSerializer(typeof (Feed));
+            using (var stReader = new StringReader(xml))
+            using (var reader = XmlReader.Create(stReader, settings))// new XmlReader(xml, settings))
             {
                 try
                 {
