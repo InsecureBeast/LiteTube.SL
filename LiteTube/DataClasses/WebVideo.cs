@@ -14,7 +14,7 @@ namespace LiteTube.DataClasses
         {
             var settings = new XmlReaderSettings
             {
-                DtdProcessing = DtdProcessing.Parse	Ignore,
+                DtdProcessing = DtdProcessing.Parse,
                 XmlResolver = null
             };
 
