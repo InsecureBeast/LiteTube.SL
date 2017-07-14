@@ -464,4 +464,7 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="ChannelNotExists" xml:space="preserve">
+    <value>Channel does not exist or is blocked</value>
+  </data>
 </root>

@@ -12,6 +12,7 @@ using Google.Apis.YouTube.v3.Data;
 using Google;
 using YouTube = LiteTube.LibVideo.YouTube;
 using System.Net.Http;
+using LiteTube.Common.Exceptions;
 
 namespace LiteTube.DataModel
 {
@@ -257,7 +258,7 @@ namespace LiteTube.DataModel
 
             var response = await channelRequest.ExecuteAsync();
             var channel = response.Items.FirstOrDefault();
-            return channel != null ? new MChannel(channel) : MChannel.Empty;
+            return channel != null ? new MChannel(channel) : null;
         }
 
         public async Task<IChannel> GetChannelByUsername(string username)

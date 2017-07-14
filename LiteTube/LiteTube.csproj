@@ -107,6 +107,7 @@
     <Compile Include="Common\Commands\SubscribeCommand.cs" />
     <Compile Include="Common\Commands\UnsubscribeCommand.cs" />
     <Compile Include="Common\ContextMenuStrategy.cs" />
+    <Compile Include="Common\Exceptions\ChannelNotFoundException.cs" />
     <Compile Include="Common\Exceptions\PlaylistNotFoundException.cs" />
     <Compile Include="Common\Exceptions\PurchaseException.cs" />
     <Compile Include="Common\Helpers\VideoPageViewHelper.cs" />

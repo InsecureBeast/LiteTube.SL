@@ -464,4 +464,7 @@
   <data name="Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
+  <data name="ChannelNotExists" xml:space="preserve">
+    <value>Канал не существует или заблокирован</value>
+  </data>
 </root>

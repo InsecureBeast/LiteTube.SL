@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using Microsoft.Devices;
 
 namespace LiteTube.DataClasses
 {
@@ -26,7 +25,7 @@ namespace LiteTube.DataClasses
                 {
                     Feed = (Feed)serializer.Deserialize(reader);
                 }
-                catch (XmlException)
+                catch (Exception)
                 {
                     Feed = new Feed();
                 }

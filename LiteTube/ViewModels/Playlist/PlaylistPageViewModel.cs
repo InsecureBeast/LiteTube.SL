@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.Common;
+using LiteTube.Common.Exceptions;
 using LiteTube.Common.Helpers;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;

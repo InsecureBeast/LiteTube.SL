@@ -285,6 +285,12 @@ namespace LiteTube
                 return;
             }
 
+            if (e.ExceptionObject is ChannelNotFoundException)
+            {
+                _container.DialogService.ShowError(e.ExceptionObject.Message);
+                return;
+            }
+
             if (e.ExceptionObject.InnerException is WebException)
                 return;
 
