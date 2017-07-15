@@ -126,24 +126,46 @@
                 </Border>
             </Grid>
 
-            <StackPanel Grid.Row="1" 
-                        Margin="-10,5,0,10">
-                <TextBlock Text="{Binding Title}" 
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           TextWrapping="Wrap"
-                           MaxHeight="54"/>
-                <TextBlock Text="{Binding ChannelTitle}" 
-                           Style="{StaticResource PhoneTextSmallStyle}"
-                           TextWrapping="NoWrap"/>
-                <TextBlock TextWrapping="NoWrap"
-                           Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
-                           Style="{StaticResource PhoneTextSmallStyle}" 
-                           FontSize="18">
-                           <!--Foreground="#FF67217A">-->
-                        <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
-                        <Run Text="{Binding PublishedAt}" />
-                </TextBlock>
-            </StackPanel>
+            <Grid Grid.Row="1" 
+                  Margin="-10,5,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Ellipse Width="55"
+                         Height="55"
+                         Margin="10,5,0,0"
+                         VerticalAlignment="Top">
+                    <Ellipse.Fill>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="{Binding ChannelLogo}"
+                                             CreateOptions="BackgroundCreation"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                
+                <StackPanel Margin="10,0,0,0"
+                            Grid.Column="1">
+                    <TextBlock Text="{Binding Title}" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               TextWrapping="Wrap"
+                               MaxHeight="54"/>
+                    <TextBlock Text="{Binding ChannelTitle}" 
+                               Style="{StaticResource PhoneTextSmallStyle}"
+                               TextWrapping="NoWrap"/>
+                    <TextBlock TextWrapping="NoWrap"
+                               Text="{Binding PublishedAt, Converter={StaticResource DateTimeToDisplayStringConverter}}"
+                               Style="{StaticResource PhoneTextSmallStyle}" 
+                               FontSize="18">
+                               <!--Foreground="#FF67217A">-->
+                            <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}"/>
+                            <Run Text="{Binding PublishedAt}" />
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
 
             <Border BorderBrush="{StaticResource PhoneSecondaryBackgroundBrush}" 
                     BorderThickness="0,0,0,1"

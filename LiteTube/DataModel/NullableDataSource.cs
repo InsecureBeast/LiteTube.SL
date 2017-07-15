@@ -258,5 +258,10 @@ namespace LiteTube.DataModel
         {
             return new Task<IPlaylist>(() => MPlaylist.Empty);
         }
+
+        public Task<string> GetChannelLogo(string channelId)
+        {
+            return new Task<string>(() => string.Empty);
+        }
     }
 }

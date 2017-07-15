@@ -48,7 +48,8 @@
                 <Ellipse.Fill>
                     <ImageBrush>
                         <ImageBrush.ImageSource>
-                            <BitmapImage UriSource="{Binding Image}" />
+                            <BitmapImage UriSource="{Binding Image}" 
+                                         CreateOptions="BackgroundCreation"/>
                         </ImageBrush.ImageSource>
                     </ImageBrush>
                 </Ellipse.Fill>
