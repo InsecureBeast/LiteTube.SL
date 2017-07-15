@@ -153,7 +153,8 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ListViewItemNoMenu">
-        <controls:ListBoxTemplateSelector>
+        <controls:ListBoxTemplateSelector Content="{Binding}" 
+                                          HorizontalContentAlignment="Stretch">
             <controls:ListBoxTemplateSelector.Normal>
                 <DataTemplate>
                     <ContentPresenter Content="{Binding}"
