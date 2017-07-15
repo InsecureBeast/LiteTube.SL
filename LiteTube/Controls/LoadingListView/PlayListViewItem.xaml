@@ -6,48 +6,23 @@
     xmlns:controls="clr-namespace:LiteTube.Controls">
 
     <DataTemplate x:Key="MenuPlaylistsViewItem">
-        <controls:ListBoxTemplateSelector Content="{Binding}" 
-                                       HorizontalContentAlignment="Stretch">
-            <controls:ListBoxTemplateSelector.Normal>
-                <DataTemplate>
-                    <Grid Margin="0,0,0,0">
-                        <!--<Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>-->
+        <Grid>
+            <ContentPresenter Content="{Binding}"
+                              ContentTemplate="{StaticResource PlaylistItemSmall}"/>
 
-                        <ContentPresenter Content="{Binding}"
-                                        ContentTemplate="{StaticResource PlaylistListViewItem}"/>
-
-                        <!--<ToggleButton Grid.Column="1"
-                                      Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                      Style="{StaticResource MoreButtonStyle}"
-                                      x:Name="moreButton">
-                            <ContentPresenter ContentTemplate="{StaticResource MoreIcon}" />
-                        </ToggleButton>-->
-
-                        <toolkit:ContextMenuService.ContextMenu>
-                            <toolkit:ContextMenu Name="ContextMenu"
-                                                 Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                 IsOpen="{Binding ElementName=moreButton, Path=IsChecked, Mode=TwoWay}"
-                                                 Style="{StaticResource ContextMenuStyle}"
-                                                 IsZoomEnabled="False">
-                                <toolkit:MenuItem Name="Delete"  
-                                                Header="{Binding Path=LocalizedResources.Delete, Source={StaticResource LocalizedStrings}}" 
-                                                Command="{Binding DeleteCommand}"
-                                                Visibility="{Binding MenuProvider.CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                            </toolkit:ContextMenu>
-                        </toolkit:ContextMenuService.ContextMenu>
-                    </Grid>
-                </DataTemplate>
-            </controls:ListBoxTemplateSelector.Normal>
-            <controls:ListBoxTemplateSelector.Adv>
-                <DataTemplate>
-                    <!--<ContentPresenter ContentTemplate="{StaticResource AdvItemDatatemplate}"/>-->
-                    <Grid/>
-                </DataTemplate>
-            </controls:ListBoxTemplateSelector.Adv>
-        </controls:ListBoxTemplateSelector>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu Name="ContextMenu"
+                                        Visibility="{Binding IsContexMenu, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        IsOpen="{Binding ElementName=moreButton, Path=IsChecked, Mode=TwoWay}"
+                                        Style="{StaticResource ContextMenuStyle}"
+                                        IsZoomEnabled="False">
+                    <toolkit:MenuItem Name="Delete"  
+                                        Header="{Binding Path=LocalizedResources.Delete, Source={StaticResource LocalizedStrings}}" 
+                                        Command="{Binding DeleteCommand}"
+                                        Visibility="{Binding MenuProvider.CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </toolkit:ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
+        </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="LoadingMenuPlaylistsView" >

@@ -6,7 +6,7 @@
     xmlns:controls="clr-namespace:LiteTube.Controls">
 
     <DataTemplate x:Key="ListViewItemNoMenuSmall">
-        <Grid Margin="0,0,0,10" 
+        <Grid Margin="{StaticResource DefaultListViewItemMargin}" 
               Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -77,10 +77,11 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ListViewItemNoMenuLarge">
-        <Grid Margin="0,0,0,20" 
+        <Grid Margin="18,10,18,10" 
               Background="{Binding IsNowPlaying, Converter={StaticResource ColorValueConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -143,6 +144,11 @@
                         <Run Text="{Binding PublishedAt}" />
                 </TextBlock>
             </StackPanel>
+
+            <Border BorderBrush="{StaticResource PhoneSecondaryBackgroundBrush}" 
+                    BorderThickness="0,0,0,1"
+                    Grid.Row="2"
+                    Margin="-18,0,-18,0"/>
         </Grid>
     </DataTemplate>
 

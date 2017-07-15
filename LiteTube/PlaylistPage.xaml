@@ -41,7 +41,6 @@
         </StackPanel>
         
         <ContentPresenter Grid.Row="2"
-                          Margin="{StaticResource DefaultContentMargin}"
                           Content="{Binding}"
                           ContentTemplate="{StaticResource LoadingListView}"/>
 

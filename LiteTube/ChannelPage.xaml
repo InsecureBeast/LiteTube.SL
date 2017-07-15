@@ -82,7 +82,7 @@
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ScrollViewer>
-                    <StackPanel>
+                    <StackPanel Margin="{StaticResource DefaultContentMargin}">
                         <TextBlock TextWrapping="NoWrap"
                                    HorizontalAlignment="Left">
                                 <Run Text="{Binding ChannelSubscribers, Converter={StaticResource NumberToStringConverter}}" />

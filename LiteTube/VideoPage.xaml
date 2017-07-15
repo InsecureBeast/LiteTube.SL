@@ -48,7 +48,7 @@
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ScrollViewer>
-                    <Grid >
+                    <Grid Margin="{StaticResource DefaultContentMargin}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -248,7 +248,8 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Grid Visibility="{Binding CommentsViewModel.IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid Visibility="{Binding CommentsViewModel.IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Margin="{StaticResource DefaultContentMargin}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>

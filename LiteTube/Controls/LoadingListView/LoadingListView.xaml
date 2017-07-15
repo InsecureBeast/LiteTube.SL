@@ -21,7 +21,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="CategoryItemTemplate">
-        <Grid Margin="0,0,0,10"
+        <Grid Margin="{StaticResource DefaultListViewItemMargin}"
               Background="{StaticResource PhoneSecondaryBackgroundBrush}"
               Height="100">
             <Grid.ColumnDefinitions>
@@ -87,7 +87,7 @@
                      ItemContainerStyle="{StaticResource StretchedListBoxItemStyle}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,0,0,15">
+                        <Grid Margin="{StaticResource DefaultListViewItemMargin}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
