@@ -305,5 +305,21 @@ namespace LiteTube.Common.Helpers
             throw new NotImplementedException();
 #endif
         }
+
+        internal static bool GetIsLargeItems()
+        {
+            var isLargeItems = true;
+            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("IsLargeItems"))
+            {
+                isLargeItems = (bool)(ApplicationData.Current.RoamingSettings.Values["IsLargeItems"]);
+            }
+
+            return isLargeItems;
+        }
+
+        internal static void SaveIsLargeItems(bool isLargeItems)
+        {
+            ApplicationData.Current.RoamingSettings.Values["IsLargeItems"] = isLargeItems;
+        }
     }
 }

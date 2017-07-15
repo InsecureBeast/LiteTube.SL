@@ -90,7 +90,8 @@
                                 HeaderTemplate="{StaticResource MiddlePanoramaHeader}">
                 <ContentPresenter Content="{Binding ProfileSectionViewModel}"
                                   ContentTemplate="{StaticResource ProfileSectionsDataTemplate}"
-                                  Style="{StaticResource PanoramaContentStyle}"/>
+                                  Style="{StaticResource PanoramaContentStyle}"
+                                  Margin="10,0,0,0"/>
             </phone:PanoramaItem>
 
             <phone:PanoramaItem Header="{Binding Path=LocalizedResources.VideoCategories, Source={StaticResource LocalizedStrings}}"
@@ -98,7 +99,7 @@
                 <!--Single line list with text wrapping-->
                 <ContentPresenter Content="{Binding}"
                                   ContentTemplate="{StaticResource CategoryLoadingListView}"
-                                  Margin="15,-19, 0,0"/>
+                                  Margin="-10,-19,-18,0"/>
             </phone:PanoramaItem>
         </phone:Panorama>
 

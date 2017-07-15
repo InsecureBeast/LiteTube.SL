@@ -169,6 +169,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel does not exist or is blocked.
+        /// </summary>
+        public static string ChannelNotExists {
+            get {
+                return ResourceManager.GetString("ChannelNotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Channel not found. Try to create channel on YouTube site..
         /// </summary>
         public static string ChannelNotFoundTooltip {
@@ -421,6 +430,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large images.
+        /// </summary>
+        public static string LargeItems {
+            get {
+                return ResourceManager.GetString("LargeItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to last hour.
         /// </summary>
         public static string LastHour {
@@ -669,6 +687,15 @@ namespace LiteTube.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
             }
         }
         

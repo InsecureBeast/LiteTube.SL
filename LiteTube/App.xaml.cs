@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
@@ -104,6 +105,7 @@ namespace LiteTube
                 if (_viewModel == null)
                 {
                     _container.Build();
+                    //_container.Purchase.Init();
                     _viewModel = new MainViewModel(() => _container.GetDataSource(), _container.ConnectionListener);
                 }
 
@@ -240,6 +242,19 @@ namespace LiteTube
 
             e.Handled = true;
 
+            if (e.ExceptionObject is GoogleApiException)
+                return;
+
+            if (e.ExceptionObject.InnerException is GoogleApiException)
+                return;
+
+            if (e.ExceptionObject is KeyNotFoundException) //TODO разобраться, что с ним не так при активации приложения
+                return;
+
+            //убирем у пользователей, но оставим в дебаг
+            if (e.ExceptionObject is UnauthorizedAccessException)
+                return;
+
             if (e.ExceptionObject is HttpRequestException)
             {
                 _container.DialogService.ShowError(AppResources.ErrorMessage);
@@ -270,7 +285,13 @@ namespace LiteTube
                 return;
             }
 
-            if (e.ExceptionObject.InnerException is System.Net.WebException)
+            if (e.ExceptionObject is ChannelNotFoundException)
+            {
+                _container.DialogService.ShowError(e.ExceptionObject.Message);
+                return;
+            }
+
+            if (e.ExceptionObject.InnerException is WebException)
                 return;
 
             if (e.ExceptionObject is OperationCanceledException)
@@ -284,19 +305,7 @@ namespace LiteTube
                 _container.DialogService.ShowException(e.ExceptionObject.InnerException);
                 return;
             }
-#if DEBUG
-#else
-            if (e.ExceptionObject is GoogleApiException)
-                return;
 
-            if (e.ExceptionObject.InnerException is GoogleApiException)
-                return;
-
-            //убирем у пользователей, но оставим в дебаг
-            if (e.ExceptionObject is UnauthorizedAccessException)
-                return;
-            
-#endif
             _container.DialogService.ShowException(e.ExceptionObject);
         }
 

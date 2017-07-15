@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LiteTube.Common
+namespace LiteTube.Common.Exceptions
 {
     public class LiteTubeException : Exception
     {

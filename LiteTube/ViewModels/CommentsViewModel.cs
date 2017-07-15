@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.ViewModels.Nodes;
 using System.Net;
+using LiteTube.Common.Exceptions;
 
 namespace LiteTube.ViewModels
 {

@@ -174,28 +174,24 @@ namespace LiteTube.ViewModels
             base.Notify(e);
             LayoutHelper.InvokeFromUiThread(async () =>
             {
-                IsConnected = e.IsConnected;
                 NotifyOfPropertyChanged(() => IsAuthorized);
+                NotifyOfPropertyChanged(() => IsConnected);
 
-                if (e.IsConnected)
-                {
-                    IsLoading = true;
-                    IsEmpty = false;
-
-                    await LoadGuideCategories();
-                    if (IsAuthorized)
-                    {
-                        _activitySectionViewModel.Items.Clear();
-                        await _activitySectionViewModel.FirstLoad();
-                    }
-                    IsDataLoaded = true;
-                    IsLoading = false;
-                    IsEmpty = !Items.Any();
+                if (!IsConnected)
                     return;
-                }
 
-                if (Items.Count > 0)
-                    IsConnected = true;
+                IsLoading = true;
+                IsEmpty = false;
+
+                await LoadGuideCategories();
+                if (IsAuthorized)
+                {
+                    _activitySectionViewModel.Items.Clear();
+                    await _activitySectionViewModel.FirstLoad();
+                }
+                IsDataLoaded = true;
+                IsLoading = false;
+                IsEmpty = !Items.Any();
             });
         }
 

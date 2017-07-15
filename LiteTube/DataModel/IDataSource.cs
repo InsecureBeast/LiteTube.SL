@@ -23,6 +23,7 @@ namespace LiteTube.DataModel
         Task<IEnumerable<IGuideCategory>> GetGuideCategories();
         Task<IChannel> GetChannel(string channelId);
         Task<IChannel> GetChannelByUsername(string username);
+        Task<string> GetChannelLogo(string channelId);
         Task<IVideoList> GetRelatedVideoList(string videoId, string pageToken);
         Task<IVideoList> GetChannelVideoList(string channelId, string pageToken);
         Task<IChannelList> GetChannels(string categoryId, string nextPageToken);
@@ -375,6 +376,11 @@ namespace LiteTube.DataModel
         public async Task<IPlaylist> AddNewPlaylist(string title, string description, PrivacyStatus privacyStatus)
         {
             return await _remoteDataSource.AddNewPlaylist(title, description, privacyStatus);
+        }
+
+        public Task<string> GetChannelLogo(string channelId)
+        {
+            return _remoteDataSource.GetChannelLogo(channelId);
         }
     }
 }

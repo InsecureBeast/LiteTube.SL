@@ -409,8 +409,10 @@ namespace LiteTube
                 IsFullScreenVisible = true,
                 IsFullScreenEnabled = true,
                 VerticalAlignment = VerticalAlignment.Center,
-                IsSkipAheadVisible = false,
-                IsSkipBackVisible = false,
+                IsSkipAheadVisible = true,
+                IsSkipBackVisible = true,
+                SkipAheadInterval = TimeSpan.FromSeconds(10),
+                SkipBackInterval = TimeSpan.FromSeconds(10),
                 IsSkipNextVisible = true,
                 IsSkipPreviousVisible = true,
                 AllowMediaStartingDeferrals = false,
@@ -473,7 +475,6 @@ namespace LiteTube
             player.MediaOpened -= PlayerOnMediaOpened;
             player.MediaEnded -= OnMediaEnded;
             player.CurrentStateChanged -= OnCurrentStateChanged;
-            player.Paused -= Player_Paused;
             player.IsFullScreenChanged -= PlayerIsFullScreenChanged;
             player.IsSkipNextChanged -= OnSkipNextChanged;
             player.IsSkipPreviousChanged -= OnSkipPreviousChanged;

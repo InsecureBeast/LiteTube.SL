@@ -458,4 +458,13 @@
   <data name="YouBought" xml:space="preserve">
     <value>You bought</value>
   </data>
+  <data name="LargeItems" xml:space="preserve">
+    <value>Ampliar imagem</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="ChannelNotExists" xml:space="preserve">
+    <value>Channel does not exist or is blocked</value>
+  </data>
 </root>

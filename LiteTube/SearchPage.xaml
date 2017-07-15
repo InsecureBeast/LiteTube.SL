@@ -32,6 +32,18 @@
                                   x:Name="NavControl"
                                   DataContext="{Binding NavigationPanelViewModel}"/>
 
+        <StackPanel Grid.Row="0"
+                    Margin="65,0,65,0"
+                    Background="{StaticResource NavigationPanelBrush}">
+            <TextBlock Text="{Binding Path=LocalizedResources.Search, Source={StaticResource LocalizedStrings}}"
+                       Margin="0,8,0,0"
+                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                       FontSize="28"
+                       FontWeight="ExtraLight"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+        
+
         <Grid Grid.Row="1"
               Background="{StaticResource NavigationPanelBrush}"
               Margin="0,0,0,0">
@@ -189,7 +201,7 @@
                 <ContentPresenter Grid.Row="2"
                                   Name="SearchPlaylistsList"
                                   Content="{Binding SearchPlaylistsViewModel}"
-                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+                                  ContentTemplate="{StaticResource LoadingPlaylstListViewSmall}"/>
             </phone:PivotItem>
         </phone:Pivot>
 

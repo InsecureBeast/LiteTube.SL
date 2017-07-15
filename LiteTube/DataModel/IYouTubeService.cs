@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace LiteTube.DataModel
 {
-    interface IYouTubeService
+    public interface IYouTubeService
     {
         string ApiKey { get; }
         YouTubeService GetService();

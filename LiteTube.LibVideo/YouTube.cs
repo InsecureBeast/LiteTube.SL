@@ -11,13 +11,10 @@ namespace LiteTube.LibVideo
 {
     public class YouTube
     {
-        public static async Task<YouTubeVideo> GetVideoAsync(string videoId, VideoQuality quality)
+        public static async Task<YouTubeVideo> GetVideoAsync(string videoId, VideoQuality quality, string token)
         {
-            var url = $"https://www.youtube.com/watch?v={videoId}&nomobile=1";
-            if (!TryNormalize(url, out url))
-                throw new ArgumentException("URL is not a valid YouTube URL!");
-
-            var source = await HttpUtils.HttpGetAsync(url, string.Empty);
+            var url = $"https://www.youtube.com/watch?v={videoId}&nomobile=1&has_verified=1&ratebypass=yes";
+            var source = await HttpUtils.HttpGetAsync(url, token);
             var res = await ParseVideosAsync(source);
             var uri = TryFindBestVideoUri(res, VideoQuality.Quality144P, quality);
             return uri;
@@ -38,32 +35,6 @@ namespace LiteTube.LibVideo
                 && (video.Format == VideoFormat.Mp4 || video.Format == VideoFormat.Mobile) 
                 && video.Resolution >= GetResolution(minQuality) 
                 && video.Resolution <= GetResolution(maxQuality);
-        }
-
-        private static bool TryNormalize(string videoUri, out string normalized)
-        {
-            // If you fix something in here, please be sure to fix in 
-            // DownloadUrlResolver.TryNormalizeYoutubeUrl as well.
-
-            normalized = null;
-
-            var builder = new StringBuilder(videoUri);
-
-            videoUri = builder.Replace("youtu.be/", "youtube.com/watch?v=")
-                .Replace("youtube.com/embed/", "youtube.com/watch?v=")
-                .Replace("/v/", "/watch?v=")
-                .Replace("/watch#", "/watch?")
-                .ToString();
-
-            var query = new Query(videoUri);
-
-            string value;
-
-            if (!query.TryGetValue("v", out value))
-                return false;
-
-            normalized = "https://youtube.com/watch?v=" + value;
-            return true;
         }
 
         private static async Task<IEnumerable<YouTubeVideo>> ParseVideosAsync(string source)

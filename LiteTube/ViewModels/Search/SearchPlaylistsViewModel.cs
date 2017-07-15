@@ -66,7 +66,7 @@ namespace LiteTube.ViewModels.Search
                 if (itemsList.Exists(c => c.Id == item.Id))
                    continue;
 
-                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), new NoContextMenuStrategy(), Delete));
+                Items.Add(new PlaylistNodeViewModel(item, _getDataSource(), new NoContextMenuStrategy(), Delete, _isLargeItems));
             }
         }
 

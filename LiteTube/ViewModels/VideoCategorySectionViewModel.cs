@@ -16,6 +16,7 @@ namespace LiteTube.ViewModels
             : base(geDataSource, connectionListener, null)
         {
             _categoryId = categoryId;
+            //NavigationPanelViewModel.Title = title;
             Title = title;
             ShowAdv = SettingsHelper.IsAdvVisible;
             _playlistService = this;

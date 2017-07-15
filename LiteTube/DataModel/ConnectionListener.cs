@@ -73,13 +73,10 @@ namespace LiteTube.DataModel
         {
             // this is coming true even when i disconnected my pc from internet.
             // i also make the dataconnection off of the emulator
-            var fg = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-#if SILVERLIGHT
+            var isAvailable = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
             var ni = NetworkInterface.NetworkInterfaceType;
             // this part is coming none  
-            return ni != NetworkInterfaceType.None;
-#endif
-            throw new NotImplementedException();
+            return isAvailable;// || ni != NetworkInterfaceType.None;
         }
     }
 }

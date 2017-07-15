@@ -180,13 +180,16 @@ namespace LiteTube.ViewModels
 
         public void Notify(UpdateContextEventArgs e)
         {
-            LoadProfileInfo();
+            LayoutHelper.InvokeFromUiThread(LoadProfileInfo);
         }
 
         public void Notify(ConnectionEventArgs e)
         {
-            if (e.IsConnected)
-                LoadProfileInfo();
+            LayoutHelper.InvokeFromUiThread(() =>
+            {
+                if (e.IsConnected)
+                    LoadProfileInfo();
+            });
         }
 
         private void VideoCategories(FrameworkElement control)

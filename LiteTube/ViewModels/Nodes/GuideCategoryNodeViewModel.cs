@@ -8,7 +8,7 @@ namespace LiteTube.ViewModels
 {
     class GuideCategoryNodeViewModel : NodeViewModelBase
     {
-        public GuideCategoryNodeViewModel(IGuideCategory category, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider)
+        public GuideCategoryNodeViewModel(IGuideCategory category, IDataSource dataSource, IContextMenuStrategy menuProvider = null) : base(dataSource, menuProvider, false)
         {
             Title = category.Title;
             CategoryId = category.Id;

@@ -73,7 +73,7 @@
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ContentPresenter Content="{Binding PlaylistListViewModel}"
-                                  ContentTemplate="{StaticResource LoadingPlaylstListView}"/>
+                                  ContentTemplate="{StaticResource LoadingPlaylstListViewSmall}"/>
             </phone:PivotItem>
 
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
@@ -82,7 +82,7 @@
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
                 <ScrollViewer>
-                    <StackPanel>
+                    <StackPanel Margin="{StaticResource DefaultContentMargin}">
                         <TextBlock TextWrapping="NoWrap"
                                    HorizontalAlignment="Left">
                                 <Run Text="{Binding ChannelSubscribers, Converter={StaticResource NumberToStringConverter}}" />

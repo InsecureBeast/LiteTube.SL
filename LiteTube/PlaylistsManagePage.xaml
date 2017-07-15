@@ -30,9 +30,20 @@
                                   x:Name="NavControl"
                                   DataContext="{Binding NavigationPanelViewModel}"/>
 
-        <TextBlock Text="{Binding Path=LocalizedResources.ManagePlaylist, Source={StaticResource LocalizedStrings}}"
+        <StackPanel Grid.Row="0"
+                    Margin="65,0,65,0"
+                    Background="{StaticResource NavigationPanelBrush}">
+            <TextBlock Text="{Binding Path=LocalizedResources.ManagePlaylist, Source={StaticResource LocalizedStrings}}"
+                       Margin="0,8,0,0"
+                       Foreground="{StaticResource NavigationPanelForegroundBrush}"
+                       FontSize="28"
+                       FontWeight="ExtraLight"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+        
+        <!--<TextBlock Text="{Binding Path=LocalizedResources.ManagePlaylist, Source={StaticResource LocalizedStrings}}"
                    Grid.Row="1"
-                   Style="{StaticResource TitleTextBlockStyle}"/>
+                   Style="{StaticResource TitleTextBlockStyle}"/>-->
 
         <ContentPresenter Grid.Row="2"
                           Margin="{StaticResource DefaultListBoxMargin}"

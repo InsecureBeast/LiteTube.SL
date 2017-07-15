@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LiteTube.Common;
+using LiteTube.Common.Exceptions;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
 

@@ -1,10 +1,9 @@
 ﻿using System;
 using LiteTube.DataClasses;
-using MyToolkit.Command;
-using System.Windows.Input;
 using LiteTube.DataModel;
 using LiteTube.Common;
 using LiteTube.ViewModels.Playlist;
+using LiteTube.Common.Helpers;
 
 namespace LiteTube.ViewModels.Nodes
 {
@@ -14,9 +13,10 @@ namespace LiteTube.ViewModels.Nodes
         private readonly string _id;
         private bool _isNowPlaying;
         private bool _isContextMenu;
+        private string _channelLogo;
 
         public VideoItemViewModel(IVideoItem videoItem, IDataSource dataSource, 
-            IContextMenuStrategy menuProvider, IPlaylistsSevice playlistService) : base(dataSource, menuProvider, playlistService)
+            IContextMenuStrategy menuProvider, IPlaylistsSevice playlistService, bool isLargeItems) : base(dataSource, menuProvider, isLargeItems, playlistService)
         {
             VideoItem = videoItem;
             _videoId = videoItem.Details.VideoId;
@@ -29,6 +29,14 @@ namespace LiteTube.ViewModels.Nodes
             ViewCount = videoItem.Details.Statistics.ViewCount;
             PublishedAt = videoItem.PublishedAt;
             IsContexMenu = dataSource.IsAuthorized;
+
+            if (isLargeItems)
+            {
+                LayoutHelper.InvokeFromUiThread(async () =>
+                {
+                    ChannelLogo = await _dataSource.GetChannelLogo(videoItem.ChannelId);
+                });
+            }
         }
 
         public IVideoItem VideoItem { get; private set; }
@@ -72,6 +80,16 @@ namespace LiteTube.ViewModels.Nodes
             {
                 _isContextMenu = value;
                 NotifyOfPropertyChanged(() => IsContexMenu);
+            }
+        }
+
+        public string ChannelLogo
+        {
+            get { return _channelLogo; }
+            set
+            {
+                _channelLogo = value;
+                NotifyOfPropertyChanged(() => ChannelLogo);
             }
         }
     }

@@ -102,6 +102,16 @@
                                   IsChecked="{Binding IsAutoplayVideo, Mode=TwoWay}"
                                   Margin="-12,-30,-10,-30"/>
 
+            <TextBlock Name="LargeItems"
+                       Text="{Binding Path=LocalizedResources.LargeItems, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource SettingsTextBlockStyle}"
+                       HorizontalAlignment="Left" />
+
+            <toolkit:ToggleSwitch Name="LargeItemsSwitch"
+                                  BorderBrush="{StaticResource PhoneSubtleBrush}"
+                                  IsChecked="{Binding IsLargeItems, Mode=TwoWay}"
+                                  Margin="-12,-30,-10,-30"/>
+
             <TextBlock Name="ApplicationTheme"
                        Text="{Binding Path=LocalizedResources.Theme, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource SettingsTextBlockStyle}"

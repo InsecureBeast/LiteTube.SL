@@ -458,4 +458,13 @@
   <data name="YouBought" xml:space="preserve">
     <value>Вы приобрели</value>
   </data>
+  <data name="LargeItems" xml:space="preserve">
+    <value>Крупные изображения</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="ChannelNotExists" xml:space="preserve">
+    <value>Канал не существует или заблокирован</value>
+  </data>
 </root>

@@ -12,6 +12,7 @@ using Google.Apis.YouTube.v3.Data;
 using Google;
 using YouTube = LiteTube.LibVideo.YouTube;
 using System.Net.Http;
+using LiteTube.Common.Exceptions;
 
 namespace LiteTube.DataModel
 {
@@ -30,6 +31,7 @@ namespace LiteTube.DataModel
         Task<IVideoList> GetMostPopular(string culture, int maxResult, string pageToken);
         Task<IChannel> GetChannel(string channelId);
         Task<IChannel> GetChannelByUsername(string username);
+        Task<string> GetChannelLogo(string channelId);
         Task<IVideoList> GetRelatedVideos(string videoId, int maxResult, string pageToken);
         Task<IVideoList> GetCategoryVideoList(string categoryId, string culture, int maxResult, string pageToken);
         Task<IVideoList> GetChannelVideoList(string channelId, string culture, int maxPageResult, string pageToken);
@@ -64,7 +66,7 @@ namespace LiteTube.DataModel
         #endregion
     }
 
-    partial class RemoteDataSource : IRemoteDataSource
+    public partial class RemoteDataSource : IRemoteDataSource
     {
         private readonly IYouTubeService _youTubeServiceControl;
         private YouTubeService _youTubeService;
@@ -257,7 +259,21 @@ namespace LiteTube.DataModel
 
             var response = await channelRequest.ExecuteAsync();
             var channel = response.Items.FirstOrDefault();
-            return channel != null ? new MChannel(channel) : MChannel.Empty;
+            return channel != null ? new MChannel(channel) : null;
+        }
+
+        public async Task<string> GetChannelLogo(string channelId)
+        {
+            var channelRequest = _youTubeService.Channels.List("snippet");
+            channelRequest.Key = _youTubeServiceControl.ApiKey;
+            channelRequest.Id = channelId;
+
+            var response = await channelRequest.ExecuteAsync();
+            var channel = response.Items.FirstOrDefault();
+            if (channel == null)
+                return string.Empty;
+
+            return new MThumbnailDetails(channel.Snippet.Thumbnails).GetThumbnailUrl();
         }
 
         public async Task<IChannel> GetChannelByUsername(string username)
@@ -535,7 +551,7 @@ namespace LiteTube.DataModel
         {
             //var video = await LiteTube.Multimedia.YouTube.GetVideoUriAsync(videoId, quality);//VideoQualityHelper.GetVideoQuality(quality));
             //return video;
-            var video = await YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality));
+            var video = await YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality), _youTubeServiceControl.OAuthToken);
             var url = await video.GetUriAsync();
             return new YouTubeUri() { Uri = new Uri(url) };
         }

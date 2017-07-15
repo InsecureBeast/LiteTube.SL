@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using LiteTube.Common.Helpers;
 using LiteTube.DataModel;
 using LiteTube.Common.Tools;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace LiteTube.ViewModels
 {
@@ -23,8 +21,9 @@ namespace LiteTube.ViewModels
         private ObservableCollection<string> _applicationLanguages;
         private string _selectedLanguage;
         private bool _isMustRestarted = false;
-        private string _currentLanguage;
+        private readonly string _currentLanguage;
         private bool _isAutoplayVideo = true;
+        private bool _isLargeItems;
 
         public SettingsViewModel(Func<IDataSource> getGetDataSource, IConnectionListener connectionListener, IPurchase purchase)
         {
@@ -44,6 +43,7 @@ namespace LiteTube.ViewModels
             _selectedLanguage = SettingsHelper.GetLanguage();
             _currentLanguage = _selectedLanguage;
             _isAutoplayVideo = SettingsHelper.GetIsAutoPlayVideo();
+            _isLargeItems = SettingsHelper.GetIsLargeItems();
             _oldSelectedApplicationTheme = _selectedApplicationTheme;
         }
 
@@ -114,6 +114,16 @@ namespace LiteTube.ViewModels
             }
         }
 
+        public bool IsLargeItems
+        {
+            get { return _isLargeItems; }
+            set
+            {
+                _isLargeItems = value;
+                NotifyOfPropertyChanged(() => IsLargeItems);
+            }
+        }
+        
         public ApplicationTheme SelectedApplicationTheme
         {
             get { return _selectedApplicationTheme; }
@@ -133,6 +143,7 @@ namespace LiteTube.ViewModels
             SettingsHelper.SaveTheme(_selectedApplicationTheme);
             SettingsHelper.SaveLanguage(_selectedLanguage);
             SettingsHelper.SaveAutoplayVideo(_isAutoplayVideo);
+            SettingsHelper.SaveIsLargeItems(_isLargeItems);
             _getDataSource().Update(I18nLanguages.CheckRegionName(_selectedRegion), _selectedQuality);
         }
 

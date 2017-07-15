@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using LiteTube.DataClasses;
 using LiteTube.DataModel;
@@ -43,8 +44,9 @@ namespace LiteTube.ViewModels
         protected string _pageToken = string.Empty;
         //private ListViewSelectionMode _selectionMode;
         private readonly ObservableCollection<NodeViewModelBase> _selectedItems;
-        private bool _isConnected = true;
+        //private bool _isConnected = true;
         protected IPlaylistsSevice _playlistService;
+        protected bool _isLargeItems;
 
 
         public SectionBaseViewModel(
@@ -65,12 +67,13 @@ namespace LiteTube.ViewModels
             _playlistService = playlistService;
 
             _hasItems = true;
+            _isLargeItems = SettingsHelper.GetIsLargeItems();
             _loadMoreCommand = new Common.RelayCommand(LoadMore);
             _itemClickCommand = new RelayCommand<NavigationObject>(NavigateTo);
             _selectCommand = new Common.RelayCommand(SelectItems);
             _deleteCommand = new Common.RelayCommand(DeleteItems);
             _selectedItems = new ObservableCollection<NodeViewModelBase>();
-            _isConnected = connectionListener.CheckNetworkAvailability();
+            //_isConnected = connectionListener.CheckNetworkAvailability();
 
             Items = new ObservableCollection<NodeViewModelBase>();
             IsItemClickEnabled = true;
@@ -114,7 +117,7 @@ namespace LiteTube.ViewModels
         {
             get
             {
-                return _isConnected && _isLoading;
+                return IsConnected && _isLoading;
             }
             protected set
             {
@@ -142,7 +145,7 @@ namespace LiteTube.ViewModels
         {
             get
             {
-                return _isConnected && _isEmpty;
+                return IsConnected && _isEmpty;
             }
             protected set
             {
@@ -153,14 +156,16 @@ namespace LiteTube.ViewModels
 
         public bool IsConnected
         {
-            get { return _isConnected; }
-            protected set
-            {
-                _isConnected = value;
-                if (!_isConnected)
-                    HideProgressIndicator();
-                NotifyOfPropertyChanged(() => IsConnected);
-            }
+            get { return _connectionListener.CheckNetworkAvailability(); }
+
+            //get { return _isConnected; }
+            //protected set
+            //{
+            //    _isConnected = value;
+            //    if (!_isConnected)
+            //        HideProgressIndicator();
+            //    NotifyOfPropertyChanged(() => IsConnected);
+            //}
         }
 
         public ICommand LoadMoreCommand
@@ -197,12 +202,15 @@ namespace LiteTube.ViewModels
         {
             try
             {
+                NotifyOfPropertyChanged(() => IsConnected);
+
                 if (!IsConnected)
                     return;
 
                 if (Items.Count > 0)
                     return;
 
+                _isLargeItems = SettingsHelper.GetIsLargeItems();
                 ShowProgressIndicator();
                 IsLoading = true;
 
@@ -213,11 +221,6 @@ namespace LiteTube.ViewModels
                 LoadItems(responseList);
                 _pageToken = responseList.NextPageToken;
                 _hasItems = !string.IsNullOrEmpty(_pageToken);
-            }
-            catch (Exception)
-            {
-                IsConnected = true;
-                throw;
             }
             finally
             {
@@ -266,7 +269,7 @@ namespace LiteTube.ViewModels
                 if (itemsList.Exists(c => c.Id == item.Details.VideoId))
                     continue;
 
-                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider(), _playlistService));
+                Items.Add(new VideoItemViewModel(item, _getDataSource(), GetContextMenuProvider(), _playlistService, _isLargeItems));
             }
             /*
             foreach (var item in items)
@@ -325,10 +328,7 @@ namespace LiteTube.ViewModels
             {
                 IsLoading = false;
                 IsEmpty = false;
-                IsConnected = true;
-
                 HideProgressIndicator();
-
                 throw;
             }
         }
@@ -362,16 +362,12 @@ namespace LiteTube.ViewModels
         {
             LayoutHelper.InvokeFromUiThread(() =>
             {
-                IsConnected = e.IsConnected;
-
                 if (e.IsConnected)
                     return;
 
                 IsEmpty = false;
                 IsLoading = false;
-
-                if (Items.Count > 0)
-                    IsConnected = true;
+                NotifyOfPropertyChanged(() => IsConnected);
             });
         }
     }

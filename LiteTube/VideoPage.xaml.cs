@@ -180,8 +180,6 @@ namespace LiteTube
             {
                 _playerState = player.GetMediaState();
                 _sensor.OrientationChanged -= Sensor_OrientationChanged;
-                player.Dispose();
-
                 base.OnNavigatedFrom(e);
             }
             catch (Exception)
@@ -370,8 +368,10 @@ namespace LiteTube
                 IsFullScreenVisible = true,
                 IsFullScreenEnabled = true,
                 VerticalAlignment = VerticalAlignment.Center,
-                IsSkipAheadVisible = false,
-                IsSkipBackVisible = false,
+                IsSkipAheadVisible = true,
+                IsSkipBackVisible = true,
+                SkipAheadInterval = TimeSpan.FromSeconds(10),
+                SkipBackInterval = TimeSpan.FromSeconds(10),
                 AllowMediaStartingDeferrals = false,
                 AutoPlay = _autoPlay,
                 VideoTitle = viewModel.Title,

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using LiteTube.Common;
 using LiteTube.Common.Helpers;
 using System.Diagnostics;
+using LiteTube.Common.Exceptions;
+using LiteTube.Resources;
 using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
@@ -36,7 +38,7 @@ namespace LiteTube.ViewModels
 
             _playlistService = this;
 
-            LayoutHelper.InvokeFromUiThread(async() => 
+            LayoutHelper.InvokeFromUiThread(async() =>
             {
                 await LoadChannel(channelId, username);
                 await FirstLoad();
@@ -181,6 +183,13 @@ namespace LiteTube.ViewModels
                 ch = await _getDataSource().GetChannel(channelId);
             else
                 ch = await _getDataSource().GetChannelByUsername(username);
+
+            if (ch == null)
+            {
+                IsEmpty = true;
+                IsLoading = false;
+                throw new ChannelNotFoundException(AppResources.ChannelNotExists);
+            }
 
             _uniqueId = ch.Id;
             Title = ch.Title;
