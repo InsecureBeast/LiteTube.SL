@@ -135,7 +135,7 @@
 
                 <Ellipse Width="55"
                          Height="55"
-                         Margin="10,5,0,0"
+                         Margin="15,5,0,0"
                          VerticalAlignment="Top">
                     <Ellipse.Fill>
                         <ImageBrush>
