@@ -6,7 +6,7 @@
     <Language code="ru-RU" />
     <Language code="pt-BR" />
   </Languages>
-  <App xmlns="" ProductID="{a6dc8489-f102-4558-95b0-3fc6b3abbab0}" Title="LightTube" RuntimeType="Silverlight" Version="2.0.8.514" Genre="apps.normal" Author="Pavel Dmitriev" Description="" SDOptOut="false" BackUpOptOut="false" Publisher="Pavel Dmitriev" PublisherID="{cc081fd0-ea82-4a65-b081-4d0fc767871a}">
+  <App xmlns="" ProductID="{a6dc8489-f102-4558-95b0-3fc6b3abbab0}" Title="LightTube" RuntimeType="Silverlight" Version="2.0.9.518" Genre="apps.normal" Author="Pavel Dmitriev" Description="" SDOptOut="false" BackUpOptOut="false" Publisher="Pavel Dmitriev" PublisherID="{cc081fd0-ea82-4a65-b081-4d0fc767871a}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
