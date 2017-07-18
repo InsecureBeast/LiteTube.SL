@@ -22,7 +22,8 @@ namespace LiteTube.DataModel
 
         private async Task<IVideoList> GetActivityWeb(string culture, int maxResult, string pageToken)
         {
-            var subs = await _youTubeWeb.GetSubscriptions(_youTubeServiceControl.OAuthToken);
+            //var subs = await _youTubeWeb.GetSubscriptions(_youTubeServiceControl.OAuthToken);
+            var subs = new List<string>();
             var res = await _youTubeWeb.GetActivity(subs, _youTubeServiceControl.OAuthToken, pageToken);
             if (res == null)
                 return null;

@@ -86,8 +86,8 @@ namespace LiteTube.DataModel
                    
                 };
                 */
-            return await GetSubscriptionsVideo(subscriptions, accessToken, nextPageToken);
-            //return await GetVideos(SUBSCRIPTIONS_URL, _recommended, accessToken, nextPageToken);
+            //return await GetSubscriptionsVideo(subscriptions, accessToken, nextPageToken);
+            return await GetVideos(SUBSCRIPTIONS_URL, _activity, accessToken, nextPageToken);
         }
 
         public async Task<YouTubeResponce> GetSubscriptionsVideo(IEnumerable<string> subscriptions, string accessToken, string nextPageToken)
@@ -271,7 +271,7 @@ namespace LiteTube.DataModel
             if (string.IsNullOrEmpty(nextPageToken))
             {
                 var response = await HttpGetAsync(url, accessToken);
-                var regex = new Regex(@"watch\?v=([^\""|&amp\;]+)");
+                var regex = new Regex(@"watch\?v=([^\""|><&\;]+)");
                 var colm = regex.Matches(response);
                 foreach (Match match in colm)
                 {
@@ -309,6 +309,7 @@ namespace LiteTube.DataModel
 
         private YouTubeResponce GetFirstTimeItems(IEnumerable<string> values, Dictionary<string, IEnumerable<string>> dic)
         {
+            dic.Clear();
             var splitted = Split(values);
             for (var i = 0; i < splitted.Count; i++)
             {
