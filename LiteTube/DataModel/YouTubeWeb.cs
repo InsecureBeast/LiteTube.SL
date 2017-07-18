@@ -99,16 +99,24 @@ namespace LiteTube.DataModel
                 {
                     var task = Task<object>.Factory.StartNew(() =>
                     {
-                        var url = string.Format(FEED_URL_FORMAT, subscription);
-                        var response = HttpGetAsync(url, accessToken).Result;
-                        return response;
+                        try
+                        {
+                            var url = string.Format(FEED_URL_FORMAT, subscription);
+                            var response = HttpGetAsync(url, accessToken).Result;
+                            return response;
+                        }
+                        catch (Exception)
+                        {
+                            return null;
+                        }
+
                     }, TaskCreationOptions.LongRunning);
 
                     tasks.Add(task);
                 }
 
                 await Task.WhenAll(tasks.ToArray());
-                var result = tasks.Where(x => !string.IsNullOrEmpty(x.Result.ToString()))
+                var result = tasks.Where(x => !string.IsNullOrEmpty(x?.Result?.ToString()))
                                   .Select(task => new WebVideo(task.Result.ToString()))
                                   .ToList();
 
