@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using LiteTube.DataModel;
@@ -13,6 +14,31 @@ namespace ConsoleApplication1
     class Program
     {
         static void Main(string[] args)
+        {
+            Task.Factory.StartNew(async () =>
+            {
+                var source = new YouTubeWeb();
+                var url = @"http://www.youtube.com/get_video_info?&video_id=eT8FxWFvUXY";
+                var videoInf = await YouTubeWeb.HttpGetAsync(url, String.Empty);
+
+                var mas = videoInf.Split('&');
+                var pairs = new Dictionary<string, string>();
+                foreach (var ma in mas)
+                {
+                    var split = ma.Split('=');
+                    pairs.Add(split[0], split[1]);
+                }
+
+                var hlsvp = pairs["hlsvp"];
+                //var uri = new Uri(hlsvp);
+                var temp = WebUtility.UrlDecode(hlsvp);
+                temp = temp.Replace(@"\/", "/");
+
+            });
+            Console.ReadKey();
+        }
+
+        static void Main1(string[] args)
         {
             Task.Factory.StartNew(async () =>
             {

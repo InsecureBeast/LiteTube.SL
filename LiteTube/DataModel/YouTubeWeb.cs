@@ -251,7 +251,7 @@ namespace LiteTube.DataModel
         }
 
         /// <exception cref="WebException">An error occurred while downloading the resource. </exception>
-        private static async Task<string>HttpGetAsync(string uri, string accessToken)
+        public static async Task<string>HttpGetAsync(string uri, string accessToken)
         {
             var handler = new HttpClientHandler { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip };
             using (var client = new HttpClient(handler))
