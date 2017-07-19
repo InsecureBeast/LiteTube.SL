@@ -359,9 +359,6 @@ namespace LiteTube
             if (viewModel == null)
                 return;
 
-            //удалим старый плеер
-            player.Dispose();
-
             //новый
             player = new LiteTubePlayer
             {
@@ -459,21 +456,21 @@ namespace LiteTube
             }
         }
 
-        private void SubscribePlayerEvents(LiteTubePlayer player)
+        private void SubscribePlayerEvents(LiteTubePlayer tubePlayer)
         {
-            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
-            player.MediaOpened += PlayerOnMediaOpened;
-            player.CurrentStateChanged += OnCurrentStateChanged;
-            player.IsInteractiveChanged += OnInteractiveChanged;
-            player.Paused += Player_Paused;
+            tubePlayer.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            tubePlayer.MediaOpened += PlayerOnMediaOpened;
+            tubePlayer.CurrentStateChanged += OnCurrentStateChanged;
+            tubePlayer.IsInteractiveChanged += OnInteractiveChanged;
+            tubePlayer.Paused += Player_Paused;
         }
 
-        private void UnsubscribePlayerEvents(LiteTubePlayer player)
+        private void UnsubscribePlayerEvents(LiteTubePlayer tubePlayer)
         {
-            player.MediaOpened -= PlayerOnMediaOpened;
-            player.CurrentStateChanged -= OnCurrentStateChanged;
-            player.IsFullScreenChanged -= PlayerIsFullScreenChanged;
-            player.IsInteractiveChanged -= OnInteractiveChanged;
+            tubePlayer.MediaOpened -= PlayerOnMediaOpened;
+            tubePlayer.CurrentStateChanged -= OnCurrentStateChanged;
+            tubePlayer.IsFullScreenChanged -= PlayerIsFullScreenChanged;
+            tubePlayer.IsInteractiveChanged -= OnInteractiveChanged;
         }
 
         private void Player_Paused(object sender, RoutedEventArgs e)

@@ -459,25 +459,25 @@ namespace LiteTube
                 SetPlayerNormalState();
         }
 
-        private void SubscribePlayerEvents(LiteTubePlayer player)
+        private void SubscribePlayerEvents(LiteTubePlayer tubePlayer)
         {
-            player.IsFullScreenChanged += PlayerIsFullScreenChanged;
-            player.MediaOpened += PlayerOnMediaOpened;
-            player.IsSkipNextChanged += OnSkipNextChanged;
-            player.IsSkipPreviousChanged += OnSkipPreviousChanged;
-            player.MediaEnded += OnMediaEnded;
-            player.CurrentStateChanged += OnCurrentStateChanged;
-            player.Paused += Player_Paused;
+            tubePlayer.IsFullScreenChanged += PlayerIsFullScreenChanged;
+            tubePlayer.MediaOpened += PlayerOnMediaOpened;
+            tubePlayer.IsSkipNextChanged += OnSkipNextChanged;
+            tubePlayer.IsSkipPreviousChanged += OnSkipPreviousChanged;
+            tubePlayer.MediaEnded += OnMediaEnded;
+            tubePlayer.CurrentStateChanged += OnCurrentStateChanged;
+            tubePlayer.Paused += Player_Paused;
         }
 
-        private void UnsubscribePlayerEvents(LiteTubePlayer player)
+        private void UnsubscribePlayerEvents(LiteTubePlayer tubePlayer)
         {
-            player.MediaOpened -= PlayerOnMediaOpened;
-            player.MediaEnded -= OnMediaEnded;
-            player.CurrentStateChanged -= OnCurrentStateChanged;
-            player.IsFullScreenChanged -= PlayerIsFullScreenChanged;
-            player.IsSkipNextChanged -= OnSkipNextChanged;
-            player.IsSkipPreviousChanged -= OnSkipPreviousChanged;
+            tubePlayer.MediaOpened -= PlayerOnMediaOpened;
+            tubePlayer.MediaEnded -= OnMediaEnded;
+            tubePlayer.CurrentStateChanged -= OnCurrentStateChanged;
+            tubePlayer.IsFullScreenChanged -= PlayerIsFullScreenChanged;
+            tubePlayer.IsSkipNextChanged -= OnSkipNextChanged;
+            tubePlayer.IsSkipPreviousChanged -= OnSkipPreviousChanged;
         }
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
