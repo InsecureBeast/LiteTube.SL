@@ -44,11 +44,19 @@ namespace LiteTube.Controls
             remove { ((PlayerInteractiveViewModel)InteractiveViewModel).Paused -= value; }
         }
 
+        public Microsoft.PlayerFramework.Adaptive.AdaptivePlugin adaptivePlugin;
+        public Microsoft.Media.AdaptiveStreaming.Dash.DashDownloaderPlugin dashDownloaderPlugin;
+
         public LiteTubePlayer() : base()
         {
             InteractiveViewModel = DefaultInteractiveViewModel = new PlayerInteractiveViewModel(this);
             IsFullScreenChanged += LiteTubePlayer_IsFullScreenChanged;
             IsRelatedItemsEnabled = true;
+
+            SM.Media.Platform.StreamingMediaPlugin asd = new SM.Media.Platform.StreamingMediaPlugin();
+            Plugins.Add(asd);
+            //RegisterPlugins();
+            //RegisterDashPlugin(true);
         }
 
         public string VideoTitle
@@ -117,6 +125,29 @@ namespace LiteTube.Controls
 
             IsRelatedItemsVisible = _isRelatedVisible;
         }
+
+        void RegisterDashPlugin(bool bRegister)
+        {
+            Microsoft.PlayerFramework.Adaptive.AdaptivePlugin plugin = Plugins.OfType<Microsoft.PlayerFramework.Adaptive.AdaptivePlugin>().First();
+            if (plugin != null)
+            {
+                if (bRegister == true)
+                {
+                    //LogMessage("Register DASH plugin");
+                    if (dashDownloaderPlugin == null)
+                        dashDownloaderPlugin = new Microsoft.Media.AdaptiveStreaming.Dash.DashDownloaderPlugin();
+                    plugin.DownloaderPlugin = dashDownloaderPlugin;
+                }
+            }
+        }
+        void RegisterPlugins()
+        {
+            //LogMessage("Register plugins");
+            if (adaptivePlugin == null)
+                adaptivePlugin = new Microsoft.PlayerFramework.Adaptive.AdaptivePlugin();
+            Plugins.Add(adaptivePlugin);
+        }
+
     }
 
     class PlayerInteractiveViewModel : InteractiveViewModel

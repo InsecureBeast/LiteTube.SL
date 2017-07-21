@@ -28,3 +28,5 @@ LiteTube.LibVideo/obj/*
 LiteTube.LibVideo/LiteTube.LibVideo.csproj.DotSettings
 ConsoleApplication1/bin/*
 ConsoleApplication1/obj/*
+SM.Media.Platform/*
+SM.Media.Core/Bin/*

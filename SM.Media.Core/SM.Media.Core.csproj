@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6829A8C8-A4F0-4D02-9D9D-BE036415BCD7}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SM.Media.Core</RootNamespace>
+    <AssemblyName>SM.Media.Core</AssemblyName>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <SilverlightVersion>
+    </SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <TargetFrameworkProfile />
+    <DefaultLanguage>en-US</DefaultLanguage>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="1MediaStreamFacadeBase.cs" />
+    <Compile Include="AAC\AacAudioSpecificConfig.cs" />
+    <Compile Include="AAC\AacConfigurator.cs" />
+    <Compile Include="AAC\AacDecoderParameters.cs" />
+    <Compile Include="AAC\AacDecoderSettings.cs" />
+    <Compile Include="AAC\AacFrameHeader.cs" />
+    <Compile Include="AAC\AacMediaParser.cs" />
+    <Compile Include="AAC\AacMediaParserFactory.cs" />
+    <Compile Include="AAC\AacParser.cs" />
+    <Compile Include="AAC\AacStreamHandler.cs" />
+    <Compile Include="AAC\AacStreamHandlerFactory.cs" />
+    <Compile Include="Ac3\Ac3Configurator.cs" />
+    <Compile Include="Ac3\Ac3FrameHeader.cs" />
+    <Compile Include="Ac3\Ac3MediaParser.cs" />
+    <Compile Include="Ac3\Ac3MediaParserFactory.cs" />
+    <Compile Include="Ac3\Ac3Parser.cs" />
+    <Compile Include="Ac3\Ac3StreamHandler.cs" />
+    <Compile Include="Ac3\Ac3StreamHandlerFactory.cs" />
+    <Compile Include="Audio\AudioMediaParser.cs" />
+    <Compile Include="Audio\AudioParserBase.cs" />
+    <Compile Include="Audio\AudioStreamHandler.cs" />
+    <Compile Include="Audio\IAudioConfigurator.cs" />
+    <Compile Include="Audio\IAudioFrameHeader.cs" />
+    <Compile Include="Audio\IAudioParser.cs" />
+    <Compile Include="Audio\Shoutcast\IShoutcastEncodingSelector.cs" />
+    <Compile Include="Audio\Shoutcast\IShoutcastMetadataFilterFactory.cs" />
+    <Compile Include="Audio\Shoutcast\Latin1ShoutcastEncodingSelector.cs" />
+    <Compile Include="Audio\Shoutcast\ShoutcastMetadataFilter.cs" />
+    <Compile Include="Audio\Shoutcast\ShoutcastMetadataFilterFactory.cs" />
+    <Compile Include="Audio\Shoutcast\Utf8ShoutcastEncodingSelector.cs" />
+    <Compile Include="Buffering\BufferingManager.cs" />
+    <Compile Include="Buffering\BufferStatus.cs" />
+    <Compile Include="Buffering\DefaultBufferingPolicy.cs" />
+    <Compile Include="Buffering\DefaultBufferingPolicyExtensions.cs" />
+    <Compile Include="Buffering\IBufferingManager.cs" />
+    <Compile Include="Buffering\IBufferingPolicy.cs" />
+    <Compile Include="Buffering\IBufferingQueue.cs" />
+    <Compile Include="Buffering\IQueueThrottling.cs" />
+    <Compile Include="Buffering\NullBufferingManager.cs" />
+    <Compile Include="Buffering\ShoutcastMetadataFilter.cs" />
+    <Compile Include="Buffering\ShoutcastMetadataFilterFactory.cs" />
+    <Compile Include="Buffering\Utf8ShoutcastEncodingSelector.cs" />
+    <Compile Include="Builder\BuilderBase.cs" />
+    <Compile Include="Builder\BuilderBaseExtensions.cs" />
+    <Compile Include="Builder\BuilderHandle.cs" />
+    <Compile Include="Builder\IBuilder.cs" />
+    <Compile Include="Builder\IBuilderHandle.cs" />
+    <Compile Include="Configuration\IConfigurationSource.cs" />
+    <Compile Include="Configuration\AudioFormat.cs" />
+    <Compile Include="Configuration\ConfigurationSourceExtensions.cs" />
+    <Compile Include="Configuration\ConfiguratorBase.cs" />
+    <Compile Include="Configuration\IFrameParser.cs" />
+    <Compile Include="Configuration\IVideoConfigurationSource.cs" />
+    <Compile Include="Configuration\NullConfigurator.cs" />
+    <Compile Include="Configuration\VideoConfigurator.cs" />
+    <Compile Include="Content\ContentKind.cs" />
+    <Compile Include="Content\ContentServiceFactory.cs" />
+    <Compile Include="Content\ContentServiceFactoryBase.cs" />
+    <Compile Include="Content\ContentServiceFactoryFinder.cs" />
+    <Compile Include="Content\ContentServiceFactoryInstance.cs" />
+    <Compile Include="Content\ContentType.cs" />
+    <Compile Include="Configuration\IAudioConfigurationSource.cs" />
+    <Compile Include="Content\ContentTypeDetector.cs" />
+    <Compile Include="Content\ContentTypes.cs" />
+    <Compile Include="Content\IContentServiceFactory.cs" />
+    <Compile Include="Content\IContentServiceFactoryFinder.cs" />
+    <Compile Include="Content\IContentServiceFactoryInstance.cs" />
+    <Compile Include="Content\IContentTypeDetector.cs" />
+    <Compile Include="DefaultMediaStreamFacadeParameters.cs" />
+    <Compile Include="H262\H262Configurator.cs" />
+    <Compile Include="H262\H262StreamHandler.cs" />
+    <Compile Include="H262\H262StreamHandlerFactory.cs" />
+    <Compile Include="H264\H264Bitstream.cs" />
+    <Compile Include="H264\H264BitstreamExtensions.cs" />
+    <Compile Include="H264\H264Configurator.cs" />
+    <Compile Include="H264\H264Reader.cs" />
+    <Compile Include="H264\H264StreamHandler.cs" />
+    <Compile Include="H264\H264StreamHandlerFactory.cs" />
+    <Compile Include="H264\IH264ConfiguratorSink.cs" />
+    <Compile Include="H264\IH264Reader.cs" />
+    <Compile Include="H264\INalParser.cs" />
+    <Compile Include="H264\NalUnitParser.cs" />
+    <Compile Include="H264\NalUnitType.cs" />
+    <Compile Include="H264\NalUnitTypeDescriptor.cs" />
+    <Compile Include="H264\NalUnitTypes.cs" />
+    <Compile Include="H264\RbspDecoder.cs" />
+    <Compile Include="Hls\HlsPlaylistParameters.cs" />
+    <Compile Include="Hls\HlsPlaylistSegmentManager.cs" />
+    <Compile Include="Hls\HlsPlaylistSegmentManagerFactory.cs" />
+    <Compile Include="Hls\HlsPlaylistSegmentManagerPolicy.cs" />
+    <Compile Include="Hls\HlsPlaylistSettings.cs" />
+    <Compile Include="Hls\HlsProgramManager.cs" />
+    <Compile Include="Hls\HlsProgramStream.cs" />
+    <Compile Include="Hls\HlsProgramStreamFactory.cs" />
+    <Compile Include="Hls\HlsSegmentsFactory.cs" />
+    <Compile Include="Hls\HlsStreamSegments.cs" />
+    <Compile Include="Hls\HlsStreamSegmentsFactory.cs" />
+    <Compile Include="Hls\IHlsPlaylistSegmentManagerPolicy.cs" />
+    <Compile Include="Hls\IHlsProgramStream.cs" />
+    <Compile Include="Hls\IHlsProgramStreamFactory.cs" />
+    <Compile Include="Hls\IHlsSegmentsFactory.cs" />
+    <Compile Include="Hls\IHlsStreamSegments.cs" />
+    <Compile Include="Hls\IHlsStreamSegmentsFactory.cs" />
+    <Compile Include="IConfigurationSource.cs" />
+    <Compile Include="IMediaStreamFacade.cs" />
+    <Compile Include="IStreamBuffer.cs" />
+    <Compile Include="IStreamSource.cs" />
+    <Compile Include="ITsTimestamp.cs" />
+    <Compile Include="M3U8\AttributeSupport\ByterangeAttributeInstance.cs" />
+    <Compile Include="M3U8\AttributeSupport\CsvStringsAttributeInstance.cs" />
+    <Compile Include="M3U8\AttributeSupport\ExtIFrameStreamInfSupport.cs" />
+    <Compile Include="M3U8\AttributeSupport\ExtKeySupport.cs" />
+    <Compile Include="M3U8\AttributeSupport\ExtMapSupport.cs" />
+    <Compile Include="M3U8\AttributeSupport\ExtMediaSupport.cs" />
+    <Compile Include="M3U8\AttributeSupport\ExtStreamInfSupport.cs" />
+    <Compile Include="M3U8\AttributeSupport\HexadecimalIntegerAttributeInstance.cs" />
+    <Compile Include="M3U8\AttributeSupport\M3U8AttributeParserSupport.cs" />
+    <Compile Include="M3U8\AttributeSupport\M3U8AttributeSupport.cs" />
+    <Compile Include="M3U8\AttributeSupport\M3U8AttributeValueInstance.cs" />
+    <Compile Include="M3U8\AttributeSupport\ResolutionAttributeInstance.cs" />
+    <Compile Include="M3U8\AttributeSupport\StringAttributeInstance.cs" />
+    <Compile Include="M3U8\M3U8Attribute.cs" />
+    <Compile Include="M3U8\M3U8AttributeInstance.cs" />
+    <Compile Include="M3U8\M3U8AttributeTag.cs" />
+    <Compile Include="M3U8\M3U8Parser.cs" />
+    <Compile Include="M3U8\M3U8ParserExtensions.cs" />
+    <Compile Include="M3U8\M3U8Tag.cs" />
+    <Compile Include="M3U8\M3U8TagExtensions.cs" />
+    <Compile Include="M3U8\M3U8TagInstance.cs" />
+    <Compile Include="M3U8\M3U8TagInstanceExtensions.cs" />
+    <Compile Include="M3U8\M3U8Tags.cs" />
+    <Compile Include="M3U8\M3U8TagScope.cs" />
+    <Compile Include="M3U8\M3U8ValueAttribute.cs" />
+    <Compile Include="M3U8\TagSupport\AttributesTagInstance.cs" />
+    <Compile Include="M3U8\TagSupport\ByterangeTagInstance.cs" />
+    <Compile Include="M3U8\TagSupport\DateTimeTagInstance.cs" />
+    <Compile Include="M3U8\TagSupport\ExtinfTagInstance.cs" />
+    <Compile Include="M3U8\TagSupport\ExtKeyTagInstance.cs" />
+    <Compile Include="M3U8\TagSupport\ExtStreamInfTagInstance.cs" />
+    <Compile Include="M3U8\TagSupport\M3U8ByterangeTag.cs" />
+    <Compile Include="M3U8\TagSupport\M3U8DateTimeTag.cs" />
+    <Compile Include="M3U8\TagSupport\M3U8ExtInfTag.cs" />
+    <Compile Include="M3U8\TagSupport\M3U8ExtKeyTag.cs" />
+    <Compile Include="M3U8\TagSupport\M3U8ExtStreamInfTag.cs" />
+    <Compile Include="M3U8\TagSupport\M3U8ValueTag.cs" />
+    <Compile Include="M3U8\TagSupport\MapTagInstance.cs" />
+    <Compile Include="M3U8\TagSupport\ValueTagInstance.cs" />
+    <Compile Include="MediaManager\CallbackReader.cs" />
+    <Compile Include="MediaManager\IMediaManager.cs" />
+    <Compile Include="MediaManager\IMediaManagerParameters.cs" />
+    <Compile Include="MediaManager\IMediaReader.cs" />
+    <Compile Include="MediaManager\MediaManagerParameters.cs" />
+    <Compile Include="MediaManager\MediaManagerState.cs" />
+    <Compile Include="MediaManager\MediaManagerStateEventArgs.cs" />
+    <Compile Include="MediaManager\MediaReader.cs" />
+    <Compile Include="MediaManager\SingleStreamMediaManager.cs" />
+    <Compile Include="MediaManager\SmMediaManager.cs" />
+    <Compile Include="MediaParser\IMediaStreamConfigurator.cs" />
+    <Compile Include="MediaParser\IMediaConfiguration.cs" />
+    <Compile Include="MediaParser\IMediaParser.cs" />
+    <Compile Include="MediaParser\IMediaParserFactory.cs" />
+    <Compile Include="MediaParser\IMediaParserFactoryFinder.cs" />
+    <Compile Include="MediaParser\IMediaParserFactoryInstance.cs" />
+    <Compile Include="MediaParser\IMediaParserMediaStream.cs" />
+    <Compile Include="MediaParser\IMediaParserParameters.cs" />
+    <Compile Include="MediaParser\MediaStreamConfigurator.cs" />
+    <Compile Include="MediaParser\MediaConfiguration.cs" />
+    <Compile Include="MediaParser\MediaParserBase.cs" />
+    <Compile Include="MediaParser\MediaParserFactory.cs" />
+    <Compile Include="MediaParser\MediaParserFactoryBase.cs" />
+    <Compile Include="MediaParser\MediaParserFactoryFinder.cs" />
+    <Compile Include="MediaParser\MediaParserMediaStreamExtensions.cs" />
+    <Compile Include="MediaParser\MediaParserParameters.cs" />
+    <Compile Include="MediaStream.cs" />
+    <Compile Include="MediaStreamConfigurator.cs" />
+    <Compile Include="MediaStreamFacade.cs" />
+    <Compile Include="MediaStreamFacadeBase.cs" />
+    <Compile Include="MediaStreamFacadeParameters.cs" />
+    <Compile Include="MediaStreamFacadeSettings.cs" />
+    <Compile Include="Metadata\ActionMetadataSink.cs" />
+    <Compile Include="Metadata\ConfigurationMetadata.cs" />
+    <Compile Include="Metadata\IConfigurationMetadata.cs" />
+    <Compile Include="Metadata\IMediaStreamMetadata.cs" />
+    <Compile Include="Metadata\IMetadataSink.cs" />
+    <Compile Include="Metadata\ISegmentMetadata.cs" />
+    <Compile Include="Metadata\IShoutcastSegmentMetadata.cs" />
+    <Compile Include="Metadata\IStreamMetadata.cs" />
+    <Compile Include="Metadata\ITrackMetadata.cs" />
+    <Compile Include="Metadata\IWebMetadataFactory.cs" />
+    <Compile Include="Metadata\MediaStreamMetadata.cs" />
+    <Compile Include="Metadata\MetadataSink.cs" />
+    <Compile Include="Metadata\MetadataSinkExtensions.cs" />
+    <Compile Include="Metadata\MetadataState.cs" />
+    <Compile Include="Metadata\SegmentMetadata.cs" />
+    <Compile Include="Metadata\ShoutcastHeaders.cs" />
+    <Compile Include="Metadata\ShoutcastSegmentMetadata.cs" />
+    <Compile Include="Metadata\StreamMetadata.cs" />
+    <Compile Include="Metadata\TrackMetadata.cs" />
+    <Compile Include="Metadata\WebMetadataFactory.cs" />
+    <Compile Include="Mmreg\HeAacWaveInfo.cs" />
+    <Compile Include="Mmreg\MpegLayer3WaveFormat.cs" />
+    <Compile Include="Mmreg\RawAacWaveInfo.cs" />
+    <Compile Include="Mmreg\WaveFormatEx.cs" />
+    <Compile Include="Mmreg\WaveFormatExExtensions.cs" />
+    <Compile Include="Module\HlsModule.cs" />
+    <Compile Include="Module\HttpClientModule.cs" />
+    <Compile Include="Module\HttpConnectionModule.cs" />
+    <Compile Include="Module\SingleStreamMediaManagerModule.cs" />
+    <Compile Include="Module\SmMediaManagerModule.cs" />
+    <Compile Include="Module\SmMediaModule.cs" />
+    <Compile Include="Module\TsMediaModule.cs" />
+    <Compile Include="Module\TsParserModule.cs" />
+    <Compile Include="MP3\Mp3Configurator.cs" />
+    <Compile Include="MP3\Mp3FrameHeader.cs" />
+    <Compile Include="MP3\Mp3MediaParser.cs" />
+    <Compile Include="MP3\Mp3MediaParserFactory.cs" />
+    <Compile Include="MP3\Mp3Parser.cs" />
+    <Compile Include="MP3\Mp3StreamHandler.cs" />
+    <Compile Include="MP3\Mp3StreamHandlerFactory.cs" />
+    <Compile Include="Pes\DefaultPesStreamHandler.cs" />
+    <Compile Include="Pes\IPesHandlerFactory.cs" />
+    <Compile Include="Pes\IPesHandlers.cs" />
+    <Compile Include="Pes\IPesStreamFactoryInstance.cs" />
+    <Compile Include="Pes\PesHandlerFactory.cs" />
+    <Compile Include="Pes\PesHandlers.cs" />
+    <Compile Include="Pes\PesStream.cs" />
+    <Compile Include="Pes\PesStreamHandler.cs" />
+    <Compile Include="Platform\IMediaStreamConfiguration.cs" />
+    <Compile Include="Platform\IMediaStreamControl.cs" />
+    <Compile Include="Platform\MediaStreamConfiguration.cs" />
+    <Compile Include="Platform\PlatformServices.cs" />
+    <Compile Include="Platform\SingleThreadSignalTaskScheduler.cs" />
+    <Compile Include="Platform\TsMediaStreamSource.cs" />
+    <Compile Include="PlaybackSession.cs" />
+    <Compile Include="PlaybackSessionBase.cs" />
+    <Compile Include="Playlists\IProgram.cs" />
+    <Compile Include="Playlists\IProgramManager.cs" />
+    <Compile Include="Playlists\IProgramStream.cs" />
+    <Compile Include="Playlists\ISubProgram.cs" />
+    <Compile Include="Playlists\MediaTrack.cs" />
+    <Compile Include="Playlists\PlaylistDefaults.cs" />
+    <Compile Include="Playlists\PlaylistSubProgram.cs" />
+    <Compile Include="Playlists\PlaylistSubStream.cs" />
+    <Compile Include="Playlists\Program.cs" />
+    <Compile Include="Playlists\SubProgram.cs" />
+    <Compile Include="Playlists\SubStream.cs" />
+    <Compile Include="Playlists\SubStreamSegment.cs" />
+    <Compile Include="Pls\IPlsSegmentManagerPolicy.cs" />
+    <Compile Include="Pls\PlsParser.cs" />
+    <Compile Include="Pls\PlsSegmentManagerFactory.cs" />
+    <Compile Include="Pls\PlsSegmentManagerPolicy.cs" />
+    <Compile Include="Pls\PlsTrack.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Segments\ISegment.cs" />
+    <Compile Include="Segments\ISegmentManager.cs" />
+    <Compile Include="Segments\ISegmentManagerFactory.cs" />
+    <Compile Include="Segments\ISegmentManagerFactoryFinder.cs" />
+    <Compile Include="Segments\ISegmentManagerFactoryInstance.cs" />
+    <Compile Include="Segments\ISegmentManagerParameters.cs" />
+    <Compile Include="Segments\ISegmentManagerReaders.cs" />
+    <Compile Include="Segments\ISegmentReader.cs" />
+    <Compile Include="Segments\ISegmentReaderManager.cs" />
+    <Compile Include="Segments\ISegmentReaderManagerFactory.cs" />
+    <Compile Include="Segments\SegmentManagerFactory.cs" />
+    <Compile Include="Segments\SegmentManagerFactoryFinder.cs" />
+    <Compile Include="Segments\SegmentManagerParameters.cs" />
+    <Compile Include="Segments\SegmentReader.cs" />
+    <Compile Include="Segments\SegmentReaderManager.cs" />
+    <Compile Include="Segments\SegmentReaderManagerExtensions.cs" />
+    <Compile Include="Segments\SegmentReaderManagerFactory.cs" />
+    <Compile Include="Segments\SegmentReaderManagerFactoryExtensions.cs" />
+    <Compile Include="Segments\SimpleSegment.cs" />
+    <Compile Include="Segments\SimpleSegmentManager.cs" />
+    <Compile Include="Segments\SimpleSegmentManagerBase.cs" />
+    <Compile Include="Segments\SimpleSegmentManagerFactory.cs" />
+    <Compile Include="StreamBuffer.cs" />
+    <Compile Include="TransportStream\TsMediaParser.cs" />
+    <Compile Include="TransportStream\TsMediaParserFactory.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\ITsDescriptorFactory.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\ITsDescriptorFactoryInstance.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsDescriptor.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsDescriptorFactory.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsDescriptorFactoryInstanceBase.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsDescriptors.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsDescriptorType.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsDescriptorTypes.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsIso639LanguageDescriptor.cs" />
+    <Compile Include="TransportStream\TsParser\Descriptor\TsIso639LanguageDescriptorFactory.cs" />
+    <Compile Include="TransportStream\TsParser\IPesStreamHandler.cs" />
+    <Compile Include="TransportStream\TsParser\IProgramStream.cs" />
+    <Compile Include="TransportStream\TsParser\IProgramStreams.cs" />
+    <Compile Include="TransportStream\TsParser\ITsDecoder.cs" />
+    <Compile Include="TransportStream\TsParser\ITsProgramAssociationTableFactory.cs" />
+    <Compile Include="TransportStream\TsParser\ITsProgramMapTableFactory.cs" />
+    <Compile Include="TransportStream\TsParser\PesStreamParameters.cs" />
+    <Compile Include="TransportStream\TsParser\ProgramStreams.cs" />
+    <Compile Include="TransportStream\TsParser\TsDecoder.cs" />
+    <Compile Include="TransportStream\TsParser\TsPacket.cs" />
+    <Compile Include="TransportStream\TsParser\TsPacketizedElementaryStream.cs" />
+    <Compile Include="TransportStream\TsParser\TsPesPacket.cs" />
+    <Compile Include="TransportStream\TsParser\TsProgramAssociationTable.cs" />
+    <Compile Include="TransportStream\TsParser\TsProgramAssociationTableFactory.cs" />
+    <Compile Include="TransportStream\TsParser\TsProgramMapTable.cs" />
+    <Compile Include="TransportStream\TsParser\TsProgramMapTableFactory.cs" />
+    <Compile Include="TransportStream\TsParser\TsProgramSpecificInformation.cs" />
+    <Compile Include="TransportStream\TsParser\TsStream.cs" />
+    <Compile Include="TransportStream\TsParser\TsStreamType.cs" />
+    <Compile Include="TransportStream\TsParser\TsTransportStreamDescriptionTable.cs" />
+    <Compile Include="TransportStream\TsParser\Utility\BufferInstance.cs" />
+    <Compile Include="TransportStream\TsParser\Utility\Crc32Msb.cs" />
+    <Compile Include="TransportStream\TsParser\Utility\IBufferPool.cs" />
+    <Compile Include="TransportStream\TsParser\Utility\ITsPesPacketPool.cs" />
+    <Compile Include="TransportStream\TsParser\Utility\ObjectPool.cs" />
+    <Compile Include="TransportStream\TsParser\Utility\RegisterExtender.cs" />
+    <Compile Include="TransportStream\TsParser\Utility\TsPesPacketPool.cs" />
+    <Compile Include="TsMediaManagerBuilder.cs" />
+    <Compile Include="TsTimestamp.cs" />
+    <Compile Include="Utility\ApplicationInformationFactory.cs" />
+    <Compile Include="Utility\IPlatformServices.cs" />
+    <Compile Include="Utility\ApplicationInformation.cs" />
+    <Compile Include="Utility\AsyncEnumerableExtensions.cs" />
+    <Compile Include="Utility\AsyncFifoWorker.cs" />
+    <Compile Include="Utility\AsyncFifoWorkerExtensions.cs" />
+    <Compile Include="Utility\AsyncLock.cs" />
+    <Compile Include="Utility\AsyncManualResetEvent.cs" />
+    <Compile Include="Utility\BitTwiddling.cs" />
+    <Compile Include="Utility\BlockingPool.cs" />
+    <Compile Include="Utility\BufferPool.cs" />
+    <Compile Include="Utility\ByteConversion.cs" />
+    <Compile Include="Utility\CancellationTaskCompletionSource.cs" />
+    <Compile Include="Utility\CancellationTokenExtensions.cs" />
+    <Compile Include="Utility\DefaultBufferPoolParameters.cs" />
+    <Compile Include="Utility\DispatcherExtensions.cs" />
+    <Compile Include="Utility\DisposeExtensions.cs" />
+    <Compile Include="Utility\EnumerableExtensions.cs" />
+    <Compile Include="Utility\ExceptionExtensions.cs" />
+    <Compile Include="Utility\FifoTaskScheduler.cs" />
+    <Compile Include="Utility\FullResolutionTimeSpan.cs" />
+    <Compile Include="Utility\IApplicationInformation.cs" />
+    <Compile Include="Utility\IAsyncEnumerable.cs" />
+    <Compile Include="Utility\IAsyncEnumerator.cs" />
+    <Compile Include="Utility\IBlockingPool`1.cs" />
+    <Compile Include="Utility\IBufferPoolParameters.cs" />
+    <Compile Include="Utility\PlatformServices.cs" />
+    <Compile Include="Utility\IRetry.cs" />
+    <Compile Include="Utility\IRetryManager.cs" />
+    <Compile Include="Utility\Iso639_2Normalization.cs" />
+    <Compile Include="Utility\IStopClose.cs" />
+    <Compile Include="Utility\MediaStreamFsm.cs" />
+    <Compile Include="Utility\PoolBufferInstance.cs" />
+    <Compile Include="Utility\PositionStream.cs" />
+    <Compile Include="Utility\QueueExtensions.cs" />
+    <Compile Include="Utility\QueueWorker.cs" />
+    <Compile Include="Utility\RandomGenerators\IRandomGenerator.cs" />
+    <Compile Include="Utility\RandomGenerators\NormalDistribution.cs" />
+    <Compile Include="Utility\RandomGenerators\NormalDistributionExtensions.cs" />
+    <Compile Include="Utility\RandomGenerators\RandomGeneratorExtensions.cs" />
+    <Compile Include="Utility\RandomGenerators\RandomTimeExtensions.cs" />
+    <Compile Include="Utility\RandomGenerators\SystemRandomGenerator.cs" />
+    <Compile Include="Utility\RandomGenerators\Well512.cs" />
+    <Compile Include="Utility\RandomGenerators\XorShift1024Star.cs" />
+    <Compile Include="Utility\ResettableParameters.cs" />
+    <Compile Include="Utility\Retry.cs" />
+    <Compile Include="Utility\RetryException.cs" />
+    <Compile Include="Utility\RetryExtensions.cs" />
+    <Compile Include="Utility\RetryManager.cs" />
+    <Compile Include="Utility\RetryManagerExtensions.cs" />
+    <Compile Include="Utility\RetryPolicy.cs" />
+    <Compile Include="Utility\SignalTask.cs" />
+    <Compile Include="Utility\SingleUseTaskTimer.cs" />
+    <Compile Include="Utility\TaskCollector.cs" />
+    <Compile Include="Utility\TaskEx.cs" />
+    <Compile Include="Utility\TaskTimer.cs" />
+    <Compile Include="Utility\TextEncodings\AsciiEncoding.cs" />
+    <Compile Include="Utility\TextEncodings\EncodingHelpers.cs" />
+    <Compile Include="Utility\TextEncodings\ISmEncodings.cs" />
+    <Compile Include="Utility\TextEncodings\SmEncodings.cs" />
+    <Compile Include="Utility\TextEncodings\Windows1252Encoding.cs" />
+    <Compile Include="Utility\TplTaskExtensions.cs" />
+    <Compile Include="Utility\WorkBuffer.cs" />
+    <Compile Include="Utility\WorkBufferBlockingPool.cs" />
+    <Compile Include="Web\1IWebReaderManager.cs" />
+    <Compile Include="Web\1WebReaderManagerParameters.cs" />
+    <Compile Include="Web\ClientReader\HttpClientExtensions.cs" />
+    <Compile Include="Web\ClientReader\HttpClientFactory.cs" />
+    <Compile Include="Web\ClientReader\HttpClientFactoryParameters.cs" />
+    <Compile Include="Web\ClientReader\HttpClientWebCache.cs" />
+    <Compile Include="Web\ClientReader\HttpClientWebReader.cs" />
+    <Compile Include="Web\ClientReader\HttpClientWebStreamResponse.cs" />
+    <Compile Include="Web\ClientReader\HttpContentExtensions.cs" />
+    <Compile Include="Web\ClientReader\IHttpClientFactory.cs" />
+    <Compile Include="Web\ClientReader\IHttpClientFactoryParameters.cs" />
+    <Compile Include="Web\ClientReader\IProductInfoHeaderValueFactory.cs" />
+    <Compile Include="Web\ClientReader\ProductInfoHeaderValueFactory.cs" />
+    <Compile Include="Web\HttpClientContentTypeDetectorExtensions.cs" />
+    <Compile Include="Web\HttpConnectionReader\1HttpConnectionRequestFactoryParameters.cs" />
+    <Compile Include="Web\HttpConnectionReader\HttpConnectionFactory.cs" />
+    <Compile Include="Web\HttpConnectionReader\HttpConnectionRequestFactory.cs" />
+    <Compile Include="Web\HttpConnectionReader\HttpConnectionRequestFactoryParameters.cs" />
+    <Compile Include="Web\HttpConnectionReader\HttpConnectionWebCache.cs" />
+    <Compile Include="Web\HttpConnectionReader\HttpConnectionWebReader.cs" />
+    <Compile Include="Web\HttpConnectionReader\HttpConnectionWebReaderManager.cs" />
+    <Compile Include="Web\HttpConnectionReader\HttpWebRequestWebStreamResponse.cs" />
+    <Compile Include="Web\HttpConnectionReader\IHttpConnectionFactory.cs" />
+    <Compile Include="Web\HttpConnectionReader\IHttpConnectionRequestFactory.cs" />
+    <Compile Include="Web\HttpConnectionReader\IHttpConnectionRequestFactoryParameters.cs" />
+    <Compile Include="Web\HttpConnection\AsyncReaderStream.cs" />
+    <Compile Include="Web\HttpConnection\ChunkedStream.cs" />
+    <Compile Include="Web\HttpConnection\ContentLengthStream.cs" />
+    <Compile Include="Web\HttpConnection\HttpConnection.cs" />
+    <Compile Include="Web\HttpConnection\HttpConnectionRequest.cs" />
+    <Compile Include="Web\HttpConnection\HttpConnectionResponse.cs" />
+    <Compile Include="Web\HttpConnection\HttpEncoding.cs" />
+    <Compile Include="Web\HttpConnection\HttpHeaderSerializer.cs" />
+    <Compile Include="Web\HttpConnection\HttpReader.cs" />
+    <Compile Include="Web\HttpConnection\HttpReaderExtensions.cs" />
+    <Compile Include="Web\HttpConnection\HttpStatus.cs" />
+    <Compile Include="Web\HttpConnection\HttpStatusExtensions.cs" />
+    <Compile Include="Web\HttpConnection\IHttpConnection.cs" />
+    <Compile Include="Web\HttpConnection\IHttpConnectionResponse.cs" />
+    <Compile Include="Web\HttpConnection\IHttpEncoding.cs" />
+    <Compile Include="Web\HttpConnection\IHttpHeaderSerializer.cs" />
+    <Compile Include="Web\HttpConnection\IHttpReader.cs" />
+    <Compile Include="Web\HttpConnection\IHttpStatus.cs" />
+    <Compile Include="Web\HttpConnection\ISocket.cs" />
+    <Compile Include="Web\HttpConnection\IUserAgentEncoder.cs" />
+    <Compile Include="Web\HttpConnection\StreamSocketWrapper.cs" />
+    <Compile Include="Web\HttpConnection\UserAgentEncoder.cs" />
+    <Compile Include="Web\IUserAgent.cs" />
+    <Compile Include="Web\IWebCache.cs" />
+    <Compile Include="Web\IWebCacheManager.cs" />
+    <Compile Include="Web\IWebReader.cs" />
+    <Compile Include="Web\IWebReaderManager.cs" />
+    <Compile Include="Web\IWebReaderManagerParameters.cs" />
+    <Compile Include="Web\IWebStreamResponse.cs" />
+    <Compile Include="Web\Platform\HttpClientWebReaderManager.cs" />
+    <Compile Include="Web\Rfc2047Encoding.cs" />
+    <Compile Include="Web\StatusCodeWebException.cs" />
+    <Compile Include="Web\UriExtensions.cs" />
+    <Compile Include="Web\UserAgent.cs" />
+    <Compile Include="Web\UserAgentExtensions.cs" />
+    <Compile Include="Web\WebCacheManager.cs" />
+    <Compile Include="Web\WebReaderExtensions.cs" />
+    <Compile Include="Web\WebReaderManagerParameters.cs" />
+    <Compile Include="Web\WebRequestReader\HttpWebRequestExtensions.cs" />
+    <Compile Include="Web\WebRequestReader\HttpWebRequestsBase.cs" />
+    <Compile Include="Web\WebRequestReader\HttpWebRequestWebCache.cs" />
+    <Compile Include="Web\WebRequestReader\HttpWebRequestWebReader.cs" />
+    <Compile Include="Web\WebRequestReader\HttpWebRequestWebReaderManager.cs" />
+    <Compile Include="Web\WebRequestReader\HttpWebRequestWebStreamResponse.cs" />
+    <Compile Include="Web\WebRequestReader\IHttpWebRequests.cs" />
+    <Compile Include="Web\WebRequestReader\PclHttpWebRequests.cs" />
+    <Compile Include="Web\WebResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\SOMAW81_Package.1.6.1\lib\wp8\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\SOMAW81_Package.1.6.1\lib\wp8\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <ProjectExtensions />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

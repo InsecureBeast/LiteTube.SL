@@ -1,0 +1,10 @@
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\SM.Media.Core.dll
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\SM.Media.Core.pdb
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\Autofac.dll
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\Autofac.xml
+D:\Programming\LiteTube\SM.Media.Core\obj\ARM\Debug\SM.Media.Core.dll
+D:\Programming\LiteTube\SM.Media.Core\obj\ARM\Debug\SM.Media.Core.pdb
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\System.Net.Http.dll
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\System.Net.Http.Primitives.dll
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\System.Net.Http.xml
+D:\Programming\LiteTube\SM.Media.Core\Bin\ARM\Debug\System.Net.Http.Primitives.xml

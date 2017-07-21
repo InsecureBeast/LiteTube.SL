@@ -9,6 +9,7 @@ using LiteTube.Common.Helpers;
 using System.Collections.Generic;
 using LiteTube.Controls;
 using System.Linq;
+using System.Net;
 using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels
@@ -423,14 +424,31 @@ namespace LiteTube.ViewModels
         {
             try
             {
-                var url = await _getDataSource().GetVideoUriAsync(videoId, quality);
+                var liveUrl = @"http://www.youtube.com/get_video_info?&video_id=eT8FxWFvUXY";
+                var videoInf = await YouTubeWeb.HttpGetAsync(liveUrl, String.Empty);
+
+                var mas = videoInf.Split('&');
+                var pairs = new Dictionary<string, string>();
+                foreach (var ma in mas)
+                {
+                    var split = ma.Split('=');
+                    pairs.Add(split[0], split[1]);
+                }
+
+                var hlsvp = pairs["hlsvp"];
+                //var uri = new Uri(hlsvp);
+                var url = WebUtility.UrlDecode(hlsvp);
+                
+
+
+                //var url = await _getDataSource().GetVideoUriAsync(videoId, quality);
                 LayoutHelper.InvokeFromUiThread(() =>
                 {
                     IsPaid = false;
                     if (url == null)
                         return;
 
-                    VideoUri = url.Uri;
+                    VideoUri = new Uri(url);
                 });
             }
             //Todo разделить исключения по типу и добавить соответсвующий баннер

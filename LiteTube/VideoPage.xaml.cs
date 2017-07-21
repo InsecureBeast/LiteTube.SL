@@ -44,7 +44,7 @@ namespace LiteTube
             Pivot.SelectionChanged += PivotOnSelectionChanged;
             SubscribePlayerEvents(player);
             player.AutoPlay = _autoPlay;
-            
+
             CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
             CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
             CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;

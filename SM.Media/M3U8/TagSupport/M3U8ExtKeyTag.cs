@@ -1,0 +1,27 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: SM.Media.M3U8.TagSupport.M3U8ExtKeyTag
+// Assembly: SM.Media, Version=1.5.3.0, Culture=neutral, PublicKeyToken=a8a96d0f02112ebc
+// MVID: 36CDA6C8-9742-4B9A-8F0F-25CFBA3563E6
+// Assembly location: D:\Programming\WP\phonesm-1.5.3-beta\bin\Debug\SM.Media.dll
+
+using SM.Media.M3U8;
+using System;
+using System.Collections.Generic;
+
+namespace SM.Media.M3U8.TagSupport
+{
+  public class M3U8ExtKeyTag : M3U8Tag
+  {
+    public M3U8ExtKeyTag(string name, M3U8TagScope scope)
+      : base(name, scope, new Func<M3U8Tag, string, M3U8TagInstance>(ExtKeyTagInstance.Create))
+    {
+    }
+
+    public IEnumerable<ExtKeyTagInstance> FindAll(IEnumerable<M3U8TagInstance> tags)
+    {
+      if (null == tags)
+        return (IEnumerable<ExtKeyTagInstance>) null;
+      return M3U8TagInstanceExtensions.Tags<M3U8ExtKeyTag, ExtKeyTagInstance>(tags, this);
+    }
+  }
+}
