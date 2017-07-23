@@ -2,14 +2,14 @@
 
 namespace SM.Media.Core.Utility
 {
-  public static class AsyncEnumerableExtensions
-  {
-    public static async Task<T> FirstOrDefaultAsync<T>(this IAsyncEnumerable<T> source)
+    public static class AsyncEnumerableExtensions
     {
-      T obj;
-      using (IAsyncEnumerator<T> enumerator = source.GetEnumerator())
-        obj = await enumerator.MoveNextAsync().ConfigureAwait(false) ? enumerator.Current : default (T);
-      return obj;
+        public static async Task<T> FirstOrDefaultAsync<T>(this IAsyncEnumerable<T> source)
+        {
+            T obj;
+            using (IAsyncEnumerator<T> enumerator = source.GetEnumerator())
+                obj = await enumerator.MoveNextAsync().ConfigureAwait(false) ? enumerator.Current : default (T);
+            return obj;
+        }
     }
-  }
 }

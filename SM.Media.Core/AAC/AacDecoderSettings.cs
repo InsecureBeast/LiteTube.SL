@@ -2,20 +2,14 @@
 
 namespace SM.Media.Core.AAC
 {
-  public static class AacDecoderSettings
-  {
-    private static readonly ResettableParameters<AacDecoderParameters> AacDecoderParameters = new ResettableParameters<AacDecoderParameters>();
-
-    public static AacDecoderParameters Parameters
+    public static class AacDecoderSettings
     {
-      get
-      {
-        return AacDecoderSettings.AacDecoderParameters.Parameters;
-      }
-      set
-      {
-        AacDecoderSettings.AacDecoderParameters.Parameters = value;
-      }
+        private static readonly ResettableParameters<AacDecoderParameters> AacDecoderParameters = new ResettableParameters<AacDecoderParameters>();
+
+        public static AacDecoderParameters Parameters
+        {
+            get { return AacDecoderParameters.Parameters; }
+            set { AacDecoderParameters.Parameters = value; }
+        }
     }
-  }
 }

@@ -5,24 +5,20 @@ using SM.Media.Core.MediaParser;
 
 namespace SM.Media.Core.AAC
 {
-  public class AacMediaParserFactory : MediaParserFactoryBase<AacMediaParser>
-  {
-    private static readonly ContentType[] Types = new ContentType[1]
+    public class AacMediaParserFactory : MediaParserFactoryBase<AacMediaParser>
     {
-      ContentTypes.Aac
-    };
+        public AacMediaParserFactory(Func<AacMediaParser> factory) : base(factory)
+        {
+        }
 
-    public override ICollection<ContentType> KnownContentTypes
-    {
-      get
-      {
-        return (ICollection<ContentType>) AacMediaParserFactory.Types;
-      }
-    }
+        private static readonly ContentType[] Types = new ContentType[1]
+        {
+            ContentTypes.Aac
+        };
 
-    public AacMediaParserFactory(Func<AacMediaParser> factory)
-      : base(factory)
-    {
+        public override ICollection<ContentType> KnownContentTypes
+        {
+            get { return Types; }
+        }
     }
-  }
 }
