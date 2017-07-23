@@ -457,6 +457,15 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to live.
+        /// </summary>
+        public static string Live {
+            get {
+                return ResourceManager.GetString("Live", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {

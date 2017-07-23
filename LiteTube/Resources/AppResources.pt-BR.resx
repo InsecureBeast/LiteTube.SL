@@ -467,4 +467,7 @@
   <data name="ChannelNotExists" xml:space="preserve">
     <value>Channel does not exist or is blocked</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>ao vivo agora</value>
+  </data>
 </root>

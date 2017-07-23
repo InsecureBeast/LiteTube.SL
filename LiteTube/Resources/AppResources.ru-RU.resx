@@ -467,4 +467,7 @@
   <data name="ChannelNotExists" xml:space="preserve">
     <value>Канал не существует или заблокирован</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>в эфире</value>
+  </data>
 </root>

@@ -39,6 +39,18 @@
                 </Border>
 
                 <Border Margin="2"
+                        Visibility="{Binding IsLive, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Background="Red"
+                        Padding="4,0,4,4">
+                    <TextBlock Text="{Binding Path=LocalizedResources.Live, Source={StaticResource LocalizedStrings}}" 
+                               TextWrapping="NoWrap" 
+                               Foreground="White"
+                               FontSize="18"/>
+                </Border>
+
+                <Border Margin="2"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
                         Visibility="{Binding Duration, Converter={StaticResource ResourceKey=ObjectToVisibilityConverter}}"
@@ -107,6 +119,18 @@
                                 TextWrapping="NoWrap" 
                                 Foreground="White"
                                 FontSize="16"/>
+                </Border>
+
+                <Border Margin="2"
+                        Visibility="{Binding IsLive, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Background="DarkRed"
+                        Padding="4,0,4,4">
+                    <TextBlock Text="{Binding Path=LocalizedResources.Live, Source={StaticResource LocalizedStrings}}" 
+                                TextWrapping="NoWrap" 
+                                Foreground="White"
+                                FontSize="18"/>
                 </Border>
 
                 <Border Margin="2"

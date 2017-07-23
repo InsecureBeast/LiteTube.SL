@@ -29,6 +29,7 @@ namespace LiteTube.ViewModels.Nodes
             ViewCount = videoItem.Details.Statistics.ViewCount;
             PublishedAt = videoItem.PublishedAt;
             IsContexMenu = dataSource.IsAuthorized;
+            IsLive = videoItem.Details.IsLive;
 
             if (isLargeItems)
             {
@@ -47,6 +48,7 @@ namespace LiteTube.ViewModels.Nodes
         public string ChannelTitle { get; private set; }
         public DateTime? PublishedAt { get; private set; }
         public ulong? ViewCount { get; private set; }
+        public bool IsLive { get; private set; }
 
         public bool IsNowPlaying
         {
