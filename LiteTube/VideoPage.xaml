@@ -311,7 +311,8 @@
                                     IsSkipBackVisible="True"
                                     AllowMediaStartingDeferrals="False"
                                     IsTimeRemainingVisible="True"
-                                    IsDurationVisible="False">
+                                    IsDurationVisible="False"
+                                    IsLive="{Binding IsLive}">
                 <controls:LiteTubePlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </controls:LiteTubePlayer.RenderTransform>

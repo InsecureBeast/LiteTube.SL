@@ -51,6 +51,7 @@ namespace LiteTube.ViewModels
         private ulong _likes;
         private ulong _dislikes;
         private VideoQualityItem _selectedVideoQualityItem;
+        private bool _isLive;
 
         public VideoPageViewModel(string videoId, Func<IDataSource> getDataSource, IConnectionListener connectionListener)
         {
@@ -203,6 +204,16 @@ namespace LiteTube.ViewModels
                     IsLiked = false;
 
                 NotifyOfPropertyChanged(() => IsDisliked);
+            }
+        }
+
+        public bool IsLive
+        {
+            get { return _isLive; }
+            set
+            {
+                _isLive = value;
+                NotifyOfPropertyChanged(() => IsLive);
             }
         }
 
@@ -420,35 +431,27 @@ namespace LiteTube.ViewModels
             LoadVideoItem(_videoId);
         }
 
-        private async void SetVideoUri(string videoId, YouTubeQuality quality)
+        private async void SetVideoUri(string videoId, YouTubeQuality quality, bool isLive)
         {
             try
             {
-                var liveUrl = @"http://www.youtube.com/get_video_info?&video_id=eT8FxWFvUXY";
-                var videoInf = await YouTubeWeb.HttpGetAsync(liveUrl, String.Empty);
-
-                var mas = videoInf.Split('&');
-                var pairs = new Dictionary<string, string>();
-                foreach (var ma in mas)
+                Uri uri = null;
+                if (isLive)
+                    uri = await _getDataSource().GetLiveVideoUriAsync(videoId, quality);
+                else
                 {
-                    var split = ma.Split('=');
-                    pairs.Add(split[0], split[1]);
+                    var videoUri = await _getDataSource().GetVideoUriAsync(videoId, quality);
+                    uri = videoUri?.Uri;
                 }
 
-                var hlsvp = pairs["hlsvp"];
-                //var uri = new Uri(hlsvp);
-                var url = WebUtility.UrlDecode(hlsvp);
-                
-
-
-                //var url = await _getDataSource().GetVideoUriAsync(videoId, quality);
                 LayoutHelper.InvokeFromUiThread(() =>
                 {
                     IsPaid = false;
-                    if (url == null)
+                    if (uri == null)
                         return;
 
-                    VideoUri = new Uri(url);
+                    VideoUri = uri;
+                    //VideoUri = new Uri(url);
                 });
             }
             //Todo разделить исключения по типу и добавить соответсвующий баннер
@@ -576,6 +579,7 @@ namespace LiteTube.ViewModels
                     Duration = videoItem.Details.Duration;
                     ViewCount = videoItem.Details.Statistics.ViewCount;
                     SetLikesAndDislikes(videoItem.Details.Statistics);
+                    IsLive = videoItem.Details.IsLive;
                 }
 
                 if (videoItem.Thumbnails != null)
@@ -587,7 +591,7 @@ namespace LiteTube.ViewModels
                 SetVideoRating(videoId);
                 var defaultQuality = SettingsHelper.GetQuality();
                 var quality = _qualityConverter.GetQualityEnum(defaultQuality);
-                SetVideoUri(videoId, quality);
+                SetVideoUri(videoId, quality, IsLive);
             });
         }
 
@@ -621,7 +625,7 @@ namespace LiteTube.ViewModels
                 return;
 
             VideoUri = null;
-            SetVideoUri(_videoId, SelectedVideoQualityItem.Quality);
+            SetVideoUri(_videoId, SelectedVideoQualityItem.Quality, IsLive);
             SettingsHelper.SaveQuality(SelectedVideoQualityItem.QualityName);
         }
 

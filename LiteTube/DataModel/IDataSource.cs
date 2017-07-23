@@ -39,7 +39,8 @@ namespace LiteTube.DataModel
         Task<RatingEnum> GetRating(string videoId);
         Task<YouTubeUri> GetVideoUriAsync(string videoId);
         Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality);
-        
+        Task<Uri> GetLiveVideoUriAsync(string videoId, YouTubeQuality quality);
+
         #region playlists
         string FavoritesPlaylistId { get; }
         string WatchLaterPlaylistId { get; }
@@ -261,6 +262,11 @@ namespace LiteTube.DataModel
         public async Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality)
         {
             return await _remoteDataSource.GetVideoUriAsync(videoId, quality);
+        }
+
+        public async Task<Uri> GetLiveVideoUriAsync(string videoId, YouTubeQuality quality)
+        {
+            return await _remoteDataSource.GetLiveVideoUriAsync(videoId, quality);
         }
 
         public string FavoritesPlaylistId

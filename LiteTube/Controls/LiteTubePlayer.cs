@@ -1,5 +1,4 @@
 ﻿using LiteTube.Common;
-using LiteTube.Common.Helpers;
 using LiteTube.Multimedia;
 using LiteTube.ViewModels;
 using LiteTube.ViewModels.Nodes;
@@ -24,6 +23,8 @@ namespace LiteTube.Controls
 
         public static readonly DependencyProperty VideoQualityItemsProperty = DependencyProperty.Register("VideoQualityItems", typeof(List<VideoQualityItem>), typeof(LiteTubePlayer), null);
         public static readonly DependencyProperty SelectedVideoQualityItemProperty = DependencyProperty.Register("SelectedVideoQualityItem", typeof(VideoQualityItem), typeof(LiteTubePlayer), null);
+
+        //public static readonly DependencyProperty RelatedItemsVisibleProperty = DependencyProperty.Register("IsRelatedItemsVisible", typeof(bool), typeof(LiteTubePlayer), null);
 
         private bool _isRelatedVisible;
 
@@ -53,10 +54,22 @@ namespace LiteTube.Controls
             IsFullScreenChanged += LiteTubePlayer_IsFullScreenChanged;
             IsRelatedItemsEnabled = true;
 
-            SM.Media.Platform.StreamingMediaPlugin asd = new SM.Media.Platform.StreamingMediaPlugin();
-            Plugins.Add(asd);
-            //RegisterPlugins();
-            //RegisterDashPlugin(true);
+            IsLiveChanged += LiteTubePlayer_IsLiveChanged;
+        }
+
+        private void LiteTubePlayer_IsLiveChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        {
+            if (e.NewValue)
+            {
+                SM.Media.Platform.StreamingMediaPlugin asd = new SM.Media.Platform.StreamingMediaPlugin();
+                Plugins.Add(asd);
+                //RegisterPlugins();
+                //RegisterDashPlugin(true);
+            }
+            else
+            {
+                Plugins.Clear();
+            }
         }
 
         public string VideoTitle

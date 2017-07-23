@@ -20,6 +20,24 @@ namespace LiteTube.LibVideo
             return uri;
         }
 
+        public static async Task<Uri> GetLiveVideoAsync(string videoId, VideoQuality quality, string token)
+        {
+            var liveUrl = $"http://www.youtube.com/get_video_info?&video_id={videoId}";
+            var videoInf = await HttpUtils.HttpGetAsync(liveUrl, String.Empty);
+
+            var mas = videoInf.Split('&');
+            var pairs = new Dictionary<string, string>();
+            foreach (var ma in mas)
+            {
+                var split = ma.Split('=');
+                pairs.Add(split[0], split[1]);
+            }
+
+            var hlsvp = pairs["hlsvp"];
+            var url = WebUtility.UrlDecode(hlsvp);
+            return new Uri(url);
+        }
+
         private static YouTubeVideo TryFindBestVideoUri(IEnumerable<YouTubeVideo> uris, VideoQuality minQuality, VideoQuality maxQuality)
         {
             var selected = uris.Where(i => IsAvailableVideo(i, minQuality, maxQuality)).ToList();

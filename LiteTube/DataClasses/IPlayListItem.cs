@@ -56,6 +56,7 @@ namespace LiteTube.DataClasses
         IPlaylistItemContentDetails ContentDetails { get; }
         IPlaylistItemSnippet Snippet { get; }
         IPlaylistItemStatus Status { get; }
+        string Kind { get; }
     }
 
     class MPlayListItem : IPlayListItem
@@ -66,6 +67,7 @@ namespace LiteTube.DataClasses
             Snippet = new MPlaylistItemSnippet(playListItem.Snippet);
             Status = new MPlaylistItemStatus(playListItem.Status);
             Id = playListItem.Id;
+            Kind = playListItem.Kind;
         }
 
         public IPlaylistItemContentDetails ContentDetails
@@ -87,6 +89,12 @@ namespace LiteTube.DataClasses
         }
 
         public string Id
+        {
+            get;
+            private set;
+        }
+
+        public string Kind
         {
             get;
             private set;

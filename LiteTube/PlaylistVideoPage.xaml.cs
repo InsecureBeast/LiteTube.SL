@@ -291,6 +291,9 @@ namespace LiteTube
 
                 case 2:
                     Debug.WriteLine("comments");
+                    if (viewModel.VideoViewModel.IsLive)
+                        return;
+
                     var commentsViewModel = viewModel.VideoViewModel.CommentsViewModel;
                     if (commentsViewModel == null)
                         return;
@@ -417,7 +420,8 @@ namespace LiteTube
                 IsSkipPreviousVisible = true,
                 AllowMediaStartingDeferrals = false,
                 AutoPlay = _autoPlay,
-                Position = TimeSpan.FromSeconds(0)
+                Position = TimeSpan.FromSeconds(0),
+                IsLive = viewModel.VideoViewModel.IsLive
             };
 
             var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.VideoUri") };
@@ -463,7 +467,7 @@ namespace LiteTube
         {
             tubePlayer.IsFullScreenChanged += PlayerIsFullScreenChanged;
             tubePlayer.MediaOpened += PlayerOnMediaOpened;
-            tubePlayer.IsSkipNextChanged += OnSkipNextChanged;
+            //tubePlayer.IsSkipNextChanged += OnSkipNextChanged;
             tubePlayer.IsSkipPreviousChanged += OnSkipPreviousChanged;
             tubePlayer.MediaEnded += OnMediaEnded;
             tubePlayer.CurrentStateChanged += OnCurrentStateChanged;

@@ -91,6 +91,16 @@ namespace LiteTube
                 {
                     _playerPosition = player.Position;
                 }
+
+                //if (a.PropertyName == "IsLive")
+                //{
+                //    if (viewModel.IsLive)
+                //    {
+                //        var item = Pivot.Items[1] as PivotItem;
+                //        Pivot.Items.Add(new PivotItem());
+                //        //item.Visibility = Visibility.Collapsed;
+                //    }
+                //}
             };
         }
 
@@ -233,6 +243,9 @@ namespace LiteTube
 
                 case 2:
                     Debug.WriteLine("comments");
+                    if (viewModel.IsLive)
+                        return;
+
                     var commentsViewModel = viewModel.CommentsViewModel;
                     if (commentsViewModel == null)
                         return;
@@ -377,7 +390,8 @@ namespace LiteTube
                 ItemClickCommand = viewModel.RelatedVideosViewModel.ItemClickCommand,
                 LoadMoreCommand = viewModel.RelatedVideosViewModel.LoadMoreCommand,
                 VideoQualityItems = viewModel.VideoQualities,
-                SelectedVideoQualityItem = viewModel.SelectedVideoQualityItem
+                SelectedVideoQualityItem = viewModel.SelectedVideoQualityItem,
+                IsLive = viewModel.IsLive
             };
 
             var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };

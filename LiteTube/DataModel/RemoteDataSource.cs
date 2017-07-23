@@ -46,7 +46,8 @@ namespace LiteTube.DataModel
         Task Unsubscribe(string subscriptionId);
         Task SetRating(string videoId, RatingEnum rating);
         Task<RatingEnum> GetRating(string videoId);
-        Task<YouTubeUri> GetVideoUriAsync(string videoId, Multimedia.YouTubeQuality quality);
+        Task<YouTubeUri> GetVideoUriAsync(string videoId, YouTubeQuality quality);
+        Task<Uri> GetLiveVideoUriAsync(string videoId, YouTubeQuality quality);
         Task<IVideoItem> GetVideoItem(string videoId);
         IProfile GetProfile();
         Task<IComment> AddComment(string channelId, string videoId, string text);
@@ -554,6 +555,12 @@ namespace LiteTube.DataModel
             var video = await YouTube.GetVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality), _youTubeServiceControl.OAuthToken);
             var url = await video.GetUriAsync();
             return new YouTubeUri() { Uri = new Uri(url) };
+        }
+
+        public async Task<Uri> GetLiveVideoUriAsync(string videoId, YouTubeQuality quality)
+        {
+            var uri = await YouTube.GetLiveVideoAsync(videoId, VideoQualityHelper.GetVideoQuality(quality), _youTubeServiceControl.OAuthToken);
+            return uri;
         }
 
         public async Task AddItemToPlaylist(string videoId, string playlistId)

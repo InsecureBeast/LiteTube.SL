@@ -244,6 +244,7 @@
             
             <!--Pivot item three-->
             <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <!--Visibility="{Binding VideoViewModel.IsLive, Converter={StaticResource InverseBooleanToVisibilityConverter}}">-->
                 <phone:PivotItem.Header>
                     <TextBlock Text="{Binding Path=LocalizedResources.Comments, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
@@ -321,7 +322,9 @@
                                          IsSkipPreviousVisible="True"
                                          AllowMediaStartingDeferrals="False"
                                          IsTimeRemainingVisible="True"
-                                         IsDurationVisible="False">
+                                         IsDurationVisible="False"
+                                         IsLive="{Binding VideoViewModel.IsLive}">
+                    
                 <controls:LiteTubePlayer.RenderTransform>
                     <TranslateTransform x:Name="PlayerMover"/>
                 </controls:LiteTubePlayer.RenderTransform>

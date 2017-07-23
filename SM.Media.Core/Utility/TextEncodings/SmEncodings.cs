@@ -25,7 +25,8 @@ namespace SM.Media.Core.Utility.TextEncodings
             if (null != encoding1)
                 return encoding1;
 
-            Encoding encoding2 = GetEncoding("iso-8859-1");
+            //Encoding encoding2 = GetEncoding("iso-8859-1");
+            Encoding encoding2 = GetEncoding("UTF-8");
             if (null != encoding2)
                 return encoding2;
 

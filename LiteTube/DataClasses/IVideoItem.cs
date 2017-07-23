@@ -16,6 +16,7 @@ namespace LiteTube.DataClasses
         string Definition { get; }
         IVideoStatistics Statistics { get; }
         bool IsPaid { get; }
+        bool IsLive { get; }
     }
 
     public interface IVideoStatistics
@@ -35,6 +36,7 @@ namespace LiteTube.DataClasses
         DateTime? PublishedAt { get; }
         string PublishedAtRaw { get; }
         IVideoDetails Details { get; }
+        string Kind { get; }
     }
 
     public interface IVideoList : IResponceList
@@ -140,6 +142,7 @@ namespace LiteTube.DataClasses
             {
                 Title = video.Snippet.Title;
                 Description = video.Snippet.Description;
+                IsLive = video.Snippet.LiveBroadcastContent == "live";
             }
 
             Statistics = new MVideoStatistics(video.Statistics);
@@ -195,6 +198,12 @@ namespace LiteTube.DataClasses
         }
 
         public bool IsPaid
+        {
+            get;
+            private set;
+        }
+
+        public bool IsLive
         {
             get;
             private set;
@@ -267,6 +276,7 @@ namespace LiteTube.DataClasses
             PublishedAt = video.Snippet.PublishedAt;
             PublishedAtRaw = video.Snippet.PublishedAtRaw;
             Details = new MVideoDetails(video);
+            Kind = video.Kind;
         }
 
         public MVideoItem(SearchResult item, IVideoDetails details)
@@ -280,6 +290,7 @@ namespace LiteTube.DataClasses
             Thumbnails = new MThumbnailDetails(item.Snippet.Thumbnails);
             PublishedAt = item.Snippet.PublishedAt;
             PublishedAtRaw = item.Snippet.PublishedAtRaw;
+            Kind = item.Kind;
         }
 
         public MVideoItem(IPlayListItem item, IVideoDetails details)
@@ -293,6 +304,7 @@ namespace LiteTube.DataClasses
             Thumbnails = item.Snippet.Thumbnails;
             PublishedAt = item.Snippet.PublishedAt;
             PublishedAtRaw = item.Snippet.PublishedAtRaw;
+            Kind = item.Kind;
         }
 
         public string ChannelId
@@ -330,7 +342,13 @@ namespace LiteTube.DataClasses
             get; 
             private set;
         }
-        
+
+        public string Kind
+        {
+            get;
+            private set;
+        }
+
         public static string GetVideoId(ActivityContentDetails details)
         {
             if (details == null)

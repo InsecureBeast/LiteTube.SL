@@ -139,6 +139,7 @@
     <Compile Include="Converters\ColorValueConverter.cs" />
     <Compile Include="Converters\RelatedVideoMarginConverter.cs" />
     <Compile Include="DataClasses\IPlaylistList.cs" />
+    <Compile Include="DataClasses\Kind.cs" />
     <Compile Include="DataClasses\SearchFilter.cs" />
     <Compile Include="DataClasses\MActivityList.cs" />
     <Compile Include="DataClasses\SearchTypes.cs" />

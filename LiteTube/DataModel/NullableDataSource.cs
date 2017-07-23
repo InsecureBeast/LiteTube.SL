@@ -263,5 +263,10 @@ namespace LiteTube.DataModel
         {
             return new Task<string>(() => string.Empty);
         }
+
+        public Task<Uri> GetLiveVideoUriAsync(string videoId, YouTubeQuality quality)
+        {
+            return new Task<Uri>(() => null);
+        }
     }
 }
