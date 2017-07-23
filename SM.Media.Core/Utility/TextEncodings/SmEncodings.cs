@@ -21,14 +21,14 @@ namespace SM.Media.Core.Utility.TextEncodings
 
         private static Encoding GetLatin1Encoding()
         {
+            Encoding encoding2 = GetEncoding("iso-8859-1");
+            //Encoding encoding2 = GetEncoding("UTF-8");
+            if (null != encoding2)
+                return encoding2;
+
             Encoding encoding1 = GetEncoding("Windows-1252");
             if (null != encoding1)
                 return encoding1;
-
-            //Encoding encoding2 = GetEncoding("iso-8859-1");
-            Encoding encoding2 = GetEncoding("UTF-8");
-            if (null != encoding2)
-                return encoding2;
 
             return new Windows1252Encoding();
         }

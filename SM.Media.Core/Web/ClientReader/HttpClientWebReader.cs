@@ -68,7 +68,7 @@ namespace SM.Media.Core.Web.ClientReader
             else
             {
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
-                HttpResponseMessage response = await HttpClientExtensions.SendAsync(this._httpClient, request, completionOption, cancellationToken, referrer, from, to).ConfigureAwait(false);
+                HttpResponseMessage response = await HttpClientExtensions.SendAsync(_httpClient, request, completionOption, cancellationToken, referrer, from, to).ConfigureAwait(false);
                 this.Update(url, response, webResponse);
                 webStreamResponse = (IWebStreamResponse)new HttpClientWebStreamResponse(request, response);
             }
