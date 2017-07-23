@@ -5,6 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteTube", "LiteTube\LiteTube.csproj", "{A6DC8489-F102-4558-95B0-3FC6B3ABBAB0}"
 	ProjectSection(ProjectDependencies) = postProject
+		{15DB5D4D-A166-40AF-B01C-B2A5BA917F74} = {15DB5D4D-A166-40AF-B01C-B2A5BA917F74}
 		{6829A8C8-A4F0-4D02-9D9D-BE036415BCD7} = {6829A8C8-A4F0-4D02-9D9D-BE036415BCD7}
 	EndProjectSection
 EndProject

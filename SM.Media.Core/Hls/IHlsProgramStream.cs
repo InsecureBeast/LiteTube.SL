@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using SM.Media.Core.M3U8;
-using SM.Media.Core.TransportStream.TsParser;
+using SM.Media.Core.Playlists;
 
 namespace SM.Media.Core.Hls
 {

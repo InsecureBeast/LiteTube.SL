@@ -112,11 +112,11 @@ label_14:
             ResolutionAttributeInstance attributeInstance = M3U8TagInstanceExtensions.AttributeInstance<ResolutionAttributeInstance>((M3U8TagInstance) streamInfTagInstance, ExtStreamInfSupport.AttrResolution);
             Uri baseUrl = parser.BaseUrl;
             Program program = HlsProgramManager.GetProgram((IDictionary<long, Program>) programs, programId, baseUrl);
-            IHlsProgramStream hlsProgramStream = this._programStreamFactory.Create((ICollection<Uri>) new Uri[1]
+            IHlsProgramStream hlsProgramStream = _programStreamFactory.Create((ICollection<Uri>) new Uri[1]
             {
               uri
             }, webReader);
-            PlaylistSubProgram playlistSubProgram1 = new PlaylistSubProgram((IProgram) program, (IProgramStream) hlsProgramStream);
+            PlaylistSubProgram playlistSubProgram1 = new PlaylistSubProgram(program, (IProgramStream) hlsProgramStream);
             playlistSubProgram1.Bandwidth = attributeValueInstance2 == null ? 0L : attributeValueInstance2.Value;
             playlistSubProgram1.Playlist = uri;
             playlistSubProgram1.AudioGroup = mediaGroup;
