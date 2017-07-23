@@ -83,7 +83,7 @@ namespace SM.Media.Core.Utility
         if (!this._isLocked)
         {
           this._isLocked = true;
-          return TaskEx.FromResult<IDisposable>((IDisposable) new AsyncLock.Releaser(this));
+          return TaskEx.FromResult((IDisposable) new AsyncLock.Releaser(this));
         }
         tcs = new TaskCompletionSource<IDisposable>();
         this._pending.Enqueue(tcs);

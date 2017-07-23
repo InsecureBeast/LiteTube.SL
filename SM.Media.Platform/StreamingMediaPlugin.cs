@@ -180,7 +180,11 @@ namespace SM.Media.Platform
 
         IMediaStreamFacade CreateMediaStreamFacade()
         {
-            var mediaStreamFacade = MediaStreamFacadeSettings.Parameters.Create();
+            var videoQuality = VideoQuality.Quality360P;
+            if (MediaPlayer.Tag != null)
+                videoQuality = (VideoQuality) MediaPlayer.Tag;
+
+            var mediaStreamFacade = MediaStreamFacadeSettings.Parameters.Create(videoQuality);
 
 #if WINDOWS_APP || WINDOWS_PHONE_APP
             mediaStreamFacade.SetParameter(MediaManagerParameters);

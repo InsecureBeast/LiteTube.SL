@@ -11,8 +11,8 @@ namespace SM.Media.Core
 {
     public class MediaStreamFacade : MediaStreamFacadeBase<MediaStreamSource>, IMediaStreamFacade, IMediaStreamFacadeBase<MediaStreamSource>, IMediaStreamFacadeBase, IDisposable
     {
-        public MediaStreamFacade(IBuilder<IMediaManager> builder = null) 
-            : base(builder ?? (IBuilder<IMediaManager>)new TsMediaManagerBuilder(MediaStreamFacadeSettings.Parameters.UseHttpConnection, MediaStreamFacadeSettings.Parameters.UseSingleStreamMediaManager))
+        public MediaStreamFacade(VideoQuality quality, IBuilder<IMediaManager> builder = null) 
+            : base(builder ?? new TsMediaManagerBuilder(MediaStreamFacadeSettings.Parameters.UseHttpConnection, MediaStreamFacadeSettings.Parameters.UseSingleStreamMediaManager, quality))
         {
         }
     }

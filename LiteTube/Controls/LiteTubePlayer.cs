@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System;
 
 namespace LiteTube.Controls
 {
@@ -22,7 +23,7 @@ namespace LiteTube.Controls
         public static readonly DependencyProperty LoadMoreCommandProperty = DependencyProperty.Register("LoadMoreCommand", typeof(ICommand), typeof(LiteTubePlayer), null);
 
         public static readonly DependencyProperty VideoQualityItemsProperty = DependencyProperty.Register("VideoQualityItems", typeof(List<VideoQualityItem>), typeof(LiteTubePlayer), null);
-        public static readonly DependencyProperty SelectedVideoQualityItemProperty = DependencyProperty.Register("SelectedVideoQualityItem", typeof(VideoQualityItem), typeof(LiteTubePlayer), null);
+        public static readonly DependencyProperty SelectedVideoQualityItemProperty = DependencyProperty.Register("SelectedVideoQualityItem", typeof(VideoQualityItem), typeof(LiteTubePlayer), new PropertyMetadata(null, OnVideoQualityChanged));
 
         //public static readonly DependencyProperty RelatedItemsVisibleProperty = DependencyProperty.Register("IsRelatedItemsVisible", typeof(bool), typeof(LiteTubePlayer), null);
 
@@ -55,6 +56,7 @@ namespace LiteTube.Controls
             IsRelatedItemsEnabled = true;
 
             IsLiveChanged += LiteTubePlayer_IsLiveChanged;
+            
         }
 
         private void LiteTubePlayer_IsLiveChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
@@ -68,7 +70,7 @@ namespace LiteTube.Controls
             }
             else
             {
-                Plugins.Clear();
+                //Plugins.Clear();
             }
         }
 
@@ -159,6 +161,18 @@ namespace LiteTube.Controls
             if (adaptivePlugin == null)
                 adaptivePlugin = new Microsoft.PlayerFramework.Adaptive.AdaptivePlugin();
             Plugins.Add(adaptivePlugin);
+        }
+
+        private static void OnVideoQualityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var player = d as MediaPlayer;
+            var quality = ((VideoQualityItem)e.NewValue).Quality;
+            player.Tag = GetQuality(quality);
+        }
+
+        private static SM.Media.Core.VideoQuality GetQuality(YouTubeQuality quality)
+        {
+            return (SM.Media.Core.VideoQuality) (int) quality;
         }
 
     }

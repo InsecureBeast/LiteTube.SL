@@ -451,7 +451,6 @@ namespace LiteTube.ViewModels
                         return;
 
                     VideoUri = uri;
-                    //VideoUri = new Uri(url);
                 });
             }
             //Todo разделить исключения по типу и добавить соответсвующий баннер

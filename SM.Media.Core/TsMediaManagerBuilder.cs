@@ -16,26 +16,27 @@ namespace SM.Media.Core
     {
         private static readonly IModule[] Modules = new IModule[4]
         {
-            (IModule) new SmMediaModule(),
-            (IModule) new TsParserModule(),
-            (IModule) new HlsModule(),
-            (IModule) new TsMediaModule()
+             new SmMediaModule(),
+             new TsParserModule(),
+             new HlsModule(),
+             new TsMediaModule()
         };
 
-        public TsMediaManagerBuilder(bool useHttpConnection, bool useSingleStreamMediaManager)
-            : base(TsMediaManagerBuilder.Modules)
+        public TsMediaManagerBuilder(bool useHttpConnection, bool useSingleStreamMediaManager, VideoQuality quality)
+            : base(Modules)
         {
+            RegistrationExtensions.Register(ContainerBuilder, (q) => quality);
+
             if (useHttpConnection)
-                BuilderBaseExtensions.RegisterModule<HttpConnectionModule>((BuilderBase) this);
+                BuilderBaseExtensions.RegisterModule<HttpConnectionModule>(this);
             else
-                BuilderBaseExtensions.RegisterModule<HttpClientModule>((BuilderBase) this);
+                BuilderBaseExtensions.RegisterModule<HttpClientModule>(this);
             if (useSingleStreamMediaManager)
-                BuilderBaseExtensions.RegisterModule<SingleStreamMediaManagerModule>((BuilderBase) this);
+                BuilderBaseExtensions.RegisterModule<SingleStreamMediaManagerModule>(this);
             else
-                BuilderBaseExtensions.RegisterModule<SmMediaManagerModule>((BuilderBase) this);
-            RegistrationExtensions.Register<IApplicationInformation>(this.ContainerBuilder,
-                (Func<IComponentContext, IApplicationInformation>) (_ => ApplicationInformationFactory.Default))
-                .SingleInstance();
+                BuilderBaseExtensions.RegisterModule<SmMediaManagerModule>(this);
+
+            RegistrationExtensions.Register(ContainerBuilder, _ => ApplicationInformationFactory.Default).SingleInstance();
         }
     }
 }

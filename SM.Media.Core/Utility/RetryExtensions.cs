@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 
 namespace SM.Media.Core.Utility
 {
-  public static class RetryExtensions
-  {
-    public static Task CallAsync(this IRetry retry, Func<Task> operation, CancellationToken cancellationToken)
+    public static class RetryExtensions
     {
-      return (Task) retry.CallAsync<int>((Func<Task<int>>) (async () =>
-      {
-        await operation().ConfigureAwait(false);
-        return 0;
-      }), cancellationToken);
+        public static Task CallAsync(this IRetry retry, Func<Task> operation, CancellationToken cancellationToken)
+        {
+            return retry.CallAsync(async () =>
+            {
+                await operation().ConfigureAwait(false);
+                return 0;
+            }, cancellationToken);
+        }
     }
-  }
 }

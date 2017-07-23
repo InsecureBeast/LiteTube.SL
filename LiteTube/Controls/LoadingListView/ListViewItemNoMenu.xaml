@@ -42,7 +42,7 @@
                         Visibility="{Binding IsLive, Converter={StaticResource BooleanToVisibilityConverter}}"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
-                        Background="Red"
+                        Background="DarkRed"
                         Padding="4,0,4,4">
                     <TextBlock Text="{Binding Path=LocalizedResources.Live, Source={StaticResource LocalizedStrings}}" 
                                TextWrapping="NoWrap" 

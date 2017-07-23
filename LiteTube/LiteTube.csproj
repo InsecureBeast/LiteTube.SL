@@ -673,6 +673,10 @@
       <Project>{e41b56a9-9c1c-4289-b9d2-2bbcedbb2567}</Project>
       <Name>LiteTube.LibVideo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SM.Media.Core\SM.Media.Core.csproj">
+      <Project>{6829a8c8-a4f0-4d02-9d9d-be036415bcd7}</Project>
+      <Name>SM.Media.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SM.Media.Platform\SM.Media.Platform.csproj">
       <Project>{15db5d4d-a166-40af-b01c-b2a5ba917f74}</Project>
       <Name>SM.Media.Platform</Name>

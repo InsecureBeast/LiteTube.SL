@@ -22,7 +22,7 @@ namespace LiteTube.LibVideo
 
         public static async Task<Uri> GetLiveVideoAsync(string videoId, VideoQuality quality, string token)
         {
-            var liveUrl = $"http://www.youtube.com/get_video_info?&video_id={videoId}";
+            var liveUrl = $"http://www.youtube.com/get_video_info?&video_id={videoId}&nomobile=1";
             var videoInf = await HttpUtils.HttpGetAsync(liveUrl, String.Empty);
 
             var mas = videoInf.Split('&');

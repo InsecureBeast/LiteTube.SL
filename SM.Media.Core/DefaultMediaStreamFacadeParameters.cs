@@ -10,11 +10,13 @@ namespace SM.Media.Core
 {
     public static class DefaultMediaStreamFacadeParameters
     {
-        public static Func<IMediaStreamFacadeBase> Factory = (Func<IMediaStreamFacadeBase>)(() => (IMediaStreamFacadeBase)new MediaStreamFacade((IBuilder<IMediaManager>)null));
+        public static Func<IMediaStreamFacadeBase> Factory = () => new MediaStreamFacade(Quality, null);
+        private static VideoQuality Quality = VideoQuality.Quality360P;
 
-        public static IMediaStreamFacade Create(this MediaStreamFacadeParameters parameters)
+        public static IMediaStreamFacade Create(this MediaStreamFacadeParameters parameters, VideoQuality quality)
         {
-            return (IMediaStreamFacade)(parameters.Factory ?? DefaultMediaStreamFacadeParameters.Factory)();
+            Quality = quality;
+            return (IMediaStreamFacade)(parameters.Factory ?? Factory)();
         }
     }
 }

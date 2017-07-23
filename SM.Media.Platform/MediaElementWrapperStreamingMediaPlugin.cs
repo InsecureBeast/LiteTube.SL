@@ -84,7 +84,11 @@ namespace SM.Media.Platform
 
         protected virtual IMediaStreamFacade CreateMediaStreamFacade()
         {
-            return MediaStreamFacadeSettings.Parameters.Create();
+            var videoQuality = VideoQuality.Quality360P;
+            if (MediaPlayer.Tag != null)
+                videoQuality = (VideoQuality)MediaPlayer.Tag;
+
+            return MediaStreamFacadeSettings.Parameters.Create(videoQuality);
         }
 
         #endregion
