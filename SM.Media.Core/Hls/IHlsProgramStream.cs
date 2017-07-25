@@ -5,8 +5,8 @@ using SM.Media.Core.Playlists;
 
 namespace SM.Media.Core.Hls
 {
-  public interface IHlsProgramStream : IProgramStream
-  {
-    Task SetParserAsync(M3U8Parser parser, CancellationToken cancellationToken);
-  }
+    public interface IHlsProgramStream : IProgramStream
+    {
+        Task SetParserAsync(M3U8Parser parser, CancellationToken cancellationToken);
+    }
 }

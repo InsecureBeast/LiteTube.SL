@@ -12,7 +12,6 @@ namespace SM.Media.Core.Hls
 {
     public class HlsPlaylistSegmentManagerPolicy : IHlsPlaylistSegmentManagerPolicy
     {
-        //TODO choose program by quality
         public static Func<ICollection<ISubProgram>, ISubProgram> SelectSubProgram = programs =>  programs.FirstOrDefault();
         private readonly Func<HlsProgramManager> _programManagerFactory;
         private readonly VideoQuality _quality;
@@ -20,7 +19,7 @@ namespace SM.Media.Core.Hls
         public HlsPlaylistSegmentManagerPolicy(Func<HlsProgramManager> programManagerFactory, VideoQuality quality)
         {
             if (null == programManagerFactory)
-                throw new ArgumentNullException("programManagerFactory");
+                throw new ArgumentNullException(nameof(programManagerFactory));
 
             _programManagerFactory = programManagerFactory;
             _quality = quality;
@@ -34,9 +33,9 @@ namespace SM.Media.Core.Hls
         protected virtual IProgramManager CreateProgramManager(ICollection<Uri> source, ContentType contentType)
         {
             if (ContentTypes.M3U != contentType && ContentTypes.M3U8 != contentType)
-                throw new NotSupportedException(string.Format("Content type {0} not supported by this program manager", null == contentType ? "<unknown>" : contentType.ToString()));
+                throw new NotSupportedException($"Content type {contentType?.ToString() ?? "<unknown>"} not supported by this program manager");
 
-            HlsProgramManager hlsProgramManager = _programManagerFactory();
+            var hlsProgramManager = _programManagerFactory();
             hlsProgramManager.Playlists = source;
             return hlsProgramManager;
         }
@@ -46,8 +45,8 @@ namespace SM.Media.Core.Hls
             ISubProgram subProgram;
             try
             {
-                IDictionary<long, Program> programs = await programManager.LoadAsync(cancellationToken).ConfigureAwait(false);
-                Program program = programs.Values.FirstOrDefault();
+                var programs = await programManager.LoadAsync(cancellationToken).ConfigureAwait(false);
+                var program = programs.Values.FirstOrDefault();
                 if (null == program)
                 {
                     Debug.WriteLine("PlaylistSegmentManagerFactory.SetMediaSource(): program not found");

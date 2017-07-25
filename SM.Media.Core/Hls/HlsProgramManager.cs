@@ -7,209 +7,204 @@ using System.Threading.Tasks;
 using SM.Media.Core.Content;
 using SM.Media.Core.M3U8;
 using SM.Media.Core.M3U8.AttributeSupport;
-using SM.Media.Core.M3U8.TagSupport;
 using SM.Media.Core.Playlists;
 using SM.Media.Core.Utility;
 using SM.Media.Core.Web;
 
 namespace SM.Media.Core.Hls
 {
-  public class HlsProgramManager : IProgramManager, IDisposable
-  {
-    private static readonly IDictionary<long, Program> NoPrograms = (IDictionary<long, Program>) new Dictionary<long, Program>();
-    private readonly IHlsProgramStreamFactory _programStreamFactory;
-    private readonly IRetryManager _retryManager;
-    private readonly IWebReaderManager _webReaderManager;
-    private IWebReader _playlistWebReader;
-
-    public ICollection<Uri> Playlists { get; set; }
-
-    public HlsProgramManager(IHlsProgramStreamFactory programStreamFactory, IWebReaderManager webReaderManager, IRetryManager retryManager)
+    public class HlsProgramManager : IProgramManager
     {
-      if (null == programStreamFactory)
-        throw new ArgumentNullException("programStreamFactory");
-      if (null == webReaderManager)
-        throw new ArgumentNullException("webReaderManager");
-      if (null == retryManager)
-        throw new ArgumentNullException("retryManager");
-      this._programStreamFactory = programStreamFactory;
-      this._webReaderManager = webReaderManager;
-      this._retryManager = retryManager;
-    }
+        private static readonly IDictionary<long, Program> _noPrograms = new Dictionary<long, Program>();
+        private readonly IHlsProgramStreamFactory _programStreamFactory;
+        private readonly IRetryManager _retryManager;
+        private readonly IWebReaderManager _webReaderManager;
+        private IWebReader _playlistWebReader;
 
-    public async Task<IDictionary<long, Program>> LoadAsync(CancellationToken cancellationToken)
-    {
-      ICollection<Uri> playlists = this.Playlists;
-      IDictionary<long, Program> dictionary;
-      foreach (Uri uri in (IEnumerable<Uri>) playlists)
-      {
-        try
-        {
-          M3U8Parser parser = new M3U8Parser();
-          if (null != this._playlistWebReader)
-            this._playlistWebReader.Dispose();
-          this._playlistWebReader = this._webReaderManager.CreateReader(uri, ContentKind.Playlist, (IWebReader) null, (ContentType) null);
-          Uri actualPlaylist = await M3U8ParserExtensions.ParseAsync(parser, this._playlistWebReader, this._retryManager, uri, cancellationToken).ConfigureAwait(false);
-          dictionary = await this.LoadAsync(this._playlistWebReader, parser, cancellationToken);
-          goto label_14;
-        }
-        catch (WebException ex)
-        {
-          Debug.WriteLine("HlsProgramManager.LoadAsync: " + ex.Message);
-        }
-      }
-      dictionary = HlsProgramManager.NoPrograms;
-label_14:
-      return dictionary;
-    }
+        public ICollection<Uri> Playlists { get; set; }
 
-    public void Dispose()
-    {
-      this.Dispose(true);
-      GC.SuppressFinalize((object) this);
-    }
+        public HlsProgramManager(IHlsProgramStreamFactory programStreamFactory, IWebReaderManager webReaderManager, IRetryManager retryManager)
+        {
+            if (null == programStreamFactory)
+                throw new ArgumentNullException(nameof(programStreamFactory));
+            if (null == webReaderManager)
+                throw new ArgumentNullException(nameof(webReaderManager));
+            if (null == retryManager)
+                throw new ArgumentNullException(nameof(retryManager));
+            _programStreamFactory = programStreamFactory;
+            _webReaderManager = webReaderManager;
+            _retryManager = retryManager;
+        }
 
-    private async Task<IDictionary<long, Program>> LoadAsync(IWebReader webReader, M3U8Parser parser, CancellationToken cancellationToken)
-    {
-      Dictionary<string, HlsProgramManager.MediaGroup> audioStreams = new Dictionary<string, HlsProgramManager.MediaGroup>();
-      foreach (M3U8TagInstance m3U8TagInstance in parser.GlobalTags)
-      {
-        if (M3U8Tags.ExtXMedia == m3U8TagInstance.Tag)
+        public async Task<IDictionary<long, Program>> LoadAsync(CancellationToken cancellationToken)
         {
-          try
-          {
-            if (null != M3U8TagInstanceExtensions.Attribute<string>(m3U8TagInstance, ExtMediaSupport.AttrType, "AUDIO"))
-              HlsProgramManager.AddMedia(parser.BaseUrl, m3U8TagInstance, audioStreams);
-          }
-          catch (NullReferenceException ex)
-          {
-          }
-        }
-      }
-      Dictionary<long, Program> programs = new Dictionary<long, Program>();
-      bool hasSegments = false;
-      foreach (M3U8Parser.M3U8Uri m3U8Uri in parser.Playlist)
-      {
-        if (m3U8Uri.Tags == null || m3U8Uri.Tags.Length < 1)
-        {
-          hasSegments = true;
-        }
-        else
-        {
-          ExtStreamInfTagInstance streamInfTagInstance = M3U8Tags.ExtXStreamInf.Find((IEnumerable<M3U8TagInstance>) m3U8Uri.Tags);
-          long programId = long.MinValue;
-          HlsProgramManager.MediaGroup mediaGroup = (HlsProgramManager.MediaGroup) null;
-          if (null != streamInfTagInstance)
-          {
-            M3U8AttributeValueInstance<long> attributeValueInstance1 = M3U8TagInstanceExtensions.Attribute<long>((M3U8TagInstance) streamInfTagInstance, ExtStreamInfSupport.AttrProgramId);
-            if (null != attributeValueInstance1)
-              programId = attributeValueInstance1.Value;
-            string key = M3U8TagInstanceExtensions.AttributeObject<string>((M3U8TagInstance) streamInfTagInstance, ExtStreamInfSupport.AttrAudio);
-            if (null != key)
-              audioStreams.TryGetValue(key, out mediaGroup);
-            Uri uri = M3U8ParserExtensions.ResolveUrl(parser, m3U8Uri.Uri);
-            M3U8AttributeValueInstance<long> attributeValueInstance2 = M3U8TagInstanceExtensions.Attribute<long>((M3U8TagInstance) streamInfTagInstance, ExtStreamInfSupport.AttrBandwidth);
-            ResolutionAttributeInstance attributeInstance = M3U8TagInstanceExtensions.AttributeInstance<ResolutionAttributeInstance>((M3U8TagInstance) streamInfTagInstance, ExtStreamInfSupport.AttrResolution);
-            Uri baseUrl = parser.BaseUrl;
-            Program program = HlsProgramManager.GetProgram((IDictionary<long, Program>) programs, programId, baseUrl);
-            IHlsProgramStream hlsProgramStream = _programStreamFactory.Create((ICollection<Uri>) new Uri[1]
+            var playlists = Playlists;
+            foreach (var uri in playlists)
             {
-              uri
-            }, webReader);
-            PlaylistSubProgram playlistSubProgram1 = new PlaylistSubProgram(program, (IProgramStream) hlsProgramStream);
-            playlistSubProgram1.Bandwidth = attributeValueInstance2 == null ? 0L : attributeValueInstance2.Value;
-            playlistSubProgram1.Playlist = uri;
-            playlistSubProgram1.AudioGroup = mediaGroup;
-            PlaylistSubProgram playlistSubProgram2 = playlistSubProgram1;
-            if (null != attributeInstance)
-            {
-              playlistSubProgram2.Width = new int?(attributeInstance.X);
-              playlistSubProgram2.Height = new int?(attributeInstance.Y);
+                try
+                {
+                    var parser = new M3U8Parser();
+                    _playlistWebReader?.Dispose();
+                    _playlistWebReader = _webReaderManager.CreateReader(uri, ContentKind.Playlist);
+                    var actualPlaylist = await parser.ParseAsync(_playlistWebReader, _retryManager, uri, cancellationToken).ConfigureAwait(false);
+                    var dictionary = await LoadAsync(_playlistWebReader, parser, cancellationToken);
+                    return dictionary;
+                }
+                catch (WebException ex)
+                {
+                    Debug.WriteLine("HlsProgramManager.LoadAsync: " + ex.Message);
+                }
             }
-            program.SubPrograms.Add((ISubProgram) playlistSubProgram2);
-          }
-          else
-            hasSegments = true;
+            return _noPrograms;
         }
-      }
-      if (hasSegments)
-      {
-        Program program = HlsProgramManager.GetProgram((IDictionary<long, Program>) programs, long.MinValue, parser.BaseUrl);
-        IHlsProgramStream hlsProgramStream = this._programStreamFactory.Create((ICollection<Uri>) new Uri[1]
+
+        public void Dispose()
         {
-          webReader.RequestUri
-        }, webReader);
-        await hlsProgramStream.SetParserAsync(parser, cancellationToken).ConfigureAwait(false);
-        PlaylistSubProgram subProgram = new PlaylistSubProgram((IProgram) program, (IProgramStream) hlsProgramStream);
-        program.SubPrograms.Add((ISubProgram) subProgram);
-      }
-      return (IDictionary<long, Program>) programs;
-    }
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-    private static Program GetProgram(IDictionary<long, Program> programs, long programId, Uri programUrl)
-    {
-      Program program;
-      if (!programs.TryGetValue(programId, out program))
-      {
-        program = new Program()
+        private async Task<IDictionary<long, Program>> LoadAsync(IWebReader webReader, M3U8Parser parser, CancellationToken cancellationToken)
         {
-          PlaylistUrl = programUrl,
-          ProgramId = programId
-        };
-        programs[programId] = program;
-      }
-      return program;
-    }
+            var audioStreams = new Dictionary<string, MediaGroup>();
+            foreach (var m3U8TagInstance in parser.GlobalTags)
+            {
+                if (M3U8Tags.ExtXMedia != m3U8TagInstance.Tag)
+                    continue;
 
-    protected virtual void Dispose(bool disposing)
-    {
-      if (disposing)
-        ;
-    }
+                try
+                {
+                    if (null != m3U8TagInstance.Attribute(ExtMediaSupport.AttrType, "AUDIO"))
+                        AddMedia(parser.BaseUrl, m3U8TagInstance, audioStreams);
+                }
+                catch (NullReferenceException)
+                {
+                    ;
+                }
+            }
 
-    private static void AddMedia(Uri playlist, M3U8TagInstance gt, Dictionary<string, HlsProgramManager.MediaGroup> audioStreams)
-    {
-      string key = M3U8TagInstanceExtensions.Attribute<string>(gt, ExtMediaSupport.AttrGroupId).Value;
-      string uriString = M3U8TagInstanceExtensions.AttributeObject<string>(gt, ExtMediaSupport.AttrUri);
-      Uri uri = (Uri) null;
-      if (null != uriString)
-        uri = new Uri(playlist, new Uri(uriString, UriKind.RelativeOrAbsolute));
-      string str = M3U8TagInstanceExtensions.AttributeObject<string>(gt, ExtMediaSupport.AttrLanguage);
-      PlaylistSubStream playlistSubStream1 = new PlaylistSubStream();
-      playlistSubStream1.Type = M3U8TagInstanceExtensions.AttributeObject<string>(gt, ExtMediaSupport.AttrType);
-      playlistSubStream1.Name = key;
-      playlistSubStream1.Playlist = uri;
-      playlistSubStream1.IsAutoselect = HlsProgramManager.IsYesNo(gt, ExtMediaSupport.AttrAutoselect, false);
-      playlistSubStream1.Language = str == null ? (string) null : str.Trim().ToLower();
-      PlaylistSubStream playlistSubStream2 = playlistSubStream1;
-      HlsProgramManager.MediaGroup mediaGroup;
-      if (!audioStreams.TryGetValue(key, out mediaGroup))
-      {
-        mediaGroup = new HlsProgramManager.MediaGroup()
+            var programs = new Dictionary<long, Program>();
+            var hasSegments = false;
+            foreach (var m3U8Uri in parser.Playlist)
+            {
+                if (m3U8Uri.Tags == null || m3U8Uri.Tags.Length < 1)
+                {
+                    hasSegments = true;
+                }
+                else
+                {
+                    var streamInfTagInstance = M3U8Tags.ExtXStreamInf.Find(m3U8Uri.Tags);
+                    var programId = long.MinValue;
+                    MediaGroup mediaGroup = null;
+                    if (null != streamInfTagInstance)
+                    {
+                        var attributeValueInstance1 = streamInfTagInstance.Attribute(ExtStreamInfSupport.AttrProgramId);
+                        if (null != attributeValueInstance1)
+                            programId = attributeValueInstance1.Value;
+
+                        var key = streamInfTagInstance.AttributeObject(ExtStreamInfSupport.AttrAudio);
+                        if (null != key)
+                            audioStreams.TryGetValue(key, out mediaGroup);
+
+                        var uri = parser.ResolveUrl(m3U8Uri.Uri);
+                        var attributeValueInstance2 = streamInfTagInstance.Attribute(ExtStreamInfSupport.AttrBandwidth);
+                        var attributeInstance = streamInfTagInstance.AttributeInstance<ResolutionAttributeInstance>(ExtStreamInfSupport.AttrResolution);
+                        var baseUrl = parser.BaseUrl;
+                        var program = GetProgram(programs, programId, baseUrl);
+                        var hlsProgramStream = _programStreamFactory.Create(new [] { uri }, webReader);
+                        var playlistSubProgram1 = new PlaylistSubProgram(program, hlsProgramStream);
+                        playlistSubProgram1.Bandwidth = attributeValueInstance2?.Value ?? 0L;
+                        playlistSubProgram1.Playlist = uri;
+                        playlistSubProgram1.AudioGroup = mediaGroup;
+                        var playlistSubProgram2 = playlistSubProgram1;
+                        if (null != attributeInstance)
+                        {
+                            playlistSubProgram2.Width = attributeInstance.X;
+                            playlistSubProgram2.Height = attributeInstance.Y;
+                        }
+                        program.SubPrograms.Add(playlistSubProgram2);
+                    }
+                    else
+                        hasSegments = true;
+                }
+            }
+            if (hasSegments)
+            {
+                var program = GetProgram(programs, long.MinValue, parser.BaseUrl);
+                var hlsProgramStream = _programStreamFactory.Create(new [] { webReader.RequestUri }, webReader);
+                await hlsProgramStream.SetParserAsync(parser, cancellationToken).ConfigureAwait(false);
+                var subProgram = new PlaylistSubProgram(program, hlsProgramStream);
+                program.SubPrograms.Add(subProgram);
+            }
+            return programs;
+        }
+
+        private static Program GetProgram(IDictionary<long, Program> programs, long programId, Uri programUrl)
         {
-          Default = (SubStream) playlistSubStream2
-        };
-        audioStreams[key] = mediaGroup;
-      }
-      if (HlsProgramManager.IsYesNo(gt, ExtMediaSupport.AttrDefault, false))
-        mediaGroup.Default = (SubStream) playlistSubStream2;
-      string index = M3U8TagInstanceExtensions.Attribute<string>(gt, ExtMediaSupport.AttrName).Value;
-      mediaGroup.Streams[index] = (SubStream) playlistSubStream2;
-    }
+            Program program;
+            if (!programs.TryGetValue(programId, out program))
+            {
+                program = new Program()
+                {
+                    PlaylistUrl = programUrl,
+                    ProgramId = programId
+                };
+                programs[programId] = program;
+            }
+            return program;
+        }
 
-    private static bool IsYesNo(M3U8TagInstance tag, M3U8ValueAttribute<string> attribute, bool defaultValue = false)
-    {
-      M3U8AttributeValueInstance<string> attributeValueInstance = M3U8TagInstanceExtensions.Attribute<string>(tag, attribute);
-      if (attributeValueInstance == null || string.IsNullOrWhiteSpace(attributeValueInstance.Value))
-        return defaultValue;
-      return 0 == string.CompareOrdinal("YES", attributeValueInstance.Value.ToUpperInvariant());
-    }
+        protected virtual void Dispose(bool disposing)
+        {
+        }
 
-    public class MediaGroup
-    {
-      public readonly IDictionary<string, SubStream> Streams = (IDictionary<string, SubStream>) new Dictionary<string, SubStream>();
+        private static void AddMedia(Uri playlist, M3U8TagInstance gt, IDictionary<string, MediaGroup> audioStreams)
+        {
+            var key = gt.Attribute(ExtMediaSupport.AttrGroupId).Value;
+            var uriString = gt.AttributeObject(ExtMediaSupport.AttrUri);
+            Uri uri = null;
+            if (null != uriString)
+                uri = new Uri(playlist, new Uri(uriString, UriKind.RelativeOrAbsolute));
 
-      public SubStream Default { get; set; }
+            var str = gt.AttributeObject(ExtMediaSupport.AttrLanguage);
+            var playlistSubStream1 = new PlaylistSubStream
+            {
+                Type = gt.AttributeObject(ExtMediaSupport.AttrType),
+                Name = key,
+                Playlist = uri,
+                IsAutoselect = IsYesNo(gt, ExtMediaSupport.AttrAutoselect),
+                Language = str?.Trim().ToLower()
+            };
+
+            var playlistSubStream2 = playlistSubStream1;
+            MediaGroup mediaGroup;
+            if (!audioStreams.TryGetValue(key, out mediaGroup))
+            {
+                mediaGroup = new MediaGroup()
+                {
+                    Default = playlistSubStream2
+                };
+                audioStreams[key] = mediaGroup;
+            }
+            if (IsYesNo(gt, ExtMediaSupport.AttrDefault))
+                mediaGroup.Default = playlistSubStream2;
+            var index = gt.Attribute(ExtMediaSupport.AttrName).Value;
+            mediaGroup.Streams[index] = playlistSubStream2;
+        }
+
+        private static bool IsYesNo(M3U8TagInstance tag, M3U8ValueAttribute<string> attribute, bool defaultValue = false)
+        {
+            var attributeValueInstance = tag.Attribute(attribute);
+            if (attributeValueInstance == null || string.IsNullOrWhiteSpace(attributeValueInstance.Value))
+                return defaultValue;
+            return 0 == string.CompareOrdinal("YES", attributeValueInstance.Value.ToUpperInvariant());
+        }
+
+        public class MediaGroup
+        {
+            public readonly IDictionary<string, SubStream> Streams = new Dictionary<string, SubStream>();
+
+            public SubStream Default { get; set; }
+        }
     }
-  }
 }

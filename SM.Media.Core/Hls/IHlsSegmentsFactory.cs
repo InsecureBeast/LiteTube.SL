@@ -7,8 +7,8 @@ using SM.Media.Core.Web;
 
 namespace SM.Media.Core.Hls
 {
-  public interface IHlsSegmentsFactory
-  {
-    Task<ICollection<ISegment>> CreateSegmentsAsync(M3U8Parser parser, IWebReader webReader, CancellationToken cancellationToken);
-  }
+    public interface IHlsSegmentsFactory
+    {
+        Task<ICollection<ISegment>> CreateSegmentsAsync(M3U8Parser parser, IWebReader webReader, CancellationToken cancellationToken);
+    }
 }

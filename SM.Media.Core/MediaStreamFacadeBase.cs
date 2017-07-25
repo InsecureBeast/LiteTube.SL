@@ -179,9 +179,9 @@ namespace SM.Media.Core
                         if (mediaManager1 == null)
                             mediaManager1 = await this.CreateMediaManagerAsync(linkedTokenSource.Token).ConfigureAwait(false);
                         mediaManager = mediaManager1;
-                        IMediaStreamConfigurator configurator = await mediaManager.OpenMediaAsync((ICollection<Uri>)new Uri[1]
+                        IMediaStreamConfigurator configurator = await mediaManager.OpenMediaAsync(new Uri[1]
                         {
-              source
+                            source
                         }, linkedTokenSource.Token).ConfigureAwait(false);
                         TMediaStreamSource mss = await configurator.CreateMediaStreamSourceAsync<TMediaStreamSource>(linkedTokenSource.Token).ConfigureAwait(false);
                         mediaStreamSource = mss;

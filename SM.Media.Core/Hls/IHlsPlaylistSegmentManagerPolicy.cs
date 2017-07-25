@@ -7,8 +7,8 @@ using SM.Media.Core.Playlists;
 
 namespace SM.Media.Core.Hls
 {
-  public interface IHlsPlaylistSegmentManagerPolicy
-  {
-    Task<ISubProgram> CreateSubProgramAsync(ICollection<Uri> source, ContentType contentType, CancellationToken cancellationToken);
-  }
+    public interface IHlsPlaylistSegmentManagerPolicy
+    {
+        Task<ISubProgram> CreateSubProgramAsync(ICollection<Uri> source, ContentType contentType, CancellationToken cancellationToken);
+    }
 }

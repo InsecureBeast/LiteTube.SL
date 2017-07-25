@@ -4,20 +4,20 @@ using SM.Media.Core.Web;
 
 namespace SM.Media.Core.Hls
 {
-  public class HlsStreamSegmentsFactory : IHlsStreamSegmentsFactory
-  {
-    private readonly IPlatformServices _platformServices;
-    private readonly IRetryManager _retryManager;
-
-    public HlsStreamSegmentsFactory(IRetryManager retryManager, IPlatformServices platformServices)
+    public class HlsStreamSegmentsFactory : IHlsStreamSegmentsFactory
     {
-      this._retryManager = retryManager;
-      this._platformServices = platformServices;
-    }
+        private readonly IPlatformServices _platformServices;
+        private readonly IRetryManager _retryManager;
 
-    public IHlsStreamSegments Create(M3U8Parser parser, IWebReader webReader)
-    {
-      return (IHlsStreamSegments) new HlsStreamSegments(parser, webReader, this._retryManager, this._platformServices);
+        public HlsStreamSegmentsFactory(IRetryManager retryManager, IPlatformServices platformServices)
+        {
+            _retryManager = retryManager;
+            _platformServices = platformServices;
+        }
+
+        public IHlsStreamSegments Create(M3U8Parser parser, IWebReader webReader)
+        {
+            return new HlsStreamSegments(parser, webReader, _retryManager, _platformServices);
+        }
     }
-  }
 }
