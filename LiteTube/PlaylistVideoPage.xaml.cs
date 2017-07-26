@@ -468,7 +468,7 @@ namespace LiteTube
             tubePlayer.IsFullScreenChanged += PlayerIsFullScreenChanged;
             tubePlayer.MediaOpened += PlayerOnMediaOpened;
             //tubePlayer.IsSkipNextChanged += OnSkipNextChanged;
-            tubePlayer.IsSkipPreviousChanged += OnSkipPreviousChanged;
+            //tubePlayer.IsSkipPreviousChanged += OnSkipPreviousChanged;
             tubePlayer.MediaEnded += OnMediaEnded;
             tubePlayer.CurrentStateChanged += OnCurrentStateChanged;
             tubePlayer.Paused += Player_Paused;

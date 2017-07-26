@@ -386,7 +386,14 @@ namespace LiteTube.DataModel
 
         public Task<string> GetChannelLogo(string channelId)
         {
-            return _remoteDataSource.GetChannelLogo(channelId);
+            try
+            {
+                return _remoteDataSource.GetChannelLogo(channelId);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
