@@ -107,7 +107,7 @@ namespace SM.Media.Platform
 
             _unloadCancellationTokenSource.Cancel();
 
-            CleanupAsync().Wait();
+            Task.Factory.StartNew(CleanupAsync, TaskCreationOptions.LongRunning);
         }
 
         #endregion
@@ -214,7 +214,7 @@ namespace SM.Media.Platform
             }
         }
 
-        async Task CleanupAsync()
+        async void CleanupAsync()
         {
             Debug.WriteLine("StreamingMediaPlugin.CleanupAsync()");
 
@@ -223,10 +223,16 @@ namespace SM.Media.Platform
                 var playbackSession = _playbackSession;
 
                 if (null != playbackSession)
-                    await playbackSession.CloseAsync().ConfigureAwait(false);
-
-                using (await _asyncLock.LockAsync(CancellationToken.None).ConfigureAwait(false))
                 {
+                    await playbackSession.StopAsync(CancellationToken.None);
+                    await playbackSession.CloseAsync();
+                }
+                
+                using (await _asyncLock.LockAsync(CancellationToken.None))
+                {
+                    if (_mediaStreamFacade == null)
+                        return;
+
                     if (_mediaStreamFacade.IsDisposed)
                         _mediaStreamFacade = null;
                 }

@@ -50,7 +50,7 @@ namespace SM.Media.Core
             if (!disposing)
                 return;
             this._mediaSourceTaskCompletionSource.TrySetCanceled();
-            CancellationTokenExtensions.CancelDisposeSafe(this._playingCancellationTokenSource);
+            this._playingCancellationTokenSource.CancelDisposeSafe();
         }
 
         public virtual Task PlayAsync(Uri source, CancellationToken cancellationToken)
@@ -108,9 +108,10 @@ namespace SM.Media.Core
 
         public virtual async Task CloseAsync()
         {
-            if (!this._playingCancellationTokenSource.IsCancellationRequested)
-                this._playingCancellationTokenSource.Cancel();
-            await this.MediaStreamFacade.PlayingTask.ConfigureAwait(false);
+            if (!_playingCancellationTokenSource.IsCancellationRequested)
+                _playingCancellationTokenSource.Cancel();
+
+            await MediaStreamFacade.PlayingTask;
         }
 
         public virtual async Task OnMediaFailedAsync()

@@ -58,6 +58,7 @@ namespace LiteTube.ViewModels
             Likes = 0;
             Dislikes = 0;
             VideoId = videoId;
+            IsLive = false;
             _getDataSource = getDataSource;
             _connectionListener = connectionListener;
             _connectionListener.Subscribe(this);

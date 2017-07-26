@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System;
+using System.Threading.Tasks;
 
 namespace LiteTube.Controls
 {
@@ -166,6 +167,9 @@ namespace LiteTube.Controls
         private static void OnVideoQualityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var player = d as MediaPlayer;
+            if (e.NewValue == null)
+                return;
+
             var quality = ((VideoQualityItem)e.NewValue).Quality;
             player.Tag = GetQuality(quality);
         }
@@ -175,6 +179,10 @@ namespace LiteTube.Controls
             return (SM.Media.Core.VideoQuality) (int) quality;
         }
 
+        //protected override void Dispose(bool disposing)
+        //{
+        //    base.Dispose(disposing);
+        //}
     }
 
     class PlayerInteractiveViewModel : InteractiveViewModel

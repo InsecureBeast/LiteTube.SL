@@ -59,21 +59,15 @@ namespace SM.Media.Core
         {
             get
             {
-                bool lockTaken = false;
-                object obj = null;
                 IMediaManager mediaManager;
-                try
+                lock (_lock)
                 {
-                    Monitor.Enter(obj = this._lock, ref lockTaken);
-                    mediaManager = this._mediaManager;
+                    mediaManager = _mediaManager;
                 }
-                finally
-                {
-                    if (lockTaken)
-                        Monitor.Exit(obj);
-                }
+                
                 if (null == mediaManager)
                     return TplTaskExtensions.CompletedTask;
+
                 return mediaManager.PlayingTask;
             }
         }

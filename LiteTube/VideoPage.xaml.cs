@@ -70,7 +70,7 @@ namespace LiteTube
             ApplicationBar = _currentApplicationBar;
         }
 
-        private void SubscribedelEvents()
+        private void SubscribeModelEvents()
         {
             var viewModel = DataContext as VideoPageViewModel;
             if (viewModel == null)
@@ -91,16 +91,6 @@ namespace LiteTube
                 {
                     _playerPosition = player.Position;
                 }
-
-                //if (a.PropertyName == "IsLive")
-                //{
-                //    if (viewModel.IsLive)
-                //    {
-                //        var item = Pivot.Items[1] as PivotItem;
-                //        Pivot.Items.Add(new PivotItem());
-                //        //item.Visibility = Visibility.Collapsed;
-                //    }
-                //}
             };
         }
 
@@ -151,7 +141,8 @@ namespace LiteTube
             {
                 NavigationHelper.OnNavigatedTo(this);
 
-                SubscribedelEvents();
+                RestorePlayer();
+                SubscribeModelEvents();
 
                 _sensor.OrientationChanged += Sensor_OrientationChanged;
 
@@ -164,8 +155,11 @@ namespace LiteTube
                 if (viewModel == null)
                     return;
 
-                var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
-                player.SetBinding(MediaPlayer.SourceProperty, binding);
+                //var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
+                //player.SetBinding(MediaPlayer.SourceProperty, binding);
+
+                if (e.NavigationMode == NavigationMode.Back && viewModel.IsLive)
+                    viewModel.Reload();
 
                 if (!viewModel.NavigationPanelViewModel.IsAuthorized) 
                     return;
@@ -190,6 +184,9 @@ namespace LiteTube
             {
                 _playerState = player.GetMediaState();
                 _sensor.OrientationChanged -= Sensor_OrientationChanged;
+
+                player.Dispose();
+                player = null;
                 base.OnNavigatedFrom(e);
             }
             catch (Exception)
@@ -400,8 +397,13 @@ namespace LiteTube
             var binding1 = new Binding { Source = viewModel, Path = new PropertyPath("SelectedVideoQualityItem"), Mode = BindingMode.TwoWay };
             player.SetBinding(LiteTubePlayer.SelectedVideoQualityItemProperty, binding1);
 
+            var bindingLive = new Binding { Source = viewModel, Path = new PropertyPath("IsLive"), Mode = BindingMode.TwoWay };
+            player.SetBinding(LiteTubePlayer.IsLiveProperty, bindingLive);
+
             SubscribePlayerEvents(player);
-            player.RestoreMediaState(_playerState);
+
+            if (_playerState != null)
+                player.RestoreMediaState(_playerState);
 
             var oldPlayer = playerBg.Children.FirstOrDefault(x => x is LiteTubePlayer);
             if (oldPlayer != null)
@@ -474,9 +476,15 @@ namespace LiteTube
         {
             tubePlayer.IsFullScreenChanged += PlayerIsFullScreenChanged;
             tubePlayer.MediaOpened += PlayerOnMediaOpened;
+            tubePlayer.MediaFailed += TubePlayerOnMediaFailed;
             tubePlayer.CurrentStateChanged += OnCurrentStateChanged;
             tubePlayer.IsInteractiveChanged += OnInteractiveChanged;
             tubePlayer.Paused += Player_Paused;
+        }
+
+        private void TubePlayerOnMediaFailed(object sender, ExceptionRoutedEventArgs exceptionRoutedEventArgs)
+        {
+            
         }
 
         private void UnsubscribePlayerEvents(LiteTubePlayer tubePlayer)
