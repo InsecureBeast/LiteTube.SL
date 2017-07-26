@@ -20,7 +20,7 @@ namespace SM.Media.Core
 
         public MediaStreamFacadeParameters()
         {
-            this.CreateTimeout = MediaStreamFacadeParameters.DefaultStartTimeout;
+            CreateTimeout = DefaultStartTimeout;
         }
     }
 }

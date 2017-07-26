@@ -14,7 +14,7 @@ namespace SM.Media.Core
 {
     public sealed class TsMediaManagerBuilder : BuilderBase<IMediaManager>
     {
-        private static readonly IModule[] Modules = new IModule[4]
+        private static readonly IModule[] _modules = 
         {
              new SmMediaModule(),
              new TsParserModule(),
@@ -23,20 +23,20 @@ namespace SM.Media.Core
         };
 
         public TsMediaManagerBuilder(bool useHttpConnection, bool useSingleStreamMediaManager, VideoQuality quality)
-            : base(Modules)
+            : base(_modules)
         {
-            RegistrationExtensions.Register(ContainerBuilder, (q) => quality);
+            ContainerBuilder.Register(q => quality);
 
             if (useHttpConnection)
-                BuilderBaseExtensions.RegisterModule<HttpConnectionModule>(this);
+                this.RegisterModule<HttpConnectionModule>();
             else
-                BuilderBaseExtensions.RegisterModule<HttpClientModule>(this);
+                this.RegisterModule<HttpClientModule>();
             if (useSingleStreamMediaManager)
-                BuilderBaseExtensions.RegisterModule<SingleStreamMediaManagerModule>(this);
+                this.RegisterModule<SingleStreamMediaManagerModule>();
             else
-                BuilderBaseExtensions.RegisterModule<SmMediaManagerModule>(this);
+                this.RegisterModule<SmMediaManagerModule>();
 
-            RegistrationExtensions.Register(ContainerBuilder, _ => ApplicationInformationFactory.Default).SingleInstance();
+            ContainerBuilder.Register(_ => ApplicationInformationFactory.Default).SingleInstance();
         }
     }
 }

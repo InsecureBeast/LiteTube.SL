@@ -52,7 +52,7 @@ namespace SM.Media.Core.Hls
                     Debug.WriteLine("PlaylistSegmentManagerFactory.SetMediaSource(): program not found");
                     throw new FileNotFoundException("Unable to load program");
                 }
-                subProgram = program.SubPrograms.FirstOrDefault(x => FirstVideo(x, _quality));
+                subProgram = TryFindBestQuality(program.SubPrograms, _quality);
                 if (null == subProgram)
                 {
                     Debug.WriteLine("PlaylistSegmentManagerFactory.SetMediaSource(): no sub programs found");
@@ -67,34 +67,66 @@ namespace SM.Media.Core.Hls
             return subProgram;
         }
 
-        private bool FirstVideo(ISubProgram subProgram, VideoQuality quality)
+        //private bool FirstVideo(ISubProgram subProgram, VideoQuality quality)
+        //{
+        //    switch (quality)
+        //    {
+        //        case VideoQuality.Quality144P:
+        //            if (subProgram.Height == 144)
+        //                return true;
+        //            break;
+        //        case VideoQuality.Quality240P:
+        //            if (subProgram.Height == 240)
+        //                return true;
+        //            break;
+        //        case VideoQuality.Quality360P:
+        //            if (subProgram.Height == 360)
+        //                return true;
+        //            break;
+        //        case VideoQuality.Quality480P:
+        //            if (subProgram.Height == 480)
+        //                return true;
+        //            break;
+        //        case VideoQuality.Quality720P:
+        //            if (subProgram.Height == 720)
+        //                return true;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    return false;
+        //}
+
+        private static ISubProgram TryFindBestQuality(IEnumerable<ISubProgram> programs, VideoQuality maxVideoQuality)
+        {
+            var selected = programs.Where(p => p.Height <= GetResolution(maxVideoQuality));
+            var ordered = selected.OrderByDescending(u => u.Height).ToList();
+            return ordered.FirstOrDefault();
+        }
+
+        private static int GetResolution(VideoQuality quality)
         {
             switch (quality)
             {
+                case VideoQuality.Unknown:
+                    return -1;
                 case VideoQuality.Quality144P:
-                    if (subProgram.Height == 144)
-                        return true;
-                    break;
+                    return 144;
                 case VideoQuality.Quality240P:
-                    if (subProgram.Height == 240)
-                        return true;
-                    break;
+                    return 240;
+                case VideoQuality.Quality270P:
+                    return 270;
                 case VideoQuality.Quality360P:
-                    if (subProgram.Height == 360)
-                        return true;
-                    break;
+                    return 360;
                 case VideoQuality.Quality480P:
-                    if (subProgram.Height == 480)
-                        return true;
-                    break;
+                    return 480;
                 case VideoQuality.Quality720P:
-                    if (subProgram.Height == 720)
-                        return true;
-                    break;
+                    return 720;
+                case VideoQuality.Quality1080P:
+                    return 1080;
                 default:
-                    break;
+                    return -1;
             }
-            return false;
         }
     }
 }
