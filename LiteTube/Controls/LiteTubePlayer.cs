@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using System;
 using System.Threading.Tasks;
+using LiteTube.StreamVideo.Platform;
 
 namespace LiteTube.Controls
 {
@@ -64,14 +65,10 @@ namespace LiteTube.Controls
         {
             if (e.NewValue)
             {
-                SM.Media.Platform.StreamingMediaPlugin asd = new SM.Media.Platform.StreamingMediaPlugin();
+                var asd = new StreamingMediaPlugin();
                 Plugins.Add(asd);
                 //RegisterPlugins();
                 //RegisterDashPlugin(true);
-            }
-            else
-            {
-                //Plugins.Clear();
             }
         }
 
@@ -174,9 +171,9 @@ namespace LiteTube.Controls
             player.Tag = GetQuality(quality);
         }
 
-        private static SM.Media.Core.VideoQuality GetQuality(YouTubeQuality quality)
+        private static StreamVideo.VideoQuality GetQuality(YouTubeQuality quality)
         {
-            return (SM.Media.Core.VideoQuality) (int) quality;
+            return (StreamVideo.VideoQuality) (int) quality;
         }
 
         //protected override void Dispose(bool disposing)
