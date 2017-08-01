@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using LiteTube.StreamVideo.Content;
@@ -10,97 +9,86 @@ namespace LiteTube.StreamVideo
 {
     public abstract class PlaybackSessionBase<TMediaSource> : IDisposable where TMediaSource : class
     {
-        private readonly int _id = Interlocked.Increment(ref PlaybackSessionBase<TMediaSource>._idCount);
+        private readonly int _id = Interlocked.Increment(ref _idCount);
         private readonly TaskCompletionSource<TMediaSource> _mediaSourceTaskCompletionSource = new TaskCompletionSource<TMediaSource>();
         private readonly CancellationTokenSource _playingCancellationTokenSource = new CancellationTokenSource();
         private static int _idCount;
-        private readonly IMediaStreamFacadeBase<TMediaSource> _mediaStreamFacade;
         private int _isDisposed;
 
         public ContentType ContentType { get; set; }
 
-        protected IMediaStreamFacadeBase<TMediaSource> MediaStreamFacade
-        {
-            get
-            {
-                return this._mediaStreamFacade;
-            }
-        }
+        protected IMediaStreamFacadeBase<TMediaSource> MediaStreamFacade { get; }
 
         protected PlaybackSessionBase(IMediaStreamFacadeBase<TMediaSource> mediaStreamFacade)
         {
             if (null == mediaStreamFacade)
-                throw new ArgumentNullException("mediaStreamFacade");
-            this._mediaStreamFacade = mediaStreamFacade;
+                throw new ArgumentNullException(nameof(mediaStreamFacade));
+            MediaStreamFacade = mediaStreamFacade;
         }
 
         public void Dispose()
         {
-            if (0 != Interlocked.Exchange(ref this._isDisposed, 1))
+            if (0 != Interlocked.Exchange(ref _isDisposed, 1))
                 return;
-            this.Dispose(true);
-            GC.SuppressFinalize((object)this);
+            Dispose(true);
         }
 
         protected virtual void Dispose(bool disposing)
         {
             if (!disposing)
                 return;
-            this._mediaSourceTaskCompletionSource.TrySetCanceled();
-            this._playingCancellationTokenSource.CancelDisposeSafe();
+            _mediaSourceTaskCompletionSource.TrySetCanceled();
+            _playingCancellationTokenSource.CancelDisposeSafe();
         }
 
         public virtual Task PlayAsync(Uri source, CancellationToken cancellationToken)
         {
-            Debug.WriteLine("PlaybackSessionBase.PlayAsync() " + (object)this);
-            Task task = this.PlayerAsync(source, cancellationToken);
+            Debug.WriteLine("PlaybackSessionBase.PlayAsync() " + this);
+            Task task = PlayerAsync(source, cancellationToken);
             TaskCollector.Default.Add(task, "StreamingMediaPlugin PlayerAsync");
-            return this.MediaStreamFacade.PlayingTask;
+            return MediaStreamFacade.PlayingTask;
         }
 
         private async Task PlayerAsync(Uri source, CancellationToken cancellationToken)
         {
             try
             {
-                using (CancellationTokenSource linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(this._playingCancellationTokenSource.Token, cancellationToken))
+                using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_playingCancellationTokenSource.Token, cancellationToken))
                 {
-                    this.MediaStreamFacade.ContentType = this.ContentType;
-                    TMediaSource mss = await this.MediaStreamFacade.CreateMediaStreamSourceAsync(source, linkedTokenSource.Token).ConfigureAwait(false);
-                    if (!this._mediaSourceTaskCompletionSource.TrySetResult(mss))
+                    MediaStreamFacade.ContentType = ContentType;
+                    var mss = await MediaStreamFacade.CreateMediaStreamSourceAsync(source, linkedTokenSource.Token);
+                    if (!_mediaSourceTaskCompletionSource.TrySetResult(mss))
                         throw new OperationCanceledException();
-                    goto label_15;
+                    return;
                 }
             }
-            catch (OperationCanceledException ex)
+            catch (OperationCanceledException)
             {
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("PlaybackSessionBase.PlayerAsync() failed: " + ExceptionExtensions.ExtendedMessage(ex));
+                Debug.WriteLine("PlaybackSessionBase.PlayerAsync() failed: " + ex.ExtendedMessage());
             }
             try
             {
-                this._mediaSourceTaskCompletionSource.TrySetCanceled();
-                await this.MediaStreamFacade.CloseAsync().ConfigureAwait(false);
+                _mediaSourceTaskCompletionSource.TrySetCanceled();
+                await MediaStreamFacade.CloseAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("PlaybackSessionBase.PlayerAsync() cleanup failed: " + ExceptionExtensions.ExtendedMessage(ex));
+                Debug.WriteLine("PlaybackSessionBase.PlayerAsync() cleanup failed: " + ex.ExtendedMessage());
             }
-            label_15:;
         }
 
         public virtual async Task<TMediaSource> GetMediaSourceAsync(CancellationToken cancellationToken)
         {
-            return await TplTaskExtensions.WithCancellation<TMediaSource>(this._mediaSourceTaskCompletionSource.Task, cancellationToken).ConfigureAwait(false);
+            return await _mediaSourceTaskCompletionSource.Task.WithCancellation(cancellationToken);
         }
 
         public virtual async Task StopAsync(CancellationToken cancellationToken)
         {
-            ConfiguredTaskAwaitable configuredTaskAwaitable = this.MediaStreamFacade.StopAsync(cancellationToken).ConfigureAwait(false);
-            await configuredTaskAwaitable;
-            configuredTaskAwaitable = this.MediaStreamFacade.PlayingTask.ConfigureAwait(false);
-            await configuredTaskAwaitable;
+            await MediaStreamFacade.StopAsync(cancellationToken);
+            await MediaStreamFacade.PlayingTask;
         }
 
         public virtual async Task CloseAsync()
@@ -113,10 +101,10 @@ namespace LiteTube.StreamVideo
 
         public virtual async Task OnMediaFailedAsync()
         {
-            Debug.WriteLine("PlaybackSessionBase.OnMediaFailedAsync() " + (object)this);
+            Debug.WriteLine("PlaybackSessionBase.OnMediaFailedAsync() " + this);
             try
             {
-                await this.CloseAsync().ConfigureAwait(false);
+                await CloseAsync();
             }
             catch (Exception ex)
             {
@@ -126,11 +114,7 @@ namespace LiteTube.StreamVideo
 
         public override string ToString()
         {
-            return string.Format("Playback ID {0} IsCompleted {1}", new object[2]
-            {
-                (object) this._id,
-                (object) (bool) (this.MediaStreamFacade.PlayingTask.IsCompleted ? true : false)
-            });
+            return $"Playback ID {_id} IsCompleted {MediaStreamFacade.PlayingTask.IsCompleted}";
         }
     }
 }
