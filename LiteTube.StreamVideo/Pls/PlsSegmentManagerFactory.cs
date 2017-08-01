@@ -9,138 +9,108 @@ using LiteTube.StreamVideo.Content;
 using LiteTube.StreamVideo.Segments;
 using LiteTube.StreamVideo.Utility;
 using LiteTube.StreamVideo.Web;
-using WebResponse = LiteTube.StreamVideo.Web.WebResponse;
 
 namespace LiteTube.StreamVideo.Pls
 {
-  public class PlsSegmentManagerFactory : ISegmentManagerFactoryInstance, IContentServiceFactoryInstance<ISegmentManager, ISegmentManagerParameters>
-  {
-    private static readonly ICollection<ContentType> Types = (ICollection<ContentType>) new ContentType[1]
+    public class PlsSegmentManagerFactory : ISegmentManagerFactoryInstance
     {
-      ContentTypes.Pls
-    };
-    private readonly IPlsSegmentManagerPolicy _plsSegmentManagerPolicy;
-    private readonly IRetryManager _retryManager;
-    private readonly IWebReaderManager _webReaderManager;
+        private static readonly ICollection<ContentType> _types = new[] { ContentTypes.Pls };
+        private readonly IPlsSegmentManagerPolicy _plsSegmentManagerPolicy;
+        private readonly IRetryManager _retryManager;
+        private readonly IWebReaderManager _webReaderManager;
 
-    public ICollection<ContentType> KnownContentTypes
-    {
-      get
-      {
-        return PlsSegmentManagerFactory.Types;
-      }
-    }
-
-    public PlsSegmentManagerFactory(IWebReaderManager webReaderManager, IPlsSegmentManagerPolicy plsSegmentManagerPolicy, IRetryManager retryManager)
-    {
-      if (null == webReaderManager)
-        throw new ArgumentNullException("webReaderManager");
-      if (null == plsSegmentManagerPolicy)
-        throw new ArgumentNullException("plsSegmentManagerPolicy");
-      if (null == retryManager)
-        throw new ArgumentNullException("retryManager");
-      this._webReaderManager = webReaderManager;
-      this._plsSegmentManagerPolicy = plsSegmentManagerPolicy;
-      this._retryManager = retryManager;
-    }
-
-    public virtual async Task<ISegmentManager> CreateAsync(ISegmentManagerParameters parameters, ContentType contentType, CancellationToken cancellationToken)
-    {
-      ISegmentManager segmentManager1;
-      foreach (Uri uri in (IEnumerable<Uri>) parameters.Source)
-      {
-        Uri localUrl = uri;
-        IRetry retry = RetryManagerExtensions.CreateWebRetry(this._retryManager, 3, 333);
-        ISegmentManager segmentManager = await retry.CallAsync<ISegmentManager>((Func<Task<ISegmentManager>>) (async () =>
+        public PlsSegmentManagerFactory(IWebReaderManager webReaderManager, IPlsSegmentManagerPolicy plsSegmentManagerPolicy, IRetryManager retryManager)
         {
-          IWebReader webReader = this._webReaderManager.CreateReader(localUrl, ContentTypes.Pls.Kind, (IWebReader) null, ContentTypes.Pls);
-          ISegmentManager segmentManager2;
-          try
-          {
-            using (IWebStreamResponse webStreamResponse = await webReader.GetWebStreamAsync(localUrl, false, cancellationToken, (Uri) null, new long?(), new long?(), (WebResponse) null).ConfigureAwait(false))
+            if (null == webReaderManager)
+                throw new ArgumentNullException(nameof(webReaderManager));
+            if (null == plsSegmentManagerPolicy)
+                throw new ArgumentNullException(nameof(plsSegmentManagerPolicy));
+            if (null == retryManager)
+                throw new ArgumentNullException(nameof(retryManager));
+            _webReaderManager = webReaderManager;
+            _plsSegmentManagerPolicy = plsSegmentManagerPolicy;
+            _retryManager = retryManager;
+        }
+
+        public ICollection<ContentType> KnownContentTypes => _types;
+
+        public virtual async Task<ISegmentManager> CreateAsync(ISegmentManagerParameters parameters, ContentType contentType, CancellationToken cancellationToken)
+        {
+            foreach (var uri in parameters.Source)
             {
-              if (!webStreamResponse.IsSuccessStatusCode)
-              {
-                webReader.Dispose();
-                segmentManager2 = (ISegmentManager) null;
-              }
-              else
-              {
-                using (Stream stream = await webStreamResponse.GetStreamAsync(cancellationToken).ConfigureAwait(false))
-                  segmentManager2 = await this.ReadPlaylistAsync(webReader, webStreamResponse.ActualUrl, stream, cancellationToken).ConfigureAwait(false);
-              }
+                var localUrl = uri;
+                var retry = _retryManager.CreateWebRetry(3, 333);
+                var segmentManager = await retry.CallAsync(async () =>
+                {
+                    var webReader = _webReaderManager.CreateReader(localUrl, ContentTypes.Pls.Kind, null, ContentTypes.Pls);
+                    ISegmentManager segmentManager2;
+                    try
+                    {
+                        using (var webStreamResponse = await webReader.GetWebStreamAsync(localUrl, false, cancellationToken, null, new long?(), new long?()))
+                        {
+                            if (!webStreamResponse.IsSuccessStatusCode)
+                            {
+                                webReader.Dispose();
+                                segmentManager2 = null;
+                            }
+                            else
+                            {
+                                using (var stream = await webStreamResponse.GetStreamAsync(cancellationToken))
+                                    segmentManager2 = await ReadPlaylistAsync(webReader, webStreamResponse.ActualUrl, stream, cancellationToken);
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        webReader.Dispose();
+                        throw;
+                    }
+                    return segmentManager2;
+                }, cancellationToken);
+
+                if (null == segmentManager)
+                    continue;
+                
+                return segmentManager;
             }
-          }
-          catch (Exception ex)
-          {
-            webReader.Dispose();
-            throw;
-          }
-          return segmentManager2;
-        }), cancellationToken);
-        if (null != segmentManager)
-        {
-          segmentManager1 = segmentManager;
-          goto label_10;
+            return null;
         }
-      }
-      segmentManager1 = (ISegmentManager) null;
-label_10:
-      return segmentManager1;
-    }
 
-    protected virtual async Task<ISegmentManager> CreateManagerAsync(PlsParser pls, IWebReader webReader, CancellationToken cancellationToken)
-    {
-      Uri trackUrl = await this._plsSegmentManagerPolicy.GetTrackAsync(pls, webReader.ContentType, cancellationToken);
-      ISegmentManager segmentManager;
-      if ((Uri) null == trackUrl)
-      {
-        segmentManager = (ISegmentManager) null;
-      }
-      else
-      {
-        ContentType contentType = await WebReaderExtensions.DetectContentTypeAsync(webReader, trackUrl, ContentKind.AnyMedia, cancellationToken).ConfigureAwait(false);
-        if ((ContentType) null == contentType)
+        protected virtual async Task<ISegmentManager> CreateManagerAsync(PlsParser pls, IWebReader webReader, CancellationToken cancellationToken)
         {
-          Debug.WriteLine("PlsSegmentManagerFactory.CreateSegmentManager() unable to detect type for " + (object) trackUrl);
-          segmentManager = (ISegmentManager) null;
+            var trackUrl = await _plsSegmentManagerPolicy.GetTrackAsync(pls, webReader.ContentType, cancellationToken);
+            ISegmentManager segmentManager;
+            if (null == trackUrl)
+            {
+                segmentManager = null;
+            }
+            else
+            {
+                var contentType = await webReader.DetectContentTypeAsync(trackUrl, ContentKind.AnyMedia, cancellationToken);
+                if (null == contentType)
+                {
+                    Debug.WriteLine("PlsSegmentManagerFactory.CreateSegmentManager() unable to detect type for " + trackUrl);
+                    segmentManager = null;
+                }
+                else
+                {
+                    segmentManager = new SimpleSegmentManager(webReader, new[] {trackUrl}, contentType);
+                }
+            }
+            return segmentManager;
         }
-        else
-          segmentManager = (ISegmentManager) new SimpleSegmentManager(webReader, (IEnumerable<Uri>) new Uri[1]
-          {
-            trackUrl
-          }, contentType);
-      }
-      return segmentManager;
-    }
 
-    [Conditional("DEBUG")]
-    private void DumpIcy(IEnumerable<KeyValuePair<string, IEnumerable<string>>> httpResponseHeaders)
-    {
-      foreach (KeyValuePair<string, IEnumerable<string>> keyValuePair in Enumerable.Where<KeyValuePair<string, IEnumerable<string>>>(httpResponseHeaders, (Func<KeyValuePair<string, IEnumerable<string>>, bool>) (kv => kv.Key.StartsWith("icy-", StringComparison.OrdinalIgnoreCase))))
-      {
-        Debug.WriteLine("Icecast {0}: ", (object) keyValuePair.Key);
-        foreach (string str in keyValuePair.Value)
-          Debug.WriteLine("       " + str);
-      }
-    }
-
-    protected virtual async Task<ISegmentManager> ReadPlaylistAsync(IWebReader webReader, Uri url, Stream stream, CancellationToken cancellationToken)
-    {
-      PlsParser pls = new PlsParser(url);
-      ISegmentManager segmentManager;
-      using (StreamReader streamReader = new StreamReader(stream))
-      {
-        bool ret = await pls.ParseAsync((TextReader) streamReader).ConfigureAwait(false);
-        if (!ret)
+        protected virtual async Task<ISegmentManager> ReadPlaylistAsync(IWebReader webReader, Uri url, Stream stream, CancellationToken cancellationToken)
         {
-          segmentManager = (ISegmentManager) null;
-          goto label_8;
+            var pls = new PlsParser(url);
+            using (var streamReader = new StreamReader(stream))
+            {
+                var ret = await pls.ParseAsync(streamReader);
+                if (!ret)
+                    return null;
+            }
+            var segmentManager = await CreateManagerAsync(pls, webReader, cancellationToken);
+            return segmentManager;
         }
-      }
-      segmentManager = await this.CreateManagerAsync(pls, webReader, cancellationToken).ConfigureAwait(false);
-label_8:
-      return segmentManager;
     }
-  }
 }

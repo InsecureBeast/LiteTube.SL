@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Builder;
 using LiteTube.StreamVideo.TransportStream.TsParser;
 using LiteTube.StreamVideo.TransportStream.TsParser.Descriptor;
 
@@ -9,11 +8,11 @@ namespace LiteTube.StreamVideo.Module
   {
     protected override void Load(ContainerBuilder builder)
     {
-      Autofac.RegistrationExtensions.RegisterType<TsDecoder>(builder).As<ITsDecoder>().ExternallyOwned();
-      Autofac.RegistrationExtensions.RegisterType<TsProgramAssociationTableFactory>(builder).As<ITsProgramAssociationTableFactory>().SingleInstance();
-      Autofac.RegistrationExtensions.RegisterType<TsProgramMapTableFactory>(builder).As<ITsProgramMapTableFactory>().SingleInstance();
-      Autofac.RegistrationExtensions.PreserveExistingDefaults<TsIso639LanguageDescriptorFactory, ConcreteReflectionActivatorData, SingleRegistrationStyle>(Autofac.RegistrationExtensions.RegisterType<TsIso639LanguageDescriptorFactory>(builder).As<ITsDescriptorFactoryInstance>().SingleInstance());
-      Autofac.RegistrationExtensions.RegisterType<TsDescriptorFactory>(builder).As<ITsDescriptorFactory>().SingleInstance();
+      builder.RegisterType<TsDecoder>().As<ITsDecoder>().ExternallyOwned();
+      builder.RegisterType<TsProgramAssociationTableFactory>().As<ITsProgramAssociationTableFactory>().SingleInstance();
+      builder.RegisterType<TsProgramMapTableFactory>().As<ITsProgramMapTableFactory>().SingleInstance();
+      builder.RegisterType<TsIso639LanguageDescriptorFactory>().As<ITsDescriptorFactoryInstance>().SingleInstance().PreserveExistingDefaults();
+      builder.RegisterType<TsDescriptorFactory>().As<ITsDescriptorFactory>().SingleInstance();
     }
   }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using LiteTube.StreamVideo.M3U8;
 using LiteTube.StreamVideo.M3U8.AttributeSupport;
 using LiteTube.StreamVideo.M3U8.TagSupport;
-using LiteTube.StreamVideo.Playlists;
+using LiteTube.StreamVideo.Program;
 using LiteTube.StreamVideo.Segments;
 using LiteTube.StreamVideo.Utility;
 using LiteTube.StreamVideo.Web;

@@ -4,15 +4,14 @@ using LiteTube.StreamVideo.TransportStream.TsParser;
 
 namespace LiteTube.StreamVideo.MP3
 {
-  public class Mp3StreamHandler : AudioStreamHandler
-  {
-    private const int MinimumPacketSize = 24;
-    private const bool UseParser = true;
-
-    public Mp3StreamHandler(PesStreamParameters parameters)
-      : base(parameters, (IAudioFrameHeader) new Mp3FrameHeader(), (IAudioConfigurator) new Mp3Configurator(parameters.MediaStreamMetadata, parameters.StreamType.Description), 24)
+    public class Mp3StreamHandler : AudioStreamHandler
     {
-      this.Parser = (AudioParserBase) new Mp3Parser(parameters.PesPacketPool, new Action<IAudioFrameHeader>(this.AudioConfigurator.Configure), this.NextHandler);
+        private const int MINIMUM_PACKET_SIZE = 24;
+        
+        public Mp3StreamHandler(PesStreamParameters parameters)
+          : base(parameters, new Mp3FrameHeader(), new Mp3Configurator(parameters.MediaStreamMetadata, parameters.StreamType.Description), MINIMUM_PACKET_SIZE)
+        {
+            Parser = new Mp3Parser(parameters.PesPacketPool, AudioConfigurator.Configure, NextHandler);
+        }
     }
-  }
 }

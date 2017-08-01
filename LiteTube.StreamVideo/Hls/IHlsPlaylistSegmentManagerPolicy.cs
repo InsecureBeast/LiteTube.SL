@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using LiteTube.StreamVideo.Content;
-using LiteTube.StreamVideo.Playlists;
+using LiteTube.StreamVideo.Program;
 
 namespace LiteTube.StreamVideo.Hls
 {

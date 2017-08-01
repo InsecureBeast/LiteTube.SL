@@ -4,25 +4,15 @@ using LiteTube.StreamVideo.TransportStream.TsParser;
 
 namespace LiteTube.StreamVideo.MP3
 {
-  public class Mp3StreamHandlerFactory : IPesStreamFactoryInstance
-  {
-    private static readonly byte[] Types = new byte[2]
+    public class Mp3StreamHandlerFactory : IPesStreamFactoryInstance
     {
-      TsStreamType.Mp3Iso11172,
-      TsStreamType.Mp3Iso13818
-    };
+        private static readonly byte[] Types =  { TsStreamType.Mp3Iso11172, TsStreamType.Mp3Iso13818 };
 
-    public ICollection<byte> SupportedStreamTypes
-    {
-      get
-      {
-        return (ICollection<byte>) Mp3StreamHandlerFactory.Types;
-      }
-    }
+        public ICollection<byte> SupportedStreamTypes => Types;
 
-    public PesStreamHandler Create(PesStreamParameters parameters)
-    {
-      return (PesStreamHandler) new Mp3StreamHandler(parameters);
+        public PesStreamHandler Create(PesStreamParameters parameters)
+        {
+            return new Mp3StreamHandler(parameters);
+        }
     }
-  }
 }

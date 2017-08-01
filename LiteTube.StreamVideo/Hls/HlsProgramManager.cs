@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using LiteTube.StreamVideo.Content;
 using LiteTube.StreamVideo.M3U8;
 using LiteTube.StreamVideo.M3U8.AttributeSupport;
-using LiteTube.StreamVideo.Playlists;
+using LiteTube.StreamVideo.Program;
 using LiteTube.StreamVideo.Utility;
 using LiteTube.StreamVideo.Web;
 
@@ -15,7 +15,7 @@ namespace LiteTube.StreamVideo.Hls
 {
     public class HlsProgramManager : IProgramManager
     {
-        private static readonly IDictionary<long, Program> _noPrograms = new Dictionary<long, Program>();
+        private static readonly IDictionary<long, Program.Program> _noPrograms = new Dictionary<long, Program.Program>();
         private readonly IHlsProgramStreamFactory _programStreamFactory;
         private readonly IRetryManager _retryManager;
         private readonly IWebReaderManager _webReaderManager;
@@ -36,7 +36,7 @@ namespace LiteTube.StreamVideo.Hls
             _retryManager = retryManager;
         }
 
-        public async Task<IDictionary<long, Program>> LoadAsync(CancellationToken cancellationToken)
+        public async Task<IDictionary<long, Program.Program>> LoadAsync(CancellationToken cancellationToken)
         {
             var playlists = Playlists;
             foreach (var uri in playlists)
@@ -64,7 +64,7 @@ namespace LiteTube.StreamVideo.Hls
             GC.SuppressFinalize(this);
         }
 
-        private async Task<IDictionary<long, Program>> LoadAsync(IWebReader webReader, M3U8Parser parser, CancellationToken cancellationToken)
+        private async Task<IDictionary<long, Program.Program>> LoadAsync(IWebReader webReader, M3U8Parser parser, CancellationToken cancellationToken)
         {
             var audioStreams = new Dictionary<string, MediaGroup>();
             foreach (var m3U8TagInstance in parser.GlobalTags)
@@ -83,7 +83,7 @@ namespace LiteTube.StreamVideo.Hls
                 }
             }
 
-            var programs = new Dictionary<long, Program>();
+            var programs = new Dictionary<long, Program.Program>();
             var hasSegments = false;
             foreach (var m3U8Uri in parser.Playlist)
             {
@@ -139,12 +139,12 @@ namespace LiteTube.StreamVideo.Hls
             return programs;
         }
 
-        private static Program GetProgram(IDictionary<long, Program> programs, long programId, Uri programUrl)
+        private static Program.Program GetProgram(IDictionary<long, Program.Program> programs, long programId, Uri programUrl)
         {
-            Program program;
+            Program.Program program;
             if (!programs.TryGetValue(programId, out program))
             {
-                program = new Program()
+                program = new Program.Program()
                 {
                     PlaylistUrl = programUrl,
                     ProgramId = programId

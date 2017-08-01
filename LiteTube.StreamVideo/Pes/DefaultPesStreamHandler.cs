@@ -3,32 +3,26 @@ using LiteTube.StreamVideo.TransportStream.TsParser;
 
 namespace LiteTube.StreamVideo.Pes
 {
-  public class DefaultPesStreamHandler : PesStreamHandler
-  {
-    private readonly Action<TsPesPacket> _nextHandler;
-
-    public override IConfigurationSource Configurator
+    public class DefaultPesStreamHandler : PesStreamHandler
     {
-      get
-      {
-        return (IConfigurationSource) null;
-      }
-    }
+        private readonly Action<TsPesPacket> _nextHandler;
 
-    public DefaultPesStreamHandler(PesStreamParameters parameters)
-      : base(parameters)
-    {
-      if (null == parameters)
-        throw new ArgumentNullException("parameters");
-      if (null == parameters.NextHandler)
-        throw new ArgumentException("NextHandler cannot be null", "parameters");
-      this._nextHandler = parameters.NextHandler;
-    }
+        public override IConfigurationSource Configurator => null;
 
-    public override void PacketHandler(TsPesPacket packet)
-    {
-      base.PacketHandler(packet);
-      this._nextHandler(packet);
+        public DefaultPesStreamHandler(PesStreamParameters parameters)
+          : base(parameters)
+        {
+            if (null == parameters)
+                throw new ArgumentNullException(nameof(parameters));
+            if (null == parameters.NextHandler)
+                throw new ArgumentException("NextHandler cannot be null", nameof(parameters));
+            _nextHandler = parameters.NextHandler;
+        }
+
+        public override void PacketHandler(TsPesPacket packet)
+        {
+            base.PacketHandler(packet);
+            _nextHandler(packet);
+        }
     }
-  }
 }

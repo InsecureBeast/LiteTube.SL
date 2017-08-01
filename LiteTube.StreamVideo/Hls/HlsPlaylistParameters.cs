@@ -1,6 +1,6 @@
 ﻿using System;
 using LiteTube.StreamVideo.M3U8;
-using LiteTube.StreamVideo.Playlists;
+using LiteTube.StreamVideo.Program;
 
 namespace LiteTube.StreamVideo.Hls
 {

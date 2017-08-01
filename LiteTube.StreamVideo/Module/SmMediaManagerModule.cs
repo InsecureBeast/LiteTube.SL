@@ -7,7 +7,7 @@ namespace LiteTube.StreamVideo.Module
   {
     protected override void Load(ContainerBuilder builder)
     {
-      RegistrationExtensions.RegisterType<SmMediaManager>(builder).As<IMediaManager>().InstancePerMatchingLifetimeScope((object) "builder-scope");
+      builder.RegisterType<SmMediaManager>().As<IMediaManager>().InstancePerMatchingLifetimeScope("builder-scope");
     }
   }
 }

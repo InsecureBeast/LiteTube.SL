@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using Autofac;
-using Autofac.Builder;
 using LiteTube.StreamVideo.Web;
 using LiteTube.StreamVideo.Web.ClientReader;
 using LiteTube.StreamVideo.Web.Platform;
@@ -11,11 +10,11 @@ namespace LiteTube.StreamVideo.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            Autofac.RegistrationExtensions.RegisterType<HttpClientWebReaderManager>(builder).As<IWebReaderManager>().SingleInstance();
-            Autofac.RegistrationExtensions.RegisterType<HttpClientFactory>(builder).As<IHttpClientFactory>().SingleInstance();
-            Autofac.RegistrationExtensions.RegisterType<HttpClientFactoryParameters>(builder).As<IHttpClientFactoryParameters>().SingleInstance();
-            Autofac.RegistrationExtensions.RegisterType<ProductInfoHeaderValueFactory>(builder).As<IProductInfoHeaderValueFactory>().SingleInstance();
-            Autofac.RegistrationExtensions.AsSelf<HttpClientHandler, ConcreteReflectionActivatorData>(Autofac.RegistrationExtensions.RegisterType<HttpClientHandler>(builder)).ExternallyOwned();
+            builder.RegisterType<HttpClientWebReaderManager>().As<IWebReaderManager>().SingleInstance();
+            builder.RegisterType<HttpClientFactory>().As<IHttpClientFactory>().SingleInstance();
+            builder.RegisterType<HttpClientFactoryParameters>().As<IHttpClientFactoryParameters>().SingleInstance();
+            builder.RegisterType<ProductInfoHeaderValueFactory>().As<IProductInfoHeaderValueFactory>().SingleInstance();
+            builder.RegisterType<HttpClientHandler>().AsSelf().ExternallyOwned();
         }
     }
 }

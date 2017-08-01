@@ -2,8 +2,8 @@
 
 namespace LiteTube.StreamVideo.Pes
 {
-  public interface IPesHandlerFactory
-  {
-    PesStreamHandler CreateHandler(PesStreamParameters parameters);
-  }
+    public interface IPesHandlerFactory
+    {
+        PesStreamHandler CreateHandler(PesStreamParameters parameters);
+    }
 }

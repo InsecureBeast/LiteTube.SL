@@ -9,15 +9,15 @@ namespace LiteTube.StreamVideo.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            RegistrationExtensions.RegisterType<StreamSocketWrapper>(builder).As<ISocket>().ExternallyOwned();
-            RegistrationExtensions.RegisterType<HttpConnection>(builder).As<IHttpConnection>().ExternallyOwned();
-            RegistrationExtensions.RegisterType<HttpConnectionFactory>(builder).As<IHttpConnectionFactory>().SingleInstance();
-            RegistrationExtensions.RegisterType<HttpConnectionRequestFactory>(builder).As<IHttpConnectionRequestFactory>().SingleInstance();
-            RegistrationExtensions.RegisterType<HttpConnectionRequestFactoryParameters>(builder).As<IHttpConnectionRequestFactoryParameters>().SingleInstance();
-            RegistrationExtensions.RegisterType<HttpConnectionWebReaderManager>(builder).As<IWebReaderManager>().SingleInstance();
-            RegistrationExtensions.RegisterType<HttpEncoding>(builder).As<IHttpEncoding>().SingleInstance();
-            RegistrationExtensions.RegisterType<HttpHeaderSerializer>(builder).As<IHttpHeaderSerializer>().SingleInstance();
-            RegistrationExtensions.RegisterType<UserAgentEncoder>(builder).As<IUserAgentEncoder>().SingleInstance();
+            builder.RegisterType<StreamSocketWrapper>().As<ISocket>().ExternallyOwned();
+            builder.RegisterType<HttpConnection>().As<IHttpConnection>().ExternallyOwned();
+            builder.RegisterType<HttpConnectionFactory>().As<IHttpConnectionFactory>().SingleInstance();
+            builder.RegisterType<HttpConnectionRequestFactory>().As<IHttpConnectionRequestFactory>().SingleInstance();
+            builder.RegisterType<HttpConnectionRequestFactoryParameters>().As<IHttpConnectionRequestFactoryParameters>().SingleInstance();
+            builder.RegisterType<HttpConnectionWebReaderManager>().As<IWebReaderManager>().SingleInstance();
+            builder.RegisterType<HttpEncoding>().As<IHttpEncoding>().SingleInstance();
+            builder.RegisterType<HttpHeaderSerializer>().As<IHttpHeaderSerializer>().SingleInstance();
+            builder.RegisterType<UserAgentEncoder>().As<IUserAgentEncoder>().SingleInstance();
         }
     }
 }
