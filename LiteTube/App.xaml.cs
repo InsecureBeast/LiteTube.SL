@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
+using System.Runtime.InteropServices;
 
 namespace LiteTube
 {
@@ -237,10 +238,13 @@ namespace LiteTube
             if (Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
-                    Debugger.Break();
+                Debugger.Break();
             }
 
             e.Handled = true;
+
+            if (e.ExceptionObject is SEHException)
+                return;
 
             if (e.ExceptionObject is GoogleApiException)
                 return;

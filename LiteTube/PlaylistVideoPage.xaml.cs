@@ -14,8 +14,6 @@ using LiteTube.Resources;
 using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using LiteTube.Tools;
-using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube
 {
@@ -220,6 +218,14 @@ namespace LiteTube
                 var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoViewModel.VideoUri") };
                 player.SetBinding(LiteTubePlayer.SourceProperty, binding);
 
+                if (e.NavigationMode == NavigationMode.Back && viewModel.VideoViewModel.IsLive)
+                {
+                    player = null;
+                    RestorePlayer();
+                    player.Load();
+                    //viewModel.Reload();
+                }
+
                 if (!viewModel.NavigationPanelViewModel.IsAuthorized) 
                     return;
                 
@@ -239,7 +245,7 @@ namespace LiteTube
             {
                 _playerState = player.GetMediaState();
                 _sensor.OrientationChanged -= Sensor_OrientationChanged;
-                player.Dispose();
+                player.Unload();
                 base.OnNavigatedFrom(e);
             }
             catch (Exception)

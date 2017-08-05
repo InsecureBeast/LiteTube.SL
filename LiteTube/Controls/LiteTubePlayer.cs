@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System;
 using System.Threading.Tasks;
 using LiteTube.StreamVideo.Platform;
+using Microsoft.PlayerFramework.Adaptive;
 
 namespace LiteTube.Controls
 {
@@ -48,8 +49,8 @@ namespace LiteTube.Controls
             remove { ((PlayerInteractiveViewModel)InteractiveViewModel).Paused -= value; }
         }
 
-        public Microsoft.PlayerFramework.Adaptive.AdaptivePlugin adaptivePlugin;
         public Microsoft.Media.AdaptiveStreaming.Dash.DashDownloaderPlugin dashDownloaderPlugin;
+        private StreamingMediaPlugin _adaptivePlugin;
 
         public LiteTubePlayer() : base()
         {
@@ -65,10 +66,7 @@ namespace LiteTube.Controls
         {
             if (e.NewValue)
             {
-                var asd = new StreamingMediaPlugin();
-                Plugins.Add(asd);
-                //RegisterPlugins();
-                //RegisterDashPlugin(true);
+                Load();
             }
         }
 
@@ -127,6 +125,23 @@ namespace LiteTube.Controls
             set { SetValue(RelatedItemsEnabledProperty, value); }
         }
 
+        public void Load()
+        {
+            if (_adaptivePlugin == null)
+                _adaptivePlugin = new StreamingMediaPlugin();
+            Plugins.Add(_adaptivePlugin);
+        }
+
+        public void Unload()
+        {
+            if (_adaptivePlugin != null)
+            {
+                _adaptivePlugin.Unload();
+                Plugins.Remove(_adaptivePlugin);
+                _adaptivePlugin = null;
+            }
+        }
+
         private void LiteTubePlayer_IsFullScreenChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
             if (!IsFullScreen)
@@ -137,28 +152,6 @@ namespace LiteTube.Controls
             }
 
             IsRelatedItemsVisible = _isRelatedVisible;
-        }
-
-        void RegisterDashPlugin(bool bRegister)
-        {
-            Microsoft.PlayerFramework.Adaptive.AdaptivePlugin plugin = Plugins.OfType<Microsoft.PlayerFramework.Adaptive.AdaptivePlugin>().First();
-            if (plugin != null)
-            {
-                if (bRegister == true)
-                {
-                    //LogMessage("Register DASH plugin");
-                    if (dashDownloaderPlugin == null)
-                        dashDownloaderPlugin = new Microsoft.Media.AdaptiveStreaming.Dash.DashDownloaderPlugin();
-                    plugin.DownloaderPlugin = dashDownloaderPlugin;
-                }
-            }
-        }
-        void RegisterPlugins()
-        {
-            //LogMessage("Register plugins");
-            if (adaptivePlugin == null)
-                adaptivePlugin = new Microsoft.PlayerFramework.Adaptive.AdaptivePlugin();
-            Plugins.Add(adaptivePlugin);
         }
 
         private static void OnVideoQualityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -176,10 +169,10 @@ namespace LiteTube.Controls
             return (StreamVideo.VideoQuality) (int) quality;
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    base.Dispose(disposing);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            //base.Dispose(disposing);
+        }
     }
 
     class PlayerInteractiveViewModel : InteractiveViewModel

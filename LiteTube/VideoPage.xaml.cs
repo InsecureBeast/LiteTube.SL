@@ -128,7 +128,7 @@ namespace LiteTube
             {
                 NavigationHelper.OnNavigatedTo(this);
 
-                RestorePlayer();
+                //RestorePlayer();
                 SubscribeModelEvents();
 
                 _sensor.OrientationChanged += Sensor_OrientationChanged;
@@ -143,8 +143,16 @@ namespace LiteTube
                 if (viewModel == null)
                     return;
 
+                var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
+                player.SetBinding(LiteTubePlayer.SourceProperty, binding);
+
                 if (e.NavigationMode == NavigationMode.Back && viewModel.IsLive)
-                    viewModel.Reload();
+                {
+                    player = null;
+                    RestorePlayer();
+                    player.Load();
+                    //viewModel.Reload();
+                }
 
                 if (!viewModel.NavigationPanelViewModel.IsAuthorized) 
                     return;
@@ -169,9 +177,7 @@ namespace LiteTube
             {
                 _playerState = player.GetMediaState();
                 _sensor.OrientationChanged -= Sensor_OrientationChanged;
-
-                player.Dispose();
-                player = null;
+                player.Unload();
                 base.OnNavigatedFrom(e);
             }
             catch (Exception)
@@ -240,6 +246,9 @@ namespace LiteTube
 
         private async void OnInteractiveChanged(object sender, RoutedEventArgs e)
         {
+            if (player == null)
+                return;
+
             if (!player.IsFullScreen)
                 return;
 
@@ -373,7 +382,8 @@ namespace LiteTube
                 LoadMoreCommand = viewModel.RelatedVideosViewModel.LoadMoreCommand,
                 VideoQualityItems = viewModel.VideoQualities,
                 SelectedVideoQualityItem = viewModel.SelectedVideoQualityItem,
-                IsLive = viewModel.IsLive
+                IsLive = viewModel.IsLive,
+                DataContext = DataContext
             };
 
             var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
@@ -384,6 +394,9 @@ namespace LiteTube
 
             var bindingLive = new Binding { Source = viewModel, Path = new PropertyPath("IsLive"), Mode = BindingMode.TwoWay };
             player.SetBinding(LiteTubePlayer.IsLiveProperty, bindingLive);
+
+            var bindingVideoTitle = new Binding { Source = viewModel, Path = new PropertyPath("VideoTitle"), Mode = BindingMode.TwoWay };
+            player.SetBinding(LiteTubePlayer.VideoTitleProperty, bindingVideoTitle);
 
             SubscribePlayerEvents(player);
 
