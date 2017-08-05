@@ -335,17 +335,12 @@ namespace LiteTube.ViewModels
 
         internal virtual void NavigateTo(NavigationObject navObject)
         {
-            if (navObject == null)
-                return;
-
-            if (navObject.ViewModel == null)
+            if (navObject?.ViewModel == null)
                 return;
 
             var id = navObject.ViewModel.VideoId;
-            var view = string.Format("/VideoPage.xaml?videoId={0}", id);
-#if SILVERLIGHT
+            var view = $"/VideoPage.xaml?videoId={id}";
             NavigationHelper.Navigate(view, new VideoPageViewModel(id, _getDataSource, _connectionListener));
-#endif
         }
 
         protected virtual void DeleteItems()

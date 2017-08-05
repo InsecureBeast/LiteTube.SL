@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:LiteTube.Controls"
+    xmlns:interactivity="clr-namespace:LiteTube.Interactivity"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -22,31 +23,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </phone:PhoneApplicationPage.Resources>
-
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <controls:NavigationPanel Grid.Row="0" 
-                                  x:Name="NavControl"
-                                  DataContext="{Binding NavigationPanelViewModel}"/>
-
-        <!--Pivot Control-->
-        <phone:Pivot Name="Pivot"
-                     Grid.Row="2"
-                     Margin="0,-10,0,0">
-            <!--Pivot item one-->
-            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="{Binding Path=LocalizedResources.Details, Source={StaticResource LocalizedStrings}}"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
+            
+            <DataTemplate x:Key="DetailsTemplate">
                 <ScrollViewer>
                     <Grid Margin="{StaticResource DefaultContentMargin}">
                         <Grid.RowDefinitions>
@@ -186,7 +164,7 @@
                                            Margin="5"/>
                             </Button>
 
-                            <Button Grid.Column="3"
+                            <Button Grid.Column="2"
                                     HorizontalAlignment="Right"
                                     Style="{StaticResource ContentButtonStyle}"
                                     Padding="5"
@@ -218,30 +196,15 @@
                                      TextWrapping="Wrap"
                                      Name="descriptionTextBlock" 
                                      Foreground="{StaticResource PhoneSubtleBrush}"
+                                     interactivity:HighlightUrlBehavior.Text="{Binding Description}"
                                      Padding="0"
                                      UseLayoutRounding="True"
                                      Margin="-12,12,-12,12"/>
                     </Grid>
                 </ScrollViewer>
-            </phone:PivotItem>
-
-            <!--Pivot item two-->
-            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="{Binding Path=LocalizedResources.RelatedVideos, Source={StaticResource LocalizedStrings}}"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
-
-                <ContentPresenter Content="{Binding RelatedVideosViewModel}"
-                                  ContentTemplate="{StaticResource LoadingListViewSmall}"/>
-            </phone:PivotItem>
-
-            <!--Pivot item three-->
-            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
-                <phone:PivotItem.Header>
-                    <TextBlock Text="{Binding Path=LocalizedResources.Comments, Source={StaticResource LocalizedStrings}}"
-                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
-                </phone:PivotItem.Header>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="CommentsDataTemplate">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -266,7 +229,7 @@
                                 </ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>
-                        
+
                         <!--<Image Source="{Binding CommentsViewModel.ProfileImage}"
                                Width="45"
                                Height="45"
@@ -277,6 +240,9 @@
                                  MinHeight="45"
                                  Margin="8,0,0,0"
                                  Name="CommentTextBox"
+                                 GotFocus="CommentTextBoxOnGotFocus"
+                                 LostFocus="CommentTextBoxOnLostFocus"
+                                 TextChanged="CommentTextBoxOnTextChanged"
                                  Text="{Binding CommentsViewModel.CommentText, Mode=TwoWay}"
                                  IsEnabled="{Binding CommentsViewModel.IsAddingComment, Converter={StaticResource InverseBooleanConverter}}"/>
                     </Grid>
@@ -286,6 +252,59 @@
                                       Margin="{StaticResource DefaultControlMargin}"
                                       Grid.Row="1"/>
                 </Grid>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:NavigationPanel Grid.Row="0" 
+                                  x:Name="NavControl"
+                                  DataContext="{Binding NavigationPanelViewModel}"/>
+
+        <!--Pivot Control-->
+        <phone:Pivot Name="Pivot"
+                     Grid.Row="2"
+                     Margin="0,-10,0,0">
+            <!--Pivot item one-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Details, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                
+                <ContentPresenter Content="{Binding}"
+                                  ContentTemplate="{StaticResource DetailsTemplate}"/>
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.RelatedVideos, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+
+                <ContentPresenter Content="{Binding RelatedVideosViewModel}"
+                                  ContentTemplate="{StaticResource LoadingListViewSmall}"/>
+            </phone:PivotItem>
+
+            <!--Pivot item three-->
+            <phone:PivotItem Margin="{StaticResource DefaultListBoxMargin}"
+                             x:Name="CommentsItem">
+                <phone:PivotItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Comments, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                </phone:PivotItem.Header>
+                
+                <ContentPresenter Content="{Binding}"
+                                  ContentTemplate="{StaticResource CommentsDataTemplate}"/>
             </phone:PivotItem>
         </phone:Pivot>
 

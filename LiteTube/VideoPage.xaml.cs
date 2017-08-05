@@ -35,7 +35,7 @@ namespace LiteTube
         private bool _isFullScreen = false;
         private bool _isRelatedLoading = false;
         private bool _isPaused = false;
-        private bool _autoPlay = true;
+        private readonly bool _autoPlay = true;
 
         public VideoPage()
         {
@@ -45,9 +45,6 @@ namespace LiteTube
             SubscribePlayerEvents(player);
             player.AutoPlay = _autoPlay;
 
-            CommentTextBox.GotFocus += CommentTextBoxOnGotFocus;
-            CommentTextBox.LostFocus += CommentTextBoxOnLostFocus;
-            CommentTextBox.TextChanged += CommentTextBoxOnTextChanged;
             PhoneApplicationService.Current.Deactivated += Current_Deactivated;
             PhoneApplicationService.Current.Activated += Current_Activated;
             LayoutRoot.SizeChanged += OnLayoutRootSizeChanged;
@@ -78,18 +75,15 @@ namespace LiteTube
             
             viewModel.PropertyChanged += (s, a) =>
             {
-                if (a.PropertyName == "Description")
-                {
-                    if (string.IsNullOrEmpty(viewModel.Description))
-                        return;
-
-                    HyperlinkHighlighter.HighlightUrls(viewModel.Description, descriptionTextBlock);
-                }
-
-
                 if (a.PropertyName == "SelectedVideoQualityItem")
                 {
                     _playerPosition = player.Position;
+                }
+
+                if (a.PropertyName == "IsLive")
+                {
+                    if (viewModel.IsLive && Pivot.Items.Count > 2)
+                        CommentsItem.Visibility = Visibility.Collapsed;
                 }
             };
         }
@@ -151,12 +145,10 @@ namespace LiteTube
                 else
                     SetVisibilityControls(Visibility.Visible);
 
+
                 var viewModel = DataContext as VideoPageViewModel;
                 if (viewModel == null)
                     return;
-
-                //var binding = new Binding { Source = viewModel, Path = new PropertyPath("VideoUri") };
-                //player.SetBinding(MediaPlayer.SourceProperty, binding);
 
                 if (e.NavigationMode == NavigationMode.Back && viewModel.IsLive)
                     viewModel.Reload();

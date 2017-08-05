@@ -10,18 +10,17 @@ namespace LiteTube.ViewModels.Nodes
     {
         private readonly RelayCommand<object> _addToPlayListCommand;
         protected readonly IDataSource _dataSource;
-        private readonly IContextMenuStrategy _menu;
         private readonly IPlaylistsSevice _playlistService;
 
         public delegate void ShowPlaylistContainer(bool show);
 
-        public NodeViewModelBase(IDataSource dataSource, IContextMenuStrategy menu, bool isLargeItems, IPlaylistsSevice playlistService = null)
+        protected NodeViewModelBase(IDataSource dataSource, IContextMenuStrategy menu, bool isLargeItems, IPlaylistsSevice playlistService = null)
         {
             if (menu == null)
-                _menu = new NoContextMenuStrategy();
+                MenuProvider = new NoContextMenuStrategy();
 
             _dataSource = dataSource;
-            _menu = menu;
+            MenuProvider = menu;
             _playlistService = playlistService;
             _addToPlayListCommand = new RelayCommand<object>(AddToPlayList);
 
@@ -31,16 +30,8 @@ namespace LiteTube.ViewModels.Nodes
         public abstract string Id { get; }
         public abstract string VideoId { get; }
         public bool IsLargeItems { get; set; }
-
-        public ICommand AddToPlaylistCommand
-        {
-            get { return _addToPlayListCommand; }
-        }
-
-        public IContextMenuStrategy MenuProvider
-        {
-            get { return _menu; }
-        }
+        public ICommand AddToPlaylistCommand => _addToPlayListCommand;
+        public IContextMenuStrategy MenuProvider { get; }
 
         protected virtual async void AddToPlayList(object obj)
         {
@@ -56,8 +47,7 @@ namespace LiteTube.ViewModels.Nodes
 
             if (obj.ToString() == "Playlist")
             {
-                if (_playlistService != null)
-                    _playlistService.ShowContainer(true, VideoId);
+                _playlistService?.ShowContainer(true, VideoId);
             }
         }
     }

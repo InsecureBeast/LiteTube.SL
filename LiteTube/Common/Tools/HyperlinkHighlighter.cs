@@ -143,9 +143,7 @@ namespace LiteTube.Tools
 
             if (!string.IsNullOrEmpty(videoId))
             {
-#if SILVERLIGHT
                 NavigationHelper.GoToVideoPage(videoId);
-#endif
                 return;
             }
 

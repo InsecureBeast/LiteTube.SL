@@ -15,6 +15,7 @@ using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using LiteTube.Tools;
+using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube
 {

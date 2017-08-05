@@ -9,7 +9,6 @@ using LiteTube.Common.Helpers;
 using System.Collections.Generic;
 using LiteTube.Controls;
 using System.Linq;
-using System.Net;
 using LiteTube.ViewModels.Playlist;
 
 namespace LiteTube.ViewModels

@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using LiteTube.Common.Helpers;
-using Microsoft.Phone.Controls;
 using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 using LiteTube.ViewModels.Nodes;
 

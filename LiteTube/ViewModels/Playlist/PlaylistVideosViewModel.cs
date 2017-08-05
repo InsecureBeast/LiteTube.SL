@@ -11,7 +11,7 @@ namespace LiteTube.ViewModels.Playlist
     class PlaylistVideosViewModel : SectionBaseViewModel
     {
         private readonly string _playlistId;
-        private Action<NavigationObject> _itemTap;
+        private readonly Action<NavigationObject> _itemTap;
 
         public PlaylistVideosViewModel(string playlistId, Func<IDataSource> geDataSource, IConnectionListener connectionListener, Action<NavigationObject> itemTap)
             : base(geDataSource, connectionListener, null)
