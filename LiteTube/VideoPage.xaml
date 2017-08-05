@@ -23,237 +23,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
-            <DataTemplate x:Key="DetailsTemplate">
-                <ScrollViewer>
-                    <Grid Margin="{StaticResource DefaultContentMargin}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Text="{Binding Title, Converter={StaticResource UppercaseConverter}}"
-                                   Style="{StaticResource PhoneTextNormalStyle}"
-                                   FontWeight="SemiBold"
-                                   TextWrapping="Wrap"
-                                   Margin="0"/>
-
-                        <Grid Grid.Row="1"
-                              x:Name="videoInfo"
-                              Margin="{StaticResource DefaultControlMargin}">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="4*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Grid.Row="1" 
-                                        Grid.Column="0"
-                                        Orientation="Horizontal">
-                                <ToggleButton Command="{Binding LikeCommand}"
-                                              IsChecked="{Binding IsLiked, Mode=TwoWay}"
-                                              Style="{StaticResource AppBarToggleButtonStyle}">
-                                    <TextBlock Text="&#xe19f;"
-                                               FontFamily="Segoe UI Symbol"
-                                               Width="30"
-                                               Height="30"
-                                               FontSize="20"/>
-                                </ToggleButton>
-                                <TextBlock Text="{Binding Likes, Converter={StaticResource NumberToStringConverter}}"
-                                           Style ="{StaticResource PhoneTextSmallStyle}"
-                                           VerticalAlignment="Center"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal"
-                                    Grid.Column="2"
-                                    Grid.Row="1" >
-                                <ToggleButton Command="{Binding DislikeCommand}"
-                                              IsChecked="{Binding IsDisliked, Mode=TwoWay}"
-                                              Style="{StaticResource AppBarToggleButtonStyle}">
-                                    <TextBlock Text="&#xe19e;"
-                                               FontFamily="Segoe UI Symbol"
-                                               Width="30"
-                                               Height="30"
-                                               FontSize="20"/>
-                                </ToggleButton>
-                                <TextBlock Text="{Binding Dislikes, Converter={StaticResource NumberToStringConverter}}"
-                                           Style ="{StaticResource PhoneTextSmallStyle}"
-                                           VerticalAlignment="Center"/>
-                            </StackPanel>
-
-                            <TextBlock Grid.Column="4"
-                                       Grid.Row="1" 
-                                       Style ="{StaticResource PhoneTextSmallStyle}"
-                                       VerticalAlignment="Center">
-                                <Run Text="{Binding ViewCount, Converter={StaticResource NumberToStringConverter}}" />
-                                <Run Text="{Binding Path=LocalizedResources.Views, Source={StaticResource LocalizedStrings}}"/>
-                            </TextBlock>
-                        </Grid>
-
-                        <!--Info about publisher (channel)-->
-                        <Grid Grid.Row="2"
-                              Background="{StaticResource PhoneSecondaryBackgroundBrush}"
-                              x:Name="publisherInfo"
-                              Margin="{StaticResource DefaultControlMargin}">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Button BorderThickness="0"
-                                    Margin="8,8,0,8"
-                                    Command="{Binding NavigationPanelViewModel.ChannelCommand}"
-                                    CommandParameter="{Binding ChannelId}"
-                                    Style="{StaticResource ImageButtonStyle}">
-                                <Image Source="{Binding ChannelImage}" 
-                                       Stretch="UniformToFill" 
-                                       Width="60"
-                                       Height="60"/>
-                            </Button>
-
-                            <StackPanel Grid.Column="1">
-                                <HyperlinkButton Content="{Binding ChannelTitle}"
-                                                 Command="{Binding NavigationPanelViewModel.ChannelCommand}"
-                                                 CommandParameter="{Binding ChannelId}"
-                                                 FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                 HorizontalAlignment="Left"
-                                                 HorizontalContentAlignment="Left"/>
-                                <TextBlock TextWrapping="NoWrap"
-                                           Style="{StaticResource PhoneTextSmallStyle}"
-                                           TextTrimming="WordEllipsis"
-                                           HorizontalAlignment="Left">
-                                    <Run Text="{Binding ChannelSubscribers, Converter={StaticResource NumberToStringConverter}}" />
-                                    <Run Text="{Binding Path=LocalizedResources.Subscribers, Source={StaticResource LocalizedStrings}}"/>
-                                </TextBlock>
-                                <TextBlock TextWrapping="NoWrap"
-                                           TextTrimming="WordEllipsis"
-                                           Style="{StaticResource PhoneTextSmallStyle}"
-                                           HorizontalAlignment="Left">
-                                <Run Text="{Binding ChannelVideoCount, Converter={StaticResource NumberToStringConverter}}" />
-                                <Run Text="{Binding Path=LocalizedResources.videos, Source={StaticResource LocalizedStrings}}"/>
-                                </TextBlock>
-                            </StackPanel>
-
-                            <Button Grid.Column="2"
-                                    Margin="0,0,8,0"
-                                    Width="130"
-                                    Height="60"
-                                    Command="{Binding SubscribeCommand}"
-                                    Style="{StaticResource ContentButtonStyle}"
-                                    Padding="5"
-                                    Visibility="{Binding IsSubscribed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                    HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding Path=LocalizedResources.Subscribe, Source={StaticResource LocalizedStrings}}"
-                                           TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"
-                                           FontSize="{StaticResource PhoneFontSizeSmall}"
-                                           FontWeight="Normal"
-                                           Margin="5"/>
-                            </Button>
-
-                            <Button Grid.Column="2"
-                                    HorizontalAlignment="Right"
-                                    Style="{StaticResource ContentButtonStyle}"
-                                    Padding="5"
-                                    Margin="0,0,8,0"
-                                    Width="130"
-                                    Height="60"
-                                    Command="{Binding UnsubscribeCommand}"
-                                    Visibility="{Binding IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <TextBlock Text="{Binding Path=LocalizedResources.Unsubscribe, Source={StaticResource LocalizedStrings}}"
-                                           TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"
-                                           FontSize="{StaticResource PhoneFontSizeSmall}"
-                                           FontWeight="Normal"
-                                           Margin="5"/>
-                            </Button>
-                        </Grid>
-
-                        <TextBlock Grid.Row="3"
-                                   TextWrapping="NoWrap"
-                                   Style="{StaticResource PhoneTextNormalStyle}"
-                                   Margin="{StaticResource DefaultControlMargin}"
-                                   x:Name="publishedTextBlock">
-                            <Run Text="{Binding Path=LocalizedResources.PublishedAt, Source={StaticResource LocalizedStrings}}" />
-                            <Run Text="{Binding PublishedAt}"/>
-                        </TextBlock>
-
-                        <RichTextBox Grid.Row="4"
-                                     IsReadOnly="True"
-                                     TextWrapping="Wrap"
-                                     Name="descriptionTextBlock" 
-                                     Foreground="{StaticResource PhoneSubtleBrush}"
-                                     interactivity:HighlightUrlBehavior.Text="{Binding Description}"
-                                     Padding="0"
-                                     UseLayoutRounding="True"
-                                     Margin="-12,12,-12,12"/>
-                    </Grid>
-                </ScrollViewer>
-            </DataTemplate>
-            
-            <DataTemplate x:Key="CommentsDataTemplate">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid Visibility="{Binding CommentsViewModel.IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Margin="{StaticResource DefaultContentMargin}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Ellipse Width="45"
-                                 Height="45"
-                                 VerticalAlignment="Top">
-                            <Ellipse.Fill>
-                                <ImageBrush>
-                                    <ImageBrush.ImageSource>
-                                        <BitmapImage UriSource="{Binding CommentsViewModel.ProfileImage}" />
-                                    </ImageBrush.ImageSource>
-                                </ImageBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
-
-                        <!--<Image Source="{Binding CommentsViewModel.ProfileImage}"
-                               Width="45"
-                               Height="45"
-                               VerticalAlignment="Top"/>-->
-                        <TextBox AcceptsReturn="True"
-                                 Grid.Column="1"
-                                 MaxHeight="150"
-                                 MinHeight="45"
-                                 Margin="8,0,0,0"
-                                 Name="CommentTextBox"
-                                 GotFocus="CommentTextBoxOnGotFocus"
-                                 LostFocus="CommentTextBoxOnLostFocus"
-                                 TextChanged="CommentTextBoxOnTextChanged"
-                                 Text="{Binding CommentsViewModel.CommentText, Mode=TwoWay}"
-                                 IsEnabled="{Binding CommentsViewModel.IsAddingComment, Converter={StaticResource InverseBooleanConverter}}"/>
-                    </Grid>
-
-                    <ContentPresenter Content="{Binding CommentsViewModel}"
-                                      ContentTemplate="{StaticResource CommentsLoadingListView}"
-                                      Margin="{StaticResource DefaultControlMargin}"
-                                      Grid.Row="1"/>
-                </Grid>
-            </DataTemplate>
-            
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
 
@@ -302,9 +71,59 @@
                     <TextBlock Text="{Binding Path=LocalizedResources.Comments, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PivotItemHeaderTextStyle}"/>
                 </phone:PivotItem.Header>
-                
-                <ContentPresenter Content="{Binding}"
-                                  ContentTemplate="{StaticResource CommentsDataTemplate}"/>
+                <Grid>
+                    <TextBlock Text="{Binding Path=LocalizedResources.Empty, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource LoadingTextBlockStyle}"
+                       Visibility="{Binding IsLive, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                    <Grid Visibility="{Binding IsLive, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Visibility="{Binding CommentsViewModel.IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="{StaticResource DefaultContentMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Ellipse Width="45"
+                                     Height="45"
+                                     VerticalAlignment="Top">
+                                <Ellipse.Fill>
+                                    <ImageBrush>
+                                        <ImageBrush.ImageSource>
+                                            <BitmapImage UriSource="{Binding CommentsViewModel.ProfileImage}" />
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+
+                            <!--<Image Source="{Binding CommentsViewModel.ProfileImage}"
+                                   Width="45"
+                                   Height="45"
+                                   VerticalAlignment="Top"/>-->
+                            <TextBox AcceptsReturn="True"
+                                     Grid.Column="1"
+                                     MaxHeight="150"
+                                     MinHeight="45"
+                                     Margin="8,0,0,0"
+                                     Name="CommentTextBox"
+                                     GotFocus="CommentTextBoxOnGotFocus"
+                                     LostFocus="CommentTextBoxOnLostFocus"
+                                     TextChanged="CommentTextBoxOnTextChanged"
+                                     Text="{Binding CommentsViewModel.CommentText, Mode=TwoWay}"
+                                     IsEnabled="{Binding CommentsViewModel.IsAddingComment, Converter={StaticResource InverseBooleanConverter}}"/>
+                        </Grid>
+
+                        <ContentPresenter Content="{Binding CommentsViewModel}"
+                                          ContentTemplate="{StaticResource CommentsLoadingListView}"
+                                          Margin="{StaticResource DefaultControlMargin}"
+                                          Grid.Row="1"/>
+                    </Grid>
+                </Grid>
             </phone:PivotItem>
         </phone:Pivot>
 

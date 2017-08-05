@@ -15,7 +15,6 @@ using LiteTube.Controls;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Windows.Data;
-using LiteTube.Tools;
 
 namespace LiteTube
 {
@@ -78,12 +77,6 @@ namespace LiteTube
                 if (a.PropertyName == "SelectedVideoQualityItem")
                 {
                     _playerPosition = player.Position;
-                }
-
-                if (a.PropertyName == "IsLive")
-                {
-                    if (viewModel.IsLive && Pivot.Items.Count > 2)
-                        CommentsItem.Visibility = Visibility.Collapsed;
                 }
             };
         }
@@ -411,6 +404,9 @@ namespace LiteTube
 
         private void Current_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            if (player == null)
+                return;
+
             _playerPosition = player.Position;
 
             UnsubscribePlayerEvents(player);

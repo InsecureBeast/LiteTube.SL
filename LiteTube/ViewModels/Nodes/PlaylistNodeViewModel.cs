@@ -51,6 +51,7 @@ namespace LiteTube.ViewModels.Nodes
         public string ImagePath { get; private set; }
         public long? ItemsCount { get; private set; }
         public DateTime? PublishedAt { get; private set; }
+        public bool IsLive { get { return false; } }
 
         public ICommand DeleteCommand
         {

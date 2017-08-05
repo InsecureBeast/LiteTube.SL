@@ -44,6 +44,7 @@ namespace LiteTube.ViewModels.Nodes
         public string ImagePath { get; private set; }
         public DateTime? PublishedAt { get; private set; }
         public TimeSpan? Duration { get; private set; }
+        public bool IsLive { get { return false; } }
 
         public override string Id
         {
