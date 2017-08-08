@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -226,7 +227,7 @@ namespace LiteTube.DataModel
         public static async Task<IEnumerable<string>> HttpGetAutoCompleteAsync(string query)
         {
             var list = new List<string>();
-            var uri = string.Format("http://suggestqueries.google.com/complete/search?client=youtube&ds=yt&q={0}", query);
+            var uri = $"http://suggestqueries.google.com/complete/search?client=youtube&ds=yt&q={query}";
             var response = await HttpGetAsync(uri, string.Empty);
             
             if (string.IsNullOrEmpty(response))
@@ -260,8 +261,9 @@ namespace LiteTube.DataModel
                 if (!string.IsNullOrEmpty(accessToken))
                     client.DefaultRequestHeaders.Add("Authorization", accessToken);
 
-                var response = await client.GetAsync(new Uri(uri, UriKind.Absolute));
-                return await response.Content.ReadAsStringAsync();
+                var response = await client.GetByteArrayAsync(new Uri(uri, UriKind.Absolute));
+                var responseString = Encoding.UTF8.GetString(response, 0, response.Length - 1);
+                return responseString;
             }
         }
 
