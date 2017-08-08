@@ -8,9 +8,10 @@
             mc:Ignorable="d"
             FontFamily="{StaticResource PhoneFontFamilyNormal}"
             FontSize="{StaticResource PhoneFontSizeNormal}"
-            Foreground="{StaticResource PhoneForegroundBrush}"
+            Foreground="{StaticResource NavigationPanelForegroundBrush}"
+            Background="{StaticResource NavigationPanelBrush}"
             d:DesignHeight="480" 
-             d:DesignWidth="480">
+            d:DesignWidth="480">
     
     <UserControl.Resources>
         <ResourceDictionary>
@@ -22,8 +23,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" 
-          Background="{StaticResource NavigationPanelBrush}">
+    <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="56"/>
             <RowDefinition Height="*"/>
@@ -44,6 +44,7 @@
                    Grid.Row="0"
                    Grid.Column="1"
                    Margin="0,6,0,0"
+                   x:Name="TitleTextBlock"
                    Foreground="{StaticResource NavigationPanelForegroundBrush}"
                    FontSize="28"
                    FontWeight="ExtraLight"

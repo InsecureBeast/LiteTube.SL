@@ -4,14 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using LiteTube.Common.Helpers;
 using Microsoft.Phone.Tasks;
 using LiteTube.Resources;
-using LiteTube.ViewModels;
-using LiteTube.Common;
 
 namespace LiteTube.Controls
 {
@@ -25,6 +20,9 @@ namespace LiteTube.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            LayoutRoot.Background = Background;
+            TitleTextBlock.Foreground = Foreground;
+
             var page = VisualHelper.FindParent<Page>(this);
             if (page == null)
             {
