@@ -150,8 +150,7 @@ namespace LiteTube
                 {
                     player = null;
                     RestorePlayer();
-                    player.Load();
-                    //viewModel.Reload();
+                    player?.Load();
                 }
 
                 if (!viewModel.NavigationPanelViewModel.IsAuthorized) 
@@ -391,12 +390,6 @@ namespace LiteTube
 
             var binding1 = new Binding { Source = viewModel, Path = new PropertyPath("SelectedVideoQualityItem"), Mode = BindingMode.TwoWay };
             player.SetBinding(LiteTubePlayer.SelectedVideoQualityItemProperty, binding1);
-
-            var bindingLive = new Binding { Source = viewModel, Path = new PropertyPath("IsLive"), Mode = BindingMode.TwoWay };
-            player.SetBinding(LiteTubePlayer.IsLiveProperty, bindingLive);
-
-            var bindingVideoTitle = new Binding { Source = viewModel, Path = new PropertyPath("VideoTitle"), Mode = BindingMode.TwoWay };
-            player.SetBinding(LiteTubePlayer.VideoTitleProperty, bindingVideoTitle);
 
             SubscribePlayerEvents(player);
 

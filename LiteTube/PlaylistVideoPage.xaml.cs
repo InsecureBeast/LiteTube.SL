@@ -12,7 +12,6 @@ using Windows.Devices.Sensors;
 using Microsoft.PlayerFramework;
 using LiteTube.Resources;
 using LiteTube.Controls;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace LiteTube
@@ -222,8 +221,7 @@ namespace LiteTube
                 {
                     player = null;
                     RestorePlayer();
-                    player.Load();
-                    //viewModel.Reload();
+                    player?.Load();
                 }
 
                 if (!viewModel.NavigationPanelViewModel.IsAuthorized) 
