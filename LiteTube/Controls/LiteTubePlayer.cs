@@ -9,9 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System;
-using System.Threading.Tasks;
 using LiteTube.StreamVideo.Platform;
-using Microsoft.PlayerFramework.Adaptive;
 
 namespace LiteTube.Controls
 {
@@ -49,7 +47,6 @@ namespace LiteTube.Controls
             remove { ((PlayerInteractiveViewModel)InteractiveViewModel).Paused -= value; }
         }
 
-        public Microsoft.Media.AdaptiveStreaming.Dash.DashDownloaderPlugin dashDownloaderPlugin;
         private StreamingMediaPlugin _adaptivePlugin;
 
         public LiteTubePlayer() : base()
