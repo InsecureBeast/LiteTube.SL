@@ -142,7 +142,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LightTube.
+        ///   Looks up a localized string similar to LightTube Pro.
         /// </summary>
         public static string ApplicationTitle {
             get {
