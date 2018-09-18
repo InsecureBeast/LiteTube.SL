@@ -126,7 +126,7 @@
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
-    <value>LightTube Pro</value>
+    <value>LightTube</value>
   </data>
   <data name="Activity" xml:space="preserve">
     <value>Activity</value>
@@ -156,7 +156,7 @@
     <value>comments</value>
   </data>
   <data name="Copyright" xml:space="preserve">
-    <value>Copyright © 2017. All right reserved.</value>
+    <value>Copyright © 2018. All right reserved.</value>
   </data>
   <data name="CopyVideoLink" xml:space="preserve">
     <value>copy video link</value>

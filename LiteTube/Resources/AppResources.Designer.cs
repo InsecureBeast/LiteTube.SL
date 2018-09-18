@@ -142,7 +142,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LightTube Pro.
+        ///   Looks up a localized string similar to LightTube.
         /// </summary>
         public static string ApplicationTitle {
             get {
@@ -223,7 +223,7 @@ namespace LiteTube.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright © 2017. All right reserved..
+        ///   Looks up a localized string similar to Copyright © 2018. All right reserved..
         /// </summary>
         public static string Copyright {
             get {

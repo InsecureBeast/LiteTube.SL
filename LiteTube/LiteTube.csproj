@@ -583,10 +583,6 @@
       <HintPath>..\packages\Microsoft.AdMediator.WindowsPhone8.Smaato.2.1.3\lib\wp\Microsoft.AdMediator.WindowsPhone8.Smaato.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.AdMediator.WindowsPhone81SL.MicrosoftAdvertising, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AdMediator.WindowsPhone81SL.MicrosoftAdvertising.2.1.3\lib\wp\Microsoft.AdMediator.WindowsPhone81SL.MicrosoftAdvertising.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Advertising.Mobile, Version=8.1.50112.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Advertising.WindowsPhone.SL81.8.1.50112.0\lib\wp81\Microsoft.Advertising.Mobile.dll</HintPath>
