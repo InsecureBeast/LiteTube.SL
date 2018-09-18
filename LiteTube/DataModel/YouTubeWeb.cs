@@ -29,7 +29,8 @@ namespace LiteTube.DataModel
 
 
         private const string BOT_USER_AGENT1 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-        private const string BOT_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+        private const string BOT_USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Mobile Safari/537.36";
+        //"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
         private readonly Dictionary<string, IEnumerable<string>> _recommended = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _related = new Dictionary<string, IEnumerable<string>>();
         private readonly Dictionary<string, IEnumerable<string>> _watchLater = new Dictionary<string, IEnumerable<string>>();
@@ -259,7 +260,9 @@ namespace LiteTube.DataModel
             {
                 client.DefaultRequestHeaders.Add("User-Agent", BOT_USER_AGENT);
                 if (!string.IsNullOrEmpty(accessToken))
-                    client.DefaultRequestHeaders.Add("Authorization", accessToken);
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+                }
 
                 var response = await client.GetByteArrayAsync(new Uri(uri, UriKind.Absolute));
                 var responseString = Encoding.UTF8.GetString(response, 0, response.Length - 1);
